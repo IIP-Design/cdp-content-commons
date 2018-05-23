@@ -52,7 +52,11 @@ class FilterSelections extends Component {
       selections: [
         language, date, ...nextTypes, ...nextCategories, ...nextSources
       ]
-    } );
+    }, this.saveToLocalStorage() );
+  }
+
+  saveToLocalStorage() {
+    localStorage.setItem( 'selections', JSON.stringify( this.state.selections ) );
   }
 
   render() {

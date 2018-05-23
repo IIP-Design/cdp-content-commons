@@ -5,11 +5,36 @@ import {
   POST_TYPE_CHANGE
 } from '../actions/types';
 
+/* TESTING */
+const localStorageFilterItem = () => {
+  const localStorageData = localStorage.getItem( 'setItem' ) !== ''
+    ? JSON.parse( localStorage.getItem( 'selections' ) )
+    : null;
+
+  const localStorageFilter = localStorageData && localStorageData.filter( item => item.filter === 'format' ).length > 0
+    ? localStorageData.filter( item => item.filter === 'format' )
+    : null;
+
+  if ( !localStorageFilter ) return null;
+
+  const initPostTypes = [];
+  localStorageFilter.map( filter => initPostTypes.push( {
+    type: filter.value,
+    display_name: filter.label
+  } ) );
+
+  return initPostTypes;
+};
+/* TESTING */
+
 const INITIAL_STATE = {
   error: false,
   list: [],
   loading: false,
-  currentPostTypes: [{ type: 'video', display_name: 'Video' }]
+  // currentPostTypes: [{ type: 'video', display_name: 'Video' }]
+  currentPostTypes: localStorageFilterItem() !== null
+    ? localStorageFilterItem()
+    : [{ type: 'video', display_name: 'Video' }]
 };
 
 export default ( state = INITIAL_STATE, action ) => {
