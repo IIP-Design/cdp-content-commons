@@ -28,8 +28,10 @@ class Search extends Component {
 
   handleSubmit( e ) {
     e.preventDefault();
-
     sessionStorage.setItem( 'currentSearch', this.props.search.query );
+
+    this.props.postTypeQueryUpdate();
+    this.props.sourceQueryUpdate();
 
     this.props.createRequest();
     this.props.history.push( '/results' );
@@ -61,6 +63,8 @@ const mapStateToProps = state => ( {
 Search.propTypes = {
   updateSearchQuery: func,
   createRequest: func,
+  postTypeQueryUpdate: func,
+  sourceQueryUpdate: func,
   history: object,
   location: object,
   search: shape( {

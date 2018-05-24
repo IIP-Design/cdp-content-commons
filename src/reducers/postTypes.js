@@ -2,38 +2,19 @@ import {
   LOAD_POST_TYPES_PENDING,
   LOAD_POST_TYPES_FAILED,
   LOAD_POST_TYPES_SUCCESS,
-  POST_TYPE_CHANGE
+  POST_TYPE_CHANGE,
+  POST_TYPE_QUERY_UPDATE
 } from '../actions/types';
 
-/* TESTING */
-const localStorageFilterItem = () => {
-  const localStorageData = localStorage.getItem( 'setItem' ) !== ''
-    ? JSON.parse( localStorage.getItem( 'selections' ) )
-    : null;
-
-  const localStorageFilter = localStorageData && localStorageData.filter( item => item.filter === 'format' ).length > 0
-    ? localStorageData.filter( item => item.filter === 'format' )
-    : null;
-
-  if ( !localStorageFilter ) return null;
-
-  const initPostTypes = [];
-  localStorageFilter.map( filter => initPostTypes.push( {
-    type: filter.value,
-    display_name: filter.label
-  } ) );
-
-  return initPostTypes;
-};
-/* TESTING */
+import { localStorageInitFilterState } from '../utils/localStorage';
 
 const INITIAL_STATE = {
   error: false,
   list: [],
   loading: false,
   // currentPostTypes: [{ type: 'video', display_name: 'Video' }]
-  currentPostTypes: localStorageFilterItem() !== null
-    ? localStorageFilterItem()
+  currentPostTypes: localStorageInitFilterState( 'format' ) !== null
+    ? localStorageInitFilterState( 'format' )
     : [{ type: 'video', display_name: 'Video' }]
 };
 
@@ -68,6 +49,11 @@ export default ( state = INITIAL_STATE, action ) => {
         currentPostTypes: action.payload.checked
           ? [...state.currentPostTypes, { type: action.payload.type, display_name: action.payload.display_name }]
           : state.currentPostTypes.filter( category => category.type !== action.payload.type )
+      };
+    case POST_TYPE_QUERY_UPDATE:
+      return {
+        ...state,
+        currentPostTypes: [{ type: 'video', display_name: 'Video' }]
       };
     default:
       return state;

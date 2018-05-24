@@ -1,10 +1,20 @@
-import { LOAD_SOURCES_PENDING, LOAD_SOURCES_FAILED, LOAD_SOURCES_SUCCESS, SOURCE_CHANGE } from '../actions/types';
+import {
+  LOAD_SOURCES_PENDING,
+  LOAD_SOURCES_FAILED,
+  LOAD_SOURCES_SUCCESS,
+  SOURCE_CHANGE,
+  SOURCE_QUERY_UPDATE
+} from '../actions/types';
+import { localStorageInitFilterState } from '../utils/localStorage';
 
 const INITIAL_STATE = {
   error: false,
   list: [],
   loading: false,
-  currentSources: []
+  // currentSources: []
+  currentSources: localStorageInitFilterState( 'source' ) !== null
+    ? localStorageInitFilterState( 'source' )
+    : []
 };
 
 export default ( state = INITIAL_STATE, action ) => {
@@ -38,6 +48,11 @@ export default ( state = INITIAL_STATE, action ) => {
         currentSources: action.payload.checked
           ? [...state.currentSources, { display_name: action.payload.display_name }]
           : state.currentSources.filter( source => source.display_name !== action.payload.display_name )
+      };
+    case SOURCE_QUERY_UPDATE:
+      return {
+        ...state,
+        currentSources: []
       };
     default:
       return state;
