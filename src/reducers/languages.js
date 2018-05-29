@@ -2,14 +2,18 @@ import {
   LOAD_LANGUAGES_PENDING,
   LOAD_LANGUAGES_FAILED,
   LOAD_LANGUAGES_SUCCESS,
-  LANGUAGE_CHANGE
+  LANGUAGE_CHANGE,
+  SEARCH_FILTER_SELECTIONS_CLEAR
 } from '../actions/types';
+import { localStorageInitFilterState } from '../utils/localStorage';
 
 const INITIAL_STATE = {
   error: false,
   list: [],
   loading: false,
-  currentLanguage: { key: 'en-us', display_name: 'English' }
+  currentLanguage: localStorageInitFilterState( 'language' ) !== null
+    ? localStorageInitFilterState( 'language' )[0]
+    : { key: 'en-us', display_name: 'English' }
 };
 
 export default ( state = INITIAL_STATE, action ) => {
@@ -38,7 +42,11 @@ export default ( state = INITIAL_STATE, action ) => {
         ...state,
         currentLanguage: action.payload ? action.payload : { key: 'en-us', display_name: 'English' }
       };
-
+    case SEARCH_FILTER_SELECTIONS_CLEAR:
+      return {
+        ...state,
+        currentLanguage: { key: 'en-us', display_name: 'English' }
+      };
     default:
       return state;
   }

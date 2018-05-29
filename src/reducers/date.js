@@ -1,4 +1,10 @@
-import { DATE_CHANGE, TO_DATE_CHANGE, FROM_DATE_CHANGE } from '../actions/types';
+import {
+  DATE_CHANGE,
+  TO_DATE_CHANGE,
+  FROM_DATE_CHANGE,
+  SEARCH_FILTER_SELECTIONS_CLEAR
+} from '../actions/types';
+import { localStorageInitFilterState } from '../utils/localStorage';
 
 const INITIAL_STATE = {
   from: new Date(),
@@ -28,7 +34,9 @@ const INITIAL_STATE = {
     // { key: 'oldest', display: 'Oldest' },
     // { key: 'custom', display: 'Custom' }
   ],
-  currentDate: { key: 'recent', display: 'Most Recent' }
+  currentDate: localStorageInitFilterState( 'date' ) !== null
+    ? localStorageInitFilterState( 'date' )[0]
+    : { key: 'recent', display: 'Most Recent' }
 };
 
 export default ( state = INITIAL_STATE, action ) => {
@@ -47,6 +55,11 @@ export default ( state = INITIAL_STATE, action ) => {
       return {
         ...state,
         to: action.payload
+      };
+    case SEARCH_FILTER_SELECTIONS_CLEAR:
+      return {
+        ...state,
+        currentDate: { key: 'recent', display: 'Most Recent' }
       };
     default:
       return state;

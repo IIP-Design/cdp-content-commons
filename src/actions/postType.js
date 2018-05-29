@@ -4,22 +4,13 @@ import {
   LOAD_POST_TYPES_PENDING,
   LOAD_POST_TYPES_FAILED,
   LOAD_POST_TYPES_SUCCESS,
-  POST_TYPE_CHANGE,
-  POST_TYPE_QUERY_UPDATE
+  POST_TYPE_CHANGE
 } from './types';
 
 export const postTypeUpdate = postType => ( {
   type: POST_TYPE_CHANGE,
   payload: postType
 } );
-
-export const postTypeQueryUpdate = () => {
-  localStorage.clear();
-  return {
-    type: POST_TYPE_QUERY_UPDATE,
-    payload: null
-  };
-};
 
 export const loadPostTypes = () => async ( dispatch ) => {
   dispatch( { type: LOAD_POST_TYPES_PENDING } );

@@ -3,22 +3,13 @@ import {
   LOAD_SOURCES_PENDING,
   LOAD_SOURCES_FAILED,
   LOAD_SOURCES_SUCCESS,
-  SOURCE_CHANGE,
-  SOURCE_QUERY_UPDATE
+  SOURCE_CHANGE
 } from './types';
 
 export const sourceUpdate = source => ( {
   type: SOURCE_CHANGE,
   payload: source
 } );
-
-export const sourceQueryUpdate = () => {
-  localStorage.clear();
-  return {
-    type: SOURCE_QUERY_UPDATE,
-    payload: null
-  };
-};
 
 export const loadSources = () => async ( dispatch ) => {
   dispatch( { type: LOAD_SOURCES_PENDING } );

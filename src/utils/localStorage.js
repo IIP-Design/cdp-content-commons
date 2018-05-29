@@ -10,11 +10,24 @@ export const localStorageInitFilterState = ( filterType ) => {
 
   if ( !localStorageFilter ) return null;
 
-  const initPostTypes = [];
-  localStorageFilter.map( filter => initPostTypes.push( {
-    type: filter.value,
-    display_name: filter.label
-  } ) );
+  const filterTypes = [];
 
-  return initPostTypes;
+  localStorageFilter.forEach( ( filter ) => {
+    if ( filter.filter === 'format' || filter.filter === 'source' ) {
+      filterTypes.push( { type: filter.value, display_name: filter.label } );
+    }
+
+    if ( filter.filter === 'date' ) {
+      filterTypes.push( { key: filter.value, display: filter.label } );
+    }
+
+    if ( filter.filter === 'language' ) {
+      filterTypes.push( { key: filter.value, display_name: filter.label } );
+    }
+
+    if ( filter.filter === 'category' ) {
+      filterTypes.push( { id: filter.value, display_name: filter.label } );
+    }
+  } );
+  return filterTypes;
 };

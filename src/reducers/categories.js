@@ -2,14 +2,18 @@ import {
   LOAD_CATEGORIES_PENDING,
   LOAD_CATEGORIES_FAILED,
   LOAD_CATEGORIES_SUCCESS,
-  CATEGORY_CHANGE
+  CATEGORY_CHANGE,
+  SEARCH_FILTER_SELECTIONS_CLEAR
 } from '../actions/types';
+import { localStorageInitFilterState } from '../utils/localStorage';
 
 const INITIAL_STATE = {
   error: false,
   list: [],
   loading: false,
-  currentCategories: []
+  currentCategories: localStorageInitFilterState( 'category' ) !== null
+    ? localStorageInitFilterState( 'category' )
+    : []
 };
 
 export default ( state = INITIAL_STATE, action ) => {
@@ -43,6 +47,11 @@ export default ( state = INITIAL_STATE, action ) => {
         currentCategories: action.payload.checked
           ? [...state.currentCategories, { id: action.payload.id, display_name: action.payload.display_name }]
           : state.currentCategories.filter( category => category.id !== action.payload.id )
+      };
+    case SEARCH_FILTER_SELECTIONS_CLEAR:
+      return {
+        ...state,
+        currentCategories: []
       };
     default:
       return state;
