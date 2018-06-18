@@ -1,5 +1,10 @@
 import { sourceAggRequest } from '../utils/api';
-import { LOAD_SOURCES_PENDING, LOAD_SOURCES_FAILED, LOAD_SOURCES_SUCCESS, SOURCE_CHANGE } from './types';
+import {
+  LOAD_SOURCES_PENDING,
+  LOAD_SOURCES_FAILED,
+  LOAD_SOURCES_SUCCESS,
+  SOURCE_CHANGE
+} from './types';
 
 /**
  * Owners name for the young leader sites are not completely standardized

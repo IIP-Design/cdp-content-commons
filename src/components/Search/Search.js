@@ -28,8 +28,10 @@ class Search extends Component {
 
   handleSubmit( e ) {
     e.preventDefault();
-
     sessionStorage.setItem( 'currentSearch', this.props.search.query );
+
+    /* RESET SEARCH FILTERS ON NEW QUERY */
+    this.props.clearFilterSelections();
 
     this.props.createRequest();
     this.props.history.push( '/results' );
@@ -61,6 +63,7 @@ const mapStateToProps = state => ( {
 Search.propTypes = {
   updateSearchQuery: func,
   createRequest: func,
+  clearFilterSelections: func,
   history: object,
   location: object,
   search: shape( {

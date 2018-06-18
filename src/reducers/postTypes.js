@@ -2,14 +2,19 @@ import {
   LOAD_POST_TYPES_PENDING,
   LOAD_POST_TYPES_FAILED,
   LOAD_POST_TYPES_SUCCESS,
-  POST_TYPE_CHANGE
+  POST_TYPE_CHANGE,
+  SEARCH_FILTER_SELECTIONS_CLEAR
 } from '../actions/types';
+
+import { localStorageInitFilterState } from '../utils/localStorage';
 
 const INITIAL_STATE = {
   error: false,
   list: [],
   loading: false,
-  currentPostTypes: [{ type: 'video', display_name: 'Video' }]
+  currentPostTypes: localStorageInitFilterState( 'format' ) !== null
+    ? localStorageInitFilterState( 'format' )
+    : [{ type: 'video', display_name: 'Video' }]
 };
 
 export default ( state = INITIAL_STATE, action ) => {
@@ -43,6 +48,11 @@ export default ( state = INITIAL_STATE, action ) => {
         currentPostTypes: action.payload.checked
           ? [...state.currentPostTypes, { type: action.payload.type, display_name: action.payload.display_name }]
           : state.currentPostTypes.filter( category => category.type !== action.payload.type )
+      };
+    case SEARCH_FILTER_SELECTIONS_CLEAR:
+      return {
+        ...state,
+        currentPostTypes: [{ type: 'video', display_name: 'Video' }]
       };
     default:
       return state;
