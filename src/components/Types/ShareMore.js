@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Form, Input } from 'semantic-ui-react';
 // import { object } from 'prop-types';
-import './Video.css';
+
 
 const ShareMore = props => (
   <div>

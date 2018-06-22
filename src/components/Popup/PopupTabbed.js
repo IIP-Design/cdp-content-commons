@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, array } from 'prop-types';
+import { string, array, bool } from 'prop-types';
 import { Header, Tab } from 'semantic-ui-react';
 import './Popup.css';
 
@@ -43,11 +43,17 @@ class PopupTabbed extends Component {
   }
 
   render() {
+    const { title, simpleTabs } = this.props;
     return (
       <div>
-        <Header as="h2">{ this.props.title }</Header>
+        <Header as="h2">{ title }</Header>
         <div className="slider" style={ this.state.sliderStyle } />
-        <Tab menu={ { secondary: true } } panes={ this.state.panes } onTabChange={ this.handleOnTabChange } />
+        <Tab
+          className={ simpleTabs ? 'simpleTabs' : '' }
+          menu={ { secondary: true } }
+          panes={ this.state.panes }
+          onTabChange={ this.handleOnTabChange }
+        />
       </div>
     );
   }
@@ -55,7 +61,8 @@ class PopupTabbed extends Component {
 
 PopupTabbed.propTypes = {
   panes: array,
-  title: string
+  title: string,
+  simpleTabs: bool
 };
 
 export default PopupTabbed;

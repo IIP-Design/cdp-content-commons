@@ -15,8 +15,9 @@
 
   &_label {
     position: absolute;
-    top: 0;
+    top: 50%;
     right: 0;
+    transform: translateY(-50%);
     width: 100%;
     margin-bottom: 0;
     margin-right: 10px;
@@ -75,15 +76,6 @@
         opacity: 0;
         animation: showCopied 1.5s ease;
       }
-    }
-  }
-
-  &_info {
-    display: block;
-    margin-left: 140px;
-    font-size: 12px;
-    @media screen and (max-width: 767px) {
-      margin-left: 0;
     }
   }
 }
