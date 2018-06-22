@@ -4,6 +4,7 @@ import { Embed, Checkbox } from 'semantic-ui-react';
 
 // import plusIcon from '../../../assets/icons/icon_plus.svg';
 import downloadIcon from '../../../assets/icons/icon_download.svg';
+import shareIcon from '../../../assets/icons/icon_share.svg';
 
 import ModalItem from '../../Modals/ModalItem';
 import ModalLangDropdown from '../../Modals/ModalLangDropdown/ModalLangDropdown';
@@ -19,9 +20,8 @@ import DownloadVideo from './DownloadVideo';
 import DownloadSrt from './DownloadSrt';
 import DownloadTranscript from './DownloadTranscript';
 import DownloadHelp from './DownloadHelp';
-import Shortcode from './Shortcode';
-import Social from './Social';
-import ShareMore from './ShareMore';
+
+import Share from '../Share';
 
 class VideoModal extends Component {
   constructor( props ) {
@@ -117,6 +117,26 @@ class VideoModal extends Component {
     return selectedLanguageUnit.language.text_direction;
   }
 
+  getShareLink() {
+    let shareLinkURL = null;
+    const youTubeId = this.getYouTubeId();
+
+    try {
+      if ( youTubeId ) {
+        shareLinkURL = `https://youtu.be/${youTubeId}`;
+      } else {
+        const uid = this.getVideoSource();
+        shareLinkURL = `https://iframe.cloudflarestream.com/${uid}`;
+      }
+
+      if ( shareLinkURL === null || shareLinkURL === undefined ) throw new Error( 'Missing Share Video Link' );
+    } catch ( e ) {
+      console.error( `${e.name}: ${e.message}` );
+    }
+
+    return shareLinkURL;
+  }
+
   handleLanguageChange( value ) {
     if ( value ) {
       const unit = this.props.item.units.find( lang => lang.language.display_name === value );
@@ -201,20 +221,22 @@ class VideoModal extends Component {
                 content={ <div /> }
               />
               <PopupTrigger
-                toolTip="Copy the shortcode for this video or<br> share it social platforms."
-                icon="share"
-                // show={ type === 'video' }
-                show={ false }
+                toolTip="Share this video"
+                icon={ shareIcon }
+                show
                 content={
                   <PopupTabbed
-                    title="How would you like to share this video?"
-                    item={ unit }
-                    panes={ [
-                      { title: 'Copy Shortcode', component: <Shortcode /> },
-                      { title: 'Social', component: <Social /> },
-                      { title: 'More', component: <ShareMore /> },
-                      { title: 'Help', component: <DownloadHelp /> }
-                    ] }
+                    classes="popup_share"
+                    title="SHARE"
+                    noTabsMenu
+                    panes={
+                      [
+                        {
+                          title: '',
+                          component: <Share contentTitle={ unit.title } shareLink={ this.getShareLink() } />
+                        }
+                      ]
+                    }
                   />
                 }
               />

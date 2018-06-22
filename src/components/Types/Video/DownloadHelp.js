@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import HelpText from '../HelpText';
 import downloadIcon from '../../../assets/icons/icon_download.svg';
 import './DownloadHelp.css';
 
 const DownloadHelp = () => (
-  <div>
+  <HelpText>
     <h4>Download Video</h4>
     <ol>
       <li>Under the { 'Video File' } tab click the download icon
@@ -23,7 +24,7 @@ const DownloadHelp = () => (
       <li>My download is taking FOREVER. How do I fix this?</li>
       <li>How do I unbundle/unzip my downloaded files?</li>
     </ul>
-  </div>
+  </HelpText>
 );
 
 export default DownloadHelp;

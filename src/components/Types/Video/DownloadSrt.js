@@ -24,7 +24,7 @@ class DownloadSrt extends Component {
     const { units } = this.props;
     return (
       <div>
-        <div className="form-group_instructions">{ this.props.instructions }</div>
+        <div className="tab_instructions">{ this.props.instructions }</div>
         { units && this.renderFormItems( units ) }
       </div>
     );
