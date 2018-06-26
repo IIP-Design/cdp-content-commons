@@ -19,9 +19,9 @@ import DownloadVideo from './DownloadVideo';
 import DownloadSrt from './DownloadSrt';
 import DownloadTranscript from './DownloadTranscript';
 import DownloadHelp from './DownloadHelp';
-import Shortcode from './Shortcode';
-import Social from './Social';
-import ShareMore from './ShareMore';
+import EmbedCode from '../EmbedCode';
+import Social from '../Social';
+import ShareMore from '../ShareMore';
 
 class VideoModal extends Component {
   constructor( props ) {
@@ -210,7 +210,7 @@ class VideoModal extends Component {
                     title="How would you like to share this video?"
                     item={ unit }
                     panes={ [
-                      { title: 'Copy Shortcode', component: <Shortcode /> },
+                      { title: 'Copy Shortcode', component: <EmbedCode /> },
                       { title: 'Social', component: <Social /> },
                       { title: 'More', component: <ShareMore /> },
                       { title: 'Help', component: <DownloadHelp /> }

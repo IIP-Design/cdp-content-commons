@@ -3,12 +3,20 @@ import { object } from 'prop-types';
 import { getItemRequest } from '../../../utils/api';
 import { normalizeItem } from '../../../utils/parser';
 
+import embedIcon from '../../../assets/icons/icon_embed.svg';
+
 import ModalItem from '../../Modals/ModalItem';
 import ModalLangDropdown from '../../Modals/ModalLangDropdown/ModalLangDropdown';
 import ModalContentMeta from '../../Modals/ModalContentMeta/ModalContentMeta';
 import ModalPostMeta from '../../Modals/ModalPostMeta/ModalPostMeta';
 import ModalPostTags from '../../Modals/ModalPostTags/ModalPostTags';
 import ModalText from '../../Modals/ModalText/ModalText';
+
+import PopupTrigger from '../../Popup/PopupTrigger';
+import PopupTabbed from '../../Popup/PopupTabbed';
+
+import PostEmbedCode from './PostEmbedCode';
+import PostEmbedHelpText from './PostEmbedHelpText';
 
 class PostModal extends Component {
   constructor( props ) {
@@ -17,7 +25,7 @@ class PostModal extends Component {
     this.state = {
       item,
       selectedLanguage: this.getLanguage(),
-      textDirection: item.language.text_direction
+      textDirection: String( item.language.text_direction )
     };
     this.handleLanguageChange = this.handleLanguageChange.bind( this );
   }
@@ -62,7 +70,31 @@ class PostModal extends Component {
               />
             </div>
             <div className="modal_options_share">
-              <a href={ item.link } target="_blank">View Original</a>
+              <PopupTrigger
+                toolTip="Embed this article."
+                icon={ embedIcon }
+                show
+                content={
+                  <PopupTabbed
+                    title="Embed this article on your site"
+                    simpleTabs
+                    panes={ [
+                      {
+                        title: 'Copy Embed Code',
+                        component: (
+                          <PostEmbedCode
+                            instructions="Copy and paste the code below to embed article on your site"
+                            embedItem={ item }
+                          />
+                        )
+                      },
+                      { title: 'Help', component: <PostEmbedHelpText /> }
+                    ] }
+                  />
+                }
+              />
+
+              { /* <a href={ item.link } target="_blank">View Original</a> */ }
             </div>
           </div>
           <div className="modal_thumbnail">

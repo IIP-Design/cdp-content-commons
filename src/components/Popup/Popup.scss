@@ -7,6 +7,7 @@
 }
 
 .popupElem {
+  
   &_wrapper {
     min-height: 425px;
 
@@ -87,6 +88,13 @@
       overflow-y: auto;
       box-shadow: none;
 
+      .tab_instructions {
+        color: $grey;
+        font-style: italic;
+        font-size: 0.857em;
+        margin-bottom: 2em;
+      }
+
       .item {
         @media screen and (max-width: 767px) {
           margin: 0;
@@ -96,6 +104,10 @@
           }
         }
       }
+    }
+
+    .simpleTabs > .ui.secondary.menu {
+      justify-content: left;
     }
 
     .ui.secondary.menu {
@@ -147,5 +159,6 @@
       background: $light-blue;
       transition: all 0.3s ease-in-out;
     }
+
   }
 }
