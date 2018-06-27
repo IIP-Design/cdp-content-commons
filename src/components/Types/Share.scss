@@ -1,0 +1,49 @@
+@import '../../assets/styles/colors.scss';
+
+.popup_share .ui.header {
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: $medium-grey;
+}
+
+.ui.horizontal.list.share_list {
+  
+  .item {
+    @media screen and (min-width: 601px) {
+      margin-left: 5em;
+    }    
+
+    .icon {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      border-radius: 50%;
+      color: #fff;
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+      }
+      
+      &.facebook {
+        background-color: $fb-blue;
+      }
+
+      &.twitter {
+        background-color: $twitter-blue;
+      }
+    }
+
+    .content {
+      margin-left: 5px;
+      font-size: 1.3em;
+      color: $medium-grey;
+    }
+
+  }
+
+}

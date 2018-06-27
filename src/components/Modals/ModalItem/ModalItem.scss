@@ -112,20 +112,19 @@
     height: 1.8em;
 
     &_share {
-      > span:first-child,
-      > img {
+      > span:first-child {
         margin-right: 0.5em;
       }
 
-      > img, 
       > span {
         display: inline-block;
         vertical-align: bottom;
         float: none !important;
       }
 
-      > img {
-        width: 1.8em;
+      .ui.button.trigger > img {
+        width: 23px;
+        height: 23px;
       }
     }   
   }

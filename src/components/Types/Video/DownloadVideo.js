@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import downloadIcon from '../../../assets/icons/icon_download.svg';
 import { Item } from 'semantic-ui-react';
 import { object, string, bool } from 'prop-types';
+import './DownloadVideo.css';
 
 // NOTE: Using the 'download' attribute to trigger downloads
 // Need to research more robust options depending on browser supprt
@@ -95,7 +96,7 @@ class DownloadVideo extends Component {
     const { selectedLanguageUnit, burnedInCaptions } = this.props;
     return (
       <div>
-        <div className="form-group_instructions">{ this.props.instructions }</div>
+        <div className="tab_instructions">{ this.props.instructions }</div>
         { this.props.selectedLanguageUnit && this.renderFormItems( selectedLanguageUnit, burnedInCaptions ) }
       </div>
     );
