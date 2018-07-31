@@ -51,6 +51,7 @@ class PostModal extends Component {
   render() {
     if ( this.state && this.state.item ) {
       const { item, textDirection } = this.state;
+
       return (
         <ModalItem headline={ item.title } textDirection={ textDirection }>
           <div className="modal_options">
@@ -62,7 +63,7 @@ class PostModal extends Component {
               />
             </div>
             <div className="modal_options_share">
-              <a href={ item.link } target="_blank">View Original</a>
+              <a href={ item.link } target="_blank" rel="noopener noreferrer">View Original</a>
             </div>
           </div>
           <div className="modal_thumbnail">
