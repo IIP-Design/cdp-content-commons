@@ -40,6 +40,12 @@ class Nav extends Component {
         name: 'help',
         to: 'help',
         label: 'Help'
+      },
+      {
+        key: 3,
+        name: 'login',
+        to: 'login',
+        label: 'Login'
       }
     ];
 
