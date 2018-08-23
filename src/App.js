@@ -7,6 +7,7 @@ import { ScrollToTop } from './utils/helpers';
 import LandingPage from './components/Pages/LandingPage';
 import AboutPage from './components/Pages/AboutPage';
 import HelpPage from './components/Pages/HelpPage';
+import LoginPage from './components/Pages/LoginPage/LoginPage';
 import PrivacyPage from './components/Pages/PrivacyPage';
 import ContactPage from './components/Pages/ContactPage';
 import VideoPage from './components/Pages/VideoPage';
@@ -26,6 +27,7 @@ const App = () => (
         <Route path="/results" component={ Results } />
         <Route path="/about" component={ AboutPage } />
         <Route path="/help" component={ HelpPage } />
+        <Route path="/login" component={ LoginPage } />
         <Route path="/privacy" component={ PrivacyPage } />
         <Route path="/contact" component={ ContactPage } />
         <Route path="/video" component={ VideoPage } />

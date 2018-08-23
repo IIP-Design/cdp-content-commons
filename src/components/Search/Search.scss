@@ -18,9 +18,9 @@
 .search_bar {
   .ui.form {
     .fields {
+      margin: 0;
       @media screen and (max-width: 767px) {
-        flex-wrap: nowrap;
-        margin: 0;
+        flex-wrap: nowrap;        
       }
       @media screen and (max-width: 540px) {
         flex-wrap: wrap;

@@ -1,186 +1,167 @@
 @import '../../assets/styles/colors.scss';
 
-header {
-  text-align: center;
-}
-
 .bar {
-  background: url('../../assets/images/cdp_home_hero.jpg');
-  background-size: cover;
-  margin-bottom: 3em;
-
+  z-index: 100;
+  
   header {
-    padding: 10em 0 1em;
+    position: relative;
+    display: flex;
+    justify-content: space-between;    
+    text-align: center;
     @media screen and (max-width: 767px) {
-      padding: 4em 0 2em;
+      flex-direction: column;
     }
   }
 
-  nav {
-    @media screen and (max-width: 767px) {
-      position: fixed;
-      top: 0;
-      right: 0;
-      z-index: 999;
-      padding: 0;
-      width: 100%;
-    }
-  }
 
-  nav .content.icon {
-    color: white;
-  }
+  .ui.container {
+    position: relative;
+  }  
 
-  nav .ui.menu .item,
-  nav .ui.menu .item:last-child {
-    color: white;
-    border-radius: 0;
-  }
 
-  nav .ui.menu .item:hover {
-    color: white;
-    border-bottom: 2px solid white;
-  }
-
-  .title,
-  .title:hover {
-    color: white;
-  }
-
-  .search_bar {
-    margin: 3em auto;
-  }
-
-  h1.ui.header .sub.header.subtitle {
-    font-size: 1em;
-    color: white;
-    margin: 0.5em 0;
-  }
-
-  h1.ui.header .sub.header.subtext {
-    margin: 0;
-    font-size: 18px;
-    color: white;
-  }
-}
-
-.resultsbar,
-.videobar {
-  background-image: linear-gradient(60deg, $light-blue 2%, $bright-blue 100%);
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 998;
-
-  header {
-    @media screen and (max-width: 767px) {
-      text-align: left;
-    }
-  }
-
-  header a,
-  header a:hover {
+  .title, .title:hover {
     color: #fff;
-    font-size: 1.5em;
+  }  
+
+
+  &--home {
+    margin-bottom: 3em;
+    background: url('../../assets/images/cdp_home_hero.jpg');
+    background-size: cover;  
+
+    header {
+      flex-direction: column;
+      padding: 10em 0 1em;
+      @media screen and (max-width: 767px) {
+        padding: 4em 0 2em;
+      }
+    }
+
+    .title {
+      @media screen and (min-width: 768px) {
+        font-size: 60px;
+      }      
+    }
+
+    h1.ui.header {
+        
+      .sub.header.subtitle {
+        margin: 0.5em 0;
+        font-size: 1em;
+        color: #fff;
+      }
+
+      .sub.header.subtext {
+        margin: 0;
+        font-size: 18px;
+        color: #fff; 
+      }
+    }
+
+    .search_bar {
+      margin: 3em auto;
+    }
   }
 
-  .search_bar {
-    @media screen and (min-width: 768px) {
-      padding: 0.6em;
-      width: 400px;
-      float: center;
-    }
-    @media screen and (min-width: 900px) {
-      width: 500px;
-    }
+
+  &:not(.bar--home) {
+    
+    h1.ui.header {
+      min-width: 300px;
+      margin: 0;
+      padding: 0;      
+      text-align: left;
+      @media screen and (min-width: 768px) {
+        margin-top: 8px;
+      }      
+      
+      .sub.header.subtitle,
+      .sub.header.subtext {
+        display: none
+      }
+    }    
+  }
+
+
+  /***  
+    About, Help, Privacy, Contact - no searchbar, white bG  
+  ***/
+  &--about,
+  &--help,
+  &--privacy,
+  &--contact, {
+    position: fixed;
+    top: 0;    
     width: 100%;
-    padding: 0.8em 0;
-    box-shadow: none;
+    background: white;
+
+    .title, .title:hover {
+      color: $blue;
+    }
+
+    .search_bar {
+      display: none;
+    }
+
+    nav .ui.menu .item.nav_loggedin .loggedinIcon {
+      fill: $blue;
+    }
   }
 
-  .search_bar .fields {
-    margin: 0;
+
+  /*** 
+    Results, Video - searchbar  
+  ***/
+  &--results,
+  &--video {    
+
+    header {
+      @media screen and (max-width: 767px) {
+        text-align: left;
+      }
+    }
+
+    .search_bar {
+      width: 100%;
+      padding: 0.8em 0;
+      box-shadow: none;
+      @media screen and (min-width: 768px) {
+        width: 400px;
+        padding: 0.6em;            
+      }
+      @media screen and (min-width: 900px) {
+        width: 500px;
+      }
+    }
+
+    .ui.secondary.menu .item.nav_loggedin {
+      padding: 0.2em;      
+    }
   }
-}
 
-.aboutbar,
-.helpbar,
-.privacybar,
-.contactbar {
-  background: white;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 998;
-}
 
-.resultsbar .ui.container,
-.videobar .ui.container,
-.bar .ui.container,
-.aboutbar .ui.container,
-.helpbar .ui.container,
-.privacybar .ui.container,
-.contactbar .ui.container {
-  @media screen and (min-width: 768px) {
-    width: 1600px;
+  /*** 
+    Login - no searchbar, only feedback nav item 
+  ***/
+  &--login {
+    @media screen and (min-width: 768px) {
+      height: 64px;
+    }
+    .search_bar {
+      display: none;
+    }
   }
-  position: relative;
-}
 
-.resultsbar h1.ui.header,
-.videobar h1.ui.header,
-.aboutbar h1.ui.header,
-.helpbar h1.ui.header,
-.privacybar h1.ui.header,
-.contactbar h1.ui.header {
-  @media screen and (min-width: 768px) {
-    float: left;
-    padding-top: 0.3em;
-  }
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
 
-.resultsbar .header .title,
-.videobar .header .title,
-.aboutbar .header .title,
-.helpbar .header .title,
-.privacybar .header .title,
-.contactbar .header .title {
-  padding: 0;
-  font-size: 0.8em;
-  @media screen and (min-width: 768px) {
-    font-size: 1em;
-    padding: 0.5em;
-    padding-left: 0;
-  }
-}
-
-.resultsbar .sub.header.subtitle,
-.resultsbar .sub.header.subtext,
-.videobar .sub.header.subtitle,
-.videobar .sub.header.subtext,
-.aboutbar .sub.header.subtitle,
-.aboutbar .sub.header.subtext,
-.helpbar .sub.header.subtitle,
-.helpbar .sub.header.subtext,
-.privacybar .sub.header.subtitle,
-.privacybar .sub.header.subtext,
-.contactbar .sub.header.subtitle,
-.contactbar .sub.header.subtext {
-  display: none;
-}
-
-.aboutbar .search_bar,
-.helpbar .search_bar,
-.privacybar .search_bar,
-.contactbar .search_bar {
-  display: none;
+  /***  
+    Blue bG bar 
+  ***/
+  &--results,
+  &--video,
+  &--login {
+    position: fixed;
+    top: 0;    
+    width: 100%;    
+    background-image: linear-gradient(60deg, $light-blue 3%, $bright-blue 100%);    
+  }  
 }

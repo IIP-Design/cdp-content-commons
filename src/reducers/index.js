@@ -6,6 +6,7 @@ import categoriesReducer from './categories';
 import postTypeReducer from './postTypes';
 import dateReducer from './date';
 import sourceReducer from './sources';
+import loginReducer from './loginTEMP';
 
 export default combineReducers( {
   search: searchReducer,
@@ -13,5 +14,6 @@ export default combineReducers( {
   category: categoriesReducer,
   type: postTypeReducer,
   date: dateReducer,
-  source: sourceReducer
+  source: sourceReducer,
+  loggedIn: loginReducer
 } );

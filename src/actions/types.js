@@ -36,3 +36,7 @@ export const CLEAR_FILTERS = 'clear_filters';
 export const DATE_CHANGE = 'date_change';
 export const FROM_DATE_CHANGE = 'from_date_change';
 export const TO_DATE_CHANGE = 'to_date_change';
+
+export const LOGGED_IN = 'logged_in';
+export const LOGGED_OUT = 'logged_out';
+
