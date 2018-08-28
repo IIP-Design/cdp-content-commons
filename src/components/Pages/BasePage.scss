@@ -10,6 +10,9 @@
     text-align: center;
     padding: 1em 0;
     color: $blue;
+    @media screen and (max-width: 425px) {
+      font-size: 3em;
+    }
 
     .sub.header {
       font-size: 0.6em;

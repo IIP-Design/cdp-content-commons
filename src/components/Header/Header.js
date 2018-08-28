@@ -7,7 +7,8 @@ import Nav from '../Nav';
 import Search from '../Search';
 
 const HeaderItem = ( props ) => {
-  const barClass = ( `${( props.location.pathname ).split( '/' ).slice( 1 )[0]}bar` );
+  const pagePath = props.location.pathname.split( '/' ).slice( 1 )[0];
+  const barClass = `bar ${pagePath === '' ? 'bar--home' : `bar--${pagePath}`}`;
 
   return (
     <section className={ barClass }>
@@ -15,8 +16,8 @@ const HeaderItem = ( props ) => {
         <header>
           <Heading />
           <Search />
+          <Nav />
         </header>
-        <Nav />
       </div>
     </section>
   );
