@@ -1,0 +1,28 @@
+.projects_item {
+  .projImage {
+    position: relative;
+    display: inline-block;
+    height: 0;
+    padding-top: 120px;
+    min-width: 195px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    @media screen and (max-width: 767px) {
+      min-height: 195px;
+      height: 100%;
+    }
+  }
+
+  .projDetails {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 1em;
+  }
+
+  .metaicon {
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+  }
+}

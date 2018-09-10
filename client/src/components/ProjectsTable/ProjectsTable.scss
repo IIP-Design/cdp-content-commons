@@ -1,0 +1,15 @@
+@import "assets/styles/colors.scss";
+
+.projects_table {
+  .ui.table thead th {
+    background: $light-blue;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .ui.sortable.table thead th:hover,
+  .ui.sortable.table thead th.sorted {  
+    background: $blue;
+    color: #fff;
+  }
+}
