@@ -1,0 +1,25 @@
+.userDetails {
+  
+  
+  &_emailAddress {
+    width: 100%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 1em;
+    }
+
+    .subtext {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+    }
+
+    .required.field {
+      margin-bottom: 0;
+    }
+  }
+
+
+
+}

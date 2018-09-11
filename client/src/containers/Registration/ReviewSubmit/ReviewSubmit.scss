@@ -1,0 +1,56 @@
+@import 'assets/styles/colors.scss';
+
+.reviewSubmit {
+  
+
+  p {
+    margin-bottom: 5px;
+
+    &.reviewSubmit_headline,
+    &.reviewSubmit_info_role {
+      margin-bottom: 2em;
+    }
+
+    &.reviewSubmit_headline {
+      font-size: 18px;
+    }
+  }
+
+
+  &_info  {
+    margin-bottom: 3em;
+
+    &_role {
+      margin: 2em 0;
+    }
+  }
+
+
+  &_newTeamInfo {
+    margin-bottom: 2em;
+  }
+
+
+  .tosAgmt {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3em;
+
+    &.error {
+
+      label {
+        color: $red !important;
+      }
+      
+    }
+
+    > label {
+      font-size: 14px !important;
+
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+
+}

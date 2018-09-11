@@ -142,10 +142,11 @@
   }
 
   /*** 
-    Login - no searchbar, only feedback nav item 
+    Login/Registration - no searchbar, only feedback nav item 
   ***/
   &--login,
-  &--register {
+  &--register,
+  &--registration-pending-approval {
     @media screen and (min-width: 768px) {
       height: 64px;
     }
@@ -161,6 +162,7 @@
   &--video,
   &--login,
   &--register,
+  &--registration-pending-approval,
   &--admin {
     position: fixed;
     top: 0;

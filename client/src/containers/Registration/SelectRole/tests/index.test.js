@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import PageRegister from '../index';
+// import { SelectRole } from '../index';
 
-describe( '<PageRegister />', () => {
+describe( '<SelectRole />', () => {
   it( 'Expect to have unit tests specified', () => {
     expect( true ).toEqual( false );
   } );

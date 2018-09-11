@@ -10,7 +10,9 @@ import Admin from '../Admin/Loadable';
 // import { ScrollToTop } from './utils/helpers';
 import LandingPage from 'components/PageLanding';
 import PageLogin from 'containers/Auth/PageLogin/Loadable';
-import PageRegister from 'containers/Auth/PageRegister/Loadable';
+
+import PageRegister from 'components/PageRegister/Loadable';
+import PageRegistrationPendingApproval from 'components/PageRegistrationPendingApproval/Loadable';
 
 // Markdown pages
 import AboutPage from 'components/pagesStatic/AboutPage/Loadable';
@@ -52,6 +54,7 @@ const App = () => (
         <Route path="/admin" component={ withAuth( Admin ) } />
         <Route path="/login" component={ PageLogin } />
         <Route path="/register" component={ PageRegister } />
+        <Route path="/registration-pending-approval" component={ PageRegistrationPendingApproval } />
         <Route path="/search" component={ PageSearch } />
         <Route path="/about" component={ AboutPage } />
         <Route path="/help" component={ HelpPage } />

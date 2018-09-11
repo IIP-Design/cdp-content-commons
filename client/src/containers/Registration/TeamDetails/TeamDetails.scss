@@ -1,0 +1,33 @@
+@import "assets/styles/colors.scss";
+
+.teamDetails {
+  
+  .ui.form .field {
+    margin-bottom: 1.5em;
+  }
+
+  .ui.form input[type="checkbox"] {
+    margin: 5px 5px 5px 0; 
+    vertical-align: baseline;
+  }
+
+
+  .grouped.fields .field.teamDetails_contentOption {
+    
+    label {
+      font-size: 14px;
+      font-weight: bold;
+    }    
+  }
+
+
+  contentOption_wrapper {
+    margin-bottom: 1em;
+  }
+
+
+  .subtext {
+    padding-left: 20px;
+  }
+
+}

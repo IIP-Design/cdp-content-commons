@@ -1,0 +1,159 @@
+@import "../../assets/styles/colors.scss";
+
+.register {
+
+
+  &_wrapper {
+    max-width: 650px;
+    padding: 30px;
+    margin: 0 auto;
+    color: $blue;
+    @media screen and (max-width: 600px) {
+      padding: 0;
+    }   
+  }
+  
+
+  &_title {
+    margin-bottom: 0;
+    padding-bottom: 15px;    
+    text-align: center;
+    color: $blue;
+    @media screen and (min-width: 768px) {
+      font-size: 34px;
+    } 
+  }
+
+
+  .ui.pointing.secondary.menu {
+    justify-content: space-between;
+    margin: 0;
+    border-bottom-width: 1px;
+
+    &:after {
+      display: none;
+    }
+
+    .item {
+      padding: 4px 0;
+      margin: 0;
+      font-size: 20px;
+      color: $alt-grey;
+      pointer-events: none;
+      @media screen and (max-width: 600px) {
+        font-size: 12px;
+      }
+    }
+
+    .active.item {
+      z-index: 1;
+      margin-bottom: -3px;
+      border-bottom: 5px solid $light-blue;
+      font-weight: bold;
+      color: #000;
+    }
+  }
+
+
+  .ui.segment {
+    max-width: 500px;
+    margin: 0 auto;
+    border: none;
+    box-shadow: none;
+    @media screen and (max-width: 425px) {
+      padding: 1em 0;
+    }
+
+    &.teamDetails {
+      display: none;
+    }
+  }
+
+    
+  &_question,
+  .ui.form .field > label,
+  .ui.form .grouped.fields > label {
+    font-size: 18px;
+    font-weight: normal;
+    color: $blue;
+  }
+
+  .ui.form .field.error > label {
+    color: #9F3A38;
+  }
+
+
+  .checkbox {
+    display: block;
+    margin-bottom: 5px;
+
+    label {
+      font-weight: bold;
+    }
+
+    &_content {
+      padding-left: 1.85714em;
+      color: #000;
+    }
+  }
+
+  .ui.form .fields {
+    @media screen and (min-width: 768px) {
+      margin-bottom: 2em;
+    }    
+  }
+  
+  .ui.form .field {
+
+    &.register_selectTeam {
+      margin-top: 2em;
+
+      > p {
+        margin-bottom: 4px;
+      }
+    }
+  }
+  
+
+  &_progress {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2em;
+
+    &.init {
+      justify-content: flex-end
+    }
+
+    .ui.button {
+      padding: 11px 17px;
+      margin: 0;
+      color: #fff;
+      transition: background 0.3s ease-in;      
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+
+      &.back {
+        border: 2px solid $light-blue;
+        background: #fff;
+        color: $light-blue;        
+
+        i {
+          vertical-align: text-bottom;
+        }
+      }
+
+      &.forward {
+        background: $light-blue;
+      }
+
+      &.back:hover,
+      &.forward:hover {
+        
+        .icon {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+}
+

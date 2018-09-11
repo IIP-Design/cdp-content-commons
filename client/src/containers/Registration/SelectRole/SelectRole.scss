@@ -1,0 +1,19 @@
+@import "assets/styles/colors.scss";
+
+
+.selectRole {  
+  
+
+  .newTeam {
+    padding: 0;
+    font-weight: normal;
+    background: none;
+    color: $light-blue;
+    cursor: pointer;
+
+    &:hover {
+      background: none;
+      color: $light-blue;
+    }
+  }
+}
