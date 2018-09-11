@@ -30,10 +30,10 @@ const ProjectsItem = ( props ) => {
           </div>
         </div>
       </Table.Cell>
-      <Table.Cell>{ item.visibility }</Table.Cell>
-      <Table.Cell>{ moment( item.dateCreated ).format( 'MMMM DD, YYYY' ) }</Table.Cell>
-      <Table.Cell>{ item.author }</Table.Cell>
-      <Table.Cell>{ item.owner }</Table.Cell>
+      <Table.Cell><span className="mobileLabel">Visibility: </span>{ item.visibility }</Table.Cell>
+      <Table.Cell><span className="mobileLabel">Date Created: </span>{ moment( item.dateCreated ).format( 'MMMM DD, YYYY' ) }</Table.Cell>
+      <Table.Cell><span className="mobileLabel">Author: </span>{ item.author }</Table.Cell>
+      <Table.Cell><span className="mobileLabel">Owner: </span>{ item.owner }</Table.Cell>
     </Table.Row>
   );
 };

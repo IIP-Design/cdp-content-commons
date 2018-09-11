@@ -12,4 +12,8 @@
     background: $blue;
     color: #fff;
   }
+  
+  .ui.sortable.table thead th.sorted:after {
+    position: absolute;
+  }
 }

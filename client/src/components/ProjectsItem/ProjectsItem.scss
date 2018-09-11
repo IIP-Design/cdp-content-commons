@@ -1,3 +1,5 @@
+@import "assets/styles/colors.scss";
+
 .projects_item {
   .projImage {
     position: relative;
@@ -11,18 +13,40 @@
     @media screen and (max-width: 767px) {
       min-height: 195px;
       height: 100%;
+      min-width: 100%;
     }
+  }
+
+  h3 {
+    color: $blue;
   }
 
   .projDetails {
     display: inline-block;
     vertical-align: top;
     margin-left: 1em;
+    @media screen and (max-width: 767px) {
+      margin-left: 0;
+    }
   }
 
   .metaicon {
     position: absolute;
     right: 5px;
     bottom: 10px;
+  }
+
+  .mobileLabel {
+    display: none;
+    font-weight: bold;
+    @media screen and (max-width: 767px) {
+      display: contents;
+    }
+  }
+}
+
+.ui.table:not(.unstackable) tr.projects_item > td {
+  @media only screen and (max-width: 767px) {
+    padding: 0.25em 0.75em 0 !important;
   }
 }

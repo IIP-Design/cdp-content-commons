@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import sortBy from 'lodash/sortBy';
 import { Table } from 'semantic-ui-react';
 import ProjectsItem from 'components/ProjectsItem';
 import './ProjectsTable.css';
@@ -22,9 +22,9 @@ const headers = [
 /* eslint-disable react/prefer-stateless-function */
 class ProjectsTable extends React.PureComponent {
   state = {
-    column: null,
-    data: _.sortBy( this.props.data, 'dateCreated' ).reverse(),
-    direction: null
+    column: 'dateCreated',
+    data: sortBy( this.props.data, 'dateCreated' ).reverse(),
+    direction: 'descending'
   }
 
   handleSort = clickedColumn => () => {
@@ -33,7 +33,7 @@ class ProjectsTable extends React.PureComponent {
     if ( column !== clickedColumn ) {
       this.setState( {
         column: clickedColumn,
-        data: _.sortBy( data, [clickedColumn] ),
+        data: sortBy( data, [clickedColumn] ),
         direction: 'ascending'
       } );
 
