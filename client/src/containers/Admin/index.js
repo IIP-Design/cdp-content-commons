@@ -14,23 +14,19 @@ import './Admin.css';
 // import LandingPage from 'components/Pages/LandingPage';
 import Dashboard from './Dashboard/Loadable';
 import PageUpload from './PageUpload/Loadable';
+import ReviewProject from '../Project/ReviewProject';
 
 /* eslint-disable react/prefer-stateless-function */
 class Admin extends PureComponent {
   render() {
     return (
       <div className="admin">
-        <Helmet>
-          <title>Admin</title>
-          <meta name="description" content="Adminstrative area for content authoring" />
-        </Helmet>
-        <div className="admin_wrapper">
-          <Switch>
-            <Route exact path="/admin/dashboard" component={ Dashboard } />
-            <Route path="/admin/upload" component={ PageUpload } />
-            <Redirect to="/" />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/admin/dashboard" component={ Dashboard } />
+          <Route path="/admin/upload" component={ PageUpload } />
+          <Route to="/admin/review-project" component={ ReviewProject } />
+          <Redirect to="/" />
+        </Switch>
       </div>
     );
   }
