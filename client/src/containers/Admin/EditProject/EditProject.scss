@@ -1,3 +1,5 @@
+@import "../../../assets/styles/colors.scss";
+
 .edit-project {
 
   > .full-bleed {
@@ -12,13 +14,13 @@
 
   .edit-project__form--support-files {
     .btn--edit {
-      color: #0071bc !important;
+      color: $light-blue !important;
       box-shadow: none;
 
       &:active,
       &:hover,
       &:focus {
-        color: #0071bc !important;
+        color: $light-blue !important;
         box-shadow: none;
       }
     }
@@ -59,11 +61,11 @@
 
   &__status {
     padding: 2rem;
-    background-color: #02bfe7;
+    background-color: $bright-blue;
   }
 
   &__content {
-    border: 3px solid #02bfe7;
+    border: 3px solid $bright-blue;
     padding: 2rem;
   }
 
