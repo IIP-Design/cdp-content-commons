@@ -14,6 +14,7 @@ import './Admin.css';
 // import LandingPage from 'components/Pages/LandingPage';
 import Dashboard from './Dashboard/Loadable';
 import PageUpload from './PageUpload/Loadable';
+import EditProject from './EditProject/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 class Admin extends PureComponent {
@@ -28,6 +29,7 @@ class Admin extends PureComponent {
           <Switch>
             <Route exact path="/admin/dashboard" component={ Dashboard } />
             <Route path="/admin/upload" component={ PageUpload } />
+            <Route path="/admin/edit-project" component={ EditProject } />
             <Redirect to="/" />
           </Switch>
         </div>

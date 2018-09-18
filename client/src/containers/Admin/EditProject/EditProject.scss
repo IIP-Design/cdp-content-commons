@@ -1,0 +1,135 @@
+.edit-project {
+
+  > .full-bleed {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  .edit-project__form--support-files {
+    .btn--edit {
+      color: #0071bc !important;
+      box-shadow: none;
+
+      &:active,
+      &:hover,
+      &:focus {
+        color: #0071bc !important;
+        box-shadow: none;
+      }
+    }
+
+    i.small.icon {
+      margin-left: 1rem;
+      font-size: 1rem;
+    }
+  }
+  
+  .ui.basic.button.edit-project__btn--delete {
+    box-shadow: none;
+
+    &:active,
+    &:hover,
+    &:focus {
+      box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.35) inset, 0px 0px 0px 0px rgba(34, 36, 38, 0.15) inset;
+    }
+  }
+
+  .msg--required {
+    display: inline-block;
+    margin-left: 0.5rem;
+    color: #cd2026;
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  &__page-header {
+    @media (min-width: 720px) {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+    }
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  &__status {
+    padding: 2rem;
+    background-color: #02bfe7;
+  }
+
+  &__content {
+    border: 3px solid #02bfe7;
+    padding: 2rem;
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+
+    &--project-data {
+      grid-column: 1 / span 3;
+
+      @media (min-width: 1080px) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 2rem;
+        grid-column: 1 / span 2;
+      }
+
+      > .heading {
+        grid-row: 1;
+        @media (min-width: 1080px) {
+          margin-bottom: 0;
+        }
+      }
+
+      > .field-group {
+        grid-row: 2;
+        margin-bottom: 1rem;
+      }
+
+      .video-author-owner {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1rem;
+      }
+    }
+
+    &--support-files {
+      grid-column: 1 / span 3;
+      @media (min-width: 660px) {
+        grid-column: 1 / span 2;
+      }
+      @media (min-width: 1080px) {
+        grid-column: 3;
+      }
+    }
+
+    &--save {
+      grid-column: 1 / span 2;
+      @media (min-width: 980px) {
+        grid-column: 1;
+      }
+    }
+  }
+
+  &__additional-videos {
+    padding: 2rem 0;
+
+    .thumbnail {
+      height: auto;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .rtl {
+      text-align: right;
+    }
+  }
+}
