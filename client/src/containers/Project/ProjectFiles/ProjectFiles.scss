@@ -1,0 +1,31 @@
+@import "../../../assets/styles/colors.scss";
+
+.project_files {
+
+  &_headline {
+    position: relative;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-right: -1rem;
+    margin-left: -1rem;
+
+    &:after,
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;  
+      height: 2px;
+      width: 100%;
+      background-color: $light-grey;
+    }
+
+    &:after {
+      bottom: 0;
+    }
+
+    &:before {
+      top: 0;
+    }
+  }
+}

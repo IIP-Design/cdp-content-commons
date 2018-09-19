@@ -14,6 +14,19 @@
     .label {
       font-weight: bold;
     }
+
+    .title {
+      font-weight: normal;
+    }
+
+    &--publish {
+      padding-top: 1em;
+      text-align: center;
+
+      h3 {
+        padding-bottom: 1em;
+      }
+    }
   }
 
 
@@ -27,137 +40,7 @@
       width: 100%;
       height: 2px;
       background-color: $light-grey;
-    }
-  }
-
-
-  .project-data {
-
-    &_info {
-      
-      :after {
-        content: "";
-        position: absolute;
-        top: 2em;
-        left: 0;
-        width: 100%;
-        height: 85%;
-        border-right: 1px solid #ccc;
-      }
-    }
-
-    &_meta {
-
-      p {
-        line-height: 1.5285em;
-      }
-    }
-
-    &_taxonomy {
-      
-      p {
-        line-height: 1.5285em;
-      }
-    }
-
-    &_description {
-      
-      p:first-child {
-        margin-bottom: 1em;
-      }
-    }
-
-    &_support-files {
-      box-shadow: none !important;
-
-      p {
-        line-height: 1.5285em; 
-      }
-
-      .thumbnails {
-
-        &_img {
-          width: 100%;
-        }
-
-        .checkbox {
-          margin-top: 1em;
-        }
-      }
-    } 
-  }
-
-  .project_files {
-
-    &_headline {
-      position: relative;
-      padding-left: 1rem;
-      padding-bottom: 1rem;
-      margin-right: -1rem;
-      margin-left: -1rem;
-
-      &:after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;  
-        height: 2px;
-        width: 100%;
-        background-color: $light-grey;
-      }
-    }
-
-    .project_file {
-      position: relative;
-      @media screen and (min-width: 768px) {
-        padding-bottom: 2em;
-      }
-
-      &:after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;  
-        height: 2px;
-        width: 100%;
-        background-color: $light-grey;
-      } 
-
-      &_header {
-        padding-bottom: 0;
-
-        .title {
-          font-weight: normal;
-        }
-      }
-
-      &_contents {
-        @media screen and (min-width: 768px) {
-          padding-top: 0;
-        }        
-      }
-
-      &_edit {
-        text-align: right;
-      }
-
-      .file_meta {
-        padding-right: 0;
-
-        img {
-          width: 100%;
-          margin-bottom: 0.5em;
-        }        
-      }
-
-      .file_info {
-
-        .public_description {
-          margin: 1em 0;
-        }
-      }
-    }
-
+    }    
   }
 
 

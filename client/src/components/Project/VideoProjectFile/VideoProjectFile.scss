@@ -1,0 +1,48 @@
+ @import "../../../assets/styles/colors.scss";
+ 
+.project_file {
+  position: relative;
+  @media screen and (min-width: 768px) {
+    padding-bottom: 2em;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;  
+    height: 2px;
+    width: 100%;
+    background-color: $light-grey;
+  } 
+
+  &_header {
+    padding-bottom: 0;
+  }
+
+  &_contents {
+    @media screen and (min-width: 768px) {
+      padding-top: 0;
+    }        
+  }
+
+  &_edit {
+    text-align: right;
+  }
+
+  .file_meta {
+    padding-right: 0;
+
+    img {
+      width: 100%;
+      margin-bottom: 0.5em;
+    }        
+  }
+
+  .file_info {
+
+    .public_description {
+      margin: 1em 0;
+    }
+  }
+}
