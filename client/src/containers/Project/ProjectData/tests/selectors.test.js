@@ -1,7 +1,0 @@
-// import { selectProjectData } from '../selectors';
-
-describe( 'selectProjectData', () => {
-  it( 'Expect to have unit tests specified', () => {
-    expect( true ).toEqual( false );
-  } );
-} );

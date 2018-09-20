@@ -9,10 +9,12 @@ import authReducer from 'containers/Auth/reducer';
 import recentsReducer from 'containers/Recents/reducer';
 
 // admin reducers
+import videoReviewProjectReducer from 'containers/Project/ReviewProject/VideoReviewProject/reducer';
 
 export default combineReducers( {
   // search: searchReducer,
   global: globalReducer,
   auth: authReducer,
-  recents: recentsReducer
+  recents: recentsReducer,
+  videoReviewProject: videoReviewProjectReducer
 } );
