@@ -1,7 +1,7 @@
- @import "../../../../../assets/styles/colors.scss";
+@import "../../../../assets/styles/colors.scss";
 
 
- .project_files {
+.project_files {
 
   &_headline {
     position: relative;
@@ -32,9 +32,10 @@
 }
 
  
-.project_file {
-  position: relative;
-  @media screen and (min-width: 768px) {
+.review-project .project_file {
+  position: relative;  
+  margin-top: 1em;
+  @media screen and (min-width: 768px) {    
     padding-bottom: 2em;
   }
 
@@ -49,12 +50,19 @@
   } 
 
   &_header {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
+
+    &.rtl {
+
+      h3 {
+        direction: rtl;
+      }      
+    }
   }
 
   &_contents {
     @media screen and (min-width: 768px) {
-      padding-top: 0;
+      padding-top: 0 !important;
     }        
   }
 
@@ -73,8 +81,24 @@
 
   .file_info {
 
-    .public_description {
+    .public_description,
+    .additional_keywords {
       margin: 1em 0;
     }
+
+    .public_description {
+
+      span {
+        display: block;
+      }
+
+      &.rtl {
+
+        span:last-child {
+          direction: rtl;
+        }        
+      }
+    }    
   }
+
 }

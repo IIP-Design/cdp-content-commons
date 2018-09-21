@@ -5,8 +5,6 @@
  */
 import React, { PureComponent } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-
 import './Admin.css';
 
 // Could redirect to / after login but reusing LandingPage for now

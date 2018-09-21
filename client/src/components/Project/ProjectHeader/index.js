@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { Grid, Button, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Grid, Icon } from 'semantic-ui-react';
 import './ProjectHeader.css';
 
 const ProjectHeader = ( props ) => {
@@ -32,6 +32,9 @@ const ProjectHeader = ( props ) => {
   );
 }
 
-ProjectHeader.propTypes = {};
+ProjectHeader.propTypes = {
+  text: PropTypes.string,
+  icon: PropTypes.string,
+};
 
 export default ProjectHeader;

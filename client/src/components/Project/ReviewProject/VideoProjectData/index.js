@@ -3,20 +3,14 @@
  * VideoProjectData
  *
  */
-import React from 'react';
-// import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import * as actions from './actions';
-import makeSelectVideoProjectData from './selectors';
 
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import './VideoProjectData.css';
 
 const VideoProjectData = ( props ) => {
   const { project_data } = props;
-  console.log(project_data);
-  
   const {
     video_title,
     author,
@@ -59,19 +53,12 @@ const VideoProjectData = ( props ) => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </section>
+    </section>  
   );
 }
 
 VideoProjectData.propTypes = {
+  project_data: PropTypes.object  
 };
 
-// const mapStateToProps = ( state, props ) => createStructuredSelector( {
-//   videoprojectdata: makeSelectVideoProjectData()
-// } );
-
-const mapStateToProps = ( { videoReviewProject } ) => ( {
-  project_data: videoReviewProject.project_data 
-} );
-
-export default connect( mapStateToProps, actions )( VideoProjectData );
+export default VideoProjectData;

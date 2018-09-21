@@ -4,53 +4,66 @@
  *
  */
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectVideoReviewProject from './selectors';
+import { selectDisableRightClick, selectVideoReviewProject } from './selectors';
 import Page from 'components/Page';
 import Breadcrumbs from 'components/Breadcrumbs';
 import { Button } from 'semantic-ui-react';
+
 import ProjectHeader from 'components/Project/ProjectHeader';
-import VideoProjectData from './VideoProjectData';
-import VideoSupportFiles from './VideoSupportFiles';
-import VideoProjectFiles from './VideoProjectFiles';
+import VideoProjectData from 'components/Project/ReviewProject/VideoProjectData';
+import VideoSupportFiles from 'components/Project/ReviewProject/VideoSupportFiles';
+import VideoProjectFiles from 'components/Project/ReviewProject/VideoProjectFiles';
 
 import './VideoReviewProject.css';
 
-const VideoReviewProject = ( props ) => {
-  return (
-    <Page title="Review Project" description="Review content project">
-      <Breadcrumbs />
-      <div className="review-project">
-        <ProjectHeader icon="video camera" text="Project Details - Review">
-            <Button>Delete Project</Button>
+class VideoReviewProject extends React.PureComponent {
+  toggleDisableRightClick = () => {
+    this.props.toggleDisableRightClick();
+  }
+
+  render() {
+    const { videoReviewProject, disableRightClick } = this.props;
+
+    return (
+      <Page title="Review Project" description="Review content project">
+        <Breadcrumbs />
+        <div className="review-project">
+          <ProjectHeader icon="video camera" text="Project Details - Review">
+              <Button>Delete Project</Button>
+              <Button>Edit</Button>
+              <Button>Preview Project</Button>
+              <Button>Publish</Button>
+          </ProjectHeader>
+          <VideoProjectData project_data={ videoReviewProject.project_data } />
+          <VideoSupportFiles
+            support_files={ videoReviewProject.support_files }
+            disableRightClick={ disableRightClick }
+            toggleDisableRightClick={ this.toggleDisableRightClick }
+          />
+          <VideoProjectFiles videos={ videoReviewProject.videos } />
+          <section className="section section--publish">
+            <h3 className="title">Your project looks great! Are you ready to Publish?</h3>
             <Button>Edit</Button>
-            <Button>Preview Project</Button>
             <Button>Publish</Button>
-        </ProjectHeader>
-        
-        <VideoProjectData />
-        <VideoSupportFiles />
-        <VideoProjectFiles />
-
-        <section className="section section--publish">
-          <h3 className="title">Your project looks great! Are you ready to Publish?</h3>
-          <Button>Edit</Button>
-          <Button>Publish</Button>
-        </section>
-
-      </div>
-    </Page>
-  );
+          </section>
+        </div>
+      </Page>
+    );
+  }
 }
 
 VideoReviewProject.propTypes = {
+  videoReviewProject: PropTypes.object
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {
-  videoreviewproject: makeSelectVideoReviewProject()
+  videoReviewProject: selectVideoReviewProject,
+  disableRightClick: selectDisableRightClick
 } );
 
 export default connect( mapStateToProps, actions )( VideoReviewProject );
