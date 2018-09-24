@@ -15,9 +15,10 @@ export const defaultAction = () => {
   };
 }
 
-export const toggleDisableRightClick = () => {
+export const toggleDisableRightClick = ( videoID ) => {
   return {
-    type: TOGGLE_DISABLE_RIGHT_CLICK
+    type: TOGGLE_DISABLE_RIGHT_CLICK,
+    payload: videoID
   };
 }
 

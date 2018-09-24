@@ -12,6 +12,7 @@ import './Admin.css';
 // import LandingPage from 'components/Pages/LandingPage';
 import Dashboard from './Dashboard/Loadable';
 import PageUpload from './PageUpload/Loadable';
+import VideoEditProject from '../Project/EditProject/VideoEditProject';
 import VideoReviewProject from '../Project/ReviewProject/VideoReviewProject';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -22,7 +23,8 @@ class Admin extends PureComponent {
         <Switch>
           <Route exact path="/admin/dashboard" component={ Dashboard } />
           <Route path="/admin/upload" component={ PageUpload } />
-          <Route to="/admin/video/:video-title/review" component={ VideoReviewProject } />
+          <Route path="/admin/video/:videoID/review" component={ VideoReviewProject } />
+          <Route path="/admin/video/:videoID/edit" component={ VideoEditProject } />
           <Redirect to="/" />
         </Switch>
       </div>

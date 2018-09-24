@@ -3,12 +3,17 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the videoReviewProject state
  */
-const selectVideoReviewProject = state => state.videoReviewProject;
+const selectVideoReviewProject = ( state, props ) => {
+  return state.videoReviewProject.filter( project => project.project_id === props.match.params.videoID )[0];  
+};
 
 /**
  * Other specific selectors
  */
- const selectDisableRightClick = state => state.videoReviewProject.disable_right_click;
+const selectDisableRightClick = ( state, props ) => {
+  const selectProject = state.videoReviewProject.filter( project => project.project_id === props.match.params.videoID )[0];
+  return selectProject.disable_right_click;
+};
 
 /**
  * Default selector used by VideoReviewProject

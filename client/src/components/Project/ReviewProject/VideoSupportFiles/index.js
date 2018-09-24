@@ -53,13 +53,11 @@ class VideoSupportFiles extends React.Component {
                         ) )
                       }
                     </Grid>
-                    
                     <Checkbox
                       label="Disable right-click to protect your images"
                       checked={ disableRightClick }
                       onClick={ toggleDisableRightClick }
                     />
-
                   </section>
                 </Grid.Column>
                 <Grid.Column mobile={ 16 } computer={ 8 }>
