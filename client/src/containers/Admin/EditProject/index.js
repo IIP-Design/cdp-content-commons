@@ -222,7 +222,15 @@ class EditProject extends React.PureComponent {
         <section className="edit-project">
           <Breadcrumbs />
           <header className="edit-project__page-header">
-            <h1 className="edit-project__page-heading">Edit Video Project</h1>
+            <h1 className="edit-project__page-heading">
+              <Icon
+                size="tiny"
+                name="video camera"
+                circular
+                inverted
+              />
+              Project Details
+            </h1>
 
             <div className="edit-project__btn-group">
               <Button

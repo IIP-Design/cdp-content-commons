@@ -12,6 +12,15 @@
     text-transform: uppercase;
   }
 
+  &__page-heading {
+    display: flex;
+    align-items: center;
+
+    > i.inverted.circular.icon {
+      margin-right: 1rem;
+    }
+  }
+
   .edit-project__form--support-files {
     .btn--edit {
       color: $light-blue !important;
