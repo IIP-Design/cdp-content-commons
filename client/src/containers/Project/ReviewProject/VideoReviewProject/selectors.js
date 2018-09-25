@@ -4,15 +4,16 @@ import { createSelector } from 'reselect';
  * Direct selector to the videoReviewProject state
  */
 const selectVideoReviewProject = ( state, props ) => {
-  return state.videoReviewProject.filter( project => project.project_id === props.match.params.videoID )[0];  
+  const selectProject = state.videoReviewProject.filter( project => project.project_id === props.match.params.videoID );
+  return selectProject.length > 0 ? selectProject[0] : null;
 };
 
 /**
  * Other specific selectors
  */
 const selectDisableRightClick = ( state, props ) => {
-  const selectProject = state.videoReviewProject.filter( project => project.project_id === props.match.params.videoID )[0];
-  return selectProject.disable_right_click;
+  const selectProject = state.videoReviewProject.filter( project => project.project_id === props.match.params.videoID );
+  return selectProject.length > 0 ? selectProject[0].disable_right_click : null;
 };
 
 /**

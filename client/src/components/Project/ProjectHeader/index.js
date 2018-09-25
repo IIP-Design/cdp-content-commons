@@ -23,7 +23,7 @@ const ProjectHeader = ( props ) => {
             </h2>
           </Grid.Column>
           {/* Buttons */}
-          <Grid.Column mobile={ 16 } computer={ 8 }>
+          <Grid.Column className="project_buttons" mobile={ 16 } computer={ 8 }>
             { props.children }
           </Grid.Column>
         </Grid.Row>

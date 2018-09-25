@@ -27,7 +27,7 @@
         padding-bottom: 1em;
       }
     }
-  }
+  }  
 
 
   .divided.grid {
@@ -44,4 +44,83 @@
   }
 
 
+  .project_buttons {
+    @media screen and (max-width: 505px) {
+      display: flex !important;
+      justify-content: space-between;
+      flex-wrap: wrap;      
+    }
+
+    .button_column_wrapper {
+      display: inline;
+      @media screen and (max-width: 505px) {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        &:first-child {
+          margin-bottom: 1em;
+        }
+      }
+    }
+
+    .button_delete_wrapper {
+      display: inline;
+    }
+
+  }
+
+  .project_button {
+    border: 2px solid $matisse-blue;
+    color: $matisse-blue;
+    background-color: #fff;
+    box-shadow: none !important;    
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+      background-color: $matisse-blue;
+
+      > a {
+        color: #fff;
+      }
+    }
+
+    > a {
+      color: $matisse-blue;
+    }
+
+    &--publish {
+      border: 2px solid $green;
+      background-color: $green;
+      color: #fff;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: $matisse-blue;
+      }
+    }
+
+    &--delete {
+      border: 2px solid #fff;
+      font-weight: normal;
+      color: $grey;
+      @media screen and (max-width: 505px) {
+        border-color: $grey;
+      }
+
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: $grey;
+        background-color: $grey;
+        color: #fff;
+      }      
+    }
+  }
 }
+
+
+

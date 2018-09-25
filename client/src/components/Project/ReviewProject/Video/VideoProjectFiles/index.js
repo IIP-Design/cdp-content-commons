@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Grid, Button } from 'semantic-ui-react';
 import './VideoProjectFiles.css';
 
@@ -27,7 +28,9 @@ const VideoProjectFiles = ( props ) => {
               <h3 className="title">{ video.title }</h3>
             </Grid.Column>
             <Grid.Column floated="right" mobile={ 8 } className="project_file_edit">
-              <Button>Edit</Button>
+              <Button className="project_button project_button--edit">
+                <Link to="#">Edit</Link>
+              </Button>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row className="project_file_contents">
