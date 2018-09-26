@@ -12,8 +12,8 @@ import './Admin.css';
 // import LandingPage from 'components/Pages/LandingPage';
 import Dashboard from './Dashboard/Loadable';
 import PageUpload from './PageUpload/Loadable';
-import VideoEditProject from '../Project/EditProject/VideoEditProject';
-import VideoReviewProject from '../Project/ReviewProject/VideoReviewProject';
+import VideoEditProject from '../Project/EditProject/VideoEditProject/Loadable';
+import VideoReviewProject from '../Project/ReviewProject/VideoReviewProject/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 class Admin extends PureComponent {
