@@ -255,19 +255,25 @@ class EditProject extends React.PureComponent {
             </div>
           </header>
 
-          <div className="edit-project__status full-bleed">
+          <div className="edit-project__status">
             <p><strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.</p>
           </div>
 
-          <div className="edit-project__content full-bleed">
-            <Form className="edit-project__form" onSubmit={ this.handleSubmit }>
-              <section className="edit-project__form--project-data">
+          <div className="edit-project__content">
+            <Form className="edit-project__form project-data" onSubmit={ this.handleSubmit }>
+              <Grid stackable>
+                <Grid.Row>
+                  <Grid.Column width="16">
                 <h2 className="heading">
                   <span className="uppercase">Project Data</span>{ ' ' }
                   <small className="msg--required">Required Fields *</small>
                 </h2>
+                  </Grid.Column>
+                </Grid.Row>
 
-                <div className="field-group">
+                <Grid.Row>
+                  <Grid.Column mobile={ 16 } computer={ 8 }>
+                    <Form.Group widths="equal">
                   <Form.Field
                     id="video-title"
                     control={ Input }
@@ -305,10 +311,9 @@ class EditProject extends React.PureComponent {
                     options={ privacyOptions }
                     required
                   />
-                </div>
+                    </Form.Group>
 
-                <div className="field-group">
-                  <div className="video-author-owner">
+                    <Form.Group widths="equal">
                     <Form.Field
                       id="author"
                       control={ Input }
@@ -322,14 +327,43 @@ class EditProject extends React.PureComponent {
                       label="Owner"
                       placeholder="IIP Video Production"
                     />
-                  </div>
+                    </Form.Group>
 
+                    <Form.Group widths="equal">
+                      <Form.Dropdown
+                        id="video-categories"
+                        control={ Dropdown }
+                        label="Categories - select up to 2"
+                        required
+                        placeholder="-"
+                        options={ categories }
+                        fluid
+                        multiple
+                        search
+                        selection
+                        closeOnBlur
+                        closeOnChange
+                      />
+
+                      <div className="field">
+                        <Form.Field
+                          id="video-tags"
+                          control={ Input }
+                          label="Tags"
+                        />
+                        <p>Enter keywords separated by commas.</p>
+                  </div>
+                    </Form.Group>
+                  </Grid.Column>
+
+                  <Grid.Column mobile={ 16 } computer={ 8 }>
                   <Form.Field
                     id="public-description"
                     control={ TextArea }
                     label="Public Description"
                   />
 
+                    <div className="field">
                   <Form.Field
                     id="internal-description"
                     control={ TextArea }
@@ -337,18 +371,40 @@ class EditProject extends React.PureComponent {
                   />
                   <p>Reason for this project as it relates to Department objectives.</p>
                 </div>
-              </section>
+                  </Grid.Column>
+                </Grid.Row>
 
-              <section className="edit-project__form--support-files">
+                <Grid.Row>
+                  <Grid.Column width="16">
+                    <Button
+                      className="edit-project__form--save"
+                      content="Save draft & upload files to this project"
+                    />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Form>
+          </div>
+
+          <div className="edit-project__support-files">
+            <Grid stackable>
+              <Grid.Row>
+                <Grid.Column width={ 16 }>
                 <h2 className="heading uppercase">Support Files</h2>
+                </Grid.Column>
+              </Grid.Row>
 
+              <Grid.Row columns={ 3 } divided>
+                <Grid.Column>
                 <SupportFileTypeList
                   headingTxt="SRT Files"
                   fileType="srt"
                   popupMsg="Some info about what SRT files are."
                   data={ langs }
                 />
+                </Grid.Column>
 
+                <Grid.Column>
                 <SupportFileTypeList
                   headingTxt="Thumbnail Files"
                   fileType="thumbnail"
@@ -362,14 +418,18 @@ class EditProject extends React.PureComponent {
                   size="small"
                   iconType="info circle"
                 />
-              </section>
+                </Grid.Column>
 
-              <Button
-                className="edit-project__form--save"
-                content="Save draft & upload files to this project"
-                color="blue"
+                <Grid.Column>
+                  <SupportFileTypeList
+                    headingTxt="Additional Files"
+                    fileType="other"
+                    popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
+                    data={ langs }
               />
-            </Form>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </div>
 
           <div className="edit-project__additional-videos">
