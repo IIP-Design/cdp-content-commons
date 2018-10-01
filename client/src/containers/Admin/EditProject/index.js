@@ -11,6 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditProject from './selectors';
 
+import Page from 'components/Page';
 import Breadcrumbs from 'components/Breadcrumbs';
 import {
   Button,
@@ -213,13 +214,7 @@ class EditProject extends React.PureComponent {
   render() {
     const langs = Object.keys( supportFiles );
     return (
-      <Fragment>
-        <Helmet>
-          <title>Edit Video Project</title>
-          <meta name="description" content="Page for editing a video project" />
-        </Helmet>
-
-        <section className="edit-project">
+      <Page title="Edit Project" description="Edit content project">
           <Breadcrumbs />
           <header className="edit-project__page-header">
             <h1 className="edit-project__page-heading">
@@ -445,8 +440,8 @@ class EditProject extends React.PureComponent {
               />
             </div>
           </div>
-        </section>
-      </Fragment>
+        </div>
+      </Page>
     );
   }
 }
