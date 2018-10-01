@@ -293,7 +293,6 @@ class EditProject extends React.PureComponent {
                     control={ Input }
                     label="Tags"
                   />
-                  <p>Enter keywords separated by commas. No limits on tags.</p>
 
                   <Form.Field
                     id="privacy-setting"
