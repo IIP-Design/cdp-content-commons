@@ -429,7 +429,6 @@ class EditProject extends React.PureComponent {
               <Button
                 className="edit-project__add-more"
                 content="+ Add more files to this project"
-                color="blue"
                 basic
                 onClick={ this.handleAddMoreFiles }
               />
