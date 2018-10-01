@@ -12,10 +12,12 @@ import makeSelectEditProject from './selectors';
 
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
+import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import Breadcrumbs from 'components/Breadcrumbs';
 import {
   Button,
   Checkbox,
+  Confirm,
   Dropdown,
   Form,
   Grid,
@@ -198,8 +200,20 @@ SupportFileTypeList.propTypes = {
 
 /* eslint-disable react/prefer-stateless-function */
 class EditProject extends React.PureComponent {
-  handleDelete = () => {
-    console.log( 'Delete Project' );
+  state = {
+    deleteConfirmOpen: false
+  }
+
+  displayConfirmDelete = () => {
+    this.setState( { deleteConfirmOpen: true } );
+  }
+
+  handleDeleteConfirm = () => {
+    this.setState( { deleteConfirmOpen: false } );
+  }
+
+  handleDeleteCancel = () => {
+    this.setState( { deleteConfirmOpen: false } );
   }
 
   handlePreview = () => {
@@ -230,7 +244,16 @@ class EditProject extends React.PureComponent {
                 className="edit-project__btn--delete"
                 content="Delete Project"
                 basic
-                onClick={ this.handleDelete }
+                onClick={ this.displayConfirmDelete }
+              />
+              <Confirm
+                className="delete"
+                open={ this.state.deleteConfirmOpen }
+                content={ <VideoConfirmDelete /> }
+                onCancel={ this.handleDeleteCancel }
+                onConfirm={ this.handleDeleteConfirm }
+                cancelButton="No, take me back"
+                confirmButton="Yes, delete forever"
               />
               <Button
                 className="edit-project__btn--preview"
