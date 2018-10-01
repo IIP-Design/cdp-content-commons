@@ -11,6 +11,12 @@
     text-transform: uppercase;
   }
 
+  .ui.form {
+    textarea {
+      font-family: "Source Sans Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    }
+  }
+
   .ui.button {
     box-shadow: none !important;
 
@@ -90,12 +96,11 @@
   }
 
   &__content {
-    border: 3px solid $bright-blue;
     padding: 1.75em;
   }
 
   &__support-files {
-    border-bottom: 1px solid $light-grey;
+    border-top: 1px solid $light-grey;
     padding: 1.75em;
 
     i.small.icon {
@@ -105,6 +110,7 @@
   }
 
   &__additional-videos {
+    border-top: 1px solid $light-grey;
     padding: 1.75em;
 
     .thumbnail {
