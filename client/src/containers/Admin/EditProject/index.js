@@ -12,6 +12,7 @@ import * as actions from './actions';
 import makeSelectEditProject from './selectors';
 
 import Page from 'components/Page';
+import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
 import {
   Button,
@@ -223,18 +224,9 @@ class EditProject extends React.PureComponent {
     return (
       <Page title="Edit Project" description="Edit content project">
           <Breadcrumbs />
-          <header className="edit-project__page-header">
-            <h1 className="edit-project__page-heading">
-              <Icon
-                size="tiny"
-                name="video camera"
-                circular
-                inverted
-              />
-              Project Details
-            </h1>
-
-            <div className="edit-project__btn-group">
+        <div className="edit-project">
+          <div className="edit-project__header">
+            <ProjectHeader icon="video camera" text="Project Details">
               <Button
                 className="edit-project__btn--delete"
                 content="Delete Project"
@@ -252,8 +244,8 @@ class EditProject extends React.PureComponent {
                 content="Final Review"
                 onClick={ this.handleFinalReview }
               />
+            </ProjectHeader>
             </div>
-          </header>
 
           <div className="edit-project__status">
             <p><strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.</p>
