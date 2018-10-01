@@ -428,7 +428,7 @@ class EditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__additional-videos">
-            <AdditionalVideos data={ additionalVideos } headingTxt="Additional Videos in Project" />
+            <AdditionalVideos data={ additionalVideos } headingTxt="Videos in Project" />
 
             <div style={ { marginTop: '3rem' } }>
               <Button
