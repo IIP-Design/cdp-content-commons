@@ -116,11 +116,12 @@
   }
 
   /*** 
-    Results, Video - searchbar  
+    Results, Video, Admin - searchbar  
   ***/
   &--results,
   &--video,
   &--admin {
+
     header {
       @media screen and (max-width: 767px) {
         text-align: left;
@@ -138,7 +139,7 @@
       @media screen and (min-width: 900px) {
         width: 500px;
       }
-    }
+    }    
   }
 
   /*** 

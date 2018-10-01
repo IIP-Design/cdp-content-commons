@@ -5,8 +5,6 @@
  */
 import React, { PureComponent } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-
 import './Admin.css';
 
 // Could redirect to / after login but reusing LandingPage for now
@@ -14,25 +12,21 @@ import './Admin.css';
 // import LandingPage from 'components/Pages/LandingPage';
 import Dashboard from './Dashboard/Loadable';
 import PageUpload from './PageUpload/Loadable';
-import EditProject from './EditProject/Loadable';
+import VideoEditProject from '../Project/EditProject/VideoEditProject/Loadable';
+import VideoReviewProject from '../Project/ReviewProject/VideoReviewProject/Loadable';
 
 /* eslint-disable react/prefer-stateless-function */
 class Admin extends PureComponent {
   render() {
     return (
       <div className="admin">
-        <Helmet>
-          <title>Admin</title>
-          <meta name="description" content="Adminstrative area for content authoring" />
-        </Helmet>
-        <div className="admin_wrapper">
-          <Switch>
-            <Route exact path="/admin/dashboard" component={ Dashboard } />
-            <Route path="/admin/upload" component={ PageUpload } />
-            <Route path="/admin/edit-project" component={ EditProject } />
-            <Redirect to="/" />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/admin/dashboard" component={ Dashboard } />
+          <Route path="/admin/upload" component={ PageUpload } />
+          <Route path="/admin/video/:videoID/review" component={ VideoReviewProject } />
+          <Route path="/admin/video/:videoID/edit" component={ VideoEditProject } />
+          <Redirect to="/" />
+        </Switch>
       </div>
     );
   }

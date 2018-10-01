@@ -1,6 +1,6 @@
 /*
  *
- * EditProject constants
+ * VideoEditProject constants
  *
  */
 

@@ -1,6 +1,6 @@
 /*
  *
- * EditProject actions
+ * VideoEditProject actions
  *
  */
 

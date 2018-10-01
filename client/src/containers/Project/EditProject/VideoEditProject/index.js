@@ -1,6 +1,6 @@
 /**
  *
- * EditProject
+ * VideoEditProject
  *
  */
 import React, { Fragment } from 'react';
@@ -8,7 +8,7 @@ import { array, bool, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
-import makeSelectEditProject from './selectors';
+import makeSelectVideoEditProject from './selectors';
 
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
@@ -30,7 +30,7 @@ import {
   TextArea
 } from 'semantic-ui-react';
 
-import './EditProject.css';
+import './VideoEditProject.css';
 import {
   categoryData,
   privacyOptions,
@@ -199,7 +199,7 @@ SupportFileTypeList.propTypes = {
 
 
 /* eslint-disable react/prefer-stateless-function */
-class EditProject extends React.PureComponent {
+class VideoEditProject extends React.PureComponent {
   state = {
     deleteConfirmOpen: false
   }
@@ -236,7 +236,7 @@ class EditProject extends React.PureComponent {
     const langs = Object.keys( supportFiles );
     return (
       <Page title="Edit Project" description="Edit content project">
-          <Breadcrumbs />
+        <Breadcrumbs />
         <div className="edit-project">
           <div className="edit-project__header">
             <ProjectHeader icon="video camera" text="Project Details">
@@ -267,7 +267,7 @@ class EditProject extends React.PureComponent {
                 onClick={ this.handleFinalReview }
               />
             </ProjectHeader>
-            </div>
+          </div>
 
           <div className="edit-project__status">
             <p><strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.</p>
@@ -278,68 +278,47 @@ class EditProject extends React.PureComponent {
               <Grid stackable>
                 <Grid.Row>
                   <Grid.Column width="16">
-                <h2 className="heading">
-                  <span className="uppercase">Project Data</span>{ ' ' }
-                  <small className="msg--required">Required Fields *</small>
-                </h2>
+                    <h2 className="heading">
+                      <span className="uppercase">Project Data</span>{ ' ' }
+                      <small className="msg--required">Required Fields *</small>
+                    </h2>
                   </Grid.Column>
                 </Grid.Row>
 
                 <Grid.Row>
                   <Grid.Column mobile={ 16 } computer={ 8 }>
                     <Form.Group widths="equal">
-                  <Form.Field
-                    id="video-title"
-                    control={ Input }
-                    label="Video Title"
-                    required
-                    autoFocus="true"
-                  />
+                      <Form.Field
+                        id="video-title"
+                        control={ Input }
+                        label="Video Title"
+                        required
+                        autoFocus="true"
+                      />
 
-                  <Form.Dropdown
-                    id="video-categories"
-                    control={ Dropdown }
-                    label="Categories - select up to 2"
-                    required
-                    placeholder="-"
-                    options={ categories }
-                    fluid
-                    multiple
-                    search
-                    selection
-                    closeOnBlur
-                    closeOnChange
-                  />
-
-                  <Form.Field
-                    id="video-tags"
-                    control={ Input }
-                    label="Tags"
-                  />
-
-                  <Form.Field
-                    id="privacy-setting"
-                    control={ Select }
-                    label="Privacy Setting"
-                    options={ privacyOptions }
-                    required
-                  />
+                      <Form.Field
+                        id="privacy-setting"
+                        control={ Select }
+                        label="Privacy Setting"
+                        options={ privacyOptions }
+                        required
+                      />
                     </Form.Group>
 
                     <Form.Group widths="equal">
-                    <Form.Field
-                      id="author"
-                      control={ Input }
-                      label="Author"
-                      placeholder="Jane Doe"
-                    />
+                      <Form.Field
+                        id="author"
+                        control={ Input }
+                        label="Author"
+                        placeholder="Jane Doe"
+                      />
 
-                    <Form.Field
-                      id="owner"
-                      control={ Input }
-                      label="Owner"
-                      placeholder="IIP Video Production"
-                    />
+                      <Form.Field
+                        id="owner"
+                        control={ Input }
+                        label="Owner"
+                        placeholder="IIP Video Production"
+                      />
                     </Form.Group>
 
                     <Form.Group widths="equal">
@@ -363,27 +342,28 @@ class EditProject extends React.PureComponent {
                           id="video-tags"
                           control={ Input }
                           label="Tags"
+                          name="tags"
                         />
                         <p>Enter keywords separated by commas.</p>
-                  </div>
+                      </div>
                     </Form.Group>
                   </Grid.Column>
 
                   <Grid.Column mobile={ 16 } computer={ 8 }>
-                  <Form.Field
-                    id="public-description"
-                    control={ TextArea }
-                    label="Public Description"
-                  />
+                    <Form.Field
+                      id="public-description"
+                      control={ TextArea }
+                      label="Public Description"
+                    />
 
                     <div className="field">
-                  <Form.Field
-                    id="internal-description"
-                    control={ TextArea }
-                    label="Internal Description"
-                  />
-                  <p>Reason for this project as it relates to Department objectives.</p>
-                </div>
+                      <Form.Field
+                        id="internal-description"
+                        control={ TextArea }
+                        label="Internal Description"
+                      />
+                      <p>Reason for this project as it relates to Department objectives.</p>
+                    </div>
                   </Grid.Column>
                 </Grid.Row>
 
@@ -403,34 +383,34 @@ class EditProject extends React.PureComponent {
             <Grid stackable>
               <Grid.Row>
                 <Grid.Column width={ 16 }>
-                <h2 className="heading uppercase">Support Files</h2>
+                  <h2 className="heading uppercase">Support Files</h2>
                 </Grid.Column>
               </Grid.Row>
 
               <Grid.Row columns={ 3 } divided>
                 <Grid.Column>
-                <SupportFileTypeList
-                  headingTxt="SRT Files"
-                  fileType="srt"
-                  popupMsg="Some info about what SRT files are."
-                  data={ langs }
-                />
+                  <SupportFileTypeList
+                    headingTxt="SRT Files"
+                    fileType="srt"
+                    popupMsg="Some info about what SRT files are."
+                    data={ langs }
+                  />
                 </Grid.Column>
 
                 <Grid.Column>
-                <SupportFileTypeList
-                  headingTxt="Thumbnail Files"
-                  fileType="thumbnail"
-                  popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
-                  data={ langs }
-                />
+                  <SupportFileTypeList
+                    headingTxt="Thumbnail Files"
+                    fileType="thumbnail"
+                    popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
+                    data={ langs }
+                  />
 
-                <Checkbox label="Disable right-click to protect your images" />
-                <IconPopup
-                  message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
-                  size="small"
-                  iconType="info circle"
-                />
+                  <Checkbox label="Disable right-click to protect your images" />
+                  <IconPopup
+                    message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
+                    size="small"
+                    iconType="info circle"
+                  />
                 </Grid.Column>
 
                 <Grid.Column>
@@ -439,7 +419,7 @@ class EditProject extends React.PureComponent {
                     fileType="other"
                     popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
                     data={ langs }
-              />
+                  />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
@@ -463,11 +443,11 @@ class EditProject extends React.PureComponent {
   }
 }
 
-EditProject.propTypes = {
+VideoEditProject.propTypes = {
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {
-  EditProject: makeSelectEditProject()
+  videoeditproject: makeSelectVideoEditProject()
 } );
 
-export default connect( mapStateToProps, actions )( EditProject );
+export default connect( mapStateToProps, actions )( VideoEditProject );

@@ -1,6 +1,6 @@
 /*
  *
- * EditProject reducer
+ * VideoEditProject reducer
  *
  */
 
@@ -9,7 +9,7 @@ import { DEFAULT_ACTION } from './constants';
 
 export const INITIAL_STATE = {};
 
-function EditProjectReducer( state = INITIAL_STATE, action ) {
+function videoEditProjectReducer( state = INITIAL_STATE, action ) {
   switch ( action.type ) {
     case DEFAULT_ACTION:
       return state;
@@ -19,4 +19,4 @@ function EditProjectReducer( state = INITIAL_STATE, action ) {
   }
 }
 
-export default EditProjectReducer;
+export default videoEditProjectReducer;

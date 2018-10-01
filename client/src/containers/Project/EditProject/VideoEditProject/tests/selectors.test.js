@@ -1,6 +1,6 @@
-// import { selectEditProject } from '../selectors';
+// import { selectVideoEditProject } from '../selectors';
 
-describe( 'selectEditProject', () => {
+describe( 'selectVideoEditProject', () => {
   it( 'Expect to have unit tests specified', () => {
     expect( true ).toEqual( false );
   } );
