@@ -1,4 +1,4 @@
-const categories = [
+const categoryData = [
   {
     value: 'about-america',
     text: 'About America'
@@ -123,7 +123,7 @@ const additionalVideos = [
 ];
 
 export {
-  categories,
+  categoryData,
   privacyOptions,
   supportFiles,
   additionalVideos

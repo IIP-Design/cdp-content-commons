@@ -28,7 +28,7 @@ import {
 
 import './EditProject.css';
 import {
-  categories,
+  categoryData,
   privacyOptions,
   supportFiles,
   additionalVideos
@@ -336,7 +336,7 @@ class EditProject extends React.PureComponent {
                         label="Categories - select up to 2"
                         required
                         placeholder="-"
-                        options={ categories }
+                        options={ categoryData }
                         fluid
                         multiple
                         search
