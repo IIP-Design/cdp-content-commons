@@ -83,7 +83,8 @@ const supportFiles = {
   },
   english: {
     srt: 'madeinamerica_english.srt',
-    thumbnail: 'madeinamerica_english.jpg'
+    thumbnail: 'madeinamerica_english.jpg',
+    other: 'madeinamerica_english.mp3'
   },
   french: {
     srt: 'madeinamerica_french.srt',
