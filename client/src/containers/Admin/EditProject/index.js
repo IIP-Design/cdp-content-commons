@@ -244,14 +244,12 @@ class EditProject extends React.PureComponent {
               <Button
                 className="edit-project__btn--preview"
                 content="Preview Project"
-                color="blue"
                 basic
                 onClick={ this.handlePreview }
               />
               <Button
                 className="edit-project__btn--final-review"
                 content="Final Review"
-                color="blue"
                 onClick={ this.handleFinalReview }
               />
             </div>
