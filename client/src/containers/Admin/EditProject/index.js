@@ -42,19 +42,6 @@ import {
  * be placed in their own separate files
  */
 
-const SupportItem = ( { lang, fileType } ) => (
-  <List.Item>
-    <List.Content floated="right">
-      <b style={ { textTransform: 'capitalize' } }>{ lang }</b>
-    </List.Content>
-    <List.Content>{ supportFiles[lang][fileType] }</List.Content>
-  </List.Item>
-);
-SupportItem.propTypes = {
-  lang: string,
-  fileType: string
-};
-
 const IconPopup = ( { message, size, iconType } ) => (
   <Popup
     trigger={ <Icon size={ size } name={ iconType } /> }
@@ -149,6 +136,25 @@ const EditSupportFilesModal = ( { btnContent, className, fileType } ) => {
 EditSupportFilesModal.propTypes = {
   btnContent: string,
   className: string,
+  fileType: string
+};
+
+const SupportItem = ( { lang, fileType } ) => {
+  const content = supportFiles[lang][fileType];
+  if ( content ) {
+    return (
+      <List.Item>
+        <List.Content floated="right">
+          <b style={ { textTransform: 'capitalize' } }>{ lang }</b>
+        </List.Content>
+        <List.Content>{ content }</List.Content>
+      </List.Item>
+    );
+  }
+  return null;
+};
+SupportItem.propTypes = {
+  lang: string,
   fileType: string
 };
 
