@@ -58,22 +58,88 @@ IconPopup.propTypes = {
   iconType: string
 };
 
+const ItemPlaceholder = () => {
+  const placeholderLayout = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    filter: 'blur(2px)'
+  };
+
+  const style1 = {
+    flexBasis: '75%',
+    marginBottom: '0.625em',
+    height: '1em',
+    backgroundColor: '#d6d7d9'
+  };
+
+  const style2 = {
+    flexBasis: '20%',
+    backgroundColor: '#b2b4b8'
+  };
+
+  return (
+    <div style={ placeholderLayout }>
+      <div style={ style1 } />
+      <div style={ { ...style1, ...style2 } } />
+    </div>
+  );
+};
+
+const VideoPlaceholder = ( { layout } ) => {
+  const placeholderStyle = {
+    cursor: 'not-allowed',
+    filter: 'blur(2px)'
+  };
+
+  const style1 = {
+    height: '162px',
+    marginBottom: '0.625em',
+    backgroundColor: '#d6d7d9'
+  };
+
+  const style2 = {
+    height: '1em',
+    width: '85%'
+  };
+
+  const style3 = {
+    height: '0.625em',
+    width: '35%'
+  };
+
+  return (
+    <div style={ { ...layout, ...placeholderStyle } }>
+      <div style={ style1 } />
+      <div style={ { ...style1, ...style2 } } />
+      <div style={ { ...style1, ...style3 } } />
+    </div>
+  );
+};
+VideoPlaceholder.propTypes = {
+  layout: object
+};
+
 const AdditionalVideo = ( {
   title,
   lang,
   ltr,
-  thumbnail
+  thumbnail,
+  isVisible
 } ) => {
   const langStyle = { textTransform: 'capitalize' };
-  const videoStyle = {
+  const layoutStyle = {
     flexBasis: '25%',
     marginRight: '1rem',
     cursor: 'pointer'
   };
 
+  if ( !isVisible ) {
+    return <VideoPlaceholder layout={ layoutStyle } />;
+  }
+
   return (
     <Modal trigger={
-      <article className="video" style={ videoStyle }>
+      <article className="video" style={ layoutStyle }>
         <img
           src={ thumbnail.url }
           alt={ thumbnail.alt }
@@ -94,24 +160,26 @@ AdditionalVideo.propTypes = {
   title: string,
   lang: string,
   ltr: bool,
-  thumbnail: object
+  thumbnail: object,
+  isVisible: bool
 };
 
-const AdditionalVideos = ( { data, headingTxt } ) => {
+const AdditionalVideos = ( { data, headingTxt, hasSaved } ) => {
   const headingStyle = { textTransform: 'uppercase' };
   const layoutStyle = { display: 'flex' };
   return (
     <Fragment>
       <h2 style={ headingStyle }>{ headingTxt }</h2>
       <div className="additional-videos" style={ layoutStyle }>
-        { data.map( video => <AdditionalVideo key={ video.title } { ...video } /> ) }
+        { data.map( video => <AdditionalVideo key={ video.title } { ...video } isVisible={ hasSaved } /> ) }
       </div>
     </Fragment>
   );
 };
 AdditionalVideos.propTypes = {
   data: array,
-  headingTxt: string
+  headingTxt: string,
+  hasSaved: bool
 };
 
 const EditSupportFilesModal = ( { btnContent, className, fileType } ) => {
@@ -141,11 +209,16 @@ EditSupportFilesModal.propTypes = {
   fileType: string
 };
 
-const SupportItem = ( { lang, fileType } ) => {
+const SupportItem = ( { lang, fileType, isVisible } ) => {
+  if ( !isVisible ) {
+    return <ItemPlaceholder />;
+  }
+
   const content = supportFiles[lang][fileType];
+
   if ( content ) {
     return (
-      <List.Item>
+      <List.Item style={ { fontSize: '0.875em' } }>
         <List.Content floated="right">
           <b style={ { textTransform: 'capitalize' } }>{ lang }</b>
         </List.Content>
@@ -157,27 +230,32 @@ const SupportItem = ( { lang, fileType } ) => {
 };
 SupportItem.propTypes = {
   lang: string,
-  fileType: string
+  fileType: string,
+  isVisible: bool
 };
 
 const SupportFileTypeList = ( {
   headingTxt,
   fileType,
   popupMsg,
-  data
+  data,
+  hasSaved
 } ) => (
   <Fragment>
     <h3>{ `${headingTxt} ` }
-      <IconPopup
-        message={ popupMsg }
-        size="small"
-        iconType="info circle"
-      />
-      <EditSupportFilesModal
-        btnContent="Edit"
-        className="btn--edit"
-        fileType={ fileType }
-      />
+      { hasSaved &&
+        <Fragment>
+          <IconPopup
+            message={ popupMsg }
+            size="small"
+            iconType="info circle"
+          />
+          <EditSupportFilesModal
+            btnContent="Edit"
+            className="btn--edit"
+            fileType={ fileType }
+          />
+        </Fragment> }
     </h3>
     <List>
       { data.map( n => (
@@ -185,6 +263,7 @@ const SupportFileTypeList = ( {
           key={ n }
           lang={ n }
           fileType={ fileType }
+          isVisible={ hasSaved }
         />
       ) ) }
     </List>
@@ -194,7 +273,8 @@ SupportFileTypeList.propTypes = {
   headingTxt: string,
   fileType: string,
   popupMsg: string,
-  data: array
+  data: array,
+  hasSaved: bool
 };
 
 
@@ -472,14 +552,14 @@ class VideoEditProject extends React.PureComponent {
                 </Grid.Row>
 
                 { !hasSavedDraft &&
-                <Grid.Row>
-                  <Grid.Column width="16">
-                    <Button
-                      className="edit-project__form--save"
-                      content="Save draft & upload files to this project"
+                  <Grid.Row>
+                    <Grid.Column width="16">
+                      <Button
+                        className="edit-project__form--save"
+                        content="Save draft & upload files to this project"
                         disabled={ !hasRequiredData }
-                    />
-                  </Grid.Column>
+                      />
+                    </Grid.Column>
                   </Grid.Row> }
               </Grid>
             </Form>
@@ -521,11 +601,11 @@ class VideoEditProject extends React.PureComponent {
                         checked={ disableRightClick }
                         onChange={ this.handleChange }
                       />
-                  <IconPopup
-                    message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
-                    size="small"
-                    iconType="info circle"
-                  />
+                      <IconPopup
+                        message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
+                        size="small"
+                        iconType="info circle"
+                      />
                     </Fragment> }
                 </Grid.Column>
 
@@ -550,13 +630,13 @@ class VideoEditProject extends React.PureComponent {
             />
 
             { hasSavedDraft &&
-            <div style={ { marginTop: '3rem' } }>
-              <Button
-                className="edit-project__add-more"
-                content="+ Add more files to this project"
-                basic
-                onClick={ this.handleAddMoreFiles }
-              />
+              <div style={ { marginTop: '3rem' } }>
+                <Button
+                  className="edit-project__add-more"
+                  content="+ Add more files to this project"
+                  basic
+                  onClick={ this.handleAddMoreFiles }
+                />
               </div> }
           </div>
         </div>
