@@ -200,8 +200,26 @@ SupportFileTypeList.propTypes = {
 
 /* eslint-disable react/prefer-stateless-function */
 class VideoEditProject extends React.PureComponent {
+  // use constructor instead?
   state = {
-    deleteConfirmOpen: false
+    deleteConfirmOpen: false,
+    disableRightClick: true,
+    hasRequiredData: false,
+    hasSavedDraft: false,
+    isUploadInProgress: false,
+    isUploadFinished: false,
+
+    /**
+     * Use redux for these?
+     */
+    title: '',
+    privacy: '',
+    author: '',
+    owner: '',
+    categories: [],
+    tags: '',
+    publicDesc: '',
+    internalDesc: ''
   }
 
   displayConfirmDelete = () => {
