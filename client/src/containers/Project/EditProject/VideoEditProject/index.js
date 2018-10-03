@@ -374,6 +374,9 @@ class VideoEditProject extends React.PureComponent {
                         label="Video Title"
                         required
                         autoFocus="true"
+                        name="title"
+                        value={ title }
+                        onChange={ this.handleChange }
                       />
 
                       <Form.Field
@@ -382,6 +385,9 @@ class VideoEditProject extends React.PureComponent {
                         label="Privacy Setting"
                         options={ privacyOptions }
                         required
+                        name="privacy"
+                        value={ privacy }
+                        onChange={ this.handleChange }
                       />
                     </Form.Group>
 
@@ -391,6 +397,9 @@ class VideoEditProject extends React.PureComponent {
                         control={ Input }
                         label="Author"
                         placeholder="Jane Doe"
+                        name="author"
+                        value={ author }
+                        onChange={ this.handleChange }
                       />
 
                       <Form.Field
@@ -398,6 +407,9 @@ class VideoEditProject extends React.PureComponent {
                         control={ Input }
                         label="Owner"
                         placeholder="IIP Video Production"
+                        name="owner"
+                        value={ owner }
+                        onChange={ this.handleChange }
                       />
                     </Form.Group>
 
@@ -415,6 +427,9 @@ class VideoEditProject extends React.PureComponent {
                         selection
                         closeOnBlur
                         closeOnChange
+                        name="categories"
+                        value={ categories }
+                        onChange={ this.handleChange }
                       />
 
                       <div className="field">
@@ -423,6 +438,9 @@ class VideoEditProject extends React.PureComponent {
                           control={ Input }
                           label="Tags"
                           name="tags"
+                          value={ tags }
+                          onChange={ this.handleChange }
+                          style={ { marginBottom: '1em' } }
                         />
                         <p>Enter keywords separated by commas.</p>
                       </div>
@@ -434,6 +452,9 @@ class VideoEditProject extends React.PureComponent {
                       id="public-description"
                       control={ TextArea }
                       label="Public Description"
+                      name="publicDesc"
+                      value={ publicDesc }
+                      onChange={ this.handleChange }
                     />
 
                     <div className="field">
@@ -441,6 +462,9 @@ class VideoEditProject extends React.PureComponent {
                         id="internal-description"
                         control={ TextArea }
                         label="Internal Description"
+                        name="internalDesc"
+                        value={ internalDesc }
+                        onChange={ this.handleChange }
                       />
                       <p>Reason for this project as it relates to Department objectives.</p>
                     </div>
