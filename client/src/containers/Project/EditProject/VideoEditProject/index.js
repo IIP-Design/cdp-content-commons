@@ -285,6 +285,7 @@ class VideoEditProject extends React.PureComponent {
                 content="Delete Project"
                 basic
                 onClick={ this.displayConfirmDelete }
+                disabled={ !isUploadFinished }
               />
               <Confirm
                 className="delete"
@@ -300,11 +301,13 @@ class VideoEditProject extends React.PureComponent {
                 content="Preview Project"
                 basic
                 onClick={ this.handlePreview }
+                disabled={ !isUploadFinished }
               />
               <Button
                 className="edit-project__btn--final-review"
                 content="Final Review"
                 onClick={ this.handleFinalReview }
+                disabled={ !isUploadFinished }
               />
             </ProjectHeader>
           </div>
@@ -420,6 +423,7 @@ class VideoEditProject extends React.PureComponent {
                     <Button
                       className="edit-project__form--save"
                       content="Save draft & upload files to this project"
+                        disabled={ !hasRequiredData }
                     />
                   </Grid.Column>
                   </Grid.Row> }

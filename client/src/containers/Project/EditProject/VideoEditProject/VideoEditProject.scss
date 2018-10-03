@@ -20,6 +20,12 @@
   .ui.button {
     box-shadow: none !important;
 
+    &.disabled,
+    &:disabled {
+      cursor: not-allowed;
+      pointer-events: auto !important;
+    }
+
     &.basic.btn--edit {
       color: $light-blue !important;
 
@@ -48,7 +54,18 @@
         color: #fff !important;
         background-color: $grey !important;
       }
+
+      &.disabled:hover,
+      &.disabled:active,
+      &.disabled:focus {
+        border-color: transparent !important;
+        @media screen and (max-width: 899px) {
+          border-color: $grey !important;
+        }
+        color: $grey !important;
+        background-color: transparent !important;
     }
+  }
   }
 
   &__btn--preview,
@@ -65,7 +82,14 @@
         color: #fff !important;
         background-color: $matisse-blue !important;
       }
+
+      &.disabled:hover,
+      &.disabled:active,
+      &.disabled:focus {
+        color: $matisse-blue !important;
+        background-color: transparent !important;
     }
+  }
   }
 
   &__btn--final-review,
@@ -80,6 +104,13 @@
       border-color: $matisse-blue !important;
       background-color: $matisse-blue !important;
     }
+
+    &.disabled:hover,
+    &.disabled:active,
+    &.disabled:focus {
+      color: #fff !important;
+      background-color: $light-blue !important;
+  }
   }
 
   .msg--required {
