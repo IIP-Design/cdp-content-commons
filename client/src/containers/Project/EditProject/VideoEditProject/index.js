@@ -500,6 +500,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="srt"
                     popupMsg="Some info about what SRT files are."
                     data={ langs }
+                    hasSaved={ hasSavedDraft }
                   />
                 </Grid.Column>
 
@@ -509,6 +510,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="thumbnail"
                     popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
                     data={ langs }
+                    hasSaved={ hasSavedDraft }
                   />
 
                   { hasSavedDraft &&
@@ -533,6 +535,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="other"
                     popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
                     data={ langs }
+                    hasSaved={ hasSavedDraft }
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -540,7 +543,11 @@ class VideoEditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__additional-videos">
-            <AdditionalVideos data={ additionalVideos } headingTxt="Videos in Project" />
+            <AdditionalVideos
+              data={ additionalVideos }
+              headingTxt="Videos in Project"
+              hasSaved={ hasSavedDraft }
+            />
 
             { hasSavedDraft &&
             <div style={ { marginTop: '3rem' } }>
