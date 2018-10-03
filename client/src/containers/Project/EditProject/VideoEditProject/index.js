@@ -246,8 +246,38 @@ class VideoEditProject extends React.PureComponent {
     console.log( 'Add more video files' );
   }
 
+  handleUpload = () => {
+    // need code to initiate upload,
+    // then setState below when finished
+    this.setState( {
+      isUploadFinished: true,
+      isUploadInProgress: false
+    } );
+  }
+
+  handleChange = ( e, { name, value } ) => {
+    // need to debounce
+    // avoid setState twice?
+    this.setState( {
+      [name]: value
+    } );
+    this.setState( nextState => ( {
+      hasRequiredData: nextState.title && nextState.privacy && nextState.categories.length > 0
+    } ) );
+  };
+
   handleSubmit = () => {
-    console.log( 'Form Submitted' );
+    const { disableRightClick } = this.state;
+
+    this.setState( {
+      disableRightClick,
+      hasSavedDraft: true,
+      isUploadInProgress: true
+    } );
+
+    // use setTimeout to simulate upload time
+    setTimeout( this.handleUpload, 5000 );
+    window.scroll( { top: 0, behavior: 'smooth' } );
   }
 
   render() {
