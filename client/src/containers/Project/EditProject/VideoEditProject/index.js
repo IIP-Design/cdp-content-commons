@@ -252,12 +252,34 @@ class VideoEditProject extends React.PureComponent {
 
   render() {
     const langs = Object.keys( supportFiles );
+    const {
+      disableRightClick,
+      hasRequiredData,
+      hasSavedDraft,
+      isUploadInProgress,
+      isUploadFinished,
+      title,
+      privacy,
+      author,
+      owner,
+      categories,
+      tags,
+      publicDesc,
+      internalDesc
+    } = this.state;
+
+    const pageTitle = `Project Details${hasSavedDraft ? ' - Edit' : ''}`;
+
+    const contentStyle = {
+      border: `${( hasRequiredData && hasSavedDraft ) ? 'none' : '3px solid #02bfe7'}`
+    };
+
     return (
       <Page title="Edit Project" description="Edit content project">
         <Breadcrumbs />
         <div className="edit-project">
           <div className="edit-project__header">
-            <ProjectHeader icon="video camera" text="Project Details">
+            <ProjectHeader icon="video camera" text={ pageTitle }>
               <Button
                 className="edit-project__btn--delete"
                 content="Delete Project"
@@ -287,11 +309,18 @@ class VideoEditProject extends React.PureComponent {
             </ProjectHeader>
           </div>
 
-          <div className="edit-project__status">
-            <p><strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.</p>
+          <div className="edit-project__status" style={ isUploadFinished ? { padding: '0' } : null }>
+            { !hasSavedDraft &&
+              <p><strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.</p> }
+
+            { isUploadInProgress &&
+              <Fragment>
+                <p style={ { marginBottom: '0' } }><strong>Uploading files:</strong> 8 of 11</p>
+                <p>Please keep this page open until upload is complete</p>
+              </Fragment> }
           </div>
 
-          <div className="edit-project__content">
+          <div className="edit-project__content" style={ contentStyle }>
             <Form className="edit-project__form project-data" onSubmit={ this.handleSubmit }>
               <Grid stackable>
                 <Grid.Row>
@@ -385,6 +414,7 @@ class VideoEditProject extends React.PureComponent {
                   </Grid.Column>
                 </Grid.Row>
 
+                { !hasSavedDraft &&
                 <Grid.Row>
                   <Grid.Column width="16">
                     <Button
@@ -392,7 +422,7 @@ class VideoEditProject extends React.PureComponent {
                       content="Save draft & upload files to this project"
                     />
                   </Grid.Column>
-                </Grid.Row>
+                  </Grid.Row> }
               </Grid>
             </Form>
           </div>
@@ -423,12 +453,20 @@ class VideoEditProject extends React.PureComponent {
                     data={ langs }
                   />
 
-                  <Checkbox label="Disable right-click to protect your images" />
+                  { hasSavedDraft &&
+                    <Fragment>
+                      <Checkbox
+                        label="Disable right-click to protect your images"
+                        name="disableRightClick"
+                        checked={ disableRightClick }
+                        onChange={ this.handleChange }
+                      />
                   <IconPopup
                     message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
                     size="small"
                     iconType="info circle"
                   />
+                    </Fragment> }
                 </Grid.Column>
 
                 <Grid.Column>
@@ -446,6 +484,7 @@ class VideoEditProject extends React.PureComponent {
           <div className="edit-project__additional-videos">
             <AdditionalVideos data={ additionalVideos } headingTxt="Videos in Project" />
 
+            { hasSavedDraft &&
             <div style={ { marginTop: '3rem' } }>
               <Button
                 className="edit-project__add-more"
@@ -453,7 +492,7 @@ class VideoEditProject extends React.PureComponent {
                 basic
                 onClick={ this.handleAddMoreFiles }
               />
-            </div>
+              </div> }
           </div>
         </div>
       </Page>
