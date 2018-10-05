@@ -125,7 +125,7 @@ const AdditionalVideo = ( {
   lang,
   ltr,
   thumbnail,
-  isVisible
+  isAvailable
 } ) => {
   const langStyle = { textTransform: 'capitalize' };
   const layoutStyle = {
@@ -134,7 +134,7 @@ const AdditionalVideo = ( {
     cursor: 'pointer'
   };
 
-  if ( !isVisible ) {
+  if ( !isAvailable ) {
     return <VideoPlaceholder layout={ layoutStyle } />;
   }
 
@@ -162,7 +162,7 @@ AdditionalVideo.propTypes = {
   lang: string,
   ltr: bool,
   thumbnail: object,
-  isVisible: bool
+  isAvailable: bool
 };
 
 const AdditionalVideos = ( { data, headingTxt, hasSubmitted } ) => {
@@ -172,7 +172,7 @@ const AdditionalVideos = ( { data, headingTxt, hasSubmitted } ) => {
     <Fragment>
       <h2 style={ headingStyle }>{ headingTxt }</h2>
       <div className="additional-videos" style={ layoutStyle }>
-        { data.map( video => <AdditionalVideo key={ video.title } { ...video } isVisible={ hasSubmitted } /> ) }
+        { data.map( video => <AdditionalVideo key={ video.title } { ...video } isAvailable={ hasSubmitted } /> ) }
       </div>
     </Fragment>
   );
@@ -210,8 +210,8 @@ EditSupportFilesModal.propTypes = {
   fileType: string
 };
 
-const SupportItem = ( { lang, fileType, isVisible } ) => {
-  if ( !isVisible ) {
+const SupportItem = ( { lang, fileType, isAvailable } ) => {
+  if ( !isAvailable ) {
     return <ItemPlaceholder />;
   }
 
@@ -232,7 +232,7 @@ const SupportItem = ( { lang, fileType, isVisible } ) => {
 SupportItem.propTypes = {
   lang: string,
   fileType: string,
-  isVisible: bool
+  isAvailable: bool
 };
 
 const SupportFileTypeList = ( {
@@ -264,7 +264,7 @@ const SupportFileTypeList = ( {
           key={ n }
           lang={ n }
           fileType={ fileType }
-          isVisible={ hasSubmitted }
+          isAvailable={ hasSubmitted }
         />
       ) ) }
     </List>
