@@ -122,8 +122,24 @@
   }
 
   &__status {
-    padding: 1.75em;
-    background-color: $bright-blue;
+    > .ui.progress {
+        border-radius: 0;
+        margin-bottom: 3em;
+        font-size: 0.875em;
+        background-color: $light-grey;
+
+        .bar {
+          border-radius: 0;
+        }
+
+        .label {
+          font-weight: normal;
+
+          .upload-status-label {
+            font-weight: bold;
+          }
+        }
+      }
   }
 
   &__content {

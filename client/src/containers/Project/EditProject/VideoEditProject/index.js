@@ -26,6 +26,7 @@ import {
   List,
   Modal,
   Popup,
+  Progress,
   Select,
   TextArea
 } from 'semantic-ui-react';
@@ -164,14 +165,14 @@ AdditionalVideo.propTypes = {
   isVisible: bool
 };
 
-const AdditionalVideos = ( { data, headingTxt, hasSaved } ) => {
+const AdditionalVideos = ( { data, headingTxt, hasSubmitted } ) => {
   const headingStyle = { textTransform: 'uppercase' };
   const layoutStyle = { display: 'flex' };
   return (
     <Fragment>
       <h2 style={ headingStyle }>{ headingTxt }</h2>
       <div className="additional-videos" style={ layoutStyle }>
-        { data.map( video => <AdditionalVideo key={ video.title } { ...video } isVisible={ hasSaved } /> ) }
+        { data.map( video => <AdditionalVideo key={ video.title } { ...video } isVisible={ hasSubmitted } /> ) }
       </div>
     </Fragment>
   );
@@ -179,7 +180,7 @@ const AdditionalVideos = ( { data, headingTxt, hasSaved } ) => {
 AdditionalVideos.propTypes = {
   data: array,
   headingTxt: string,
-  hasSaved: bool
+  hasSubmitted: bool
 };
 
 const EditSupportFilesModal = ( { btnContent, className, fileType } ) => {
@@ -239,11 +240,11 @@ const SupportFileTypeList = ( {
   fileType,
   popupMsg,
   data,
-  hasSaved
+  hasSubmitted
 } ) => (
   <Fragment>
     <h3>{ `${headingTxt} ` }
-      { hasSaved &&
+      { hasSubmitted &&
         <Fragment>
           <IconPopup
             message={ popupMsg }
@@ -263,7 +264,7 @@ const SupportFileTypeList = ( {
           key={ n }
           lang={ n }
           fileType={ fileType }
-          isVisible={ hasSaved }
+          isVisible={ hasSubmitted }
         />
       ) ) }
     </List>
@@ -274,7 +275,21 @@ SupportFileTypeList.propTypes = {
   fileType: string,
   popupMsg: string,
   data: array,
-  hasSaved: bool
+  hasSubmitted: bool
+};
+
+const SaveNotification = ( { msg, customStyles = {} } ) => {
+  const defaultStyle = {
+    padding: '1em 1.5em',
+    fontSize: '0.625em',
+    backgroundColor: '#b9de52'
+  };
+
+  return <p style={ { ...defaultStyle, ...customStyles } }>{ msg }</p>;
+};
+SaveNotification.propTypes = {
+  msg: string,
+  customStyles: object
 };
 
 
@@ -285,9 +300,11 @@ class VideoEditProject extends React.PureComponent {
     deleteConfirmOpen: false,
     disableRightClick: true,
     hasRequiredData: false,
-    hasSavedDraft: false,
+    hasSubmittedData: false,
     isUploadInProgress: false,
     isUploadFinished: false,
+    displayTheSaveMsg: false,
+    displayTheUploadSuccessMsg: false,
 
     /**
      * Use redux for these?
@@ -331,8 +348,17 @@ class VideoEditProject extends React.PureComponent {
     // then setState below when finished
     this.setState( {
       isUploadFinished: true,
-      isUploadInProgress: false
+      isUploadInProgress: false,
+      displayTheUploadSuccessMsg: true
     } );
+
+    setTimeout( () => {
+      this.setState( { displayTheSaveMsg: false } );
+    }, 2000 );
+
+    setTimeout( () => {
+      this.setState( { displayTheUploadSuccessMsg: false } );
+    }, 3000 );
   }
 
   handleChange = ( e, { name, value } ) => {
@@ -351,8 +377,9 @@ class VideoEditProject extends React.PureComponent {
 
     this.setState( {
       disableRightClick,
-      hasSavedDraft: true,
-      isUploadInProgress: true
+      hasSubmittedData: true,
+      isUploadInProgress: true,
+      displayTheSaveMsg: true
     } );
 
     // use setTimeout to simulate upload time
@@ -365,9 +392,11 @@ class VideoEditProject extends React.PureComponent {
     const {
       disableRightClick,
       hasRequiredData,
-      hasSavedDraft,
+      hasSubmittedData,
       isUploadInProgress,
       isUploadFinished,
+      displayTheSaveMsg,
+      displayTheUploadSuccessMsg,
       title,
       privacy,
       author,
@@ -378,11 +407,17 @@ class VideoEditProject extends React.PureComponent {
       internalDesc
     } = this.state;
 
-    const pageTitle = `Project Details${hasSavedDraft ? ' - Edit' : ''}`;
+    const pageTitle = `Project Details${hasSubmittedData ? ' - Edit' : ''}`;
 
     const contentStyle = {
-      border: `${( hasRequiredData && hasSavedDraft ) ? 'none' : '3px solid #02bfe7'}`
+      border: `${( hasRequiredData && hasSubmittedData ) ? 'none' : '3px solid #02bfe7'}`
     };
+
+    const statusStyle = {
+      backgroundColor: isUploadFinished ? '#f1f1f1' : '#02bfe7'
+    };
+
+    const saveNotificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
 
     return (
       <Page title="Edit Project" description="Edit content project">
@@ -422,15 +457,41 @@ class VideoEditProject extends React.PureComponent {
             </ProjectHeader>
           </div>
 
-          <div className="edit-project__status" style={ isUploadFinished ? { padding: '0' } : null }>
-            { !hasSavedDraft &&
-              <p><strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.</p> }
+          <div className="edit-project__status" style={ isUploadInProgress ? null : statusStyle }>
+            { !hasSubmittedData &&
+              <p style={ { padding: '1em 1.75em' } }>
+                <strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.
+              </p> }
+
+            { displayTheSaveMsg &&
+              <SaveNotification
+                customStyles={ {
+                  position: 'absolute',
+                  top: '11em',
+                  left: '50%',
+                  transform: 'translateX(-50%)'
+                  } }
+                msg={ saveNotificationMsg }
+              /> }
 
             { isUploadInProgress &&
-              <Fragment>
-                <p style={ { marginBottom: '0' } }><strong>Uploading files:</strong> 8 of 11</p>
+              <Progress
+                // need to programmatically determine value & total
+                value="8"
+                total="11"
+                color="blue"
+                size="medium"
+                active
+                style={ { padding: '0' } }
+              >
+                <p style={ { marginBottom: '0' } }><span className="upload-status-label">Uploading files:</span> 8 of 11</p>
                 <p>Please keep this page open until upload is complete</p>
-              </Fragment> }
+              </Progress> }
+
+            { displayTheUploadSuccessMsg &&
+              <p style={ { padding: '1em 1.75em' } }>
+                <Icon size="large" name="check circle outline" /> Files uploaded successfully!
+              </p> }
           </div>
 
           <div className="edit-project__content" style={ contentStyle }>
@@ -551,7 +612,7 @@ class VideoEditProject extends React.PureComponent {
                   </Grid.Column>
                 </Grid.Row>
 
-                { !hasSavedDraft &&
+                { !hasSubmittedData &&
                   <Grid.Row>
                     <Grid.Column width="16">
                       <Button
@@ -580,7 +641,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="srt"
                     popupMsg="Some info about what SRT files are."
                     data={ langs }
-                    hasSaved={ hasSavedDraft }
+                    hasSubmitted={ hasSubmittedData }
                   />
                 </Grid.Column>
 
@@ -590,10 +651,10 @@ class VideoEditProject extends React.PureComponent {
                     fileType="thumbnail"
                     popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
                     data={ langs }
-                    hasSaved={ hasSavedDraft }
+                    hasSubmitted={ hasSubmittedData }
                   />
 
-                  { hasSavedDraft &&
+                  { hasSubmittedData &&
                     <Fragment>
                       <Checkbox
                         label="Disable right-click to protect your images"
@@ -615,7 +676,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="other"
                     popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
                     data={ langs }
-                    hasSaved={ hasSavedDraft }
+                    hasSubmitted={ hasSubmittedData }
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -626,10 +687,10 @@ class VideoEditProject extends React.PureComponent {
             <AdditionalVideos
               data={ additionalVideos }
               headingTxt="Videos in Project"
-              hasSaved={ hasSavedDraft }
+              hasSubmitted={ hasSubmittedData }
             />
 
-            { hasSavedDraft &&
+            { hasSubmittedData &&
               <div style={ { marginTop: '3rem' } }>
                 <Button
                   className="edit-project__add-more"
