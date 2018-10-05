@@ -4,7 +4,7 @@
  *
  */
 import React, { Fragment } from 'react';
-import { array, bool, object, string } from 'prop-types';
+import { array, bool, func, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -45,6 +45,14 @@ import {
  * be placed in their own separate files
  */
 
+const withModal = ( props, Trigger, Content ) => (
+  <Modal trigger={ <Trigger { ...props } /> }>
+    <Modal.Content>
+      <Content { ...props } />
+    </Modal.Content>
+  </Modal>
+);
+
 const IconPopup = ( { message, size, iconType } ) => (
   <Popup
     trigger={ <Icon size={ size } name={ iconType } /> }
@@ -59,7 +67,20 @@ IconPopup.propTypes = {
   iconType: string
 };
 
-const ItemPlaceholder = () => {
+const EditSingleProjectItem = ( props ) => {
+  const { title } = props;
+  return (
+    <div>
+      <p>{ title }</p>
+      <p>Edit Single Project Item Component</p>
+    </div>
+  );
+};
+EditSingleProjectItem.propTypes = {
+  title: string
+};
+
+const SupportItemPlaceholder = () => {
   const placeholderLayout = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -86,8 +107,10 @@ const ItemPlaceholder = () => {
   );
 };
 
-const VideoPlaceholder = ( { layout } ) => {
+const VideoItemPlaceholder = () => {
   const placeholderStyle = {
+    flexBasis: '25%',
+    marginRight: '1rem',
     cursor: 'not-allowed',
     filter: 'blur(2px)'
   };
@@ -109,78 +132,122 @@ const VideoPlaceholder = ( { layout } ) => {
   };
 
   return (
-    <div style={ { ...layout, ...placeholderStyle } }>
+    <li className="placeholder" style={ placeholderStyle }>
       <div style={ style1 } />
       <div style={ { ...style1, ...style2 } } />
       <div style={ { ...style1, ...style3 } } />
-    </div>
+    </li>
   );
 };
-VideoPlaceholder.propTypes = {
-  layout: object
-};
 
-const AdditionalVideo = ( {
+const Placeholder = ( { type } ) => (
+  ( type === 'video' && <VideoItemPlaceholder /> ) || <SupportItemPlaceholder />
+);
+
+const VideoItem = ( {
   title,
   lang,
   ltr,
   thumbnail,
-  isAvailable
+  ...rest
 } ) => {
-  const langStyle = { textTransform: 'capitalize' };
-  const layoutStyle = {
+  const itemStyle = {
     flexBasis: '25%',
     marginRight: '1rem',
     cursor: 'pointer'
   };
 
-  if ( !isAvailable ) {
-    return <VideoPlaceholder layout={ layoutStyle } />;
-  }
-
   return (
-    <Modal trigger={
-      <article className="video" style={ layoutStyle }>
-        <img
-          src={ thumbnail.url }
-          alt={ thumbnail.alt }
-          className="thumbnail"
-        />
-        <header>
-          <h3 className={ ltr ? 'ltr' : 'rtl' }>{ title }</h3>
-        </header>
-        <p style={ langStyle }>{ lang }</p>
-      </article> }
-    >
-      <Modal.Header>Edit { title } - { lang }</Modal.Header>
-      <Modal.Content>Maecenas faucibus mollis interdum.</Modal.Content>
-    </Modal>
+    <li className="video" style={ itemStyle } { ...rest }>
+      <img
+        src={ thumbnail.url }
+        alt={ thumbnail.alt }
+        className="thumbnail"
+      />
+      <h3
+        className={ ltr ? 'ltr' : 'rtl' }
+        style={ { marginTop: '0' } }
+      >
+        { title }
+      </h3>
+      <p style={ { textTransform: 'capitalize' } }>{ lang }</p>
+    </li>
   );
 };
-AdditionalVideo.propTypes = {
+VideoItem.propTypes = {
   title: string,
   lang: string,
   ltr: bool,
-  thumbnail: object,
-  isAvailable: bool
+  thumbnail: object
 };
 
-const AdditionalVideos = ( { data, headingTxt, hasSubmitted } ) => {
-  const headingStyle = { textTransform: 'uppercase' };
-  const layoutStyle = { display: 'flex' };
+const ProjectItem = ( props ) => {
+  const {
+    isAvailable,
+    type,
+    displayInModal,
+    modalTrigger,
+    modalContent,
+    ...rest
+  } = props;
+
+  const Item = modalTrigger;
+
+  if ( !isAvailable ) return <Placeholder type={ type } />;
+
+  return (
+    ( displayInModal &&
+      withModal( { ...rest }, modalTrigger, modalContent ) ) ||
+      <Item { ...rest } />
+  );
+};
+ProjectItem.propTypes = {
+  isAvailable: bool,
+  type: string,
+  displayInModal: bool,
+  modalTrigger: func,
+  modalContent: func
+};
+
+const ProjectItemsList = ( {
+  data,
+  headingTxt,
+  hasSubmitted,
+  projectType,
+  modalTrigger,
+  modalContent
+} ) => {
+  const listStyle = {
+    display: 'flex',
+    paddingLeft: '0',
+    listStyle: 'none'
+  };
   return (
     <Fragment>
-      <h2 style={ headingStyle }>{ headingTxt }</h2>
-      <div className="additional-videos" style={ layoutStyle }>
-        { data.map( video => <AdditionalVideo key={ video.title } { ...video } isAvailable={ hasSubmitted } /> ) }
-      </div>
+      <h2 style={ { textTransform: 'uppercase' } }>{ headingTxt }</h2>
+      <ul className="project-items" style={ listStyle }>
+        { data.map( item => (
+          <ProjectItem
+            key={ item.title }
+            { ...item }
+            isAvailable={ hasSubmitted }
+            type={ projectType }
+            displayInModal
+            modalTrigger={ modalTrigger }
+            modalContent={ modalContent }
+          />
+        ) ) }
+      </ul>
     </Fragment>
   );
 };
-AdditionalVideos.propTypes = {
+ProjectItemsList.propTypes = {
   data: array,
   headingTxt: string,
-  hasSubmitted: bool
+  hasSubmitted: bool,
+  projectType: string,
+  modalTrigger: func,
+  modalContent: func
 };
 
 const EditSupportFilesModal = ( { btnContent, className, fileType } ) => {
@@ -212,7 +279,7 @@ EditSupportFilesModal.propTypes = {
 
 const SupportItem = ( { lang, fileType, isAvailable } ) => {
   if ( !isAvailable ) {
-    return <ItemPlaceholder />;
+    return <SupportItemPlaceholder />;
   }
 
   const content = supportFiles[lang][fileType];
@@ -683,11 +750,14 @@ class VideoEditProject extends React.PureComponent {
             </Grid>
           </div>
 
-          <div className="edit-project__additional-videos">
-            <AdditionalVideos
+          <div className="edit-project__items">
+            <ProjectItemsList
               data={ additionalVideos }
               headingTxt="Videos in Project"
               hasSubmitted={ hasSubmittedData }
+              projectType="video"
+              modalTrigger={ VideoItem }
+              modalContent={ EditSingleProjectItem }
             />
 
             { hasSubmittedData &&
