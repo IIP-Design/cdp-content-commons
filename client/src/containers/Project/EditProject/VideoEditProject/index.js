@@ -70,10 +70,12 @@ IconPopup.propTypes = {
 const EditSingleProjectItem = ( props ) => {
   const { title } = props;
   return (
-    <div>
-      <p>{ title }</p>
+    <article className="edit-project-item">
+      <header className="header">
+        <h2>{ title }</h2>
+      </header>
       <p>Edit Single Project Item Component</p>
-    </div>
+    </article>
   );
 };
 EditSingleProjectItem.propTypes = {
