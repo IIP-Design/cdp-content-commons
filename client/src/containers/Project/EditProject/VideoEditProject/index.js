@@ -62,9 +62,9 @@ const IconPopup = ( { message, size, iconType } ) => (
   />
 );
 IconPopup.propTypes = {
-  message: string,
+  message: string.isRequired,
   size: string,
-  iconType: string
+  iconType: string.isRequired
 };
 
 const EditSingleProjectItem = ( props ) => {
@@ -245,10 +245,10 @@ const ProjectItemsList = ( {
   );
 };
 ProjectItemsList.propTypes = {
-  data: array,
+  data: array.isRequired,
   headingTxt: string,
   hasSubmittedData: bool,
-  projectType: string,
+  projectType: string.isRequired,
   displayItemInModal: bool,
   modalTrigger: func,
   modalContent: func
@@ -280,7 +280,7 @@ const EditSupportFilesButton = ( props ) => {
 };
 EditSupportFilesButton.propTypes = {
   className: string,
-  btnContent: string
+  btnContent: string.isRequired
 };
 
 const EditSupportFilesContent = ( props ) => {
@@ -381,7 +381,7 @@ SupportFileTypeList.propTypes = {
   headingTxt: string,
   fileType: string,
   popupMsg: string,
-  data: array,
+  data: array.isRequired,
   hasSubmittedData: bool
 };
 
@@ -395,7 +395,7 @@ const SaveNotification = ( { msg, customStyles = {} } ) => {
   return <p style={ { ...defaultStyle, ...customStyles } }>{ msg }</p>;
 };
 SaveNotification.propTypes = {
-  msg: string,
+  msg: string.isRequired,
   customStyles: object
 };
 
