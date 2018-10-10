@@ -23,7 +23,6 @@ import {
   Grid,
   Icon,
   Input,
-  List,
   Modal,
   Popup,
   Progress,
@@ -102,10 +101,10 @@ const SupportItemPlaceholder = () => {
   };
 
   return (
-    <div style={ placeholderLayout }>
+    <li style={ placeholderLayout }>
       <div style={ style1 } />
       <div style={ { ...style1, ...style2 } } />
-    </div>
+    </li>
   );
 };
 
@@ -326,12 +325,10 @@ const SupportItem = ( { lang, fileType, isAvailable } ) => {
 
   if ( content ) {
     return (
-      <List.Item style={ { fontSize: '0.875em' } }>
-        <List.Content floated="right">
-          <b style={ { textTransform: 'capitalize' } }>{ lang }</b>
-        </List.Content>
-        <List.Content>{ content }</List.Content>
-      </List.Item>
+      <li className="support-item">
+        { content }
+        <span className="item-lang" style={ { fontWeight: 'bold', textTransform: 'capitalize' } }>{ lang }</span>
+      </li>
     );
   }
   return null;
@@ -365,7 +362,7 @@ const SupportFileTypeList = ( {
           />
         </Fragment> }
     </h3>
-    <List>
+    <ul>
       { data.map( n => (
         <SupportItem
           key={ n }
@@ -374,7 +371,7 @@ const SupportFileTypeList = ( {
           isAvailable={ hasSubmittedData }
         />
       ) ) }
-    </List>
+    </ul>
   </Fragment>
 );
 SupportFileTypeList.propTypes = {
