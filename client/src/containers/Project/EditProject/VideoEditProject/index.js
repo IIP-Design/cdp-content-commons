@@ -212,7 +212,7 @@ ProjectItem.propTypes = {
 
 const ProjectItemsList = ( {
   data,
-  headingTxt,
+  headline,
   hasSubmittedData,
   projectType,
   displayItemInModal,
@@ -226,7 +226,7 @@ const ProjectItemsList = ( {
   };
   return (
     <Fragment>
-      <h2 style={ { textTransform: 'uppercase' } }>{ headingTxt }</h2>
+      <h2 style={ { textTransform: 'uppercase' } }>{ headline }</h2>
       <ul className="project-items" style={ listStyle }>
         { data.map( item => (
           <ProjectItem
@@ -245,7 +245,7 @@ const ProjectItemsList = ( {
 };
 ProjectItemsList.propTypes = {
   data: array.isRequired,
-  headingTxt: string,
+  headline: string,
   hasSubmittedData: bool,
   projectType: string.isRequired,
   displayItemInModal: bool,
@@ -340,14 +340,14 @@ SupportItem.propTypes = {
 };
 
 const SupportFileTypeList = ( {
-  headingTxt,
+  headline,
   fileType,
   popupMsg,
   data,
   hasSubmittedData
 } ) => (
   <Fragment>
-    <h3>{ `${headingTxt} ` }
+    <h3>{ `${headline} ` }
       { hasSubmittedData &&
         <Fragment>
           <IconPopup
@@ -375,7 +375,7 @@ const SupportFileTypeList = ( {
   </Fragment>
 );
 SupportFileTypeList.propTypes = {
-  headingTxt: string,
+  headline: string,
   fileType: string,
   popupMsg: string,
   data: array.isRequired,
@@ -741,7 +741,7 @@ class VideoEditProject extends React.PureComponent {
               <Grid.Row columns={ 3 } divided>
                 <Grid.Column>
                   <SupportFileTypeList
-                    headingTxt="SRT Files"
+                    headline="SRT Files"
                     fileType="srt"
                     popupMsg="Some info about what SRT files are."
                     data={ langs }
@@ -751,7 +751,7 @@ class VideoEditProject extends React.PureComponent {
 
                 <Grid.Column>
                   <SupportFileTypeList
-                    headingTxt="Thumbnail Files"
+                    headline="Thumbnail Files"
                     fileType="thumbnail"
                     popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
                     data={ langs }
@@ -776,7 +776,7 @@ class VideoEditProject extends React.PureComponent {
 
                 <Grid.Column>
                   <SupportFileTypeList
-                    headingTxt="Additional Files"
+                    headline="Additional Files"
                     fileType="other"
                     popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
                     data={ langs }
@@ -790,7 +790,7 @@ class VideoEditProject extends React.PureComponent {
           <div className="edit-project__items">
             <ProjectItemsList
               data={ additionalVideos }
-              headingTxt="Videos in Project"
+              headline="Videos in Project"
               hasSubmittedData={ hasSubmittedData }
               projectType="video"
               displayItemInModal
