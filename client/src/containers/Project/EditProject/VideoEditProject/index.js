@@ -187,7 +187,7 @@ const ProjectItem = ( props ) => {
   const {
     isAvailable,
     type,
-    displayInModal,
+    displayItemInModal,
     modalTrigger,
     modalContent,
     ...rest
@@ -198,7 +198,7 @@ const ProjectItem = ( props ) => {
   if ( !isAvailable ) return <Placeholder type={ type } />;
 
   return (
-    ( displayInModal &&
+    ( displayItemInModal &&
       withModal( { ...rest }, modalTrigger, modalContent ) ) ||
       <Item { ...rest } />
   );
@@ -206,7 +206,7 @@ const ProjectItem = ( props ) => {
 ProjectItem.propTypes = {
   isAvailable: bool,
   type: string,
-  displayInModal: bool,
+  displayItemInModal: bool,
   modalTrigger: func,
   modalContent: func
 };
@@ -214,8 +214,9 @@ ProjectItem.propTypes = {
 const ProjectItemsList = ( {
   data,
   headingTxt,
-  hasSubmitted,
+  hasSubmittedData,
   projectType,
+  displayItemInModal,
   modalTrigger,
   modalContent
 } ) => {
@@ -232,9 +233,9 @@ const ProjectItemsList = ( {
           <ProjectItem
             key={ item.title }
             { ...item }
-            isAvailable={ hasSubmitted }
+            isAvailable={ hasSubmittedData }
             type={ projectType }
-            displayInModal
+            displayItemInModal={ displayItemInModal }
             modalTrigger={ modalTrigger }
             modalContent={ modalContent }
           />
@@ -246,8 +247,9 @@ const ProjectItemsList = ( {
 ProjectItemsList.propTypes = {
   data: array,
   headingTxt: string,
-  hasSubmitted: bool,
+  hasSubmittedData: bool,
   projectType: string,
+  displayItemInModal: bool,
   modalTrigger: func,
   modalContent: func
 };
@@ -345,11 +347,11 @@ const SupportFileTypeList = ( {
   fileType,
   popupMsg,
   data,
-  hasSubmitted
+  hasSubmittedData
 } ) => (
   <Fragment>
     <h3>{ `${headingTxt} ` }
-      { hasSubmitted &&
+      { hasSubmittedData &&
         <Fragment>
           <IconPopup
             message={ popupMsg }
@@ -369,7 +371,7 @@ const SupportFileTypeList = ( {
           key={ n }
           lang={ n }
           fileType={ fileType }
-          isAvailable={ hasSubmitted }
+          isAvailable={ hasSubmittedData }
         />
       ) ) }
     </List>
@@ -380,7 +382,7 @@ SupportFileTypeList.propTypes = {
   fileType: string,
   popupMsg: string,
   data: array,
-  hasSubmitted: bool
+  hasSubmittedData: bool
 };
 
 const SaveNotification = ( { msg, customStyles = {} } ) => {
@@ -746,7 +748,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="srt"
                     popupMsg="Some info about what SRT files are."
                     data={ langs }
-                    hasSubmitted={ hasSubmittedData }
+                    hasSubmittedData={ hasSubmittedData }
                   />
                 </Grid.Column>
 
@@ -756,7 +758,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="thumbnail"
                     popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
                     data={ langs }
-                    hasSubmitted={ hasSubmittedData }
+                    hasSubmittedData={ hasSubmittedData }
                   />
 
                   { hasSubmittedData &&
@@ -781,7 +783,7 @@ class VideoEditProject extends React.PureComponent {
                     fileType="other"
                     popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
                     data={ langs }
-                    hasSubmitted={ hasSubmittedData }
+                    hasSubmittedData={ hasSubmittedData }
                   />
                 </Grid.Column>
               </Grid.Row>
@@ -792,8 +794,9 @@ class VideoEditProject extends React.PureComponent {
             <ProjectItemsList
               data={ additionalVideos }
               headingTxt="Videos in Project"
-              hasSubmitted={ hasSubmittedData }
+              hasSubmittedData={ hasSubmittedData }
               projectType="video"
+              displayItemInModal
               modalTrigger={ VideoItem }
               modalContent={ EditSingleProjectItem }
             />
