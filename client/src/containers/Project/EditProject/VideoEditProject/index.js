@@ -252,37 +252,73 @@ ProjectItemsList.propTypes = {
   modalContent: func
 };
 
-const EditSupportFilesModal = ( { btnContent, className, fileType } ) => {
+const EditSupportFilesButton = ( props ) => {
+  const { className, btnContent } = props;
+
+  /**
+   * Duplicate props to avoid unknown prop warning
+   * @see https://reactjs.org/warnings/unknown-prop.html
+   */
+  const btnProps = { ...props };
+  delete btnProps.fileType;
+  delete btnProps.btnContent;
+  delete btnProps.className;
+
+  return (
+    <Button
+      className={ className }
+      type="button"
+      content={ btnContent }
+      size="small"
+      basic
+      compact
+      { ...btnProps }
+    />
+  );
+};
+EditSupportFilesButton.propTypes = {
+  className: string,
+  btnContent: string
+};
+
+const EditSupportFilesContent = ( props ) => {
+  const { fileType } = props;
+
+  /**
+   * Duplicate props to avoid unknown prop warning
+   * @see https://reactjs.org/warnings/unknown-prop.html
+   */
+  const articleProps = { ...props };
+  delete articleProps.btnContent;
+  delete articleProps.fileType;
+
   const headingStyle = {
     textTransform: ( fileType === 'srt' && 'uppercase' ) || 'capitalize'
   };
 
   return (
-    <Modal trigger={
-      <Button
-        className={ className }
-        type="button"
-        content={ btnContent }
-        size="small"
-        basic
-        compact
-      /> }
-    >
-      <Modal.Header>Edit <span style={ headingStyle }>{ fileType }</span> files in this project</Modal.Header>
-      <Modal.Content>Curabitur blandit tempus porttitor.</Modal.Content>
-    </Modal>
+    <article className={ `${fileType}-files` } { ...articleProps }>
+      <header className="header">
+        <h2>Edit <span style={ headingStyle }>{ fileType }</span> files in this project</h2>
+      </header>
+      <p>Curabitur blandit tempus porttitor.</p>
+    </article>
   );
 };
-EditSupportFilesModal.propTypes = {
-  btnContent: string,
-  className: string,
+EditSupportFilesContent.propTypes = {
   fileType: string
 };
 
+const EditSupportFilesModal = props =>
+  withModal( props, EditSupportFilesButton, EditSupportFilesContent );
+EditSupportFilesModal.propTypes = {
+  className: string,
+  fileType: string,
+  btnContent: string
+};
+
 const SupportItem = ( { lang, fileType, isAvailable } ) => {
-  if ( !isAvailable ) {
-    return <SupportItemPlaceholder />;
-  }
+  if ( !isAvailable ) return <SupportItemPlaceholder />;
 
   const content = supportFiles[lang][fileType];
 
