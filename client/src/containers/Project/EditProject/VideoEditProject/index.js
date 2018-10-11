@@ -81,69 +81,63 @@ EditSingleProjectItem.propTypes = {
   title: string
 };
 
-const SupportItemPlaceholder = () => {
-  const placeholderLayout = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    filter: 'blur(2px)'
-  };
+const Placeholder = ( { type } ) => {
+  const altGrey = '#d6d7d9';
+  const mediumGrey = '#b2b4b8';
 
-  const style1 = {
-    flexBasis: '75%',
-    marginBottom: '0.625em',
-    height: '1em',
-    backgroundColor: '#d6d7d9'
-  };
-
-  const style2 = {
-    flexBasis: '20%',
-    backgroundColor: '#b2b4b8'
-  };
-
-  return (
-    <li style={ placeholderLayout }>
-      <div style={ style1 } />
-      <div style={ { ...style1, ...style2 } } />
-    </li>
-  );
-};
-
-const VideoItemPlaceholder = () => {
-  const placeholderStyle = {
-    flexBasis: '25%',
-    marginRight: '1rem',
-    cursor: 'not-allowed',
-    filter: 'blur(2px)'
-  };
-
-  const style1 = {
-    height: '162px',
-    marginBottom: '0.625em',
-    backgroundColor: '#d6d7d9'
-  };
-
-  const style2 = {
-    height: '1em',
-    width: '85%'
-  };
-
-  const style3 = {
-    height: '0.625em',
-    width: '35%'
+  const styles = {
+    video: {
+      listItem: {
+        flexBasis: '25%',
+        marginRight: '1rem',
+        cursor: 'not-allowed',
+        filter: 'blur(2px)'
+      },
+      child1: {
+        height: '162px',
+        marginBottom: '0.625em',
+        backgroundColor: altGrey
+      },
+      child2: {
+        height: '1em',
+        width: '85%'
+      },
+      child3: {
+        height: '0.625em',
+        width: '35%'
+      }
+    },
+    supportItem: {
+      listItem: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        filter: 'blur(2px)'
+      },
+      child1: {
+        flexBasis: '75%',
+        marginBottom: '0.625em',
+        height: '1em',
+        backgroundColor: altGrey
+      },
+      child2: {
+        flexBasis: '20%',
+        backgroundColor: mediumGrey
+      }
+    }
   };
 
   return (
-    <li className="placeholder" style={ placeholderStyle }>
-      <div style={ style1 } />
-      <div style={ { ...style1, ...style2 } } />
-      <div style={ { ...style1, ...style3 } } />
+    <li className={ `${type}-placeholder` } style={ styles[type].listItem }>
+      <div style={ styles[type].child1 } />
+      <div style={ { ...styles[type].child1, ...styles[type].child2 } } />
+      { type === 'video' &&
+        <div style={ { ...styles[type].child1, ...styles[type].child3 } } /> }
     </li>
   );
 };
-
-const Placeholder = ( { type } ) => (
-  ( type === 'video' && <VideoItemPlaceholder /> ) || <SupportItemPlaceholder />
-);
+Placeholder.propTypes = {
+  type: string
+};
 
 const VideoItem = ( {
   title,
@@ -319,7 +313,7 @@ EditSupportFilesModal.propTypes = {
 };
 
 const SupportItem = ( { lang, fileType, isAvailable } ) => {
-  if ( !isAvailable ) return <SupportItemPlaceholder />;
+  if ( !isAvailable ) return <Placeholder type="supportItem" />;
 
   const content = supportFiles[lang][fileType];
 
@@ -588,7 +582,9 @@ class VideoEditProject extends React.PureComponent {
                 active
                 style={ { padding: '0' } }
               >
-                <p style={ { marginBottom: '0' } }><span className="upload-status-label">Uploading files:</span> 8 of 11</p>
+                <p style={ { marginBottom: '0' } }>
+                  <span className="upload-status-label">Uploading files:</span> 8 of 11
+                </p>
                 <p>Please keep this page open until upload is complete</p>
               </Progress> }
 
