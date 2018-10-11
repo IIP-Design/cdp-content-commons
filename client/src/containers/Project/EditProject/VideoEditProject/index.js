@@ -459,11 +459,11 @@ class VideoEditProject extends React.PureComponent {
     }, 3000 );
   }
 
-  handleChange = ( e, { name, value } ) => {
+  handleChange = ( e, { name, value, checked } ) => {
     // need to debounce
     // avoid setState twice?
     this.setState( {
-      [name]: value
+      [name]: value || checked
     } );
     this.setState( nextState => ( {
       hasRequiredData: nextState.title && nextState.privacy && nextState.categories.length > 0
@@ -754,20 +754,20 @@ class VideoEditProject extends React.PureComponent {
                     hasSubmittedData={ hasSubmittedData }
                   />
 
-                  { hasSubmittedData &&
-                    <Fragment>
-                      <Checkbox
-                        label="Disable right-click to protect your images"
-                        name="disableRightClick"
-                        checked={ disableRightClick }
-                        onChange={ this.handleChange }
-                      />
-                      <IconPopup
-                        message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
-                        size="small"
-                        iconType="info circle"
-                      />
-                    </Fragment> }
+                  <Fragment>
+                    <Checkbox
+                      label="Disable right-click to protect your images"
+                      name="disableRightClick"
+                      type="checkbox"
+                      checked={ disableRightClick }
+                      onChange={ this.handleChange }
+                    />
+                    <IconPopup
+                      message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
+                      size="small"
+                      iconType="info circle"
+                    />
+                  </Fragment>
                 </Grid.Column>
 
                 <Grid.Column>
