@@ -412,7 +412,7 @@ class VideoEditProject extends React.PureComponent {
     author: '',
     owner: '',
     categories: [],
-    tags: '',
+    tags: [],
     publicDesc: '',
     internalDesc: ''
   }
@@ -471,13 +471,14 @@ class VideoEditProject extends React.PureComponent {
   };
 
   handleSubmit = () => {
-    const { disableRightClick } = this.state;
+    const { disableRightClick, tags } = this.state;
 
     this.setState( {
       disableRightClick,
       hasSubmittedData: true,
       isUploadInProgress: true,
-      displayTheSaveMsg: true
+      displayTheSaveMsg: true,
+      tags: tags.length > 0 ? tags.split( /\s?[,;]\s?/ ) : tags
     } );
 
     // use setTimeout to simulate upload time
