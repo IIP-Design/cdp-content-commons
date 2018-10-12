@@ -408,7 +408,7 @@ class VideoEditProject extends React.PureComponent {
      * Use redux for these?
      */
     title: '',
-    privacy: '',
+    privacy: 'anyone',
     author: '',
     owner: '',
     categories: [],
@@ -616,7 +616,7 @@ class VideoEditProject extends React.PureComponent {
                         required
                         autoFocus="true"
                         name="title"
-                        value={ title }
+                        value={ title || '' }
                         onChange={ this.handleChange }
                       />
 
@@ -639,7 +639,7 @@ class VideoEditProject extends React.PureComponent {
                         label="Author"
                         placeholder="Jane Doe"
                         name="author"
-                        value={ author }
+                        value={ author || '' }
                         onChange={ this.handleChange }
                       />
 
@@ -649,7 +649,7 @@ class VideoEditProject extends React.PureComponent {
                         label="Owner"
                         placeholder="IIP Video Production"
                         name="owner"
-                        value={ owner }
+                        value={ owner || '' }
                         onChange={ this.handleChange }
                       />
                     </Form.Group>
@@ -679,7 +679,7 @@ class VideoEditProject extends React.PureComponent {
                           control={ Input }
                           label="Tags"
                           name="tags"
-                          value={ tags }
+                          value={ tags || '' }
                           onChange={ this.handleChange }
                           style={ { marginBottom: '1em' } }
                         />
