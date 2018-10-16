@@ -384,6 +384,7 @@ class VideoEditProject extends React.PureComponent {
     isUploadFinished: false,
     displayTheSaveMsg: false,
     displayTheUploadSuccessMsg: false,
+    hasExceededMaxCategories: false,
 
     /**
      * Use redux for these?
@@ -397,6 +398,8 @@ class VideoEditProject extends React.PureComponent {
     publicDesc: '',
     internalDesc: ''
   }
+
+  MAX_CATEGORY_COUNT = 2;
 
   displayConfirmDelete = () => {
     this.setState( { deleteConfirmOpen: true } );
@@ -441,13 +444,13 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleChange = ( e, { name, value, checked } ) => {
-    // need to debounce
     // avoid setState twice?
     this.setState( {
       [name]: value || checked
     } );
     this.setState( nextState => ( {
-      hasRequiredData: nextState.title && nextState.privacy && nextState.categories.length > 0
+      hasExceededMaxCategories: nextState.categories.length > this.MAX_CATEGORY_COUNT,
+      hasRequiredData: nextState.title && nextState.privacy && ( nextState.categories.length > 0 && nextState.categories.length < ( this.MAX_CATEGORY_COUNT + 1 ) )
     } ) );
   };
 
@@ -479,6 +482,7 @@ class VideoEditProject extends React.PureComponent {
       isUploadFinished,
       displayTheSaveMsg,
       displayTheUploadSuccessMsg,
+      hasExceededMaxCategories,
       title,
       privacy,
       author,
@@ -642,7 +646,7 @@ class VideoEditProject extends React.PureComponent {
                       <Form.Dropdown
                         id="video-categories"
                         control={ Dropdown }
-                        label="Categories - select up to 2"
+                        label={ `Categories - select up to ${this.MAX_CATEGORY_COUNT}` }
                         required
                         placeholder="-"
                         options={ categoryData }
@@ -655,6 +659,7 @@ class VideoEditProject extends React.PureComponent {
                         name="categories"
                         value={ categories }
                         onChange={ this.handleChange }
+                        error={ hasExceededMaxCategories }
                       />
 
                       <div className="field">
