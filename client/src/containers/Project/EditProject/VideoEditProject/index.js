@@ -52,14 +52,17 @@ const withModal = ( props, Trigger, Content ) => (
   </Modal>
 );
 
-const IconPopup = ( { message, size, iconType } ) => (
-  <Popup
-    trigger={ <Icon size={ size } name={ iconType } /> }
-    content={ message }
-    size={ size }
-    inverted
-  />
-);
+const IconPopup = ( props ) => {
+  const { message, size, iconType } = props;
+  return (
+    <Popup
+      trigger={ <Icon size={ size } name={ iconType } /> }
+      content={ message }
+      size={ size }
+      inverted
+    />
+  );
+};
 IconPopup.propTypes = {
   message: string.isRequired,
   size: string,
@@ -81,13 +84,15 @@ EditSingleProjectItem.propTypes = {
   title: string
 };
 
-const VideoItem = ( {
-  title,
-  lang,
-  ltr,
-  thumbnail,
-  ...rest
-} ) => {
+const VideoItem = ( props ) => {
+  const {
+    title,
+    lang,
+    ltr,
+    thumbnail,
+    ...rest
+  } = props;
+
   const itemStyle = {
     flexBasis: '25%',
     marginRight: '1rem',
@@ -159,17 +164,19 @@ ProjectItem.propTypes = {
   customPlaceholderStyle: object
 };
 
-const ProjectItemsList = ( {
-  data,
-  headline,
-  hasSubmittedData,
-  projectType,
-  displayItemInModal,
-  modalTrigger,
-  modalContent,
-  customListStyle,
-  customPlaceholderStyle
-} ) => {
+const ProjectItemsList = ( props ) => {
+  const {
+    data,
+    headline,
+    hasSubmittedData,
+    projectType,
+    displayItemInModal,
+    modalTrigger,
+    modalContent,
+    customListStyle,
+    customPlaceholderStyle
+  } = props;
+
   const defaultListStyle = {
     display: 'flex',
     paddingLeft: '0',
@@ -275,7 +282,8 @@ EditSupportFilesModal.propTypes = {
   btnContent: string
 };
 
-const SupportItem = ( { lang, fileType, isAvailable } ) => {
+const SupportItem = ( props ) => {
+  const { lang, fileType, isAvailable } = props;
   const content = supportFiles[lang][fileType];
   const placeholderStyle = {
     filter: 'blur(4px)'
@@ -299,41 +307,45 @@ SupportItem.propTypes = {
   isAvailable: bool
 };
 
-const SupportFileTypeList = ( {
-  headline,
-  fileType,
-  popupMsg,
-  data,
-  hasSubmittedData
-} ) => (
-  <Fragment>
-    <h3>{ `${headline} ` }
-      { hasSubmittedData &&
-        <Fragment>
-          <IconPopup
-            message={ popupMsg }
-            size="small"
-            iconType="info circle"
-          />
-          <EditSupportFilesModal
-            btnContent="Edit"
-            className="btn--edit"
+const SupportFileTypeList = ( props ) => {
+  const {
+    headline,
+    fileType,
+    popupMsg,
+    data,
+    hasSubmittedData
+  } = props;
+
+  return (
+    <Fragment>
+      <h3>{ `${headline} ` }
+        { hasSubmittedData &&
+          <Fragment>
+            <IconPopup
+              message={ popupMsg }
+              size="small"
+              iconType="info circle"
+            />
+            <EditSupportFilesModal
+              btnContent="Edit"
+              className="btn--edit"
+              fileType={ fileType }
+            />
+          </Fragment> }
+      </h3>
+      <ul>
+        { data.map( n => (
+          <SupportItem
+            key={ n }
+            lang={ n }
             fileType={ fileType }
+            isAvailable={ hasSubmittedData }
           />
-        </Fragment> }
-    </h3>
-    <ul>
-      { data.map( n => (
-        <SupportItem
-          key={ n }
-          lang={ n }
-          fileType={ fileType }
-          isAvailable={ hasSubmittedData }
-        />
-      ) ) }
-    </ul>
-  </Fragment>
-);
+        ) ) }
+      </ul>
+    </Fragment>
+  );
+};
 SupportFileTypeList.propTypes = {
   headline: string,
   fileType: string,
@@ -342,7 +354,8 @@ SupportFileTypeList.propTypes = {
   hasSubmittedData: bool
 };
 
-const SaveNotification = ( { msg, customStyles } ) => {
+const SaveNotification = ( props ) => {
+  const { msg, customStyles } = props;
   const defaultStyle = {
     padding: '1em 1.5em',
     fontSize: '0.625em',
