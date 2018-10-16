@@ -81,64 +81,6 @@ EditSingleProjectItem.propTypes = {
   title: string
 };
 
-const Placeholder = ( { type } ) => {
-  const altGrey = '#d6d7d9';
-  const mediumGrey = '#b2b4b8';
-
-  const styles = {
-    video: {
-      listItem: {
-        flexBasis: '25%',
-        marginRight: '1rem',
-        cursor: 'not-allowed',
-        filter: 'blur(2px)'
-      },
-      child1: {
-        height: '162px',
-        marginBottom: '0.625em',
-        backgroundColor: altGrey
-      },
-      child2: {
-        height: '1em',
-        width: '85%'
-      },
-      child3: {
-        height: '0.625em',
-        width: '35%'
-      }
-    },
-    supportItem: {
-      listItem: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        filter: 'blur(2px)'
-      },
-      child1: {
-        flexBasis: '75%',
-        marginBottom: '0.625em',
-        height: '1em',
-        backgroundColor: altGrey
-      },
-      child2: {
-        flexBasis: '20%',
-        backgroundColor: mediumGrey
-      }
-    }
-  };
-
-  return (
-    <li className={ `${type}-placeholder` } style={ styles[type].listItem }>
-      <div style={ styles[type].child1 } />
-      <div style={ { ...styles[type].child1, ...styles[type].child2 } } />
-      { type === 'video' &&
-        <div style={ { ...styles[type].child1, ...styles[type].child3 } } /> }
-    </li>
-  );
-};
-Placeholder.propTypes = {
-  type: string
-};
-
 const VideoItem = ( {
   title,
   lang,
@@ -179,16 +121,29 @@ VideoItem.propTypes = {
 const ProjectItem = ( props ) => {
   const {
     isAvailable,
-    type,
     displayItemInModal,
     modalTrigger,
     modalContent,
+    customPlaceholderStyle,
     ...rest
   } = props;
 
   const Item = modalTrigger;
 
-  if ( !isAvailable ) return <Placeholder type={ type } />;
+  if ( !isAvailable ) {
+    const defaultPlaceholderStyle = {
+      flexBasis: '25%',
+      marginRight: '1rem',
+      cursor: 'not-allowed',
+      filter: 'blur(4px)'
+    };
+    const style = {
+      ...defaultPlaceholderStyle,
+      ...customPlaceholderStyle
+    };
+
+    return <Item { ...rest } style={ style } />;
+  }
 
   return (
     ( displayItemInModal &&
@@ -198,10 +153,10 @@ const ProjectItem = ( props ) => {
 };
 ProjectItem.propTypes = {
   isAvailable: bool,
-  type: string,
   displayItemInModal: bool,
   modalTrigger: func,
-  modalContent: func
+  modalContent: func,
+  customPlaceholderStyle: object
 };
 
 const ProjectItemsList = ( {
@@ -211,13 +166,18 @@ const ProjectItemsList = ( {
   projectType,
   displayItemInModal,
   modalTrigger,
-  modalContent
+  modalContent,
+  customListStyle,
+  customPlaceholderStyle
 } ) => {
-  const listStyle = {
+  const defaultListStyle = {
     display: 'flex',
     paddingLeft: '0',
     listStyle: 'none'
   };
+
+  const listStyle = { ...defaultListStyle, ...customListStyle };
+
   return (
     <Fragment>
       <h2 style={ { textTransform: 'uppercase' } }>{ headline }</h2>
@@ -231,6 +191,7 @@ const ProjectItemsList = ( {
             displayItemInModal={ displayItemInModal }
             modalTrigger={ modalTrigger }
             modalContent={ modalContent }
+            customPlaceholderStyle={ customPlaceholderStyle }
           />
         ) ) }
       </ul>
@@ -244,7 +205,9 @@ ProjectItemsList.propTypes = {
   projectType: string.isRequired,
   displayItemInModal: bool,
   modalTrigger: func,
-  modalContent: func
+  modalContent: func,
+  customListStyle: object,
+  customPlaceholderStyle: object
 };
 
 const EditSupportFilesButton = ( props ) => {
@@ -313,15 +276,18 @@ EditSupportFilesModal.propTypes = {
 };
 
 const SupportItem = ( { lang, fileType, isAvailable } ) => {
-  if ( !isAvailable ) return <Placeholder type="supportItem" />;
-
   const content = supportFiles[lang][fileType];
+  const placeholderStyle = {
+    filter: 'blur(4px)'
+  };
 
   if ( content ) {
     return (
-      <li className="support-item">
+      <li className="support-item" style={ !isAvailable ? placeholderStyle : null }>
         { content }
-        <span className="item-lang" style={ { fontWeight: 'bold', textTransform: 'capitalize' } }>{ lang }</span>
+        <span className="item-lang" style={ { fontWeight: 'bold', textTransform: 'capitalize' } }>
+          { lang }
+        </span>
       </li>
     );
   }
@@ -376,14 +342,16 @@ SupportFileTypeList.propTypes = {
   hasSubmittedData: bool
 };
 
-const SaveNotification = ( { msg, customStyles = {} } ) => {
+const SaveNotification = ( { msg, customStyles } ) => {
   const defaultStyle = {
     padding: '1em 1.5em',
     fontSize: '0.625em',
     backgroundColor: '#b9de52'
   };
 
-  return <p style={ { ...defaultStyle, ...customStyles } }>{ msg }</p>;
+  const style = { ...defaultStyle, ...customStyles };
+
+  return <p style={ style }>{ msg }</p>;
 };
 SaveNotification.propTypes = {
   msg: string.isRequired,
