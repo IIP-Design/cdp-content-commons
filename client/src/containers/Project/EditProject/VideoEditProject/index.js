@@ -418,7 +418,8 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleFinalReview = () => {
-    console.log( 'Project Final Review' );
+    const { videoID } = this.props.match.params;
+    this.props.history.push( `/admin/video/${videoID}/review` );
   }
 
   handleAddMoreFiles = () => {
@@ -800,6 +801,8 @@ class VideoEditProject extends React.PureComponent {
 }
 
 VideoEditProject.propTypes = {
+  history: object,
+  match: object
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {
