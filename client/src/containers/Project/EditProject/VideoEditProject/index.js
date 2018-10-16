@@ -451,7 +451,9 @@ class VideoEditProject extends React.PureComponent {
     } ) );
   };
 
-  handleSubmit = () => {
+  handleSubmit = ( e ) => {
+    e.preventDefault();
+
     const { disableRightClick, tags } = this.state;
 
     this.setState( {
