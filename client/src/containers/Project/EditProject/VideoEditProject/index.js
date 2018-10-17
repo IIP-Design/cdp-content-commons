@@ -377,7 +377,6 @@ class VideoEditProject extends React.PureComponent {
   // use constructor instead?
   state = {
     deleteConfirmOpen: false,
-    disableRightClick: true,
     hasRequiredData: false,
     hasSubmittedData: false,
     isUploadInProgress: false,
@@ -389,14 +388,17 @@ class VideoEditProject extends React.PureComponent {
     /**
      * Use redux for these?
      */
-    title: '',
-    privacy: 'anyone',
-    author: '',
-    owner: '',
-    categories: [],
-    tags: [],
-    publicDesc: '',
-    internalDesc: ''
+    projectData: {
+      title: '',
+      privacy: 'anyone',
+      author: '',
+      owner: '',
+      categories: [],
+      tags: [],
+      publicDesc: '',
+      internalDesc: '',
+      protectImages: true
+    }
   }
 
   MAX_CATEGORY_COUNT = 2;
@@ -445,28 +447,42 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleChange = ( e, { name, value, checked } ) => {
-    // avoid setState twice?
-    this.setState( {
-      [name]: value || checked
-    } );
-    this.setState( nextState => ( {
-      hasExceededMaxCategories: nextState.categories.length > this.MAX_CATEGORY_COUNT,
-      hasRequiredData: nextState.title && nextState.privacy && ( nextState.categories.length > 0 && nextState.categories.length < ( this.MAX_CATEGORY_COUNT + 1 ) )
+    this.setState( previousState => ( {
+      projectData: {
+        ...previousState.projectData,
+        [name]: value || checked
+      }
     } ) );
+    this.setState( ( nextState ) => {
+      const {
+        categories,
+        title,
+        privacy
+      } = nextState.projectData;
+      const categoryCount = categories.length;
+
+      return ( {
+        hasExceededMaxCategories: categoryCount > this.MAX_CATEGORY_COUNT,
+        hasRequiredData: title && privacy && categoryCount > 0 && categoryCount <= this.MAX_CATEGORY_COUNT
+      } );
+    } );
   };
 
   handleSubmit = ( e ) => {
     e.preventDefault();
 
-    const { disableRightClick, tags } = this.state;
+    const { protectImages, tags } = this.state.projectData;
 
-    this.setState( {
-      disableRightClick,
+    this.setState( previousState => ( {
       hasSubmittedData: true,
       isUploadInProgress: true,
       displayTheSaveMsg: true,
-      tags: tags.length > 0 ? tags.split( /\s?[,;]\s?/ ) : tags
-    } );
+      projectData: {
+        ...previousState.projectData,
+        tags: tags.length > 0 ? tags.split( /\s?[,;]\s?/ ) : tags,
+        protectImages
+      }
+    } ) );
 
     // use setTimeout to simulate upload time
     setTimeout( this.handleUpload, 5000 );
@@ -476,7 +492,6 @@ class VideoEditProject extends React.PureComponent {
   render() {
     const langs = Object.keys( supportFiles );
     const {
-      disableRightClick,
       hasRequiredData,
       hasSubmittedData,
       isUploadInProgress,
@@ -484,6 +499,10 @@ class VideoEditProject extends React.PureComponent {
       displayTheSaveMsg,
       displayTheUploadSuccessMsg,
       hasExceededMaxCategories,
+      projectData
+    } = this.state;
+
+    const {
       title,
       privacy,
       author,
@@ -491,8 +510,9 @@ class VideoEditProject extends React.PureComponent {
       categories,
       tags,
       publicDesc,
-      internalDesc
-    } = this.state;
+      internalDesc,
+      protectImages
+    } = projectData;
 
     const pageTitle = `Project Details${hasSubmittedData ? ' - Edit' : ''}`;
 
@@ -747,9 +767,9 @@ class VideoEditProject extends React.PureComponent {
                   <Fragment>
                     <Checkbox
                       label="Disable right-click to protect your images"
-                      name="disableRightClick"
+                      name="protectImages"
                       type="checkbox"
-                      checked={ disableRightClick }
+                      checked={ protectImages }
                       onChange={ this.handleChange }
                     />
                     <IconPopup
