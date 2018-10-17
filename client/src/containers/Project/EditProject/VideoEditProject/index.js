@@ -276,11 +276,6 @@ EditSupportFilesContent.propTypes = {
 
 const EditSupportFilesModal = props =>
   withModal( props, EditSupportFilesButton, EditSupportFilesContent );
-EditSupportFilesModal.propTypes = {
-  className: string,
-  fileType: string,
-  btnContent: string
-};
 
 const SupportItem = ( props ) => {
   const { lang, fileType, isAvailable } = props;
