@@ -442,9 +442,9 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleChange = ( e, { name, value, checked } ) => {
-    this.setState( previousState => ( {
+    this.setState( prevState => ( {
       projectData: {
-        ...previousState.projectData,
+        ...prevState.projectData,
         [name]: value || checked
       }
     } ) );
@@ -468,12 +468,12 @@ class VideoEditProject extends React.PureComponent {
 
     const { protectImages, tags } = this.state.projectData;
 
-    this.setState( previousState => ( {
+    this.setState( prevState => ( {
       hasSubmittedData: true,
       isUploadInProgress: true,
       displayTheSaveMsg: true,
       projectData: {
-        ...previousState.projectData,
+        ...prevState.projectData,
         tags: tags.length > 0 ? tags.split( /\s?[,;]\s?/ ) : tags,
         protectImages
       }
