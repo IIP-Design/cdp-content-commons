@@ -12,8 +12,10 @@ import makeSelectVideoEditProject from './selectors';
 
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
-import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import Breadcrumbs from 'components/Breadcrumbs';
+import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
+import PreviewProjectContent from 'components/Project/PreviewProjectContent/Loadable';
+
 import {
   Button,
   Checkbox,
@@ -40,12 +42,13 @@ import { categoryData, privacyOptions } from './mockData';
  */
 
 const withModal = ( props, Trigger, Content ) => (
-  <Modal trigger={ <Trigger { ...props } /> }>
+  <Modal closeIcon trigger={ <Trigger { ...props } /> }>
     <Modal.Content>
       <Content { ...props } />
     </Modal.Content>
   </Modal>
 );
+};
 
 const IconPopup = ( props ) => {
   const { message, size, iconType } = props;
@@ -85,6 +88,7 @@ const VideoItem = ( props ) => {
     language,
     textDirection,
     thumbnail,
+    alt,
     ...rest
   } = props;
 
@@ -111,7 +115,7 @@ const VideoItem = ( props ) => {
     <li className="video" style={ itemStyle } { ...itemProps }>
       <img
         src={ thumbnail }
-        alt={ `${title} - ${language} language video` }
+        alt={ alt }
         className="thumbnail"
       />
       <h3
@@ -129,6 +133,7 @@ VideoItem.propTypes = {
   language: string,
   textDirection: string,
   thumbnail: string,
+  alt: string,
   fileName: string,
   rest: object
 };
@@ -353,23 +358,16 @@ SupportFileTypeList.propTypes = {
   hasSubmittedData: bool
 };
 
-const SaveNotification = ( props ) => {
-  const { msg, customStyles } = props;
-  const defaultStyle = {
-    padding: '1em 1.5em',
-    fontSize: '0.625em',
-    backgroundColor: '#b9de52'
-  };
+const PreviewProjectButton = ( props ) => {
+  const btnProps = { ...props };
+  delete btnProps.data;
+  delete btnProps.projecttype;
 
-  const style = { ...defaultStyle, ...customStyles };
-
-  return <p style={ style }>{ msg }</p>;
-};
-SaveNotification.propTypes = {
-  msg: string.isRequired,
-  customStyles: object
+  return <Button { ...btnProps } />;
 };
 
+const PreviewProject = props =>
+  withModal( props, PreviewProjectButton, PreviewProjectContent );
 
 /* eslint-disable react/prefer-stateless-function */
 class VideoEditProject extends React.PureComponent {
@@ -387,7 +385,7 @@ class VideoEditProject extends React.PureComponent {
     /**
      * Use redux for these?
      */
-    projectData: {
+    formData: {
       title: '',
       privacySetting: 'anyone',
       author: '',
@@ -447,8 +445,8 @@ class VideoEditProject extends React.PureComponent {
 
   handleChange = ( e, { name, value, checked } ) => {
     this.setState( prevState => ( {
-      projectData: {
-        ...prevState.projectData,
+      formData: {
+        ...prevState.formData,
         [name]: value || checked
       }
     } ) );
@@ -457,7 +455,7 @@ class VideoEditProject extends React.PureComponent {
         categories,
         title,
         privacySetting
-      } = nextState.projectData;
+      } = nextState.formData;
       const categoryCount = categories.length;
 
       return ( {
@@ -470,14 +468,14 @@ class VideoEditProject extends React.PureComponent {
   handleSubmit = ( e ) => {
     e.preventDefault();
 
-    const { protectImages, tags } = this.state.projectData;
+    const { protectImages, tags } = this.state.formData;
 
     this.setState( prevState => ( {
       hasSubmittedData: true,
       isUploadInProgress: true,
       displayTheSaveMsg: true,
-      projectData: {
-        ...prevState.projectData,
+      formData: {
+        ...prevState.formData,
         tags: tags.length > 0 ? tags.split( /\s?[,;]\s?/ ) : tags,
         protectImages
       }
@@ -489,7 +487,12 @@ class VideoEditProject extends React.PureComponent {
   }
 
   render() {
-    const { supportFiles, videos } = this.props.videoEditProject;
+    const projectData = this.props.videoEditProject;
+    const {
+      projectType,
+      supportFiles,
+      videos
+    } = projectData;
 
     const {
       hasRequiredData,
@@ -499,7 +502,7 @@ class VideoEditProject extends React.PureComponent {
       displayTheSaveMsg,
       displayTheUploadSuccessMsg,
       hasExceededMaxCategories,
-      projectData
+      formData
     } = this.state;
 
     const {
@@ -512,7 +515,7 @@ class VideoEditProject extends React.PureComponent {
       publicDesc,
       internalDesc,
       protectImages
-    } = projectData;
+    } = formData;
 
     const pageTitle = `Project Details${hasSubmittedData ? ' - Edit' : ''}`;
 
@@ -548,12 +551,14 @@ class VideoEditProject extends React.PureComponent {
                 cancelButton="No, take me back"
                 confirmButton="Yes, delete forever"
               />
-              <Button
+              <PreviewProject
                 className="edit-project__btn--preview"
                 content="Preview Project"
                 basic
                 onClick={ this.handlePreview }
                 disabled={ !isUploadFinished }
+                data={ projectData }
+                projecttype={ `${projectType}s` }
               />
               <Button
                 className="edit-project__btn--final-review"

@@ -64,8 +64,8 @@
         }
         color: $grey !important;
         background-color: transparent !important;
+      }
     }
-  }
   }
 
   &__btn--preview,
@@ -88,8 +88,8 @@
       &.disabled:focus {
         color: $matisse-blue !important;
         background-color: transparent !important;
+      }
     }
-  }
   }
 
   &__btn--final-review,
@@ -110,7 +110,7 @@
     &.disabled:focus {
       color: #fff !important;
       background-color: $light-blue !important;
-  }
+    }
   }
 
   .msg--required {
@@ -188,6 +188,12 @@
     .rtl {
       direction: rtl;
       text-align: right;
+    }
+  }
+
+  .ui.modal {
+    > .content {
+      position: relative;
     }
   }
 }

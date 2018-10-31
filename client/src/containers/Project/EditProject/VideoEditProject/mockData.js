@@ -1,5 +1,3 @@
-import sampleThumbMD from '../../../../assets/images/Projects/madeinamerica_med.jpg';
-
 const categoryData = [
   {
     value: 'about-america',
@@ -79,6 +77,7 @@ const projects = [
     projectType: 'video',
     projectId: 'made-in-america',
     protectImages: false,
+    updated: '2018-27-06T00:00:00Z',
     projectData: {
       title: 'Made in America',
       author: 'Jane Doe',
@@ -109,11 +108,12 @@ const projects = [
     videos: [
       {
         title: 'Made in America',
-        thumbnail: sampleThumbMD,
+        thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
+        alt: 'Man walking through factory (State Dept.)',
         fileName: 'madeinamerica_english.mp4',
         fileSize: '631.9MB',
         dimensions: '1920 x 1080',
-        uploaded: 'April 13, 2018 at 3:45 PM',
+        uploaded: '2018-13-04T15:45:00Z',
         duration: '9:16',
         language: 'English',
         textDirection: 'ltr',
@@ -121,15 +121,16 @@ const projects = [
         videoType: 'Full Video',
         quality: 'For Web',
         publicDesc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.',
-        youTubeUrl: 'youtube.com/videourl'
+        youTubeUrl: 'https://www.youtube.com/watch?v=1evw4fRu3bo'
       },
       {
         title: 'Fabriqué en Amérique',
-        thumbnail: sampleThumbMD,
+        thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
+        alt: '',
         fileName: 'madeinamerica_french.mp4',
         fileSize: '631.9MB',
         dimensions: '1920 x 1080',
-        uploaded: 'April 13, 2018 at 3:45 PM',
+        uploaded: '2018-13-04T15:45:00Z',
         duration: '9:16',
         language: 'French',
         textDirection: 'ltr',
@@ -138,15 +139,16 @@ const projects = [
         quality: 'For Web',
         publicDesc: 'La valeur et le sens de l’expression Fabriqué en Amérique, ont leur origine dans un passé riche d’innovation et de persévérance. Découvrez une partie de l’histoire de l’industrie manufacturière aux États-Unis et l’influence positive qu’elle a eue sur le monde, dans le passé et encore aujourd’hui.',
         additionalKeywords: ['la valeur', 'innovation', 'ipsum'],
-        youTubeUrl: 'youtube.com/videourl'
+        youTubeUrl: 'https://www.youtube.com/watch?v=1evw4fRu3bo'
       },
       {
         title: 'عنوان: امریکی ساختہ',
-        thumbnail: sampleThumbMD,
+        thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
+        alt: '',
         fileName: 'madeinamerica_arabic.mp4',
         fileSize: '631.9MB',
         dimensions: '1920 x 1080',
-        uploaded: 'April 13, 2018 at 3:45 PM',
+        uploaded: '2018-13-04T15:45:00Z',
         duration: '9:16',
         language: 'Arabic',
         textDirection: 'rtl',
@@ -155,7 +157,7 @@ const projects = [
         quality: 'For Web',
         publicDesc: 'امریکی ساختہ کی قدر اور مفہوم نے جدت طرازی اور استقامت کی شاندار تاریخ سے جنم لیا ہے۔ امریکہ میں مصنوعات سازی کی مختصر تاریخ سے آگہی حاصل کریں اور دنیا پر مرتب ہونے والے اس کے مثبت اثرات میں سے چند ایک کا احوال سنیں اور دیکھیں کہ آج اس کے فوائد کس طرح محسوس کیے جا رہے ہیں۔',
         additionalKeywords: ['ساختہ'],
-        youTubeUrl: 'youtube.com/videourl'
+        youTubeUrl: 'https://www.youtube.com/watch?v=1evw4fRu3bo'
       }
     ]
   }
