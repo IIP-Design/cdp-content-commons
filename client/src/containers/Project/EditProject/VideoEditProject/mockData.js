@@ -1,3 +1,5 @@
+import sampleThumbMD from '../../../../assets/images/Projects/madeinamerica_med.jpg';
+
 const categoryData = [
   {
     value: 'about-america',
@@ -72,59 +74,95 @@ const privacyOptions = [
   }
 ];
 
-const supportFiles = {
-  arabic: {
-    srt: 'madeinamerica_arabic.srt',
-    thumbnail: 'madeinamerica_arabic.jpg'
-  },
-  chinese: {
-    srt: 'madeinamerica_chinese.srt',
-    thumbnail: 'madeinamerica_chinese.jpg'
-  },
-  english: {
-    srt: 'madeinamerica_english.srt',
-    thumbnail: 'madeinamerica_english.jpg',
-    other: 'madeinamerica_english.mp3'
-  },
-  french: {
-    srt: 'madeinamerica_french.srt',
-    thumbnail: 'madeinamerica_french.jpg'
-  }
-};
-
-const additionalVideos = [
+const projects = [
   {
-    title: 'Made in America',
-    lang: 'english',
-    ltr: true,
-    thumbnail: {
-      url: 'https://via.placeholder.com/350x200',
-      alt: 'some alt text'
-    }
-  },
-  {
-    title: 'عنوان: امریکی ساختہ',
-    lang: 'arabic',
-    ltr: false,
-    thumbnail: {
-      url: 'https://via.placeholder.com/350x200',
-      alt: 'some alt text'
-    }
-  },
-  {
-    title: '« Made in America » French',
-    lang: 'french',
-    ltr: true,
-    thumbnail: {
-      url: 'https://via.placeholder.com/350x200',
-      alt: 'some alt text'
-    }
+    projectType: 'video',
+    projectId: 'made-in-america',
+    protectImages: false,
+    projectData: {
+      title: 'Made in America',
+      author: 'Jane Doe',
+      owner: 'IIP Video Production',
+      privacySetting: 'Anyone can see this project',
+      categories: ['Science & Technology'],
+      tags: ['economy', 'manufacturing'],
+      publicDesc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.',
+      internalDesc: 'Use this video on social media and embed on web pages to engage audiences in the importance of Economic Prosperity.'
+    },
+    supportFiles: {
+      srt: [
+        { lang: 'Arabic', file: 'madeinamerica_arabic.srt' },
+        { lang: 'Chinese', file: 'madeinamerica_chinese.srt' },
+        { lang: 'English', file: 'madeinamerica_english.srt' },
+        { lang: 'French', file: 'madeinamerica_french.srt' }
+      ],
+      thumbnail: [
+        { lang: 'Arabic', file: 'madeinamerica_arabic.jpg' },
+        { lang: 'Chinese', file: 'madeinamerica_chinese.jpg' },
+        { lang: 'English', file: 'madeinamerica_english.jpg' },
+        { lang: 'French', file: 'madeinamerica_french.jpg' }
+      ],
+      other: [
+        { lang: 'English', file: 'madeinamerica_english.mp3' }
+      ]
+    },
+    videos: [
+      {
+        title: 'Made in America',
+        thumbnail: sampleThumbMD,
+        fileName: 'madeinamerica_english.mp4',
+        fileSize: '631.9MB',
+        dimensions: '1920 x 1080',
+        uploaded: 'April 13, 2018 at 3:45 PM',
+        duration: '9:16',
+        language: 'English',
+        textDirection: 'ltr',
+        subtitlesCaptions: 'Clean - No Captions',
+        videoType: 'Full Video',
+        quality: 'For Web',
+        publicDesc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.',
+        youTubeUrl: 'youtube.com/videourl'
+      },
+      {
+        title: 'Fabriqué en Amérique',
+        thumbnail: sampleThumbMD,
+        fileName: 'madeinamerica_french.mp4',
+        fileSize: '631.9MB',
+        dimensions: '1920 x 1080',
+        uploaded: 'April 13, 2018 at 3:45 PM',
+        duration: '9:16',
+        language: 'French',
+        textDirection: 'ltr',
+        subtitlesCaptions: 'Clean - No Captions',
+        videoType: 'Full Video',
+        quality: 'For Web',
+        publicDesc: 'La valeur et le sens de l’expression Fabriqué en Amérique, ont leur origine dans un passé riche d’innovation et de persévérance. Découvrez une partie de l’histoire de l’industrie manufacturière aux États-Unis et l’influence positive qu’elle a eue sur le monde, dans le passé et encore aujourd’hui.',
+        additionalKeywords: ['la valeur', 'innovation', 'ipsum'],
+        youTubeUrl: 'youtube.com/videourl'
+      },
+      {
+        title: 'عنوان: امریکی ساختہ',
+        thumbnail: sampleThumbMD,
+        fileName: 'madeinamerica_arabic.mp4',
+        fileSize: '631.9MB',
+        dimensions: '1920 x 1080',
+        uploaded: 'April 13, 2018 at 3:45 PM',
+        duration: '9:16',
+        language: 'Arabic',
+        textDirection: 'rtl',
+        subtitlesCaptions: 'Clean - No Captions',
+        videoType: 'Full Video',
+        quality: 'For Web',
+        publicDesc: 'امریکی ساختہ کی قدر اور مفہوم نے جدت طرازی اور استقامت کی شاندار تاریخ سے جنم لیا ہے۔ امریکہ میں مصنوعات سازی کی مختصر تاریخ سے آگہی حاصل کریں اور دنیا پر مرتب ہونے والے اس کے مثبت اثرات میں سے چند ایک کا احوال سنیں اور دیکھیں کہ آج اس کے فوائد کس طرح محسوس کیے جا رہے ہیں۔',
+        additionalKeywords: ['ساختہ'],
+        youTubeUrl: 'youtube.com/videourl'
+      }
+    ]
   }
 ];
 
 export {
   categoryData,
   privacyOptions,
-  supportFiles,
-  additionalVideos
+  projects
 };

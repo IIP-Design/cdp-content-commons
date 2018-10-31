@@ -9,6 +9,7 @@ import authReducer from 'containers/Auth/reducer';
 import recentsReducer from 'containers/Recents/reducer';
 
 // admin reducers
+import videoEditProjectReducer from 'containers/Project/EditProject/VideoEditProject/reducer';
 import videoReviewProjectReducer from 'containers/Project/ReviewProject/VideoReviewProject/reducer';
 
 export default combineReducers( {
@@ -16,5 +17,6 @@ export default combineReducers( {
   global: globalReducer,
   auth: authReducer,
   recents: recentsReducer,
+  videoEditProject: videoEditProjectReducer,
   videoReviewProject: videoReviewProjectReducer
 } );

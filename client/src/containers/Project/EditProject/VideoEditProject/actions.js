@@ -6,8 +6,7 @@
 
 import { DEFAULT_ACTION } from './constants';
 
-export const defaultAction = () => {
-  return {
-    type: DEFAULT_ACTION
-  };
-};
+export const defaultAction = videoID => ( {
+  type: DEFAULT_ACTION,
+  payload: videoID
+} );

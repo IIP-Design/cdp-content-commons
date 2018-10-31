@@ -3,7 +3,12 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the VideoEditProject state
  */
-const selectVideoEditProject = state => state.videoEditProject;
+const selectVideoEditProject = ( state, props ) => {
+  const { videoID } = props.match.params;
+  const projects = state.videoEditProject;
+  const selectedProject = projects.find( project => project.projectId === videoID );
+  return selectedProject || null;
+};
 
 /**
  * Other specific selectors

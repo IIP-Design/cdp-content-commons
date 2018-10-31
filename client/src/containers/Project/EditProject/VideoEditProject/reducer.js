@@ -5,9 +5,10 @@
  */
 
 import { DEFAULT_ACTION } from './constants';
+import { projects } from './mockData';
 
 
-export const INITIAL_STATE = {};
+export const INITIAL_STATE = projects;
 
 function videoEditProjectReducer( state = INITIAL_STATE, action ) {
   switch ( action.type ) {

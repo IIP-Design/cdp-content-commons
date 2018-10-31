@@ -31,12 +31,7 @@ import {
 } from 'semantic-ui-react';
 
 import './VideoEditProject.css';
-import {
-  categoryData,
-  privacyOptions,
-  supportFiles,
-  additionalVideos
-} from './mockData';
+import { categoryData, privacyOptions } from './mockData';
 
 
 /**
@@ -87,11 +82,24 @@ EditSingleProjectItem.propTypes = {
 const VideoItem = ( props ) => {
   const {
     title,
-    lang,
-    ltr,
+    language,
+    textDirection,
     thumbnail,
     ...rest
   } = props;
+
+  /**
+   * Duplicate props to avoid unknown prop warning
+   * @see https://reactjs.org/warnings/unknown-prop.html
+   */
+  const itemProps = { ...rest };
+  delete itemProps.fileName;
+  delete itemProps.fileSize;
+  delete itemProps.subtitlesCaptions;
+  delete itemProps.videoType;
+  delete itemProps.publicDesc;
+  delete itemProps.youTubeUrl;
+  delete itemProps.additionalKeywords;
 
   const itemStyle = {
     flexBasis: '25%',
@@ -100,27 +108,29 @@ const VideoItem = ( props ) => {
   };
 
   return (
-    <li className="video" style={ itemStyle } { ...rest }>
+    <li className="video" style={ itemStyle } { ...itemProps }>
       <img
-        src={ thumbnail.url }
-        alt={ thumbnail.alt }
+        src={ thumbnail }
+        alt={ `${title} - ${language} language video` }
         className="thumbnail"
       />
       <h3
-        className={ ltr ? 'ltr' : 'rtl' }
+        className={ textDirection }
         style={ { marginTop: '0' } }
       >
         { title }
       </h3>
-      <p style={ { textTransform: 'capitalize' } }>{ lang }</p>
+      <p style={ { textTransform: 'capitalize' } }>{ language }</p>
     </li>
   );
 };
 VideoItem.propTypes = {
   title: string,
-  lang: string,
-  ltr: bool,
-  thumbnail: object
+  language: string,
+  textDirection: string,
+  thumbnail: string,
+  fileName: string,
+  rest: object
 };
 
 const ProjectItem = ( props ) => {
@@ -191,7 +201,7 @@ const ProjectItemsList = ( props ) => {
       <ul className="project-items" style={ listStyle }>
         { data.map( item => (
           <ProjectItem
-            key={ item.title }
+            key={ `${item.title} - ${item.language}` }
             { ...item }
             isAvailable={ hasSubmittedData }
             type={ projectType }
@@ -278,27 +288,21 @@ const EditSupportFilesModal = props =>
   withModal( props, EditSupportFilesButton, EditSupportFilesContent );
 
 const SupportItem = ( props ) => {
-  const { lang, fileType, isAvailable } = props;
-  const content = supportFiles[lang][fileType];
+  const { fileType, item, isAvailable } = props;
   const placeholderStyle = {
     filter: 'blur(4px)'
   };
 
-  if ( content ) {
-    return (
-      <li className="support-item" style={ !isAvailable ? placeholderStyle : null }>
-        { content }
-        <span className="item-lang" style={ { fontWeight: 'bold', textTransform: 'capitalize' } }>
-          { lang }
-        </span>
-      </li>
-    );
-  }
-  return null;
+  return (
+    <li key={ `${fileType}-${item.lang}` } className="support-item" style={ !isAvailable ? placeholderStyle : null }>
+      { item.file }
+      <b className="item-lang">{ item.lang }</b>
+    </li>
+  );
 };
 SupportItem.propTypes = {
-  lang: string,
   fileType: string,
+  item: object.isRequired,
   isAvailable: bool
 };
 
@@ -329,11 +333,11 @@ const SupportFileTypeList = ( props ) => {
           </Fragment> }
       </h3>
       <ul>
-        { data.map( n => (
+        { data.map( obj => (
           <SupportItem
-            key={ n }
-            lang={ n }
+            key={ `${fileType}-${obj.lang}` }
             fileType={ fileType }
+            item={ obj }
             isAvailable={ hasSubmittedData }
           />
         ) ) }
@@ -385,7 +389,7 @@ class VideoEditProject extends React.PureComponent {
      */
     projectData: {
       title: '',
-      privacy: 'anyone',
+      privacySetting: 'anyone',
       author: '',
       owner: '',
       categories: [],
@@ -452,13 +456,13 @@ class VideoEditProject extends React.PureComponent {
       const {
         categories,
         title,
-        privacy
+        privacySetting
       } = nextState.projectData;
       const categoryCount = categories.length;
 
       return ( {
         hasExceededMaxCategories: categoryCount > this.MAX_CATEGORY_COUNT,
-        hasRequiredData: title && privacy && categoryCount > 0 && categoryCount <= this.MAX_CATEGORY_COUNT
+        hasRequiredData: title && privacySetting && categoryCount > 0 && categoryCount <= this.MAX_CATEGORY_COUNT
       } );
     } );
   };
@@ -485,7 +489,8 @@ class VideoEditProject extends React.PureComponent {
   }
 
   render() {
-    const langs = Object.keys( supportFiles );
+    const { supportFiles, videos } = this.props.videoEditProject;
+
     const {
       hasRequiredData,
       hasSubmittedData,
@@ -499,7 +504,7 @@ class VideoEditProject extends React.PureComponent {
 
     const {
       title,
-      privacy,
+      privacySetting,
       author,
       owner,
       categories,
@@ -631,7 +636,7 @@ class VideoEditProject extends React.PureComponent {
                         options={ privacyOptions }
                         required
                         name="privacy"
-                        value={ privacy }
+                        value={ privacySetting }
                         onChange={ this.handleChange }
                       />
                     </Form.Group>
@@ -745,7 +750,7 @@ class VideoEditProject extends React.PureComponent {
                     headline="SRT Files"
                     fileType="srt"
                     popupMsg="Some info about what SRT files are."
-                    data={ langs }
+                    data={ supportFiles.srt }
                     hasSubmittedData={ hasSubmittedData }
                   />
                 </Grid.Column>
@@ -755,7 +760,7 @@ class VideoEditProject extends React.PureComponent {
                     headline="Thumbnail Files"
                     fileType="thumbnail"
                     popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
-                    data={ langs }
+                    data={ supportFiles.thumbnail }
                     hasSubmittedData={ hasSubmittedData }
                   />
 
@@ -780,7 +785,7 @@ class VideoEditProject extends React.PureComponent {
                     headline="Additional Files"
                     fileType="other"
                     popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
-                    data={ langs }
+                    data={ supportFiles.other }
                     hasSubmittedData={ hasSubmittedData }
                   />
                 </Grid.Column>
@@ -790,7 +795,7 @@ class VideoEditProject extends React.PureComponent {
 
           <div className="edit-project__items">
             <ProjectItemsList
-              data={ additionalVideos }
+              data={ videos }
               headline="Videos in Project"
               hasSubmittedData={ hasSubmittedData }
               projectType="video"
@@ -817,11 +822,12 @@ class VideoEditProject extends React.PureComponent {
 
 VideoEditProject.propTypes = {
   history: object,
-  match: object
+  match: object,
+  videoEditProject: object
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {
-  videoeditproject: makeSelectVideoEditProject()
+  videoEditProject: makeSelectVideoEditProject()
 } );
 
 export default connect( mapStateToProps, actions )( VideoEditProject );
