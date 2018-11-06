@@ -7,6 +7,8 @@
 import React, { Fragment } from 'react';
 import { object } from 'prop-types';
 import { Dropdown, Icon } from 'semantic-ui-react';
+
+import Notification from 'components/Project/Notification/Loadable';
 import './PreviewProjectContent.css';
 
 
@@ -110,7 +112,10 @@ class PreviewProjectContent extends React.PureComponent {
 
     return (
       <Fragment>
-        <p style={ previewMsgStyles }>This is a preview of your { projectType } project on Content Commons.</p>
+        <Notification
+          customStyles={ previewMsgStyles }
+          msg={ `This is a preview of your ${projectType} project on Content Commons.` }
+        />
         <article { ...contentProps } className="project-preview">
           <header className="project-preview__header">
             <h1 className={ textDirection }>{ title }</h1>

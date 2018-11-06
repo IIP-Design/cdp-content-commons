@@ -15,6 +15,7 @@ import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
 import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent/Loadable';
+import Notification from 'components/Project/Notification/Loadable';
 
 import {
   Button,
@@ -48,7 +49,6 @@ const withModal = ( props, Trigger, Content ) => (
     </Modal.Content>
   </Modal>
 );
-};
 
 const IconPopup = ( props ) => {
   const { message, size, iconType } = props;
@@ -576,7 +576,7 @@ class VideoEditProject extends React.PureComponent {
               </p> }
 
             { displayTheSaveMsg &&
-              <SaveNotification
+              <Notification
                 customStyles={ {
                   position: 'absolute',
                   top: '11em',
