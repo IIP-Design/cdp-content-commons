@@ -93,10 +93,10 @@ class PreviewProjectContent extends React.PureComponent {
      * @see https://reactjs.org/warnings/unknown-prop.html
      */
     const contentProps = { ...this.props };
-    delete contentProps.basic;
-    delete contentProps.handlePreview;
     delete contentProps.isUploadFinished;
     delete contentProps.data;
+    delete contentProps.modalTrigger;
+    delete contentProps.modalContent;
 
     const previewMsgStyles = {
       position: 'absolute',

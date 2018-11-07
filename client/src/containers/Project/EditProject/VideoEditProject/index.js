@@ -4,7 +4,7 @@
  *
  */
 import React, { Fragment } from 'react';
-import { array, bool, func, object, string } from 'prop-types';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -15,8 +15,14 @@ import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
 import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent/Loadable';
-import EditSingleProjectItem from '../../EditSingleProjectItem';
+import SupportFileTypeList from 'components/Project/EditProject/SupportFileTypeList';
+import IconPopup from 'components/Project/EditProject/IconPopup';
+import PreviewProject from 'components/Project/PreviewProject';
 import Notification from 'components/Project/Notification/Loadable';
+import ProjectItemsList from 'components/Project/ProjectItemsList';
+import VideoItem from 'components/Project/Types/VideoItem';
+
+import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
 import {
   Button,
@@ -27,8 +33,6 @@ import {
   Grid,
   Icon,
   Input,
-  Modal,
-  Popup,
   Progress,
   Select,
   TextArea
@@ -37,323 +41,6 @@ import {
 import './VideoEditProject.css';
 import { categoryData, privacyOptions } from './mockData';
 
-
-/**
- * These components can probably probably
- * be placed in their own separate files
- */
-
-const withModal = ( props, Trigger, Content ) => (
-  <Modal closeIcon trigger={ <Trigger { ...props } /> }>
-    <Modal.Content>
-      <Content { ...props } />
-    </Modal.Content>
-  </Modal>
-);
-
-const IconPopup = ( props ) => {
-  const { message, size, iconType } = props;
-  return (
-    <Popup
-      trigger={ <Icon size={ size } name={ iconType } /> }
-      content={ message }
-      size={ size }
-      inverted
-    />
-  );
-};
-IconPopup.propTypes = {
-  message: string.isRequired,
-  size: string,
-  iconType: string.isRequired
-};
-
-const VideoItem = ( props ) => {
-  const {
-    title,
-    language,
-    textDirection,
-    thumbnail,
-    alt,
-    ...rest
-  } = props;
-
-  /**
-   * Duplicate props to avoid unknown prop warning
-   * @see https://reactjs.org/warnings/unknown-prop.html
-   */
-  const itemProps = { ...rest };
-  delete itemProps.fileName;
-  delete itemProps.fileSize;
-  delete itemProps.subtitlesCaptions;
-  delete itemProps.videoType;
-  delete itemProps.publicDesc;
-  delete itemProps.youTubeUrl;
-  delete itemProps.additionalKeywords;
-
-  const itemStyle = {
-    flexBasis: '25%',
-    marginRight: '1rem',
-    cursor: 'pointer'
-  };
-
-  return (
-    <li className="video" style={ itemStyle } { ...itemProps }>
-      <img
-        src={ thumbnail }
-        alt={ alt }
-        className="thumbnail"
-      />
-      <h3
-        className={ textDirection }
-        style={ { marginTop: '0' } }
-      >
-        { title }
-      </h3>
-      <p style={ { textTransform: 'capitalize' } }>{ language }</p>
-    </li>
-  );
-};
-VideoItem.propTypes = {
-  title: string,
-  language: string,
-  textDirection: string,
-  thumbnail: string,
-  alt: string,
-  fileName: string,
-  rest: object
-};
-
-const ProjectItem = ( props ) => {
-  const {
-    isAvailable,
-    displayItemInModal,
-    modalTrigger,
-    modalContent,
-    customPlaceholderStyle,
-    ...rest
-  } = props;
-
-  const Item = modalTrigger;
-
-  if ( !isAvailable ) {
-    const defaultPlaceholderStyle = {
-      flexBasis: '25%',
-      marginRight: '1rem',
-      cursor: 'not-allowed',
-      filter: 'blur(4px)'
-    };
-    const style = {
-      ...defaultPlaceholderStyle,
-      ...customPlaceholderStyle
-    };
-
-    return <Item { ...rest } style={ style } />;
-  }
-
-  return (
-    ( displayItemInModal &&
-      withModal( { ...rest }, modalTrigger, modalContent ) ) ||
-      <Item { ...rest } />
-  );
-};
-ProjectItem.propTypes = {
-  isAvailable: bool,
-  displayItemInModal: bool,
-  modalTrigger: func,
-  modalContent: func,
-  customPlaceholderStyle: object
-};
-
-const ProjectItemsList = ( props ) => {
-  const {
-    data,
-    headline,
-    hasSubmittedData,
-    projectType,
-    displayItemInModal,
-    modalTrigger,
-    modalContent,
-    customListStyle,
-    customPlaceholderStyle
-  } = props;
-
-  const defaultListStyle = {
-    display: 'flex',
-    paddingLeft: '0',
-    listStyle: 'none'
-  };
-
-  const listStyle = { ...defaultListStyle, ...customListStyle };
-
-  return (
-    <Fragment>
-      <h2 style={ { textTransform: 'uppercase' } }>{ headline }</h2>
-      <ul className="project-items" style={ listStyle }>
-        { data.map( item => (
-          <ProjectItem
-            key={ `${item.title} - ${item.language}` }
-            { ...item }
-            isAvailable={ hasSubmittedData }
-            type={ projectType }
-            displayItemInModal={ displayItemInModal }
-            modalTrigger={ modalTrigger }
-            modalContent={ modalContent }
-            customPlaceholderStyle={ customPlaceholderStyle }
-          />
-        ) ) }
-      </ul>
-    </Fragment>
-  );
-};
-ProjectItemsList.propTypes = {
-  data: array.isRequired,
-  headline: string,
-  hasSubmittedData: bool,
-  projectType: string.isRequired,
-  displayItemInModal: bool,
-  modalTrigger: func,
-  modalContent: func,
-  customListStyle: object,
-  customPlaceholderStyle: object
-};
-
-const EditSupportFilesButton = ( props ) => {
-  const { className, btnContent } = props;
-
-  /**
-   * Duplicate props to avoid unknown prop warning
-   * @see https://reactjs.org/warnings/unknown-prop.html
-   */
-  const btnProps = { ...props };
-  delete btnProps.fileType;
-  delete btnProps.btnContent;
-  delete btnProps.className;
-
-  return (
-    <Button
-      className={ className }
-      type="button"
-      content={ btnContent }
-      size="small"
-      basic
-      compact
-      { ...btnProps }
-    />
-  );
-};
-EditSupportFilesButton.propTypes = {
-  className: string,
-  btnContent: string.isRequired
-};
-
-const EditSupportFilesContent = ( props ) => {
-  const { fileType } = props;
-
-  /**
-   * Duplicate props to avoid unknown prop warning
-   * @see https://reactjs.org/warnings/unknown-prop.html
-   */
-  const articleProps = { ...props };
-  delete articleProps.btnContent;
-  delete articleProps.fileType;
-
-  const headingStyle = {
-    textTransform: ( fileType === 'srt' && 'uppercase' ) || 'capitalize'
-  };
-
-  return (
-    <article className={ `${fileType}-files` } { ...articleProps }>
-      <header className="header">
-        <h2>Edit <span style={ headingStyle }>{ fileType }</span> files in this project</h2>
-      </header>
-      <p>Curabitur blandit tempus porttitor.</p>
-    </article>
-  );
-};
-EditSupportFilesContent.propTypes = {
-  fileType: string
-};
-
-const EditSupportFilesModal = props =>
-  withModal( props, EditSupportFilesButton, EditSupportFilesContent );
-
-const SupportItem = ( props ) => {
-  const { fileType, item, isAvailable } = props;
-  const placeholderStyle = {
-    filter: 'blur(4px)'
-  };
-
-  return (
-    <li key={ `${fileType}-${item.lang}` } className="support-item" style={ !isAvailable ? placeholderStyle : null }>
-      { item.file }
-      <b className="item-lang">{ item.lang }</b>
-    </li>
-  );
-};
-SupportItem.propTypes = {
-  fileType: string,
-  item: object.isRequired,
-  isAvailable: bool
-};
-
-const SupportFileTypeList = ( props ) => {
-  const {
-    headline,
-    fileType,
-    popupMsg,
-    data,
-    hasSubmittedData
-  } = props;
-
-  return (
-    <Fragment>
-      <h3>{ `${headline} ` }
-        { hasSubmittedData &&
-          <Fragment>
-            <IconPopup
-              message={ popupMsg }
-              size="small"
-              iconType="info circle"
-            />
-            <EditSupportFilesModal
-              btnContent="Edit"
-              className="btn--edit"
-              fileType={ fileType }
-            />
-          </Fragment> }
-      </h3>
-      <ul>
-        { data.map( obj => (
-          <SupportItem
-            key={ `${fileType}-${obj.lang}` }
-            fileType={ fileType }
-            item={ obj }
-            isAvailable={ hasSubmittedData }
-          />
-        ) ) }
-      </ul>
-    </Fragment>
-  );
-};
-SupportFileTypeList.propTypes = {
-  headline: string,
-  fileType: string,
-  popupMsg: string,
-  data: array.isRequired,
-  hasSubmittedData: bool
-};
-
-const PreviewProjectButton = ( props ) => {
-  const btnProps = { ...props };
-  delete btnProps.data;
-  delete btnProps.projecttype;
-
-  return <Button { ...btnProps } />;
-};
-
-const PreviewProject = props =>
-  withModal( props, PreviewProjectButton, PreviewProjectContent );
 
 /* eslint-disable react/prefer-stateless-function */
 class VideoEditProject extends React.PureComponent {
@@ -396,10 +83,6 @@ class VideoEditProject extends React.PureComponent {
 
   handleDeleteCancel = () => {
     this.setState( { deleteConfirmOpen: false } );
-  }
-
-  handlePreview = () => {
-    console.log( 'Preview Project' );
   }
 
   handleFinalReview = () => {
@@ -538,13 +221,18 @@ class VideoEditProject extends React.PureComponent {
                 confirmButton="Yes, delete forever"
               />
               <PreviewProject
-                className="edit-project__btn--preview"
-                content="Preview Project"
-                basic
-                onClick={ this.handlePreview }
-                disabled={ !isUploadFinished }
-                data={ projectData }
-                projecttype={ `${projectType}s` }
+                triggerProps={ {
+                  className: 'edit-project__btn--preview',
+                  content: 'Preview Project',
+                  basic: true,
+                  disabled: !isUploadFinished
+                } }
+                contentProps={ {
+                  data: projectData,
+                  projecttype: `${projectType}s`
+                } }
+                modalTrigger={ Button }
+                modalContent={ PreviewProjectContent }
               />
               <Button
                 className="edit-project__btn--final-review"
