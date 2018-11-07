@@ -15,6 +15,7 @@ import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
 import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent/Loadable';
+import EditSingleProjectItem from '../../EditSingleProjectItem';
 import Notification from 'components/Project/Notification/Loadable';
 
 import {
@@ -65,21 +66,6 @@ IconPopup.propTypes = {
   message: string.isRequired,
   size: string,
   iconType: string.isRequired
-};
-
-const EditSingleProjectItem = ( props ) => {
-  const { title } = props;
-  return (
-    <article className="edit-project-item">
-      <header className="header">
-        <h2>{ title }</h2>
-      </header>
-      <p>Edit Single Project Item Component</p>
-    </article>
-  );
-};
-EditSingleProjectItem.propTypes = {
-  title: string
 };
 
 const VideoItem = ( props ) => {
