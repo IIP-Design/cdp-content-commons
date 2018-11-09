@@ -14,13 +14,13 @@ import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
 import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
-import PreviewProjectContent from 'components/Project/PreviewProjectContent/Loadable';
+import PreviewProject from 'components/Project/PreviewProject';
+import PreviewProjectContent from 'components/Project/PreviewProjectContent';
 import SupportFileTypeList from 'components/Project/EditProject/SupportFileTypeList';
 import IconPopup from 'components/Project/EditProject/IconPopup';
-import PreviewProject from 'components/Project/PreviewProject';
-import Notification from 'components/Project/Notification/Loadable';
-import ProjectItemsList from 'components/Project/ProjectItemsList';
+import StatusMessages from 'components/Project/EditProject/StatusMessages';
 import VideoItem from 'components/Project/Types/VideoItem';
+import ProjectItemsList from 'components/Project/ProjectItemsList';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
@@ -31,7 +31,6 @@ import {
   Dropdown,
   Form,
   Grid,
-  Icon,
   Input,
   Progress,
   Select,
@@ -196,7 +195,7 @@ class VideoEditProject extends React.PureComponent {
       backgroundColor: isUploadFinished ? '#f1f1f1' : '#02bfe7'
     };
 
-    const saveNotificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
+    const notificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
 
     return (
       <Page title="Edit Project" description="Edit content project">
@@ -244,21 +243,12 @@ class VideoEditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__status" style={ isUploadInProgress ? null : statusStyle }>
-            { !hasSubmittedData &&
-              <p style={ { padding: '1em 1.75em' } }>
-                <strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.
-              </p> }
-
-            { displayTheSaveMsg &&
-              <Notification
-                customStyles={ {
-                  position: 'absolute',
-                  top: '11em',
-                  left: '50%',
-                  transform: 'translateX(-50%)'
-                  } }
-                msg={ saveNotificationMsg }
-              /> }
+            <StatusMessages
+              hasSubmittedData={ hasSubmittedData }
+              displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
+              displayTheSaveMsg={ displayTheSaveMsg }
+              notificationMsg={ notificationMsg }
+            />
 
             { isUploadInProgress &&
               <Progress
@@ -275,11 +265,6 @@ class VideoEditProject extends React.PureComponent {
                 </p>
                 <p>Please keep this page open until upload is complete</p>
               </Progress> }
-
-            { displayTheUploadSuccessMsg &&
-              <p style={ { padding: '1em 1.75em' } }>
-                <Icon size="large" name="check circle outline" /> Files uploaded successfully!
-              </p> }
           </div>
 
           <div className="edit-project__content" style={ contentStyle }>
