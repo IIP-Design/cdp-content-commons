@@ -146,35 +146,6 @@
     padding: 1.75em;
   }
 
-  &__support-files {
-    border-top: 1px solid $light-grey;
-    padding: 1.75em;
-
-    ul {
-      padding-left: 0;
-      list-style: none;
-
-      > .support-item {
-        display: flex;
-        @media screen and (min-width: 769px) and (max-width: 1080px) {
-          flex-direction: column;
-          margin-bottom: 0.5em;
-
-          > .item-lang {
-            order: -1;
-          }
-        }
-        justify-content: space-between;
-        font-size: 0.875em;
-      }
-    }
-
-    i.small.icon {
-      margin-left: 0.875em;
-      font-size: 0.875em;
-    }
-  }
-
   &__items {
     border-top: 1px solid $light-grey;
     padding: 1.75em;

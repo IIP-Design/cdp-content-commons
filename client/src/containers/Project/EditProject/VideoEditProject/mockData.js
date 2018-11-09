@@ -72,6 +72,29 @@ const privacyOptions = [
   }
 ];
 
+const supportFilesConfig = {
+  srt: {
+    headline: 'SRT Files',
+    fileType: 'srt',
+    popupMsg: 'Some info about what SRT files are.'
+  },
+  thumbnail: {
+    headline: 'Thumbnail Files',
+    fileType: 'thumbnail',
+    popupMsg: 'Thumbnail to be used when a video is unable to be played or when audio only audio is used.',
+    checkBoxLabel: 'Disable right-click to protect your images',
+    checkBoxName: 'protectImages',
+    iconMsg: 'Checking this prevents people from downloading and using your images. Useful if your images are licensed.',
+    iconSize: 'small',
+    iconType: 'info circle'
+  },
+  other: {
+    headline: 'Additional Files',
+    fileType: 'other',
+    popupMsg: 'Additional files that can be used with this video, e.g., audio file, pdf.'
+  }
+};
+
 const projects = [
   {
     projectType: 'video',
@@ -166,5 +189,6 @@ const projects = [
 export {
   categoryData,
   privacyOptions,
+  supportFilesConfig,
   projects
 };

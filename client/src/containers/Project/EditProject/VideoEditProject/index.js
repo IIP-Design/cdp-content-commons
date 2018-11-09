@@ -3,7 +3,7 @@
  * VideoEditProject
  *
  */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -16,17 +16,15 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
-import SupportFileTypeList from 'components/Project/EditProject/SupportFileTypeList';
-import IconPopup from 'components/Project/EditProject/IconPopup';
 import StatusMessages from 'components/Project/EditProject/StatusMessages';
-import VideoItem from 'components/Project/Types/VideoItem';
+import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
+import VideoItem from 'components/Project/Types/VideoItem';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
 import {
   Button,
-  Checkbox,
   Confirm,
   Dropdown,
   Form,
@@ -38,7 +36,11 @@ import {
 } from 'semantic-ui-react';
 
 import './VideoEditProject.css';
-import { categoryData, privacyOptions } from './mockData';
+import {
+  categoryData,
+  privacyOptions,
+  supportFilesConfig
+} from './mockData';
 
 
 /* eslint-disable react/prefer-stateless-function */
@@ -401,60 +403,14 @@ class VideoEditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__support-files">
-            <Grid stackable>
-              <Grid.Row>
-                <Grid.Column width={ 16 }>
-                  <h2 className="heading uppercase">Support Files</h2>
-                </Grid.Column>
-              </Grid.Row>
-
-              <Grid.Row columns={ 3 } divided>
-                <Grid.Column>
-                  <SupportFileTypeList
-                    headline="SRT Files"
-                    fileType="srt"
-                    popupMsg="Some info about what SRT files are."
-                    data={ supportFiles.srt }
-                    hasSubmittedData={ hasSubmittedData }
-                  />
-                </Grid.Column>
-
-                <Grid.Column>
-                  <SupportFileTypeList
-                    headline="Thumbnail Files"
-                    fileType="thumbnail"
-                    popupMsg="Thumbnail to be used when a video is unable to be played or when audio only audio is used."
-                    data={ supportFiles.thumbnail }
-                    hasSubmittedData={ hasSubmittedData }
-                  />
-
-                  <Fragment>
-                    <Checkbox
-                      label="Disable right-click to protect your images"
-                      name="protectImages"
-                      type="checkbox"
-                      checked={ protectImages }
-                      onChange={ this.handleChange }
-                    />
-                    <IconPopup
-                      message="Checking this prevents people from downloading and using your images. Useful if your images are licensed."
-                      size="small"
-                      iconType="info circle"
-                    />
-                  </Fragment>
-                </Grid.Column>
-
-                <Grid.Column>
-                  <SupportFileTypeList
-                    headline="Additional Files"
-                    fileType="other"
-                    popupMsg="Additional files that can be used with this video, e.g., audio file, pdf."
-                    data={ supportFiles.other }
-                    hasSubmittedData={ hasSubmittedData }
-                  />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            <ProjectSupportFiles
+              heading="Support Files"
+              supportFiles={ supportFiles }
+              hasSubmittedData={ hasSubmittedData }
+              protectImages={ protectImages }
+              handleChange={ this.handleChange }
+              config={ supportFilesConfig }
+            />
           </div>
 
           <div className="edit-project__items">
