@@ -4,9 +4,9 @@
  *
  */
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import { array, bool, func, object, string } from 'prop-types';
-// import './ProjectItemsList.css';
+import './ProjectItemsList.css';
 
 import ProjectItem from 'components/Project/ProjectItem';
 
@@ -32,9 +32,9 @@ const ProjectItemsList = ( props ) => {
   const listStyle = { ...defaultListStyle, ...customListStyle };
 
   return (
-    <Fragment>
-      <h2 style={ { textTransform: 'uppercase' } }>{ headline }</h2>
-      <ul className="project-items" style={ listStyle }>
+    <div className="project-items">
+      <h2 className="list-heading">{ headline }</h2>
+      <ul className="items-list" style={ listStyle }>
         { data.map( item => (
           <ProjectItem
             key={ `${item.title} - ${item.language}` }
@@ -48,7 +48,7 @@ const ProjectItemsList = ( props ) => {
           />
         ) ) }
       </ul>
-    </Fragment>
+    </div>
   );
 };
 

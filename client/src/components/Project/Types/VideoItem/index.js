@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { object, string } from 'prop-types';
-// import './VideoItem.css';
+import './VideoItem.css';
 
 const VideoItem = ( props ) => {
   const {
@@ -15,6 +15,7 @@ const VideoItem = ( props ) => {
     textDirection,
     thumbnail,
     alt,
+    fileName,
     ...rest
   } = props;
 
@@ -23,7 +24,6 @@ const VideoItem = ( props ) => {
    * @see https://reactjs.org/warnings/unknown-prop.html
    */
   const itemProps = { ...rest };
-  delete itemProps.fileName;
   delete itemProps.fileSize;
   delete itemProps.subtitlesCaptions;
   delete itemProps.videoType;
@@ -32,25 +32,19 @@ const VideoItem = ( props ) => {
   delete itemProps.additionalKeywords;
 
   const itemStyle = {
-    flexBasis: '25%',
-    marginRight: '1rem',
+    flexBasis: '15em',
+    marginRight: '1em',
     cursor: 'pointer'
   };
 
   return (
-    <li className="video" style={ itemStyle } { ...itemProps }>
-      <img
-        src={ thumbnail }
-        alt={ alt }
-        className="thumbnail"
-      />
-      <h3
-        className={ textDirection }
-        style={ { marginTop: '0' } }
-      >
-        { title }
-      </h3>
-      <p style={ { textTransform: 'capitalize' } }>{ language }</p>
+    <li className="item video" style={ itemStyle } { ...itemProps }>
+      <div className="thumbnail">
+        <img src={ thumbnail } alt={ alt } />
+        <p className="file-name">{ fileName }</p>
+      </div>
+      <h3 className={ `item-heading ${textDirection}` }>{ title }</h3>
+      <p className="item-lang">{ language }</p>
     </li>
   );
 };

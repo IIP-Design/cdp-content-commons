@@ -178,17 +178,6 @@
   &__items {
     border-top: 1px solid $light-grey;
     padding: 1.75em;
-
-    .thumbnail {
-      height: auto;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .rtl {
-      direction: rtl;
-      text-align: right;
-    }
   }
 
   .ui.modal {

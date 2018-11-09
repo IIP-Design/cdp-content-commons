@@ -1,0 +1,47 @@
+.video {
+  .thumbnail {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(91, 97, 107, 0);
+      transition: all 200ms linear;
+    }
+
+    &:hover::before,
+    &:active::before {
+      background-color: rgba(91, 97, 107, 0.8);
+    }
+    
+    > .file-name {
+      position: absolute;
+      left: 0.625em;
+      bottom: 0.25em;
+      font-size: 0.75em;
+      color: transparent;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      transition: all 200ms linear;
+    }
+
+    &:hover > .file-name,
+    &:active > .file-name {
+      color: #fff;
+    }
+  }
+
+  .item-lang {
+    font-size: 0.875em;
+    text-transform: capitalize;
+  }
+
+  .rtl {
+    direction: rtl;
+    text-align: right;
+  }
+}

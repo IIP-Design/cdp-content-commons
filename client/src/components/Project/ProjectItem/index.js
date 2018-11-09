@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { bool, func, object } from 'prop-types';
-// import './ProjectItem.css';
+import './ProjectItem.css';
 
 import withModal from 'components/Project/EditProject/withModal';
 
@@ -24,8 +24,8 @@ const ProjectItem = ( props ) => {
 
   if ( !isAvailable ) {
     const defaultPlaceholderStyle = {
-      flexBasis: '25%',
-      marginRight: '1rem',
+      flexBasis: '15em',
+      marginRight: '1em',
       cursor: 'not-allowed',
       filter: 'blur(4px)'
     };
@@ -34,7 +34,7 @@ const ProjectItem = ( props ) => {
       ...customPlaceholderStyle
     };
 
-    return <Item { ...data } style={ style } />;
+    return <Item { ...data } className="placeholder" style={ style } />;
   }
 
   return (
