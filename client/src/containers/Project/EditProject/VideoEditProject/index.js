@@ -17,6 +17,7 @@ import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConf
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
 import StatusMessages from 'components/Project/EditProject/StatusMessages';
+import ProjectDataForm from 'components/Project/EditProject/ProjectDataForm';
 import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
 import VideoItem from 'components/Project/Types/VideoItem';
@@ -26,13 +27,7 @@ import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 import {
   Button,
   Confirm,
-  Dropdown,
-  Form,
-  Grid,
-  Input,
-  Progress,
-  Select,
-  TextArea
+  Progress
 } from 'semantic-ui-react';
 
 import './VideoEditProject.css';
@@ -270,136 +265,30 @@ class VideoEditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__content" style={ contentStyle }>
-            <Form className="edit-project__form project-data" onSubmit={ this.handleSubmit }>
-              <Grid stackable>
-                <Grid.Row>
-                  <Grid.Column width="16">
-                    <h2 className="heading">
-                      <span className="uppercase">Project Data</span>{ ' ' }
-                      <small className="msg--required">Required Fields *</small>
-                    </h2>
-                  </Grid.Column>
-                </Grid.Row>
+            <ProjectDataForm
+              handleSubmit={ this.handleSubmit }
+              handleChange={ this.handleChange }
 
-                <Grid.Row>
-                  <Grid.Column mobile={ 16 } computer={ 8 }>
-                    <Form.Group widths="equal">
-                      <Form.Field
-                        id="video-title"
-                        control={ Input }
-                        label="Video Title"
-                        required
-                        autoFocus="true"
-                        name="title"
-                        value={ title || '' }
-                        onChange={ this.handleChange }
-                      />
+              videoTitle={ title || '' }
+              privacyOptions={ privacyOptions }
+              privacySetting={ privacySetting }
 
-                      <Form.Field
-                        id="privacy-setting"
-                        control={ Select }
-                        label="Privacy Setting"
-                        options={ privacyOptions }
-                        required
-                        name="privacy"
-                        value={ privacySetting }
-                        onChange={ this.handleChange }
-                      />
-                    </Form.Group>
+              authorValue={ author || '' }
+              ownerValue={ owner || '' }
 
-                    <Form.Group widths="equal">
-                      <Form.Field
-                        id="author"
-                        control={ Input }
-                        label="Author"
-                        placeholder="Jane Doe"
-                        name="author"
-                        value={ author || '' }
-                        onChange={ this.handleChange }
-                      />
+              categoryLabel={ `Categories - select up to ${this.MAX_CATEGORY_COUNT}` }
+              categoryOptions={ categoryData }
+              categoriesValue={ categories }
+              hasExceededMaxCategories={ hasExceededMaxCategories }
+              tagsValue={ tags || '' }
 
-                      <Form.Field
-                        id="owner"
-                        control={ Input }
-                        label="Owner"
-                        placeholder="IIP Video Production"
-                        name="owner"
-                        value={ owner || '' }
-                        onChange={ this.handleChange }
-                      />
-                    </Form.Group>
+              publicDescValue={ publicDesc }
+              internalDescValue={ internalDesc }
 
-                    <Form.Group widths="equal">
-                      <Form.Dropdown
-                        id="video-categories"
-                        control={ Dropdown }
-                        label={ `Categories - select up to ${this.MAX_CATEGORY_COUNT}` }
-                        required
-                        placeholder="-"
-                        options={ categoryData }
-                        fluid
-                        multiple
-                        search
-                        selection
-                        closeOnBlur
-                        closeOnChange
-                        name="categories"
-                        value={ categories }
-                        onChange={ this.handleChange }
-                        error={ hasExceededMaxCategories }
-                      />
-
-                      <div className="field">
-                        <Form.Field
-                          id="video-tags"
-                          control={ Input }
-                          label="Tags"
-                          name="tags"
-                          value={ tags || '' }
-                          onChange={ this.handleChange }
-                          style={ { marginBottom: '1em' } }
-                        />
-                        <p>Enter keywords separated by commas.</p>
-                      </div>
-                    </Form.Group>
-                  </Grid.Column>
-
-                  <Grid.Column mobile={ 16 } computer={ 8 }>
-                    <Form.Field
-                      id="public-description"
-                      control={ TextArea }
-                      label="Public Description"
-                      name="publicDesc"
-                      value={ publicDesc }
-                      onChange={ this.handleChange }
-                    />
-
-                    <div className="field">
-                      <Form.Field
-                        id="internal-description"
-                        control={ TextArea }
-                        label="Internal Description"
-                        name="internalDesc"
-                        value={ internalDesc }
-                        onChange={ this.handleChange }
-                      />
-                      <p>Reason for this project as it relates to Department objectives.</p>
-                    </div>
-                  </Grid.Column>
-                </Grid.Row>
-
-                { !hasSubmittedData &&
-                  <Grid.Row>
-                    <Grid.Column width="16">
-                      <Button
-                        className="edit-project__form--save"
-                        content="Save draft & upload files to this project"
-                        disabled={ !hasRequiredData }
-                      />
-                    </Grid.Column>
-                  </Grid.Row> }
-              </Grid>
-            </Form>
+              // submit button props
+              hasSubmittedData={ hasSubmittedData }
+              hasRequiredData={ hasRequiredData }
+            />
           </div>
 
           <div className="edit-project__support-files">

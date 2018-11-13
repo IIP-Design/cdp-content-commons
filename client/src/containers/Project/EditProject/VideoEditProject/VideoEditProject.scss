@@ -113,14 +113,6 @@
     }
   }
 
-  .msg--required {
-    display: inline-block;
-    margin-left: 0.5em;
-    color: $red;
-    font-size: 0.625em;
-    font-weight: normal;
-  }
-
   &__status {
     > .ui.progress {
         border-radius: 0;
