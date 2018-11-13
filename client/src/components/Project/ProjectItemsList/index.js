@@ -12,6 +12,7 @@ import ProjectItem from 'components/Project/ProjectItem';
 
 const ProjectItemsList = ( props ) => {
   const {
+    listEl,
     data,
     headline,
     hasSubmittedData,
@@ -22,6 +23,8 @@ const ProjectItemsList = ( props ) => {
     customListStyle,
     customPlaceholderStyle
   } = props;
+
+  const List = listEl;
 
   const defaultListStyle = {
     display: 'flex',
@@ -34,7 +37,7 @@ const ProjectItemsList = ( props ) => {
   return (
     <div className="project-items">
       <h2 className="list-heading">{ headline }</h2>
-      <ul className="items-list" style={ listStyle }>
+      <List className="items-list" style={ listStyle }>
         { data.map( item => (
           <ProjectItem
             key={ `${item.title} - ${item.language}` }
@@ -47,12 +50,13 @@ const ProjectItemsList = ( props ) => {
             customPlaceholderStyle={ customPlaceholderStyle }
           />
         ) ) }
-      </ul>
+      </List>
     </div>
   );
 };
 
 ProjectItemsList.propTypes = {
+  listEl: string,
   data: array.isRequired,
   headline: string,
   hasSubmittedData: bool,
@@ -62,6 +66,10 @@ ProjectItemsList.propTypes = {
   modalContent: func,
   customListStyle: object,
   customPlaceholderStyle: object
+};
+
+ProjectItemsList.defaultProps = {
+  listEl: 'ul'
 };
 
 export default ProjectItemsList;

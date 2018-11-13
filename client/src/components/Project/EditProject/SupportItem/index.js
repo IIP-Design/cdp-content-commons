@@ -7,18 +7,38 @@
 import React from 'react';
 import { bool, object, string } from 'prop-types';
 
+import Placeholder from 'components/Project/Placeholder';
+
 
 const SupportItem = ( props ) => {
   const { fileType, item, isAvailable } = props;
-  const placeholderStyle = {
-    filter: 'blur(4px)'
-  };
+
+  if ( isAvailable ) {
+    return (
+      <li key={ `${fileType}-${item.lang}` } className="support-item">
+        { item.file }
+        <b className="item-lang">{ item.lang }</b>
+      </li>
+    );
+  }
 
   return (
-    <li key={ `${fileType}-${item.lang}` } className="support-item" style={ !isAvailable ? placeholderStyle : null }>
-      { item.file }
-      <b className="item-lang">{ item.lang }</b>
-    </li>
+    <Placeholder
+      parentEl="li"
+      childEl="span"
+      parentStyles={ {
+        display: 'flex',
+        justifyContent: 'space-between'
+      } }
+      childStyles={ {
+        fileName: { width: '75%' },
+        language: {
+          width: '20%',
+          marginRight: '0',
+          backgroundColor: '#5b616b'
+        }
+      } }
+    />
   );
 };
 

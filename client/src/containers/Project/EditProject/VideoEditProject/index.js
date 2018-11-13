@@ -304,6 +304,7 @@ class VideoEditProject extends React.PureComponent {
 
           <div className="edit-project__items">
             <ProjectItemsList
+              listEl="ul"
               data={ videos }
               headline="Videos in Project"
               hasSubmittedData={ hasSubmittedData }
