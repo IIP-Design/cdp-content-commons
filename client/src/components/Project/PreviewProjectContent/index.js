@@ -6,7 +6,7 @@
 
 import React, { Fragment } from 'react';
 import { object } from 'prop-types';
-import { Dropdown, Icon } from 'semantic-ui-react';
+import { Dropdown, Embed, Icon } from 'semantic-ui-react';
 
 import Notification from 'components/Project/Notification/Loadable';
 import './PreviewProjectContent.css';
@@ -43,6 +43,18 @@ class PreviewProjectContent extends React.PureComponent {
       [item.language]: item
     } ), {} )
   );
+
+  getYouTubeId = ( url ) => {
+    /**
+     * @todo This may not even be necessary depending
+     * on how the YouTube URL/Id is stored in data.
+     */
+    url = url
+      .replace( /(>|<)/gi, '' )
+      .split( /(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/ );
+
+    return url[2] ? url[2].split( /[^0-9a-z_-]/i )[0] : url;
+  };
 
   toggleArrow = () => {
     this.setState( { dropDownIsOpen: !this.state.dropDownIsOpen } );
@@ -134,18 +146,14 @@ class PreviewProjectContent extends React.PureComponent {
           </header>
           <div className="project-preview__content">
             <div className="preview">
-              { /* replace with when data structure is known */ }
-              <img
-                src={ thumbnail }
-                alt={ alt }
-                className="thumbnail"
-              />
-              <Icon
-                name="video play"
-                size="huge"
-                inverted
-                className="play-video-icon"
-              />
+              { /* @todo getYouTubeId may not be necessary depending
+                on how the YouTube URL is stored in data */ }
+              { youTubeUrl &&
+                <Embed
+                  id={ this.getYouTubeId( youTubeUrl ) }
+                  placeholder={ thumbnail }
+                  source="youtube"
+                /> }
             </div>
             <div className="project-meta">
               <dl>
@@ -178,7 +186,7 @@ class PreviewProjectContent extends React.PureComponent {
 }
 
 PreviewProjectContent.propTypes = {
-  data: object
+  data: object.isRequired
 };
 
 export default PreviewProjectContent;
