@@ -44,14 +44,14 @@ const VideoItem = ( props ) => {
         <p className="file-name">{ fileName }</p>
       </div>
       <h3 className={ `item-heading ${textDirection}` }>{ title }</h3>
-      <p className="item-lang">{ language }</p>
+      <p className="item-lang">{ language.display }</p>
     </li>
   );
 };
 
 VideoItem.propTypes = {
   title: string,
-  language: string,
+  language: object,
   textDirection: string,
   thumbnail: string,
   alt: string,

@@ -100,7 +100,7 @@ const projects = [
     projectType: 'video',
     projectId: 'made-in-america',
     protectImages: false,
-    updated: '2018-27-06T00:00:00Z',
+    updated: '2018-06-27T00:00:00Z',
     projectData: {
       title: 'Made in America',
       author: 'Jane Doe',
@@ -136,9 +136,12 @@ const projects = [
         fileName: 'madeinamerica_english.mp4',
         fileSize: '631.9MB',
         dimensions: '1920 x 1080',
-        uploaded: '2018-13-04T15:45:00Z',
+        uploaded: '2018-04-13T15:45:00Z',
         duration: '9:16',
-        language: 'English',
+        language: {
+          code: 'en',
+          display: 'English'
+        },
         textDirection: 'ltr',
         subtitlesCaptions: 'Clean - No Captions',
         videoType: 'Full Video',
@@ -153,9 +156,12 @@ const projects = [
         fileName: 'madeinamerica_french.mp4',
         fileSize: '631.9MB',
         dimensions: '1920 x 1080',
-        uploaded: '2018-13-04T15:45:00Z',
+        uploaded: '2018-04-13T15:45:00Z',
         duration: '9:16',
-        language: 'French',
+        language: {
+          code: 'fr',
+          display: 'French'
+        },
         textDirection: 'ltr',
         subtitlesCaptions: 'Clean - No Captions',
         videoType: 'Full Video',
@@ -171,9 +177,12 @@ const projects = [
         fileName: 'madeinamerica_arabic.mp4',
         fileSize: '631.9MB',
         dimensions: '1920 x 1080',
-        uploaded: '2018-13-04T15:45:00Z',
+        uploaded: '2018-04-13T15:45:00Z',
         duration: '9:16',
-        language: 'Arabic',
+        language: {
+          code: 'ar',
+          display: 'Arabic'
+        },
         textDirection: 'rtl',
         subtitlesCaptions: 'Clean - No Captions',
         videoType: 'Full Video',

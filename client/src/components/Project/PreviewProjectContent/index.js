@@ -32,15 +32,16 @@ class PreviewProjectContent extends React.PureComponent {
 
   getLanguages = ( obj, str ) => (
     obj[str].map( item => ( {
-      value: item.language,
-      text: item.language
+      key: item.language.code,
+      value: item.language.display,
+      text: item.language.display
     } ) )
   );
 
   getProjectItems = ( obj, str ) => (
     obj[str].reduce( ( acc, item ) => ( {
       ...acc,
-      [item.language]: item
+      [item.language.display]: item
     } ), {} )
   );
 
@@ -54,6 +55,12 @@ class PreviewProjectContent extends React.PureComponent {
       .split( /(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/ );
 
     return url[2] ? url[2].split( /[^0-9a-z_-]/i )[0] : url;
+  };
+
+  formatDate = ( dateString, locale, options = {} ) => {
+    const a = dateString.split( /[^0-9]/ );
+    const d = new Date( a[0], a[1] - 1, a[2], a[3], a[4], a[5] );
+    return d.toLocaleString( locale, options );
   };
 
   toggleArrow = () => {
@@ -94,11 +101,19 @@ class PreviewProjectContent extends React.PureComponent {
     const {
       title,
       thumbnail,
-      alt,
       textDirection,
       publicDesc,
-      uploaded
+      uploaded,
+      language,
+      youTubeUrl
     } = selectedItem;
+
+    const locale = language.code;
+    const dateOptions = {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    };
 
     /**
      * Duplicate props to avoid unknown prop warning
@@ -140,7 +155,7 @@ class PreviewProjectContent extends React.PureComponent {
                 onClick={ this.toggleArrow }
                 onChange={ this.handleChange }
               />
-              { /* need to replace download icon later */ }
+              { /* @todo need to replace download icon later */ }
               <Icon name="download" />
             </div>
           </header>
@@ -161,7 +176,9 @@ class PreviewProjectContent extends React.PureComponent {
                 <dd>{ projectType }</dd>
                 <br />
                 <dt>Updated:</dt>
-                <dd>{ updated }</dd>
+                <dd>
+                  { this.formatDate( updated, locale, dateOptions ) }
+                </dd>
               </dl>
             </div>
             <p className={ `public-desc ${textDirection}` }>
@@ -175,7 +192,9 @@ class PreviewProjectContent extends React.PureComponent {
                 <dd>{ owner }</dd>
                 <br />
                 <dt>Date Published:</dt>
-                <dd>{ uploaded }</dd>
+                <dd>
+                  { this.formatDate( uploaded, locale, dateOptions ) }
+                </dd>
               </dl>
             </div>
           </footer>
