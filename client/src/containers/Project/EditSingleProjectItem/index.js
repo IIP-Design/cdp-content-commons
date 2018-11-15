@@ -10,25 +10,28 @@ import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSingleProjectItem from './selectors';
 
+import ModalItem from 'components/Modals/ModalItem/ModalItem';
 import './EditSingleProjectItem.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class EditSingleProjectItem extends React.PureComponent {
   render() {
-    const { title } = this.props;
+    const { title, textDirection } = this.props;
     return (
-      <article className="edit-project-item">
-        <header className="header">
-          <h2>{ title }</h2>
-        </header>
+      <ModalItem
+        customClassName="edit-project-item"
+        headline={ title }
+        textDirection={ textDirection }
+      >
         <p>Edit Single Project Item Component</p>
-      </article>
+      </ModalItem>
     );
   }
 }
 
 EditSingleProjectItem.propTypes = {
-  title: string
+  title: string,
+  textDirection: string
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {

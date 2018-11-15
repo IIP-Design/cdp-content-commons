@@ -4,10 +4,14 @@
  *
  */
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
 import { Dropdown, Embed, Icon } from 'semantic-ui-react';
 
+import ModalItem from 'components/Modals/ModalItem/ModalItem';
+import ModalContentMeta from 'components/Modals/ModalContentMeta/ModalContentMeta';
+import ModalDescription from 'components/Modals/ModalDescription/ModalDescription';
+import ModalPostMeta from 'components/Modals/ModalPostMeta/ModalPostMeta';
 import Notification from 'components/Project/Notification/Loadable';
 import './PreviewProjectContent.css';
 
@@ -57,12 +61,6 @@ class PreviewProjectContent extends React.PureComponent {
     return url[2] ? url[2].split( /[^0-9a-z_-]/i )[0] : url;
   };
 
-  formatDate = ( dateString, locale, options = {} ) => {
-    const a = dateString.split( /[^0-9]/ );
-    const d = new Date( a[0], a[1] - 1, a[2], a[3], a[4], a[5] );
-    return d.toLocaleString( locale, options );
-  };
-
   toggleArrow = () => {
     this.setState( { dropDownIsOpen: !this.state.dropDownIsOpen } );
   }
@@ -104,102 +102,63 @@ class PreviewProjectContent extends React.PureComponent {
       textDirection,
       publicDesc,
       uploaded,
-      language,
       youTubeUrl
     } = selectedItem;
-
-    const locale = language.code;
-    const dateOptions = {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    };
-
-    /**
-     * Duplicate props to avoid unknown prop warning
-     * @see https://reactjs.org/warnings/unknown-prop.html
-     */
-    const contentProps = { ...this.props };
-    delete contentProps.isUploadFinished;
-    delete contentProps.data;
-    delete contentProps.modalTrigger;
-    delete contentProps.modalContent;
 
     const previewMsgStyles = {
       position: 'absolute',
       top: '0',
       left: '0',
       right: '0',
-      borderTopLeftRadius: '4px',
-      borderTopRightRadius: '4px',
+      // match Semantic UI border-radius
+      borderTopLeftRadius: '0.28571429rem',
+      borderTopRightRadius: '0.28571429rem',
       padding: '1em 1.5em',
       fontSize: '1em',
       backgroundColor: '#faab1a'
     };
 
     return (
-      <Fragment>
+      <ModalItem
+        customClassName="project-preview"
+        headline={ title }
+        textDirection={ textDirection }
+      >
         <Notification
           customStyles={ previewMsgStyles }
           msg={ `This is a preview of your ${projectType} project on Content Commons.` }
         />
-        <article { ...contentProps } className="project-preview">
-          <header className="project-preview__header">
-            <h1 className={ textDirection }>{ title }</h1>
-            <div className="modal_options">
-              <Dropdown
-                className="modal_languages"
-                value={ selectedLanguage }
-                icon={ dropDownIsOpen ? 'chevron up' : 'chevron down' }
-                options={ languages }
-                onClick={ this.toggleArrow }
-                onChange={ this.handleChange }
-              />
-              { /* @todo need to replace download icon later */ }
-              <Icon name="download" />
-            </div>
-          </header>
-          <div className="project-preview__content">
-            <div className="preview">
-              { /* @todo getYouTubeId may not be necessary depending
-                on how the YouTube URL is stored in data */ }
-              { youTubeUrl &&
-                <Embed
-                  id={ this.getYouTubeId( youTubeUrl ) }
-                  placeholder={ thumbnail }
-                  source="youtube"
-                /> }
-            </div>
-            <div className="project-meta">
-              <dl>
-                <dt>File Type:</dt>
-                <dd>{ projectType }</dd>
-                <br />
-                <dt>Updated:</dt>
-                <dd>
-                  { this.formatDate( updated, locale, dateOptions ) }
-                </dd>
-              </dl>
-            </div>
-            <p className={ `public-desc ${textDirection}` }>
-              { publicDesc }
-            </p>
-          </div>
-          <footer>
-            <div className="project-meta">
-              <dl>
-                <dt>Source:</dt>
-                <dd>{ owner }</dd>
-                <br />
-                <dt>Date Published:</dt>
-                <dd>
-                  { this.formatDate( uploaded, locale, dateOptions ) }
-                </dd>
-              </dl>
-            </div>
-          </footer>
-        </article>
-      </Fragment>
+
+        <div className="modal_options">
+          <Dropdown
+            className="modal_languages"
+            value={ selectedLanguage }
+            icon={ dropDownIsOpen ? 'chevron up' : 'chevron down' }
+            options={ languages }
+            onClick={ this.toggleArrow }
+            onChange={ this.handleChange }
+          />
+          { /* @todo need to replace download icon later */ }
+          <Icon name="download" />
+        </div>
+
+        <div className="project-preview__content">
+          { /* @todo getYouTubeId may not be necessary depending
+            on how the YouTube URL is stored in data */ }
+          { youTubeUrl &&
+            <Embed
+              id={ this.getYouTubeId( youTubeUrl ) }
+              placeholder={ thumbnail }
+              source="youtube"
+            /> }
+
+          <ModalContentMeta type={ projectType } dateUpdated={ updated } />
+
+          <ModalDescription description={ publicDesc } />
+        </div>
+
+        <ModalPostMeta source={ owner } datePublished={ uploaded } />
+      </ModalItem>
     );
   }
 }
