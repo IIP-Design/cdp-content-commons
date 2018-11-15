@@ -21,12 +21,16 @@ const ProjectItem = ( props ) => {
   } = props;
 
   const Item = modalTrigger;
+  const modalProps = {
+    triggerProps: { ...data },
+    contentProps: { ...data }
+  };
   const sharedStyles = { cursor: 'not-allowed' };
 
   if ( isAvailable ) {
     return (
       ( displayItemInModal &&
-        withModal( { triggerProps: { ...data } }, modalTrigger, modalContent ) ) ||
+        withModal( modalProps, modalTrigger, modalContent ) ) ||
         <Item { ...data } />
     );
   }
