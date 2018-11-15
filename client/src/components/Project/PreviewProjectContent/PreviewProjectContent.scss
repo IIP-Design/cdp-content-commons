@@ -1,47 +1,6 @@
 .project-preview {
   margin-top: 3em;
 
-  .rtl {
-    direction: rtl;
-    text-align: right;
-  }
-
-  .preview {
-    position: relative;
-  }
-
-  .play-video-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .thumbnail {
-    height: auto;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .public-desc {
-    font-size: 18px;
-  }
-
-  .project-meta {
-    > dl {
-      font-size: 0.875em;
-
-      > dt {
-        display: inline-block;
-      }
-
-      > dd {
-        display: inline-block;
-        margin-left: 0.5em;
-      }
-    }
-  }
-
   > footer {
     margin: initial;
     color: initial;
