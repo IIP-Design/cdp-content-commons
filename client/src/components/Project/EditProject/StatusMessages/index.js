@@ -20,7 +20,7 @@ const StatusMessages = ( props ) => {
     notificationMsg
   } = props;
 
-  const msgStyles = { padding: '1em 1.75em' };
+  const msgStyles = { margin: '0', padding: '1em 1.75em' };
 
   return (
     <Fragment>
