@@ -12,6 +12,7 @@ import { Icon } from 'semantic-ui-react';
 
 import Notification from 'components/Project/Notification/Loadable';
 
+
 const StatusMessages = ( props ) => {
   const {
     hasSubmittedData,
@@ -36,6 +37,7 @@ const StatusMessages = ( props ) => {
 
       { displayTheSaveMsg &&
         <Notification
+          el="p"
           customStyles={ {
             position: 'absolute',
             top: '11em',

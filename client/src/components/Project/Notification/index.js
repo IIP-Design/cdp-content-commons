@@ -9,7 +9,8 @@ import { object, string } from 'prop-types';
 
 
 const Notification = ( props ) => {
-  const { msg, customStyles } = props;
+  const { el, msg, customStyles } = props;
+  const El = el;
   const defaultStyle = {
     padding: '1em 1.5em',
     fontSize: '0.625em',
@@ -18,12 +19,17 @@ const Notification = ( props ) => {
 
   const style = { ...defaultStyle, ...customStyles };
 
-  return <p style={ style }>{ msg }</p>;
+  return <El style={ style }>{ msg }</El>;
 };
 
 Notification.propTypes = {
+  el: string,
   msg: string.isRequired,
   customStyles: object
+};
+
+Notification.defaultProps = {
+  el: 'p'
 };
 
 export default Notification;

@@ -125,6 +125,7 @@ class PreviewProjectContent extends React.PureComponent {
         textDirection={ textDirection }
       >
         <Notification
+          el="p"
           customStyles={ previewMsgStyles }
           msg={ `This is a preview of your ${projectType} project on Content Commons.` }
         />
