@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import { string } from 'prop-types';
+import { object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -16,12 +16,12 @@ import './EditSingleProjectItem.css';
 /* eslint-disable react/prefer-stateless-function */
 class EditSingleProjectItem extends React.PureComponent {
   render() {
-    const { title, textDirection } = this.props;
+    const { title, language } = this.props;
     return (
       <ModalItem
         customClassName="edit-project-item"
         headline={ title }
-        textDirection={ textDirection }
+        textDirection={ language.text_direction }
       >
         <p>Edit Single Project Item Component</p>
       </ModalItem>
@@ -31,7 +31,7 @@ class EditSingleProjectItem extends React.PureComponent {
 
 EditSingleProjectItem.propTypes = {
   title: string,
-  textDirection: string
+  language: object
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {

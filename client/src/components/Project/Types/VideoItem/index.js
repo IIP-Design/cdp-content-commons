@@ -12,7 +12,6 @@ const VideoItem = ( props ) => {
   const {
     title,
     language,
-    textDirection,
     thumbnail,
     alt,
     fileName,
@@ -24,11 +23,7 @@ const VideoItem = ( props ) => {
    * @see https://reactjs.org/warnings/unknown-prop.html
    */
   const itemProps = { ...rest };
-  delete itemProps.fileSize;
-  delete itemProps.subtitlesCaptions;
-  delete itemProps.videoType;
-  delete itemProps.publicDesc;
-  delete itemProps.youTubeUrl;
+  delete itemProps.desc;
   delete itemProps.additionalKeywords;
 
   const itemStyle = {
@@ -43,8 +38,8 @@ const VideoItem = ( props ) => {
         <img src={ thumbnail } alt={ alt } />
         <p className="file-name">{ fileName }</p>
       </div>
-      <h3 className={ `item-heading ${textDirection}` }>{ title }</h3>
-      <p className="item-lang">{ language.display }</p>
+      <h3 className={ `item-heading ${language.text_direction}` }>{ title }</h3>
+      <p className="item-lang">{ language.display_name }</p>
     </li>
   );
 };
@@ -52,7 +47,6 @@ const VideoItem = ( props ) => {
 VideoItem.propTypes = {
   title: string,
   language: object,
-  textDirection: string,
   thumbnail: string,
   alt: string,
   fileName: string,

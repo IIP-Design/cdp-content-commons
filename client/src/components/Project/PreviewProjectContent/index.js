@@ -6,13 +6,26 @@
 
 import React from 'react';
 import { object } from 'prop-types';
-import { Dropdown, Embed, Icon } from 'semantic-ui-react';
+import { Dropdown, Embed } from 'semantic-ui-react';
+
+import downloadIcon from '../../../assets/icons/icon_download.svg';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
 import ModalContentMeta from 'components/Modals/ModalContentMeta/ModalContentMeta';
 import ModalDescription from 'components/Modals/ModalDescription/ModalDescription';
 import ModalPostMeta from 'components/Modals/ModalPostMeta/ModalPostMeta';
+
+import PopupTrigger from 'components/Popup/PopupTrigger';
+import PopupTabbed from 'components/Popup/PopupTabbed';
+
+import DownloadVideo from 'components/Types/Video/DownloadVideo';
+import DownloadSrt from 'components/Types/Video/DownloadSrt';
+import DownloadThumbnail from 'components/Types/Video/DownloadThumbnail';
+import DownloadOtherFiles from 'components/Types/Video/DownloadOtherFiles';
+import DownloadHelp from 'components/Types/Video/DownloadHelp';
+
 import Notification from 'components/Project/Notification/Loadable';
+
 import './PreviewProjectContent.css';
 
 
@@ -36,16 +49,16 @@ class PreviewProjectContent extends React.PureComponent {
 
   getLanguages = ( obj, str ) => (
     obj[str].map( item => ( {
-      key: item.language.code,
-      value: item.language.display,
-      text: item.language.display
+      key: item.language.language_code,
+      value: item.language.display_name,
+      text: item.language.display_name
     } ) )
   );
 
   getProjectItems = ( obj, str ) => (
     obj[str].reduce( ( acc, item ) => ( {
       ...acc,
-      [item.language.display]: item
+      [item.language.display_name]: item
     } ), {} )
   );
 
@@ -85,7 +98,8 @@ class PreviewProjectContent extends React.PureComponent {
     const {
       projectType,
       projectData,
-      updated
+      updated,
+      videos
     } = this.props.data;
     const { owner } = projectData;
 
@@ -99,11 +113,14 @@ class PreviewProjectContent extends React.PureComponent {
     const {
       title,
       thumbnail,
-      textDirection,
-      publicDesc,
+      language,
+      desc,
       uploaded,
-      youTubeUrl
+      source
     } = selectedItem;
+
+    const youTubeUrl = source[0].streamUrl[0].url;
+    const { burnedInCaptions } = source[0];
 
     const previewMsgStyles = {
       position: 'absolute',
@@ -122,7 +139,7 @@ class PreviewProjectContent extends React.PureComponent {
       <ModalItem
         customClassName="project-preview"
         headline={ title }
-        textDirection={ textDirection }
+        textDirection={ language.text_direction }
       >
         <Notification
           el="p"
@@ -139,8 +156,61 @@ class PreviewProjectContent extends React.PureComponent {
             onClick={ this.toggleArrow }
             onChange={ this.handleChange }
           />
-          { /* @todo need to replace download icon later */ }
-          <Icon name="download" />
+
+          <div className="trigger-container">
+            <PopupTrigger
+              toolTip="Download video"
+              icon={ { img: downloadIcon, dim: 18 } }
+              position="right"
+              show={ projectType === 'video' }
+              content={
+                <PopupTabbed
+                  title="Download this video."
+                  panes={ [
+                    {
+                      title: 'Video File',
+                      component: (
+                        <DownloadVideo
+                          selectedLanguageUnit={ selectedItem }
+                          instructions={ `Download the video and SRT files in ${selectedLanguage}.
+                            This download option is best for uploading this video to web pages.` }
+                          burnedInCaptions={ burnedInCaptions === 'true' }
+                        />
+                      )
+                    },
+                    {
+                      title: 'SRT',
+                      component: (
+                        <DownloadSrt
+                          instructions="Download SRTs"
+                          units={ videos }
+                        />
+                      )
+                    },
+                    {
+                      title: 'Thumbnail',
+                      component: (
+                        <DownloadThumbnail
+                          instructions="Download Thumbnail(s)"
+                          units={ videos }
+                        />
+                      )
+                    },
+                    {
+                      title: 'Other',
+                      component: (
+                        <DownloadOtherFiles
+                          instructions="Download Other File(s)"
+                          units={ videos }
+                        />
+                      )
+                    },
+                    { title: 'Help', component: <DownloadHelp /> }
+                  ] }
+                />
+              }
+            />
+          </div>
         </div>
 
         <div className="project-preview__content">
@@ -155,7 +225,7 @@ class PreviewProjectContent extends React.PureComponent {
 
           <ModalContentMeta type={ projectType } dateUpdated={ updated } />
 
-          <ModalDescription description={ publicDesc } />
+          <ModalDescription description={ desc } />
         </div>
 
         <ModalPostMeta source={ owner } datePublished={ uploaded } />

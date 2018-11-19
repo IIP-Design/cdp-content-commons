@@ -133,63 +133,182 @@ const projects = [
         title: 'Made in America',
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: 'Man walking through factory (State Dept.)',
-        fileName: 'madeinamerica_english.mp4',
-        fileSize: '631.9MB',
-        dimensions: '1920 x 1080',
-        uploaded: '2018-04-13T15:45:00Z',
-        duration: '9:16',
         language: {
-          code: 'en',
-          display: 'English'
+          language_code: 'en',
+          locale: 'en-us',
+          display_name: 'English',
+          native_name: 'English',
+          text_direction: 'ltr'
         },
-        textDirection: 'ltr',
-        subtitlesCaptions: 'Clean - No Captions',
-        videoType: 'Full Video',
-        quality: 'For Web',
-        publicDesc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.',
-        youTubeUrl: 'https://www.youtube.com/watch?v=1evw4fRu3bo'
+        other: [
+          {
+            fileName: 'madeinamerica_english.mp3',
+            fileType: 'mp3',
+            md5: '',
+            srcUrl: 'https://other-download-url.com'
+          }
+        ],
+        source: [
+          {
+            burnedInCaptions: 'false',
+            downloadUrl: 'https://video-download-url.com',
+            duration: '9:16',
+            filetype: '',
+            md5: '',
+            fileName: 'madeinamerica_english.mp4',
+            size: {
+              bitrate: 9832917,
+              filesize: 662595174,
+              height: '1080',
+              width: '1920'
+            },
+            stream: {
+              link: '',
+              site: '',
+              thumbnail: null,
+              uid: '',
+              url: ''
+            },
+            streamUrl: [
+              {
+                site: 'youtube',
+                url: 'https://youtu.be/1evw4fRu3bo'
+              }
+            ],
+            video_quality: 'web'
+          }
+        ],
+        srt: {
+          md5: '',
+          srcUrl: 'https://srt-download-url.com'
+        },
+        transcript: {
+          md5: '',
+          srcUrl: ''
+        },
+        fileName: 'madeinamerica_english.mp4',
+        uploaded: '2018-04-13T15:45:00Z',
+        desc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.'
       },
       {
         title: 'Fabriqué en Amérique',
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: '',
-        fileName: 'madeinamerica_french.mp4',
-        fileSize: '631.9MB',
-        dimensions: '1920 x 1080',
-        uploaded: '2018-04-13T15:45:00Z',
-        duration: '9:16',
         language: {
-          code: 'fr',
-          display: 'French'
+          language_code: 'fr',
+          locale: 'fr-fr',
+          display_name: 'French',
+          native_name: 'Français',
+          text_direction: 'ltr'
         },
-        textDirection: 'ltr',
-        subtitlesCaptions: 'Clean - No Captions',
-        videoType: 'Full Video',
-        quality: 'For Web',
-        publicDesc: 'La valeur et le sens de l’expression Fabriqué en Amérique, ont leur origine dans un passé riche d’innovation et de persévérance. Découvrez une partie de l’histoire de l’industrie manufacturière aux États-Unis et l’influence positive qu’elle a eue sur le monde, dans le passé et encore aujourd’hui.',
-        additionalKeywords: ['la valeur', 'innovation', 'ipsum'],
-        youTubeUrl: 'https://www.youtube.com/watch?v=1evw4fRu3bo'
+        other: [
+          {
+            fileName: '',
+            fileType: '',
+            md5: '',
+            srcUrl: ''
+          }
+        ],
+        source: [
+          {
+            burnedInCaptions: 'false',
+            downloadUrl: 'https://video-download-url.com',
+            duration: '9:16',
+            filetype: '',
+            md5: '',
+            fileName: 'madeinamerica_french.mp4',
+            size: {
+              bitrate: 9832917,
+              filesize: 662595174,
+              height: '1080',
+              width: '1920'
+            },
+            stream: {
+              link: '',
+              site: '',
+              thumbnail: null,
+              uid: '',
+              url: ''
+            },
+            streamUrl: [
+              {
+                site: 'youtube',
+                url: 'https://youtu.be/1evw4fRu3bo'
+              }
+            ],
+            video_quality: 'web'
+          }
+        ],
+        srt: {
+          md5: '',
+          srcUrl: 'https://srt-download-url.com'
+        },
+        transcript: {},
+        fileName: 'madeinamerica_french.mp4',
+        uploaded: '2018-04-13T15:45:00Z',
+        desc: 'La valeur et le sens de l’expression Fabriqué en Amérique, ont leur origine dans un passé riche d’innovation et de persévérance. Découvrez une partie de l’histoire de l’industrie manufacturière aux États-Unis et l’influence positive qu’elle a eue sur le monde, dans le passé et encore aujourd’hui.',
+        additionalKeywords: [
+          'la valeur', 'innovation', 'ipsum'
+        ]
       },
       {
         title: 'عنوان: امریکی ساختہ',
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: '',
-        fileName: 'madeinamerica_arabic.mp4',
-        fileSize: '631.9MB',
-        dimensions: '1920 x 1080',
-        uploaded: '2018-04-13T15:45:00Z',
-        duration: '9:16',
         language: {
-          code: 'ar',
-          display: 'Arabic'
+          language_code: 'ar',
+          locale: 'ar',
+          display_name: 'Arabic',
+          native_name: 'العربية',
+          text_direction: 'rtl'
         },
-        textDirection: 'rtl',
-        subtitlesCaptions: 'Clean - No Captions',
-        videoType: 'Full Video',
-        quality: 'For Web',
-        publicDesc: 'امریکی ساختہ کی قدر اور مفہوم نے جدت طرازی اور استقامت کی شاندار تاریخ سے جنم لیا ہے۔ امریکہ میں مصنوعات سازی کی مختصر تاریخ سے آگہی حاصل کریں اور دنیا پر مرتب ہونے والے اس کے مثبت اثرات میں سے چند ایک کا احوال سنیں اور دیکھیں کہ آج اس کے فوائد کس طرح محسوس کیے جا رہے ہیں۔',
-        additionalKeywords: ['ساختہ'],
-        youTubeUrl: 'https://www.youtube.com/watch?v=1evw4fRu3bo'
+        other: [
+          {
+            fileName: '',
+            fileType: '',
+            md5: '',
+            srcUrl: ''
+          }
+        ],
+        source: [
+          {
+            burnedInCaptions: 'false',
+            downloadUrl: 'https://video-download-url.com',
+            duration: '9:16',
+            filetype: '',
+            md5: '',
+            fileName: 'madeinamerica_arabic.mp4',
+            size: {
+              bitrate: 9832917,
+              filesize: 662595174,
+              height: '1080',
+              width: '1920'
+            },
+            stream: {
+              link: '',
+              site: '',
+              thumbnail: null,
+              uid: '',
+              url: ''
+            },
+            streamUrl: [
+              {
+                site: 'youtube',
+                url: 'https://youtu.be/1evw4fRu3bo'
+              }
+            ],
+            video_quality: 'web'
+          }
+        ],
+        srt: {
+          md5: '',
+          srcUrl: 'https://srt-download-url.com'
+        },
+        transcript: {},
+        fileName: 'madeinamerica_arabic.mp4',
+        uploaded: '2018-04-13T15:45:00Z',
+        desc: 'امریکی ساختہ کی قدر اور مفہوم نے جدت طرازی اور استقامت کی شاندار تاریخ سے جنم لیا ہے۔ امریکہ میں مصنوعات سازی کی مختصر تاریخ سے آگہی حاصل کریں اور دنیا پر مرتب ہونے والے اس کے مثبت اثرات میں سے چند ایک کا احوال سنیں اور دیکھیں کہ آج اس کے فوائد کس طرح محسوس کیے جا رہے ہیں۔',
+        additionalKeywords: ['ساختہ']
       }
     ]
   }
