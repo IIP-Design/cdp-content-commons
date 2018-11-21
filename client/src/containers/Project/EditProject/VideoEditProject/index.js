@@ -202,7 +202,7 @@ class VideoEditProject extends React.PureComponent {
     const pageTitle = `Project Details${hasSubmittedData ? ' - Edit' : ''}`;
 
     const contentStyle = {
-      border: `${( hasRequiredData && hasSubmittedData ) ? 'none' : '3px solid #02bfe7'}`
+      border: `3px solid ${( hasRequiredData && hasSubmittedData ) ? 'transparent' : '#02bfe7'}`
     };
 
     const statusStyle = {
