@@ -24,11 +24,7 @@ import VideoItem from 'components/Project/Types/VideoItem';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
-import {
-  Button,
-  Confirm,
-  Progress
-} from 'semantic-ui-react';
+import { Button, Confirm, Progress } from 'semantic-ui-react';
 
 import './VideoEditProject.css';
 import {
@@ -50,6 +46,8 @@ class VideoEditProject extends React.PureComponent {
     displayTheSaveMsg: false,
     displayTheUploadSuccessMsg: false,
     hasExceededMaxCategories: false,
+    totalUploaded: 8,
+    totalUploadSize: 0,
 
     /**
      * Use redux for these?
@@ -65,6 +63,20 @@ class VideoEditProject extends React.PureComponent {
       internalDesc: '',
       protectImages: true
     }
+  }
+
+  componentWillMount = () => {
+    const videosCount = this.props.videoEditProject.videos.length;
+    this.setState( {
+      totalUploadSize: videosCount + this.getSupportFilesCount()
+    } );
+  }
+
+  getSupportFilesCount = () => {
+    const { supportFiles } = this.props.videoEditProject;
+    const types = Object.keys( supportFiles );
+    const count = ( acc, cur ) => acc + supportFiles[cur].length;
+    return types.reduce( count, 0 );
   }
 
   MAX_CATEGORY_COUNT = 2;
@@ -167,7 +179,9 @@ class VideoEditProject extends React.PureComponent {
       displayTheSaveMsg,
       displayTheUploadSuccessMsg,
       hasExceededMaxCategories,
-      formData
+      formData,
+      totalUploaded,
+      totalUploadSize
     } = this.state;
 
     const {
@@ -249,18 +263,17 @@ class VideoEditProject extends React.PureComponent {
 
             { isUploadInProgress &&
               <Progress
-                // need to programmatically determine value & total
-                value="8"
-                total="11"
+                value={ totalUploaded }
+                total={ totalUploadSize }
                 color="blue"
                 size="medium"
                 active
-                style={ { padding: '0' } }
               >
-                <p style={ { marginBottom: '0' } }>
-                  <span className="upload-status-label">Uploading files:</span> 8 of 11
+                <p>
+                  <b>Uploading files:</b> { totalUploaded } of { totalUploadSize }
+                  <br />
+                  Please keep this page open until upload is complete
                 </p>
-                <p>Please keep this page open until upload is complete</p>
               </Progress> }
           </div>
 
