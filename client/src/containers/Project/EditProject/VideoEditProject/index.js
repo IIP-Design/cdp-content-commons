@@ -137,7 +137,10 @@ class VideoEditProject extends React.PureComponent {
 
       return ( {
         hasExceededMaxCategories: categoryCount > this.MAX_CATEGORY_COUNT,
-        hasRequiredData: title && privacySetting && categoryCount > 0 && categoryCount <= this.MAX_CATEGORY_COUNT
+        hasRequiredData: ( title !== '' ) &&
+          privacySetting &&
+          categoryCount > 0 &&
+          categoryCount <= this.MAX_CATEGORY_COUNT
       } );
     } );
   };
