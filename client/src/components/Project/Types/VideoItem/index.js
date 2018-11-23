@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { array, object, string } from 'prop-types';
+import { array, func, object, string } from 'prop-types';
 import { Icon, Progress } from 'semantic-ui-react';
 
 import './VideoItem.css';
@@ -18,10 +18,8 @@ const VideoItem = ( props ) => {
     alt,
     fileName,
     source,
-    ...rest
+    onClick
   } = props;
-
-  const { filesize } = source[0].size;
 
   /**
    * @todo will need to replace `true` condition with
@@ -29,15 +27,7 @@ const VideoItem = ( props ) => {
    * (i.e., when total filesize === total uploaded)
    */
   const isUploading = true;
-
-  /**
-   * Duplicate props to avoid unknown prop warning
-   * @see https://reactjs.org/warnings/unknown-prop.html
-   */
-  const itemProps = { ...rest };
-  delete itemProps.desc;
-  delete itemProps.additionalKeywords;
-
+  const { filesize } = source[0].size;
   const itemStyle = {
     flexBasis: '15em',
     marginRight: '1em',
@@ -45,36 +35,38 @@ const VideoItem = ( props ) => {
   };
 
   return (
-    <li className="item video" style={ itemStyle } { ...itemProps }>
-      <div className={ `thumbnail${isUploading ? ' uploading' : ''}` }>
-        <img src={ thumbnail } alt={ alt } />
-        <p className="file-name">{ fileName }</p>
+    <li className="item video" style={ itemStyle }>
+      <button className="modal-trigger" onClick={ onClick }>
+        <div className={ `thumbnail${isUploading ? ' uploading' : ''}` }>
+          <img src={ thumbnail } alt={ alt } />
+          <p className="file-name">{ fileName }</p>
+          { isUploading &&
+            <div className="loading-animation">
+              <Icon
+                loading
+                name="spinner"
+                size="large"
+              />
+            </div> }
+        </div>
         { isUploading &&
-          <div className="loading-animation">
-            <Icon
-              loading
-              name="spinner"
-              size="big"
-            />
-          </div> }
-      </div>
-      { isUploading &&
-        <Progress
-          /**
-           * @todo determine value via passed-in state
-           */
-          value={ filesize * 0.72 }
-          total={ filesize }
-          color="blue"
-          size="small"
-          active
-          progress
-          precision={ 0 }
-        >
-          <p>Upload in progress</p>
-        </Progress> }
-      <h3 className={ `item-heading ${language.text_direction}` }>{ title }</h3>
-      <p className="item-lang">{ language.display_name }</p>
+          <Progress
+            /**
+            * @todo determine value via passed-in state
+            */
+            value={ filesize * 0.72 }
+            total={ filesize }
+            color="blue"
+            size="small"
+            active
+            progress
+            precision={ 0 }
+          >
+            <p>Upload in progress</p>
+          </Progress> }
+        <h3 className={ `item-heading ${language.text_direction}` }>{ title }</h3>
+        <p className="item-lang">{ language.display_name }</p>
+      </button>
     </li>
   );
 };
@@ -86,7 +78,7 @@ VideoItem.propTypes = {
   alt: string,
   fileName: string,
   source: array,
-  rest: object
+  onClick: func
 };
 
 export default VideoItem;

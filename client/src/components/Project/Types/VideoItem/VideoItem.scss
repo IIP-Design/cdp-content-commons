@@ -33,6 +33,10 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+
+      > i.icon.loading {
+        margin: 0;
+      }
     }
   }
 
@@ -46,20 +50,34 @@
     text-align: right;
   }
 
-  > .ui.active.progress {
-    border-radius: 0;
-    background-color: $light-grey;
+  .modal-trigger {
+    padding: 0;
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
 
-    .bar {
+    > .ui.active.progress {
       border-radius: 0;
-      &::after {
+      background-color: $light-grey;
+  
+      .bar {
         border-radius: 0;
+        &::after {
+          border-radius: 0;
+        }
+      }
+  
+      > .label {
+        font-weight: normal;
+        text-align: left
       }
     }
 
-    > .label {
-      font-weight: normal;
-      text-align: left
+    &:hover,
+    &:active,
+    &:focus {
+      cursor: pointer;
     }
   }
 }
