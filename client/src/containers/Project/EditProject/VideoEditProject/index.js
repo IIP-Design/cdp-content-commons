@@ -93,6 +93,10 @@ class VideoEditProject extends React.PureComponent {
     this.setState( { deleteConfirmOpen: false } );
   }
 
+  handleSaveDraft = () => {
+    console.log( 'Draft saved' );
+  }
+
   handleFinalReview = () => {
     const { videoID } = this.props.match.params;
     this.props.history.push( `/admin/video/${videoID}/review` );
@@ -246,6 +250,13 @@ class VideoEditProject extends React.PureComponent {
                 } }
                 modalTrigger={ Button }
                 modalContent={ PreviewProjectContent }
+              />
+              <Button
+                className="edit-project__btn--save-draft"
+                content="Save Draft"
+                basic
+                onClick={ this.handleSaveDraft }
+                disabled={ !isUploadFinished }
               />
               <Button
                 className="edit-project__btn--final-review"
