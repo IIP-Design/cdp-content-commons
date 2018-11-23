@@ -1,9 +1,11 @@
 @import "../../../../assets/styles/colors.scss";
 
 .edit-project__form {
+  .heading {
+    line-height: 1;
+  }
+
   .msg--required {
-    display: inline-block;
-    margin-left: 0.5em;
     color: $red;
     font-size: 0.625em;
     font-weight: normal;

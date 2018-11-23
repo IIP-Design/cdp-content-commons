@@ -303,7 +303,8 @@ class VideoEditProject extends React.PureComponent {
               authorValue={ author || '' }
               ownerValue={ owner || '' }
 
-              categoryLabel={ `Categories - select up to ${this.MAX_CATEGORY_COUNT}` }
+              categoryLabel="Categories"
+              maxCategories={ this.MAX_CATEGORY_COUNT }
               categoryOptions={ categoryData }
               categoriesValue={ categories }
               hasExceededMaxCategories={ hasExceededMaxCategories }

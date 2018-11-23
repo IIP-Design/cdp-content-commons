@@ -9,6 +9,7 @@ import {
   array,
   bool,
   func,
+  number,
   string
 } from 'prop-types';
 import './ProjectDataForm.css';
@@ -33,6 +34,7 @@ const ProjectDataForm = ( props ) => {
     authorValue,
     ownerValue,
     categoryLabel,
+    maxCategories,
     categoryOptions,
     hasExceededMaxCategories,
     categoriesValue,
@@ -49,7 +51,8 @@ const ProjectDataForm = ( props ) => {
         <Grid.Row>
           <Grid.Column width="16">
             <h2 className="heading">
-              <span className="uppercase">Project Data</span>{ ' ' }
+              <span className="uppercase">Project Data</span>
+              <br />
               <small className="msg--required">Required Fields *</small>
             </h2>
           </Grid.Column>
@@ -104,24 +107,28 @@ const ProjectDataForm = ( props ) => {
             </Form.Group>
 
             <Form.Group widths="equal">
-              <Form.Dropdown
-                id="video-categories"
-                control={ Dropdown }
-                label={ categoryLabel }
-                required
-                placeholder="-"
-                options={ categoryOptions }
-                fluid
-                multiple
-                search
-                selection
-                closeOnBlur
-                closeOnChange
-                name="categories"
-                value={ categoriesValue }
-                onChange={ handleChange }
-                error={ hasExceededMaxCategories }
-              />
+              <div className="field">
+                <Form.Dropdown
+                  id="video-categories"
+                  control={ Dropdown }
+                  label={ categoryLabel }
+                  required
+                  placeholder="-"
+                  options={ categoryOptions }
+                  fluid
+                  multiple
+                  search
+                  selection
+                  closeOnBlur
+                  closeOnChange
+                  name="categories"
+                  value={ categoriesValue }
+                  onChange={ handleChange }
+                  error={ hasExceededMaxCategories }
+                  style={ { marginBottom: '1em' } }
+                />
+                <p>Select up to { maxCategories }.</p>
+              </div>
 
               <div className="field">
                 <Form.Field
@@ -186,6 +193,7 @@ ProjectDataForm.propTypes = {
   authorValue: string,
   ownerValue: string,
   categoryLabel: string,
+  maxCategories: number,
   categoryOptions: array,
   hasExceededMaxCategories: bool,
   categoriesValue: array,
