@@ -21,6 +21,7 @@ import ProjectDataForm from 'components/Project/EditProject/ProjectDataForm';
 import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
 import VideoItem from 'components/Project/Types/VideoItem';
+import Notification from 'components/Project/Notification/Loadable';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
@@ -209,10 +210,6 @@ class VideoEditProject extends React.PureComponent {
       border: `3px solid ${( hasRequiredData && hasSubmittedData ) ? 'transparent' : '#02bfe7'}`
     };
 
-    const statusStyle = {
-      backgroundColor: isUploadFinished ? '#f1f1f1' : '#02bfe7'
-    };
-
     const notificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
 
     return (
@@ -267,13 +264,25 @@ class VideoEditProject extends React.PureComponent {
             </ProjectHeader>
           </div>
 
-          <div className="edit-project__status" style={ isUploadInProgress ? null : statusStyle }>
+          <div className="edit-project__status alpha">
             <StatusMessages
               hasSubmittedData={ hasSubmittedData }
               displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
               displayTheSaveMsg={ displayTheSaveMsg }
               notificationMsg={ notificationMsg }
             />
+
+            { displayTheSaveMsg &&
+              <Notification
+                el="p"
+                customStyles={ {
+                  position: 'absolute',
+                  top: '13em',
+                  left: '50%',
+                  transform: 'translateX(-50%)'
+                  } }
+                msg={ notificationMsg }
+              /> }
 
             { isUploadInProgress &&
               <Progress
@@ -317,6 +326,30 @@ class VideoEditProject extends React.PureComponent {
               hasSubmittedData={ hasSubmittedData }
               hasRequiredData={ hasRequiredData }
             />
+          </div>
+
+          <div className="edit-project__status beta">
+            <StatusMessages
+              hasSubmittedData={ hasSubmittedData }
+              displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
+              displayTheSaveMsg={ displayTheSaveMsg }
+              notificationMsg={ notificationMsg }
+            />
+
+            { isUploadInProgress &&
+              <Progress
+                value={ totalUploaded }
+                total={ totalUploadSize }
+                color="blue"
+                size="medium"
+                active
+              >
+                <p>
+                  <b>Uploading files:</b> { totalUploaded } of { totalUploadSize }
+                  <br />
+                  Please keep this page open until upload is complete
+                </p>
+              </Progress> }
           </div>
 
           <div className="edit-project__support-files">

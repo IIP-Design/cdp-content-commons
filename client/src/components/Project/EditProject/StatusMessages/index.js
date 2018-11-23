@@ -5,56 +5,57 @@
  */
 
 import React, { Fragment } from 'react';
-import { bool, string } from 'prop-types';
-// import './StatusMessages.css';
-
+import { bool } from 'prop-types';
 import { Icon } from 'semantic-ui-react';
-
-import Notification from 'components/Project/Notification/Loadable';
 
 
 const StatusMessages = ( props ) => {
   const {
     hasSubmittedData,
-    displayTheUploadSuccessMsg,
-    displayTheSaveMsg,
-    notificationMsg
+    displayTheUploadSuccessMsg
   } = props;
 
-  const msgStyles = { margin: '0', padding: '1em 1.75em' };
+  const baseStyles = {
+    margin: '0',
+    padding: '0.625em 1.75em',
+    backgroundColor: '#d6d7d9',
+    textAlign: 'center'
+  };
+
+  const draftMsgStyles = {
+    ...baseStyles,
+    padding: '0.625em 1.75em 1.5em',
+    backgroundColor: '#ffffff'
+  };
+
+  const successStyles = {
+    ...baseStyles,
+    backgroundColor: '#aee02d',
+    textAlign: 'initial'
+  };
 
   return (
     <Fragment>
       { !hasSubmittedData &&
-        <p style={ msgStyles }>
-          <strong>Fill out the required fields to finish setting up this project.</strong> Your files will not be uploaded until the project is saved as a draft.
-        </p> }
+        <Fragment>
+          <p style={ baseStyles }>
+            <strong>Fill out the required fields to finish setting up this project.</strong>
+          </p>
+          <p style={ draftMsgStyles }>Your files will not be uploaded until the project is saved as a draft.
+          </p>
+        </Fragment> }
 
       { displayTheUploadSuccessMsg &&
-        <p style={ msgStyles }>
+        <p style={ successStyles }>
           <Icon size="large" name="check circle outline" /> Files uploaded successfully!
         </p> }
-
-      { displayTheSaveMsg &&
-        <Notification
-          el="p"
-          customStyles={ {
-            position: 'absolute',
-            top: '11em',
-            left: '50%',
-            transform: 'translateX(-50%)'
-            } }
-          msg={ notificationMsg }
-        /> }
     </Fragment>
   );
 };
 
 StatusMessages.propTypes = {
   hasSubmittedData: bool,
-  displayTheUploadSuccessMsg: bool,
-  displayTheSaveMsg: bool,
-  notificationMsg: string
+  displayTheUploadSuccessMsg: bool
 };
 
 export default StatusMessages;
