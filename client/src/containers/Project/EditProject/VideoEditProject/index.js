@@ -32,7 +32,7 @@ import {
   categoryData,
   privacyOptions,
   supportFilesConfig
-} from './mockData';
+} from '../../mockData';
 
 
 /* eslint-disable react/prefer-stateless-function */

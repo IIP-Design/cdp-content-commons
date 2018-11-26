@@ -5,7 +5,7 @@
  */
 
 import { DEFAULT_ACTION } from './constants';
-import { projects } from './mockData';
+import { projects } from '../../mockData';
 
 
 export const INITIAL_STATE = projects;
