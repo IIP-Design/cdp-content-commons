@@ -34,6 +34,27 @@ export const escape = ( id ) => {
   return re.test( id.charAt( 0 ) ) ? `\\${id}` : id;
 };
 
+/**
+ * If there are an odd number of quotes in the query string is will cause
+ * an error. So in that case a string is returned with some quotes escaped
+ * to prevent error.
+ *
+ * @param str
+ * @returns string
+ */
+export const maybeFixQuotes = ( str ) => {
+  const quoteCount = str.replace( /[^"]/g, '' ).length;
+
+  // If only 1 quote then escape it
+  if ( quoteCount === 1 ) return str.replace( '"', '\\"' );
+  // If an odd number of quotes then escape all the ones in the middle
+  if ( quoteCount % 2 === 1 ) {
+    const parts = str.split( '"' );
+    return `${parts[0]}"${parts.slice( 1, -1 ).join( '\\"' )}"${parts[parts.length - 1]}`;
+  }
+  return str;
+};
+
 export const capitalizeFirst = str => str.substr( 0, 1 ).toUpperCase() + str.substr( 1 );
 export const titleCase = str =>
   str
@@ -45,24 +66,31 @@ export const titleCase = str =>
 export const getAvailableLanguages = ( item ) => {
   if ( !item || !item.type ) return [];
   switch ( item.type ) {
-    case 'video':
-      return item.units.map( unit => ( {
-        key: unit.language.language_code,
-        value: unit.language.display_name,
-        text: unit.language.display_name
-      } ) );
+    case 'video': {
+      const langArr = item.units.reduce( ( langs, unit ) => {
+        if ( unit.source && unit.source.length ) {
+          langs.push( {
+            key: unit.language.locale,
+            value: unit.language.display_name,
+            text: unit.language.display_name
+          } );
+        }
+        return langs;
+      }, [] );
+      return langArr;
+    }
     case 'post':
       if ( item.languages ) {
         let langArray = [];
         langArray = item.languages.map( post => ( {
           id: post.post_id,
-          key: post.language.language_code,
+          key: post.language.locale,
           value: post.language.display_name,
           text: post.language.display_name
         } ) );
         langArray.unshift( {
           id: item.id,
-          key: item.language.language_code,
+          key: item.language.locale,
           value: item.language.display_name,
           text: item.language.display_name
         } );
@@ -137,6 +165,8 @@ const getQryFields = ( types = [] ) => {
   return [...set];
 };
 
+const escapeRegExp = string => string.replace( /[.*+-=&!?^~${}()|[\]\\]/g, '\\$&' );
+
 export const queryBuilder = ( store ) => {
   const body = new Bodybuilder();
   const options = [];
@@ -201,7 +231,7 @@ export const queryBuilder = ( store ) => {
 
   // add original search query last
   if ( store.search.query ) {
-    const qryObj = { query: `${store.search.query} AND (${optionStr})` };
+    const qryObj = { query: `(${maybeFixQuotes( escapeRegExp( store.search.query ) )}) AND (${optionStr})` };
     if ( hasSelectedTypes ) {
       qryObj.fields = getQryFields( store.type.currentPostTypes );
     }

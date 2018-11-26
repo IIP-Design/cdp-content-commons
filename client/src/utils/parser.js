@@ -69,28 +69,40 @@ const getDefaultThumbnail = ( type ) => {
 const getThumbnail = ( source ) => {
   const { thumbnail } = source;
   const image = source.featured_image;
+  const tn = ( thumbnail && thumbnail.sizes ) ? thumbnail.sizes : thumbnail;
 
-  if ( thumbnail ) {
-    if ( thumbnail.medium && thumbnail.medium.url ) {
-      return thumbnail.medium.url;
+  if ( tn ) {
+    if ( tn.medium && tn.medium.url ) {
+      return tn.medium.url;
     }
 
-    if ( thumbnail.small && thumbnail.small.url ) {
-      return thumbnail.small.url;
+    if ( tn.small && tn.small.url ) {
+      return tn.small.url;
     }
 
-    if ( thumbnail.large && thumbnail.large.url ) {
-      return thumbnail.large.url;
+    if ( tn.large && tn.large.url ) {
+      return tn.large.url;
     }
 
-    if ( thumbnail.full && thumbnail.full.url ) {
-      return thumbnail.full.url;
+    if ( tn.full && tn.full.url ) {
+      return tn.full.url;
     }
   } else if ( image && image.sizes && image.sizes.medium ) {
     return image.sizes.medium.url;
   }
 
   return null;
+};
+
+const getThumbnailMeta = ( source ) => {
+  const thumbnail = ( ( source || {} ).thumbnail || {} );
+
+  const imageMeta = {
+    alt: ( thumbnail.alt ? thumbnail.alt : ' ' ),
+    caption: ( thumbnail.caption ? thumbnail.caption : '' )
+  };
+
+  return imageMeta;
 };
 
 const getThumbnailFromVideo = ( source ) => {
@@ -158,6 +170,7 @@ const populateItem = ( source ) => {
     description: source.excerpt,
     content: source.content,
     thumbnail: getThumbnail( source ) || getDefaultThumbnail( source.type ),
+    thumbnailMeta: getThumbnailMeta( source ) || {},
     categories: source.categories || [],
     language: source.language,
     languages: source.languages || []

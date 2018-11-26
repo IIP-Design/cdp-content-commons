@@ -6,12 +6,18 @@
 import { Auth, Cache } from 'aws-amplify';
 import {
   LOGIN_ERROR,
+  LOGIN_RESET_ERROR,
   LOGIN,
   LOGOUT
 } from './constants';
 
 
-const dispatchError = ( dispatch, err, callbackError ) => {
+/**
+ *
+ * @param {function} dispatch
+ * @param {string|object} err
+ */
+const dispatchError = ( dispatch, err ) => {
   let msg = 'Login failed.';
   if ( err && err.error !== 'popup_closed_by_user' ) { // user closes window before selecting a google email
     if ( err.reason && err.reason.indexOf( 'Account domain does not match hosted_domain' ) !== -1 ) {
@@ -19,9 +25,8 @@ const dispatchError = ( dispatch, err, callbackError ) => {
     }
     dispatch( {
       type: LOGIN_ERROR,
-      payload: 'Error'
+      payload: msg
     } );
-    callbackError( msg );
   }
 };
 
@@ -35,7 +40,7 @@ const federatedSignIn = async ( googleUser ) => {
   /* eslint-disable camelcase */
   const { id_token, expires_at } = googleUser.getAuthResponse();
   const profile = googleUser.getBasicProfile();
-  let user = {
+  const user = {
     email: profile.getEmail(),
     name: profile.getName()
   };
@@ -46,38 +51,55 @@ const federatedSignIn = async ( googleUser ) => {
     user
   );
 
-  user = await Auth.currentAuthenticatedUser();
-  return user;
+  // return the full authenticated object from Cache to avoind another call
+  return Cache.getItem( 'federatedInfo' );
 };
+
+/**
+ * Fetches a reference to the google api script that was added
+ * when component <ButtonGoogle/> mounts
+ */
+const getGoogleApiRef = () => ( window.gapi && window.gapi.auth2
+  ? window.gapi.auth2.getAuthInstance()
+  : null );
+
+/**
+ * Login via Google and then authenticate the google user
+ * against the aws identity pool to get access to aws services
+ */
+export const googleLogin = async () => {
+  const ga = getGoogleApiRef();
+  if ( ga ) {
+    const googleUser = await ga.signIn();
+    const user = await federatedSignIn( googleUser );
+    return user;
+  }
+  throw new Error( 'Google is not available for authentication.' );
+};
+
 
 /**
  * Authenticate via Google
  *
- * @param {function} callbackSuccess function to execute on success
- * @param {function} callbackError function to execute on error
+ * @param {object} history routes user to page they loggedin from
  */
-export const googleLogin = ( callbackSuccess, callbackError ) => async ( dispatch ) => {
+export const willGoogleLogin = history => async ( dispatch ) => {
   try {
-    const ga = window.gapi && window.gapi.auth2
-      ? window.gapi.auth2.getAuthInstance()
-      : null;
-
-    if ( ga ) {
-      const googleUser = await ga.signIn();
-      const user = await federatedSignIn( googleUser );
-
-      dispatch( {
-        type: LOGIN,
-        payload: user
-      } );
-      callbackSuccess();
-    } else {
-      dispatchError( dispatch, 'Google is not available for authentication.', callbackError );
-    }
+    const user = await googleLogin();
+    dispatch( {
+      type: LOGIN,
+      payload: user
+    } );
+    history.goBack();
   } catch ( err ) {
-    dispatchError( dispatch, err, callbackError );
+    dispatchError( dispatch, err );
   }
 };
+
+export const resetError = () => ( {
+  type: LOGIN_RESET_ERROR,
+  payload: ''
+} );
 
 
 export const login = () => async ( dispatch ) => {

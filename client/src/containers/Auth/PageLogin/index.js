@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from '../actions';
-import { makeSelectAuthenticated } from '../selectors';
+import { makeSelectAuthenticated, makeSelectError } from '../selectors';
 import { Button, Message } from 'semantic-ui-react';
 import ButtonGoogle from 'components/ButtonGoogle';
 
@@ -18,44 +18,35 @@ import Page from 'components/Page';
 import './PageLogin.css';
 
 class PageLogin extends PureComponent {
-  state = {
-    error: true,
-    errorMsg: ''
+  componentWillMount() {
+    this.props.resetError();
   }
 
-  handleLoginSuccess = () => {
-    this.props.history.goBack();
-  };
-
-  handleLoginError = ( err ) => {
-    this.setState( {
-      error: false,
-      errorMsg: err
-    } );
-  };
-
   handleClickGoogleLogin = () => {
-    this.props.googleLogin( this.handleLoginSuccess, this.handleLoginError );
+    this.props.willGoogleLogin( this.props.history );
   };
 
   handleClickLogout = () => {
     this.props.logout();
   };
 
-  renderLoginPage = () => (
-    <Page title="Login" description="Login to Content Commons">
-      <div className="login login_wrapper">
-        <h1>Log In</h1>
-        <p className="login_subtext">Log in to collect, upload, and manage content in the Content Commons.</p>
-        <ButtonGoogle
-          clientid={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
-          onClick={ this.handleClickGoogleLogin }
-        >Login america.gov
-        </ButtonGoogle>
-        <Message negative hidden={ this.state.error }>{ this.state.errorMsg }</Message>
+  renderLoginPage = () => {
+    const { errorMessage } = this.props;
 
-        { /* /------- NOT INCL IN MVP  --------/ */ }
-        { /* <p className="login_optionText">Or</p>
+    return (
+      <Page title="Login" description="Login to Content Commons">
+        <div className="login login_wrapper">
+          <h1>Log In</h1>
+          <p className="login_subtext">Log in to collect, upload, and manage content in the Content Commons.</p>
+          <ButtonGoogle
+            clientid={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
+            onClick={ this.handleClickGoogleLogin }
+          >Login america.gov
+          </ButtonGoogle>
+          <Message negative hidden={ !errorMessage }>{ errorMessage }</Message>
+
+          { /* /------- NOT INCL IN MVP  --------/ */ }
+          { /* <p className="login_optionText">Or</p>
         <Form>
           <Form.Input label="Email" type="text" placeholder="Your email address" />
           <Form.Input label="Password" type="password" placeholder="********" />
@@ -70,9 +61,10 @@ class PageLogin extends PureComponent {
           </div>
         </Form> */ }
 
-      </div>
-    </Page>
-  );
+        </div>
+      </Page>
+    );
+  }
 
   renderLogoutPage = () => (
     <Page title="Login" description="Login to Content Commons">
@@ -96,13 +88,16 @@ class PageLogin extends PureComponent {
 
 PageLogin.propTypes = {
   logout: PropTypes.func,
-  googleLogin: PropTypes.func,
+  willGoogleLogin: PropTypes.func,
+  resetError: PropTypes.func,
   authenticated: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  errorMessage: PropTypes.string
 };
 
 const mapStateToProps = state => createStructuredSelector( {
-  authenticated: makeSelectAuthenticated()
+  authenticated: makeSelectAuthenticated(),
+  errorMessage: makeSelectError()
 } );
 
 export default withRouter( connect( mapStateToProps, actions )( PageLogin ) );

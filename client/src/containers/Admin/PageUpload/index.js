@@ -62,7 +62,13 @@ const PageUpload = () => (
         <li>Are allowed on the CDP servers.</li>
       </ol>
       <p>Still have questions?</p>
-      <p>Read our <Link to="/about">FAQs</Link> about uploading content.</p>
+      <p>
+        Read our
+        &nbsp;
+        <Link to="/about">FAQs</Link>
+        &nbsp;
+        about uploading content.
+      </p>
     </div>
   </Page>
 );

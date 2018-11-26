@@ -91,7 +91,20 @@
 
     &--metaContent {
       margin-top: 1em;
-    }    
+    }
+
+    & figure {
+      max-width: 100%;
+      
+      &.alignnone {
+        margin: 1em 0;
+      }
+    }
+     & figcaption {
+      color: #5b6168;
+      font-size: 12px;
+      margin-bottom: 1em;
+    }
   }
 
   &_headline {
@@ -129,13 +142,4 @@
       }
     }   
   }
-
-
-  &_thumbnail {
-    
-    img {
-      width: 100%;
-    }
-  }
-  
 }

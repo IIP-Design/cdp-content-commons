@@ -15,6 +15,10 @@ const makeSelectAuthenticated = props =>
   createSelector( selectAuth, auth => auth.authenticated );
 
 
+const makeSelectError = () =>
+  createSelector( selectAuth, auth => auth.errorMessage );
+
+
 const makeSelectUser = props =>
   createSelector( selectAuthenticated, authenticated => ( ( authenticated && authenticated.user )
     ? authenticated.user
@@ -25,5 +29,6 @@ const makeSelectUser = props =>
 export {
   selectAuth,
   makeSelectAuthenticated,
+  makeSelectError,
   makeSelectUser
 };

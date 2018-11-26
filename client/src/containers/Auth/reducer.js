@@ -7,7 +7,8 @@ import { Cache } from 'aws-amplify';
 import {
   LOGIN,
   LOGOUT,
-  LOGIN_ERROR
+  LOGIN_ERROR,
+  LOGIN_RESET_ERROR
 } from './constants';
 
 
@@ -33,7 +34,13 @@ function authReducer( state = INITIAL_STATE, action ) {
     case LOGIN_ERROR:
       return {
         ...state,
-        errorMessage: 'Error message'
+        errorMessage: action.payload
+      };
+
+    case LOGIN_RESET_ERROR:
+      return {
+        ...state,
+        errorMessage: ''
       };
 
     default:
