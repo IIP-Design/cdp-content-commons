@@ -20,8 +20,7 @@ const Placeholder = ( props ) => {
   const Child = childEl;
   const baseStyle = {
     height: '0.875em',
-    width: '15em',
-    marginRight: '1em',
+    width: 'auto',
     marginBottom: '0.625em',
     backgroundColor: '#d6d7d9'
   };

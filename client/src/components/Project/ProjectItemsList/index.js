@@ -27,8 +27,9 @@ const ProjectItemsList = ( props ) => {
   const List = listEl;
 
   const defaultListStyle = {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(13em, 1fr))',
+    gridGap: '1.5em 1em',
     paddingLeft: '0',
     listStyle: 'none'
   };

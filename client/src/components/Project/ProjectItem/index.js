@@ -43,7 +43,7 @@ const ProjectItem = ( props ) => {
       childStyles={ {
         thumbnail: {
           ...sharedStyles,
-          height: '8em'
+          height: '10em'
         },
         heading: {
           ...sharedStyles,

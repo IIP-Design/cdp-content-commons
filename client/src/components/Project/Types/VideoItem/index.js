@@ -29,9 +29,6 @@ const VideoItem = ( props ) => {
   const isUploading = true;
   const { filesize } = source[0].size;
   const itemStyle = {
-    flexBasis: '15em',
-    marginRight: '1em',
-    marginBottom: '1.5em',
     cursor: isUploading ? 'not-allowed' : 'pointer'
   };
 
