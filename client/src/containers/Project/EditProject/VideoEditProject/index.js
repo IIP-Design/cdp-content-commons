@@ -277,7 +277,7 @@ class VideoEditProject extends React.PureComponent {
                 el="p"
                 customStyles={ {
                   position: 'absolute',
-                  top: '13em',
+                  top: '10.75em',
                   left: '50%',
                   transform: 'translateX(-50%)'
                   } }

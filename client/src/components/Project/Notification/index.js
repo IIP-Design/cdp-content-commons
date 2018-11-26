@@ -13,7 +13,7 @@ const Notification = ( props ) => {
   const El = el;
   const defaultStyle = {
     padding: '1em 1.5em',
-    fontSize: '0.625em',
+    fontSize: '0.75em',
     backgroundColor: '#b9de52'
   };
 
