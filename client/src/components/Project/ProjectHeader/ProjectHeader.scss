@@ -12,6 +12,9 @@
 }
 
 .project_header {
+  @media screen and (max-width: 899px) {
+    margin-bottom: 1em;
+  }
     
   > h2 {
     display: flex;

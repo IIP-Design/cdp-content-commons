@@ -1,9 +1,11 @@
 @import "../../../../assets/styles/colors.scss";
 
 .edit-project {
-  @media screen and (max-width: 899px) {
-    .project_header {
-      margin-bottom: 1em;
+  @media screen and (max-width: 550px) {
+    .project_buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 0.5fr);
+      grid-gap: 1em;
     }
   }
 
