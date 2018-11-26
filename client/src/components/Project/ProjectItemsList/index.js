@@ -28,6 +28,7 @@ const ProjectItemsList = ( props ) => {
 
   const defaultListStyle = {
     display: 'flex',
+    flexWrap: 'wrap',
     paddingLeft: '0',
     listStyle: 'none'
   };

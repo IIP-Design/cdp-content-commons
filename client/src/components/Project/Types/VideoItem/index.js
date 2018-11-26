@@ -31,6 +31,7 @@ const VideoItem = ( props ) => {
   const itemStyle = {
     flexBasis: '15em',
     marginRight: '1em',
+    marginBottom: '1.5em',
     cursor: isUploading ? 'not-allowed' : 'pointer'
   };
 

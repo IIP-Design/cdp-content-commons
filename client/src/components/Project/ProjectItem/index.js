@@ -39,6 +39,7 @@ const ProjectItem = ( props ) => {
     <Placeholder
       parentEl="li"
       childEl="div"
+      parentStyles={ { marginBottom: '1.5em' } }
       childStyles={ {
         thumbnail: {
           ...sharedStyles,
