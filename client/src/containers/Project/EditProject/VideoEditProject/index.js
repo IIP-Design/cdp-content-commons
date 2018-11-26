@@ -204,8 +204,6 @@ class VideoEditProject extends React.PureComponent {
       protectImages
     } = formData;
 
-    const pageTitle = `Project Details${hasSubmittedData ? ' - Edit' : ''}`;
-
     const contentStyle = {
       border: `3px solid ${( hasRequiredData && hasSubmittedData ) ? 'transparent' : '#02bfe7'}`
     };
@@ -217,7 +215,7 @@ class VideoEditProject extends React.PureComponent {
         <Breadcrumbs />
         <div className="edit-project">
           <div className="edit-project__header">
-            <ProjectHeader icon="video camera" text={ pageTitle }>
+            <ProjectHeader icon="video camera" text="Project Details">
               <Button
                 className="edit-project__btn--delete"
                 content="Delete Project"
