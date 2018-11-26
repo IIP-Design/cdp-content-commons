@@ -266,8 +266,6 @@ class VideoEditProject extends React.PureComponent {
             <StatusMessages
               hasSubmittedData={ hasSubmittedData }
               displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
-              displayTheSaveMsg={ displayTheSaveMsg }
-              notificationMsg={ notificationMsg }
             />
 
             { displayTheSaveMsg &&
@@ -330,8 +328,6 @@ class VideoEditProject extends React.PureComponent {
             <StatusMessages
               hasSubmittedData={ hasSubmittedData }
               displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
-              displayTheSaveMsg={ displayTheSaveMsg }
-              notificationMsg={ notificationMsg }
             />
 
             { isUploadInProgress &&
