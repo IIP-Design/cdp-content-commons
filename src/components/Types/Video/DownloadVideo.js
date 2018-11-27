@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import downloadIcon from '../../../assets/icons/icon_download.svg';
 import { Item } from 'semantic-ui-react';
-import { object, string, bool } from 'prop-types';
+import { object, string, bool, func } from 'prop-types';
+import withFileDownload from '../../../utils/withFileDownload';
 
-// NOTE: Using the 'download' attribute to trigger downloads
-// Need to research more robust options depending on browser supprt
 class DownloadVideo extends Component {
   getSrt() {
     const arr = [];
@@ -53,25 +52,28 @@ class DownloadVideo extends Component {
   };
 
   renderFormItem( video, index ) {
-    const { title } = this.props.selectedLanguageUnit;
+    const { title, language } = this.props.selectedLanguageUnit;
     const size = this.getSizeInfo( video.size );
-    const fn = `${title.replace( /\s/g, '_' )}_${video.size.width}.${this.getFnExt( video.downloadUrl )}`;
+    // const fn = `${title.replace( /\s/g, '_' )}_${video.size.width}.${this.getFnExt( video.downloadUrl )}`;
     const videoQuality = `${video.video_quality && video.video_quality === 'broadcast' ? 'broadcast' : 'web'}`;
-
+    const downloadIdentifier = `${videoQuality}_${size.weight}_${size.label}`.replace( /\s/g, '' );
     return (
-      <Item.Group key={ `fs_${index}` } className="download-item">
-        <Item as="a" href={ video.downloadUrl } download={ fn }>
-          <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
-          <Item.Content>
-            <Item.Header className="download-header">
+      <div key={ `fs_${index}` } >
+        <Item.Group className="download-item">
+          <Item as="a" href={ this.props.downloadLink( video.downloadUrl, title, language.locale, downloadIdentifier ) }>
+            <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
+            <Item.Content>
+              <Item.Header className="download-header">
               Download <span className="lightweight">{ `"${title}"` }</span> for { `${videoQuality}` }
-            </Item.Header>
-            <Item.Meta> { `File size: ${size.weight}` } </Item.Meta>
-            <Item.Meta> { `Dimensions: ${size.label}` }</Item.Meta>
-            <span className="item_hover">{ `Download for ${videoQuality}` }</span>
-          </Item.Content>
-        </Item>
-      </Item.Group>
+              </Item.Header>
+              <Item.Meta> { `File size: ${size.weight}` } </Item.Meta>
+              <Item.Meta> { `Dimensions: ${size.label}` }</Item.Meta>
+              <span className="item_hover">{ `Download for ${videoQuality}` }</span>
+            </Item.Content>
+          </Item>
+        </Item.Group>
+        <Item.Extra style={ { color: '#cd2026' } }>{ this.props.error }</Item.Extra>
+      </div>
     );
   }
 
@@ -88,7 +90,7 @@ class DownloadVideo extends Component {
 
     // Filter for videos w/ downloadable URLs, then return array of react elements
     // returns empty array !downloadable URLs
-    const videosArr = videos.filter( ( v, i ) => v.downloadUrl !== '' ).map( ( v, i ) => this.renderFormItem( v, i ));
+    const videosArr = videos.filter( ( v, i ) => v.downloadUrl !== '' ).map( ( v, i ) => this.renderFormItem( v, i ) );
     return videosArr.length ? videosArr : 'There are no videos available for download at this time';
   }
 
@@ -106,7 +108,9 @@ class DownloadVideo extends Component {
 DownloadVideo.propTypes = {
   selectedLanguageUnit: object,
   instructions: string,
-  burnedInCaptions: bool
+  burnedInCaptions: bool,
+  downloadLink: func,
+  error: string
 };
 
-export default DownloadVideo;
+export default withFileDownload( DownloadVideo );
