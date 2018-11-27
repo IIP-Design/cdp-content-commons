@@ -11,6 +11,8 @@ import * as actions from './actions';
 import makeSelectEditSingleProjectItem from './selectors';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
+import VideoEditVideo from '../EditProject/VideoEditVideo';
+
 import './EditSingleProjectItem.css';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -23,7 +25,7 @@ class EditSingleProjectItem extends React.PureComponent {
         headline={ title }
         textDirection={ language.text_direction }
       >
-        <p>Edit Single Project Item Component</p>
+        <VideoEditVideo data={ this.props } />
       </ModalItem>
     );
   }
