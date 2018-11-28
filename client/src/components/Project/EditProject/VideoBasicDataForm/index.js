@@ -23,7 +23,7 @@ const VideoBasicDataForm = ( props ) => {
     <label htmlFor="video-quality">
       Video Quality
       <IconPopup
-        message={ 'Web: small - for social sharing\nBroadcast: large - ambassador videos' }
+        message="Web: small - for social sharing, Broadcast: large - ambassador videos"
         size="small"
         iconType="info circle"
       />

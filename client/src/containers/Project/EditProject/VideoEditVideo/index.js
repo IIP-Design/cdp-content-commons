@@ -29,10 +29,10 @@ class VideoEditVideo extends React.PureComponent {
 
     return (
       <div>
-        <figure className="modal_thumbnail overlay-image">
-          <img className="image" src={ data.thumbnail } alt={ data.alt } />
-          <div className="hover">
-            <div className="text">Change Thumbnail</div>
+        <figure className="modal_thumbnail overlay">
+          <img className="overlay-image" src={ data.thumbnail } alt={ data.alt } />
+          <div className="overlay-hover">
+            <div className="overlay-text">Change Thumbnail</div>
           </div>
         </figure>
         <section className="modal_section modal_section--metaContent">
@@ -57,10 +57,10 @@ class VideoEditVideo extends React.PureComponent {
             </div>
           </div>
         </section>
-        <section>
+        <section className="tabbed-container">
           <Tab menu={ { secondary: true, pointing: true } } panes={ panes } />
         </section>
-        <section>
+        <section className="video-carousel">
           <h3 className="video-carousel-header">Videos in this Project</h3>
         </section>
       </div>
