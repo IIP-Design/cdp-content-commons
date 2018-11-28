@@ -10,4 +10,10 @@
     font-size: 0.625em;
     font-weight: normal;
   }
+
+  &--save {
+    &.ui.button {
+      margin: 0;
+    }
+  }
 }
