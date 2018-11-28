@@ -114,13 +114,13 @@ const projects = [
     supportFiles: {
       srt: [
         { lang: 'Arabic', file: 'madeinamerica_arabic.srt' },
-        { lang: 'Chinese', file: 'madeinamerica_chinese.srt' },
+        { lang: 'Chinese (Simplified)', file: 'madeinamerica_chinese_ljhlkjhl_kjhlkjh_aslkfja;lskjfweoij.srt' },
         { lang: 'English', file: 'madeinamerica_english.srt' },
         { lang: 'French', file: 'madeinamerica_french.srt' }
       ],
       thumbnail: [
         { lang: 'Arabic', file: 'madeinamerica_arabic.jpg' },
-        { lang: 'Chinese', file: 'madeinamerica_chinese.jpg' },
+        { lang: 'Chinese (Simplified)', file: 'madeinamerica_chinese.jpg' },
         { lang: 'English', file: 'madeinamerica_english.jpg' },
         { lang: 'French', file: 'madeinamerica_french.jpg' }
       ],
@@ -186,7 +186,7 @@ const projects = [
           md5: '',
           srcUrl: ''
         },
-        fileName: 'madeinamerica_english.mp4',
+        fileName: 'madeinamerica_english_asdkjaf_al;kdflkeori_erpoiuzx,mnvz.mp4',
         uploaded: '2018-04-13T15:45:00Z',
         desc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.'
       },

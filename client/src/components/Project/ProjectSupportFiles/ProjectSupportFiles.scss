@@ -1,5 +1,14 @@
 @import "../../../assets/styles/colors.scss";
 
+@mixin stack() {
+  flex-direction: column;
+  margin-bottom: 0.5em;
+
+  > .item-lang {
+    order: -1;
+  }
+}
+
 .support-files {
   ul {
     padding-left: 0;
@@ -7,21 +16,35 @@
 
     > .support-item {
       display: flex;
-      @media screen and (min-width: 769px) and (max-width: 1080px) {
-        flex-direction: column;
-        margin-bottom: 0.5em;
 
-        > .item-lang {
-          order: -1;
-        }
+      &.long {
+        margin-top: 0.5em;
+        @include stack();
+      }
+
+      @media screen and (max-width: 400px), (min-width: 768px) and (max-width: 1280px) {
+        @include stack();
       }
       justify-content: space-between;
       font-size: 0.875em;
+
+      > .item-name {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word;
+      }
     }
   }
 
+  .ui.button {
+    margin: 0;
+    padding: 0.625em;
+  }
+
   i.small.icon {
-    margin-left: 0.875em;
-    font-size: 0.875em;
+    margin-left: 0.625em;
+    font-size: 0.75em;
   }
 }
