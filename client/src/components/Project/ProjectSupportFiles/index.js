@@ -24,6 +24,7 @@ const ProjectSupportFiles = ( props ) => {
   } = props;
 
   const fileTypes = Object.keys( config );
+  const columns = fileTypes.filter( n => supportFiles[n].length > 0 );
 
   const renderFileTypes = ( type ) => {
     const {
@@ -76,7 +77,7 @@ const ProjectSupportFiles = ( props ) => {
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Row columns={ 3 } divided>
+        <Grid.Row columns={ columns.length } divided>
           { fileTypes.map( renderFileTypes ) }
         </Grid.Row>
       </Grid>
