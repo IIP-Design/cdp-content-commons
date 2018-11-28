@@ -1,6 +1,10 @@
 @import "../../../../assets/styles/colors.scss";
 
 .edit-project {
+  :focus:not(:focus-visible) {
+    outline: none
+  }
+
   @media screen and (max-width: 550px) {
     .project_buttons {
       display: grid;
@@ -21,6 +25,13 @@
 
   .ui.button {
     box-shadow: none !important;
+
+    &:focus,
+    &.basic.buttons .button:focus,
+    &.basic:focus {
+      outline: 2px dotted $medium-grey;
+      outline-offset: 2px;
+    }
 
     &.disabled,
     &:disabled {
