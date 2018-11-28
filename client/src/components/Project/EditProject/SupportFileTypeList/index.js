@@ -23,41 +23,46 @@ const SupportFileTypeList = ( props ) => {
     hasSubmittedData
   } = props;
 
-  return (
-    <Fragment>
-      <h3>{ `${headline} ` }
-        { hasSubmittedData &&
-          <Fragment>
-            <IconPopup
-              message={ popupMsg }
-              size="small"
-              iconType="info circle"
-            />
-            <EditSupportFiles
-              triggerProps={ {
-                  className: 'btn--edit',
-                  content: 'Edit',
-                  size: 'small',
-                  basic: true
-              } }
-              contentProps={ { fileType } }
-              modalTrigger={ Button }
-              modalContent={ EditSupportFilesContent }
-            />
-          </Fragment> }
-      </h3>
-      <ul>
-        { data.map( obj => (
-          <SupportItem
-            key={ `${fileType}-${obj.lang}` }
-            fileType={ fileType }
-            item={ obj }
-            isAvailable={ hasSubmittedData }
-          />
-        ) ) }
-      </ul>
-    </Fragment>
+  const renderSupportItem = obj => (
+    <SupportItem
+      key={ `${fileType}-${obj.lang}` }
+      fileType={ fileType }
+      item={ obj }
+      isAvailable={ hasSubmittedData }
+    />
   );
+
+  if ( data && data.length > 0 ) {
+    return (
+      <Fragment>
+        <h3>{ `${headline} ` }
+          { hasSubmittedData &&
+            <Fragment>
+              <IconPopup
+                message={ popupMsg }
+                size="small"
+                iconType="info circle"
+              />
+              <EditSupportFiles
+                triggerProps={ {
+                    className: 'btn--edit',
+                    content: 'Edit',
+                    size: 'small',
+                    basic: true
+                } }
+                contentProps={ { fileType } }
+                modalTrigger={ Button }
+                modalContent={ EditSupportFilesContent }
+              />
+            </Fragment> }
+        </h3>
+        <ul>
+          { data.map( renderSupportItem ) }
+        </ul>
+      </Fragment>
+    );
+  }
+  return null;
 };
 
 SupportFileTypeList.propTypes = {
