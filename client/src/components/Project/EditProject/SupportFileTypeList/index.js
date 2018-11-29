@@ -23,11 +23,11 @@ const SupportFileTypeList = ( props ) => {
     hasSubmittedData
   } = props;
 
-  const renderSupportItem = obj => (
+  const renderSupportItem = item => (
     <SupportItem
-      key={ `${fileType}-${obj.lang}` }
+      key={ `${fileType}-${item.lang}` }
       fileType={ fileType }
-      item={ obj }
+      item={ item }
       isAvailable={ hasSubmittedData }
     />
   );
