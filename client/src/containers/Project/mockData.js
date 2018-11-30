@@ -99,7 +99,6 @@ const projects = [
   {
     projectType: 'video',
     projectId: 'made-in-america',
-    protectImages: false,
     updated: '2018-06-27T00:00:00Z',
     projectData: {
       title: 'Made in America',
@@ -131,6 +130,7 @@ const projects = [
     },
     videos: [
       {
+        id: '3728',
         title: 'Made in America',
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: 'Man walking through factory (State Dept.)',
@@ -192,6 +192,7 @@ const projects = [
         desc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.'
       },
       {
+        id: '3729',
         title: 'Fabriqué en Amérique',
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: '',
@@ -253,6 +254,7 @@ const projects = [
         ]
       },
       {
+        id: '3730',
         title: 'عنوان: امریکی ساختہ',
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: '',

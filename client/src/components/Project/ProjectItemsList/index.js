@@ -14,6 +14,7 @@ const ProjectItemsList = ( props ) => {
   const {
     listEl,
     data,
+    projectId,
     headline,
     hasSubmittedData,
     projectType,
@@ -46,7 +47,8 @@ const ProjectItemsList = ( props ) => {
             isAvailable={ hasSubmittedData }
             type={ projectType }
             displayItemInModal={ displayItemInModal }
-            data={ { ...item } }
+            projectId={ projectId }
+            itemId={ item.id }
             modalTrigger={ modalTrigger }
             modalContent={ modalContent }
             customPlaceholderStyle={ customPlaceholderStyle }
@@ -60,6 +62,7 @@ const ProjectItemsList = ( props ) => {
 ProjectItemsList.propTypes = {
   listEl: string,
   data: array.isRequired,
+  projectId: object.isRequired,
   headline: string,
   hasSubmittedData: bool,
   projectType: string.isRequired,

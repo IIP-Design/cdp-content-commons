@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { bool, func, object } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import './ProjectItem.css';
 
 import withModal from 'components/Project/EditProject/withModal';
@@ -13,7 +13,8 @@ import Placeholder from 'components/Project/Placeholder';
 
 const ProjectItem = ( props ) => {
   const {
-    data,
+    projectId,
+    itemId,
     isAvailable,
     displayItemInModal,
     modalTrigger,
@@ -22,8 +23,7 @@ const ProjectItem = ( props ) => {
 
   const Item = modalTrigger;
   const modalProps = {
-    triggerProps: { ...data },
-    contentProps: { ...data }
+    triggerProps: { ...projectId, itemId, displayItemInModal }
   };
   const sharedStyles = { cursor: 'not-allowed' };
 
@@ -31,7 +31,11 @@ const ProjectItem = ( props ) => {
     return (
       ( displayItemInModal &&
         withModal( modalProps, modalTrigger, modalContent ) ) ||
-        <Item { ...data } />
+        <Item
+          { ...projectId }
+          itemId={ itemId }
+          displayItemInModal={ displayItemInModal }
+        />
     );
   }
 
@@ -60,7 +64,8 @@ const ProjectItem = ( props ) => {
 };
 
 ProjectItem.propTypes = {
-  data: object,
+  projectId: object.isRequired,
+  itemId: string.isRequired,
   isAvailable: bool,
   displayItemInModal: bool,
   modalTrigger: func,

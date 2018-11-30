@@ -16,7 +16,6 @@ import './EditSingleProjectItem.css';
 /* eslint-disable react/prefer-stateless-function */
 class EditSingleProjectItem extends React.PureComponent {
   render() {
-    const { title, language } = this.props;
     return (
       <ModalItem
         customClassName="edit-project-item"

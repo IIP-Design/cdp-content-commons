@@ -20,7 +20,8 @@ import StatusMessages from 'components/Project/EditProject/StatusMessages';
 import ProjectDataForm from 'components/Project/EditProject/ProjectDataForm';
 import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
-import VideoItem from 'components/Project/Types/VideoItem';
+// import VideoItem from 'components/Project/Types/VideoItem';
+import VideoItem from 'containers/Project/Types/VideoItem';
 import Notification from 'components/Project/Notification/Loadable';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
@@ -361,6 +362,7 @@ class VideoEditProject extends React.PureComponent {
             <ProjectItemsList
               listEl="ul"
               data={ videos }
+              projectId={ this.props.match.params }
               headline="Videos in Project"
               hasSubmittedData={ hasSubmittedData }
               projectType="video"
