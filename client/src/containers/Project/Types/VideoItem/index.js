@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectVideoItem from './selectors';
-import { Icon, Progress } from 'semantic-ui-react';
+import { Icon, Loader, Progress } from 'semantic-ui-react';
 
 import './VideoItem.css';
 
@@ -77,11 +77,7 @@ class VideoItem extends React.PureComponent {
             <p className="file-name">{ fileName }</p>
             { isUploading &&
               <div className="loading-animation">
-                <Icon
-                  loading
-                  name="spinner"
-                  size="large"
-                />
+                <Loader active inline="centered" />
               </div> }
           </div>
           { isUploading &&
