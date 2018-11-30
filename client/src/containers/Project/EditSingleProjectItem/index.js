@@ -20,8 +20,8 @@ class EditSingleProjectItem extends React.PureComponent {
     return (
       <ModalItem
         customClassName="edit-project-item"
-        headline={ title }
-        textDirection={ language.text_direction }
+        headline="The Project Title"
+        textDirection="ltr"
       >
         <p>Edit Single Project Item Component</p>
       </ModalItem>
@@ -29,10 +29,7 @@ class EditSingleProjectItem extends React.PureComponent {
   }
 }
 
-EditSingleProjectItem.propTypes = {
-  title: string,
-  language: object
-};
+EditSingleProjectItem.propTypes = {};
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {
   editsingleprojectitem: makeSelectEditSingleProjectItem()
