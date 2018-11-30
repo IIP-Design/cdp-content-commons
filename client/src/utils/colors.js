@@ -4,6 +4,8 @@ export default {
   lightBlue: '#0071bc',
   brightBlue: '#02bfe7',
   blueGreen: '#d6d7d9',
+  pear: '#aee02d',
+  lightningYellow: '#fdb81e',
   lightGrey: '#f1f1f1',
   mediumGrey: '#b2b4b8',
   altGrey: '#d6d7d9',

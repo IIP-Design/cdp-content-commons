@@ -7,6 +7,7 @@
 import React from 'react';
 import { object, string } from 'prop-types';
 
+import colors from '../../../utils/colors';
 
 const Notification = ( props ) => {
   const { el, msg, customStyles } = props;
@@ -14,7 +15,7 @@ const Notification = ( props ) => {
   const defaultStyle = {
     padding: '1em 1.5em',
     fontSize: '0.75em',
-    backgroundColor: '#b9de52'
+    backgroundColor: colors.pear
   };
 
   const style = { ...defaultStyle, ...customStyles };

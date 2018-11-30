@@ -8,6 +8,9 @@ import React from 'react';
 import { object, string } from 'prop-types';
 import { Dropdown, Embed } from 'semantic-ui-react';
 
+import colors from '../../../utils/colors';
+import { getYouTubeId } from '../../../utils/helpers';
+
 import downloadIcon from '../../../assets/icons/icon_download.svg';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
@@ -26,7 +29,6 @@ import DownloadHelp from 'components/Types/Video/DownloadHelp';
 
 import Notification from 'components/Project/Notification/Loadable';
 
-import { getYouTubeId } from '../../../utils/helpers';
 import './PreviewProjectContent.css';
 
 
@@ -122,7 +124,7 @@ class PreviewProjectContent extends React.PureComponent {
       borderTopRightRadius: '0.28571429rem',
       padding: '1em 1.5em',
       fontSize: '1em',
-      backgroundColor: '#faab1a'
+      backgroundColor: colors.lightningYellow
     };
 
     return (

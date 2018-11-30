@@ -8,6 +8,7 @@ import React, { Fragment } from 'react';
 import { bool } from 'prop-types';
 import { Icon } from 'semantic-ui-react';
 
+import colors from '../../../../utils/colors';
 
 const StatusMessages = ( props ) => {
   const {
@@ -18,19 +19,19 @@ const StatusMessages = ( props ) => {
   const baseStyles = {
     margin: '0',
     padding: '0.625em 1.75em',
-    backgroundColor: '#d6d7d9',
+    backgroundColor: colors.blueGreen,
     textAlign: 'center'
   };
 
   const draftMsgStyles = {
     ...baseStyles,
     padding: '0.625em 1.75em 1.5em',
-    backgroundColor: '#ffffff'
+    backgroundColor: colors.white
   };
 
   const successStyles = {
     ...baseStyles,
-    backgroundColor: '#aee02d',
+    backgroundColor: colors.pear,
     textAlign: 'initial'
   };
 

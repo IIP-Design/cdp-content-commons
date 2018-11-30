@@ -7,6 +7,8 @@
 import React from 'react';
 import { object, string } from 'prop-types';
 
+import colors from '../../../utils/colors';
+
 
 const Placeholder = ( props ) => {
   const {
@@ -22,7 +24,7 @@ const Placeholder = ( props ) => {
     height: '0.875em',
     width: 'auto',
     marginBottom: '0.625em',
-    backgroundColor: '#d6d7d9'
+    backgroundColor: colors.altGrey
   };
 
   const childStylesKeys = Object.keys( childStyles );

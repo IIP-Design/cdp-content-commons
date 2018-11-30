@@ -7,6 +7,8 @@
 import React from 'react';
 import { bool, number, object, string } from 'prop-types';
 
+import colors from '../../../../utils/colors';
+
 import Placeholder from 'components/Project/Placeholder';
 
 
@@ -45,7 +47,7 @@ const SupportItem = ( props ) => {
         language: {
           width: '20%',
           marginRight: '0',
-          backgroundColor: '#5b616b'
+          backgroundColor: colors.grey
         }
       } }
     />
