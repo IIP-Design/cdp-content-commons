@@ -1,12 +1,5 @@
 import { createSelector } from 'reselect';
-
-
-const createHashMap = ( array, key ) => (
-  array.reduce( ( acc, obj ) => ( {
-    ...acc,
-    [obj[key]]: obj
-  } ), {} )
-);
+import { createHashMap } from '../../../../utils/helpers';
 
 /**
  * Direct selector to the videoItem state

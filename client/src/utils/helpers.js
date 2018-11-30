@@ -252,3 +252,10 @@ export const ScrollToTop = () => {
   window.scrollTo( 0, 0 );
   return null;
 };
+
+export const createHashMap = ( array, key ) => (
+  array.reduce( ( acc, obj ) => ( {
+    ...acc,
+    [obj[key]]: obj
+  } ), {} )
+);
