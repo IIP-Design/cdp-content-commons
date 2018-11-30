@@ -26,6 +26,7 @@ import DownloadHelp from 'components/Types/Video/DownloadHelp';
 
 import Notification from 'components/Project/Notification/Loadable';
 
+import { getYouTubeId } from '../../../utils/helpers';
 import './PreviewProjectContent.css';
 
 
@@ -62,18 +63,6 @@ class PreviewProjectContent extends React.PureComponent {
       [item.language.display_name]: item
     } ), {} )
   );
-
-  getYouTubeId = ( url ) => {
-    /**
-     * @todo This may not even be necessary depending
-     * on how the YouTube URL/Id is stored in data.
-     */
-    url = url
-      .replace( /(>|<)/gi, '' )
-      .split( /(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/ );
-
-    return url[2] ? url[2].split( /[^0-9a-z_-]/i )[0] : url;
-  };
 
   toggleArrow = () => {
     this.setState( { dropDownIsOpen: !this.state.dropDownIsOpen } );
@@ -219,7 +208,7 @@ class PreviewProjectContent extends React.PureComponent {
             on how the YouTube URL is stored in data */ }
           { youTubeUrl &&
             <Embed
-              id={ this.getYouTubeId( youTubeUrl ) }
+              id={ getYouTubeId( youTubeUrl ) }
               placeholder={ thumbnail }
               source="youtube"
             /> }
