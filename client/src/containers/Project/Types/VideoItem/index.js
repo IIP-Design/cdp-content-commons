@@ -16,9 +16,94 @@ import './VideoItem.css';
 /* eslint-disable react/prefer-stateless-function */
 class VideoItem extends React.PureComponent {
   state = {
-    isUploading: true,
+    fileSizeBytes: 0,
+    bytesUploaded: 0,
+    nIntervId: null,
+    isUploading: false,
     isUploadSuccess: false,
     error: false
+  }
+
+  componentWillMount = () => {
+    this.setState( {
+      fileSizeBytes: this.getFileSize()
+    } );
+  }
+
+  componentDidMount = () => {
+    /**
+     * @todo simulate upload for dev purposes;
+     * replace for production
+     * min, max interval in milliseconds
+     */
+    const interval = this.getRandomInt( 500, 1500 );
+    const nIntervId = setInterval( this.uploadItem, interval );
+    this.setState( { nIntervId } );
+  }
+
+  getFileSize = () => (
+    this.props.videoItem.source[0].size.filesize
+  )
+
+  /**
+   * @todo simulate upload for dev purposes;
+   * replace for production
+   */
+  getRandomInt = ( min, max ) => {
+    min = Math.ceil( min );
+    max = Math.floor( max );
+    return (
+      Math.floor( Math.random() * ( ( max - min ) + 1 ) ) + min
+    );
+  }
+
+  getRemainingUnits = ( totalUnits, unitsUploaded ) => (
+    totalUnits - unitsUploaded
+  )
+
+  /**
+   * @todo simulate upload for dev purposes;
+   * replace for production
+   * 1MB = 1,048,576 Bytes
+   */
+  MEGABYTE = 1048576;
+
+  incrementUpload = ( unit, min, max ) => (
+    this[unit] * this.getRandomInt( min, max )
+  )
+
+  endUpload = intervId => clearInterval( intervId );
+
+  uploadItem = () => {
+    /**
+     * @todo simulate upload for dev purposes;
+     * replace for production
+     * min, max increment in megabytes
+     */
+    this.setState( ( nextState ) => {
+      const { fileSizeBytes, bytesUploaded } = nextState;
+      let increment = this.incrementUpload( 'MEGABYTE', 10, 50 );
+      const remainingBytes = this.getRemainingUnits( fileSizeBytes, bytesUploaded );
+
+      if ( remainingBytes < increment ) {
+        increment = remainingBytes;
+      }
+
+      // continue uploading
+      if ( bytesUploaded < fileSizeBytes ) {
+        return {
+          bytesUploaded: this.state.bytesUploaded + increment,
+          isUploading: true
+        };
+      }
+
+      // stop uploading
+      this.endUpload( nextState.nIntervId );
+      return {
+        isUploading: false,
+        isUploadSuccess: true
+      };
+    } );
   }
 
   render() {
@@ -28,23 +113,20 @@ class VideoItem extends React.PureComponent {
       language,
       thumbnail,
       alt,
-      fileName,
-      source
+      fileName
     } = videoItem;
 
-    /**
-     * @todo will need to replace `true` condition with
-     * state value of whether upload is complete
-     * (i.e., when total filesize === total uploaded)
-     */
-    const { isUploading, error } = this.state;
-    const { filesize } = source[0].size;
+    const {
+      fileSizeBytes,
+      bytesUploaded,
+      isUploading,
+      error
+    } = this.state;
+
     const itemStyle = {
       cursor: isUploading ? 'not-allowed' : 'pointer'
     };
-    if ( !displayItemInModal ) {
-      itemStyle.cursor = 'default';
-    }
+    if ( !displayItemInModal ) itemStyle.cursor = 'default';
 
     const uploadingClass = isUploading ? ' isUploading' : '';
     const Wrapper = !isUploading && displayItemInModal ? 'button' : 'span';
@@ -82,11 +164,8 @@ class VideoItem extends React.PureComponent {
           </div>
           { isUploading &&
             <Progress
-              /**
-              * @todo determine value via passed-in state
-              */
-              value={ filesize * 0.72 }
-              total={ filesize }
+              value={ bytesUploaded }
+              total={ fileSizeBytes }
               color="blue"
               size="small"
               active
