@@ -73,7 +73,7 @@ class VideoItem extends React.PureComponent {
           style={ itemStyle }
         >
           <div className={ `thumbnail${uploadingClass}` }>
-            <img src={ thumbnail } alt={ alt } />
+            { thumbnail && <img src={ thumbnail } alt={ alt } /> }
             <p className="file-name">{ fileName }</p>
             { isUploading &&
               <div className="loading-animation">
