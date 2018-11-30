@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { object } from 'prop-types';
+import { object, string } from 'prop-types';
 import { Dropdown, Embed } from 'semantic-ui-react';
 
 import downloadIcon from '../../../assets/icons/icon_download.svg';
@@ -31,8 +31,9 @@ import './PreviewProjectContent.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class PreviewProjectContent extends React.PureComponent {
-  constructor( { data, projecttype } ) {
-    super();
+  constructor( props ) {
+    super( props );
+    const { data, projecttype } = this.props;
 
     this.state = {
       dropDownIsOpen: false,
@@ -235,7 +236,8 @@ class PreviewProjectContent extends React.PureComponent {
 }
 
 PreviewProjectContent.propTypes = {
-  data: object.isRequired
+  data: object.isRequired,
+  projecttype: string
 };
 
 export default PreviewProjectContent;
