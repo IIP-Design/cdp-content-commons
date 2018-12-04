@@ -5,32 +5,62 @@
  */
 
 import React, { Fragment } from 'react';
-import { array, bool, string } from 'prop-types';
+import { array, bool, object, string } from 'prop-types';
+
+import { Button } from 'semantic-ui-react';
 
 import EditSupportFiles from 'components/Project/EditProject/EditSupportFiles';
 import EditSupportFilesContent from 'components/Project/EditProject/EditSupportFilesContent';
-import SupportItem from 'components/Project/EditProject/SupportItem';
 import IconPopup from 'components/Project/EditProject/IconPopup';
+import Placeholder from 'components/Project/Placeholder';
 
-import { Button } from 'semantic-ui-react';
+import SupportItem from 'containers/Project/SupportItem';
+
+import colors from '../../../../utils/colors';
+
 
 const SupportFileTypeList = ( props ) => {
   const {
     headline,
+    projectId,
     fileType,
     popupMsg,
     data,
     hasSubmittedData
   } = props;
 
-  const renderSupportItem = item => (
-    <SupportItem
-      key={ `${fileType}-${item.lang}` }
-      fileType={ fileType }
-      item={ item }
-      isAvailable={ hasSubmittedData }
-    />
-  );
+  const renderSupportItem = ( item ) => {
+    if ( hasSubmittedData ) {
+      return (
+        <SupportItem
+          key={ `${fileType}-${item.lang}` }
+          projectId={ { ...projectId } }
+          fileType={ fileType }
+          itemId={ item.id }
+        />
+      );
+    }
+
+    return (
+      <Placeholder
+        key={ `${fileType}-${item.lang}` }
+        parentEl="li"
+        childEl="span"
+        parentStyles={ {
+          display: 'flex',
+          justifyContent: 'space-between'
+        } }
+        childStyles={ {
+          fileName: { width: '75%' },
+          language: {
+            width: '20%',
+            marginRight: '0',
+            backgroundColor: colors.grey
+          }
+        } }
+      />
+    );
+  };
 
   if ( data && data.length > 0 ) {
     return (
@@ -67,6 +97,7 @@ const SupportFileTypeList = ( props ) => {
 
 SupportFileTypeList.propTypes = {
   headline: string,
+  projectId: object.isRequired,
   fileType: string,
   popupMsg: string,
   data: array.isRequired,

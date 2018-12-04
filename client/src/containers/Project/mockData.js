@@ -113,19 +113,82 @@ const projects = [
     },
     supportFiles: {
       srt: [
-        { lang: 'Arabic', file: 'madeinamerica_arabic.srt' },
-        { lang: 'Chinese (Simplified)', file: 'madeinamerica_chinese_ljhlkjhl_kjhlkjh_aslkfja;lskjfweoij.srt' },
-        { lang: 'English', file: 'madeinamerica_english.srt' },
-        { lang: 'French', file: 'madeinamerica_french.srt' }
+        {
+          id: '5678',
+          lang: 'Arabic',
+          file: 'madeinamerica_arabic.srt',
+          size: {
+            filesize: 24576
+          }
+        },
+        {
+          id: '5679',
+          lang: 'Chinese (Simplified)',
+          file: 'madeinamerica_chinese_ljhlkjhl_kjhlkjh_aslkfja;lskjfweoij.srt',
+          size: {
+            filesize: 24576
+          }
+        },
+        {
+          id: '5680',
+          lang: 'English',
+          file: 'madeinamerica_english.srt',
+          size: {
+            filesize: 24576
+          }
+        },
+        {
+          id: '5681',
+          lang: 'French',
+          file: 'madeinamerica_french.srt',
+          size: {
+            filesize: 24576
+          }
+        }
       ],
       thumbnail: [
-        { lang: 'Arabic', file: 'madeinamerica_arabic.jpg' },
-        { lang: 'Chinese (Simplified)', file: 'madeinamerica_chinese.jpg' },
-        { lang: 'English', file: 'madeinamerica_english.jpg' },
-        { lang: 'French', file: 'madeinamerica_french.jpg' }
+        {
+          id: '5682',
+          lang: 'Arabic',
+          file: 'madeinamerica_arabic.jpg',
+          size: {
+            filesize: 58368
+          }
+        },
+        {
+          id: '5683',
+          lang: 'Chinese (Simplified)',
+          file: 'madeinamerica_chinese.jpg',
+          size: {
+            filesize: 58368
+          }
+        },
+        {
+          id: '5684',
+          lang: 'English',
+          file: 'madeinamerica_english.jpg',
+          size: {
+            filesize: 58368
+          }
+        },
+        {
+          id: '5685',
+          lang: 'French',
+          file: 'madeinamerica_french.jpg',
+          size: {
+            filesize: 58368
+          }
+        }
       ],
       other: [
-        { lang: 'English', file: 'madeinamerica_english.mp3' }
+        {
+          id: '5686',
+          lang: 'English',
+          file: 'madeinamerica_english.mp3',
+          size: {
+            filesize: 5242880
+          }
+        }
       ]
     },
     videos: [

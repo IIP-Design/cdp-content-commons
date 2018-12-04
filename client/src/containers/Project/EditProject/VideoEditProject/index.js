@@ -350,6 +350,7 @@ class VideoEditProject extends React.PureComponent {
           <div className="edit-project__support-files">
             <ProjectSupportFiles
               heading="Support Files"
+              projectId={ this.props.match.params }
               supportFiles={ supportFiles }
               hasSubmittedData={ hasSubmittedData }
               protectImages={ protectImages }

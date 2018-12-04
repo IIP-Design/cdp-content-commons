@@ -16,6 +16,7 @@ import { Checkbox, Grid } from 'semantic-ui-react';
 const ProjectSupportFiles = ( props ) => {
   const {
     heading,
+    projectId,
     supportFiles,
     hasSubmittedData,
     protectImages,
@@ -42,6 +43,7 @@ const ProjectSupportFiles = ( props ) => {
         <Grid.Column>
           <SupportFileTypeList
             headline={ headline }
+            projectId={ projectId }
             fileType={ type }
             popupMsg={ popupMsg }
             data={ supportFiles[type] }
@@ -87,6 +89,7 @@ const ProjectSupportFiles = ( props ) => {
 
 ProjectSupportFiles.propTypes = {
   heading: string,
+  projectId: object.isRequired,
   supportFiles: object.isRequired,
   hasSubmittedData: bool,
   protectImages: bool,
