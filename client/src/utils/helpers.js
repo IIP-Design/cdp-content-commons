@@ -248,8 +248,8 @@ export const queryBuilder = ( store ) => {
   return body.build();
 };
 
-export const ScrollToTop = () => {
-  window.scrollTo( 0, 0 );
+export const ScrollToTop = ( options = { top: 0, left: 0 } ) => {
+  window.scrollTo( options );
   return null;
 };
 

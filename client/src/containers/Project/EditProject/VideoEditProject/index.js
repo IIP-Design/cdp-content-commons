@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectVideoEditProject from './selectors';
+import { Button, Confirm, Progress } from 'semantic-ui-react';
 
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
@@ -20,13 +21,12 @@ import StatusMessages from 'components/Project/EditProject/StatusMessages';
 import ProjectDataForm from 'components/Project/EditProject/ProjectDataForm';
 import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
-// import VideoItem from 'components/Project/Types/VideoItem';
 import VideoItem from 'containers/Project/Types/VideoItem';
 import Notification from 'components/Project/Notification/Loadable';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
-import { Button, Confirm, Progress } from 'semantic-ui-react';
+import { ScrollToTop } from '../../../../utils/helpers';
 
 import './VideoEditProject.css';
 import {
@@ -169,7 +169,7 @@ class VideoEditProject extends React.PureComponent {
 
     // use setTimeout to simulate upload time
     setTimeout( this.handleUpload, 5000 );
-    window.scroll( { top: 0, behavior: 'smooth' } );
+    ScrollToTop( { top: 0, behavior: 'smooth' } );
   }
 
   render() {
