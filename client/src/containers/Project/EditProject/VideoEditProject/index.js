@@ -45,6 +45,7 @@ class VideoEditProject extends React.PureComponent {
     hasSubmittedData: false,
     isUploadInProgress: false,
     isUploadFinished: false,
+    hasUnsavedData: false,
     displayTheSaveMsg: false,
     displayTheUploadSuccessMsg: false,
     hasExceededMaxCategories: false,
@@ -142,6 +143,7 @@ class VideoEditProject extends React.PureComponent {
       const categoryCount = categories.length;
 
       return ( {
+        hasUnsavedData: true,
         hasExceededMaxCategories: categoryCount > this.MAX_CATEGORY_COUNT,
         hasRequiredData: ( title !== '' ) &&
           privacySetting &&
@@ -159,6 +161,7 @@ class VideoEditProject extends React.PureComponent {
     this.setState( prevState => ( {
       hasSubmittedData: true,
       isUploadInProgress: true,
+      hasUnsavedData: false,
       displayTheSaveMsg: true,
       formData: {
         ...prevState.formData,
@@ -185,6 +188,7 @@ class VideoEditProject extends React.PureComponent {
       hasSubmittedData,
       isUploadInProgress,
       isUploadFinished,
+      hasUnsavedData,
       displayTheSaveMsg,
       displayTheUploadSuccessMsg,
       hasExceededMaxCategories,
@@ -247,13 +251,14 @@ class VideoEditProject extends React.PureComponent {
                 modalTrigger={ Button }
                 modalContent={ PreviewProjectContent }
               />
-              <Button
-                className="edit-project__btn--save-draft"
-                content="Save Draft"
-                basic
-                onClick={ this.handleSaveDraft }
-                disabled={ !isUploadFinished }
-              />
+              { hasSubmittedData &&
+                <Button
+                  className="edit-project__btn--save-draft"
+                  content="Save Draft"
+                  basic
+                  onClick={ this.handleSaveDraft }
+                  disabled={ !isUploadFinished || !hasUnsavedData }
+                /> }
               <Button
                 className="edit-project__btn--final-review"
                 content="Final Review"
