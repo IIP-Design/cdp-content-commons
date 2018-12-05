@@ -10,6 +10,7 @@ import {
   bool,
   func,
   number,
+  oneOfType,
   string
 } from 'prop-types';
 import './ProjectDataForm.css';
@@ -197,7 +198,7 @@ ProjectDataForm.propTypes = {
   categoryOptions: array,
   hasExceededMaxCategories: bool,
   categoriesValue: array,
-  tagsValue: array,
+  tagsValue: oneOfType( [array, string] ),
   publicDescValue: string,
   internalDescValue: string,
   hasSubmittedData: bool,
