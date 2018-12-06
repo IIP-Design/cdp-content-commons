@@ -3,8 +3,8 @@
  * VideoItem
  *
  */
-import React from 'react';
-import { bool, func, object } from 'prop-types';
+import React, { Fragment } from 'react';
+import { bool, func, number, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -16,21 +16,15 @@ import './VideoItem.css';
 /* eslint-disable react/prefer-stateless-function */
 class VideoItem extends React.PureComponent {
   state = {
-    fileSizeBytes: 0,
     bytesUploaded: 0,
     nIntervId: null,
-    isUploading: false,
-    isUploadSuccess: false,
-    error: false
-  }
-
-  componentWillMount = () => {
-    this.setState( {
-      fileSizeBytes: this.getFileSize()
-    } );
+    isUploading: false
   }
 
   componentDidMount = () => {
+    const { videoID, itemId, loadVideoItem } = this.props;
+    loadVideoItem( videoID, itemId );
+
     /**
      * @todo simulate upload for dev purposes;
      * replace for production
@@ -40,10 +34,6 @@ class VideoItem extends React.PureComponent {
     const nIntervId = setInterval( this.uploadItem, interval );
     this.setState( { nIntervId } );
   }
-
-  getFileSize = () => (
-    this.props.videoItem.source[0].size.filesize
-  )
 
   /**
    * @todo simulate upload for dev purposes;
@@ -72,7 +62,15 @@ class VideoItem extends React.PureComponent {
     this[unit] * this.getRandomInt( min, max )
   )
 
-  endUpload = intervId => clearInterval( intervId );
+  endUpload = ( intervId ) => {
+    const {
+      videoID,
+      itemId,
+      setUploadStatus
+    } = this.props;
+    clearInterval( intervId );
+    setUploadStatus( videoID, itemId );
+  };
 
   uploadItem = () => {
     /**
@@ -81,16 +79,18 @@ class VideoItem extends React.PureComponent {
      * min, max increment in megabytes
      */
     this.setState( ( nextState ) => {
-      const { fileSizeBytes, bytesUploaded } = nextState;
+      const { filesize } = this.props;
+      const { bytesUploaded } = nextState;
+
+      const remainingBytes = this.getRemainingUnits( filesize, bytesUploaded );
       let increment = this.incrementUpload( 'MEGABYTE', 10, 50 );
-      const remainingBytes = this.getRemainingUnits( fileSizeBytes, bytesUploaded );
 
       if ( remainingBytes < increment ) {
         increment = remainingBytes;
       }
 
       // continue uploading
-      if ( bytesUploaded < fileSizeBytes ) {
+      if ( bytesUploaded < filesize ) {
         return {
           bytesUploaded: this.state.bytesUploaded + increment,
           isUploading: true
@@ -99,29 +99,39 @@ class VideoItem extends React.PureComponent {
 
       // stop uploading
       this.endUpload( nextState.nIntervId );
-      return {
-        isUploading: false,
-        isUploadSuccess: true
-      };
+      return { isUploading: false };
     } );
   }
 
   render() {
-    const { onClick, videoItem, displayItemInModal } = this.props;
+    const {
+      onClick,
+      itemId,
+      filesize,
+      videoItem,
+      displayItemInModal
+    } = this.props;
+
+    if ( !videoItem[itemId] || videoItem[itemId].loading ) {
+      return (
+        <Loader active inline="centered">
+          <p style={ { fontSize: '0.75em' } }>
+            Preparing file for upload...
+          </p>
+        </Loader>
+      );
+    }
+
     const {
       title,
       language,
       thumbnail,
       alt,
-      fileName
-    } = videoItem;
+      fileName,
+      uploadStatus
+    } = videoItem[itemId];
 
-    const {
-      fileSizeBytes,
-      bytesUploaded,
-      isUploading,
-      error
-    } = this.state;
+    const { bytesUploaded, isUploading } = this.state;
 
     const itemStyle = {
       cursor: isUploading ? 'not-allowed' : 'pointer'
@@ -132,7 +142,7 @@ class VideoItem extends React.PureComponent {
     const Wrapper = !isUploading && displayItemInModal ? 'button' : 'span';
     const wrapperClass = displayItemInModal ? 'modal-trigger' : 'wrapper';
 
-    if ( error ) {
+    if ( uploadStatus.error ) {
       return (
         <li className="item video error" style={ { textAlign: 'center' } }>
           <Icon
@@ -140,7 +150,9 @@ class VideoItem extends React.PureComponent {
             name="exclamation triangle"
             size="large"
           />
-          <p>An uploading error occurred for this item.</p>
+          <p style={ { fontSize: '0.75em' } }>
+            An uploading error occurred for this item.
+          </p>
         </li>
       );
     }
@@ -155,8 +167,11 @@ class VideoItem extends React.PureComponent {
           style={ itemStyle }
         >
           <div className={ `thumbnail${uploadingClass}` }>
-            { thumbnail && <img src={ thumbnail } alt={ alt } /> }
-            <p className="file-name">{ fileName }</p>
+            { thumbnail &&
+              <Fragment>
+                <img src={ thumbnail } alt={ alt } />
+                <p className="file-name">{ fileName }</p>
+              </Fragment> }
             { isUploading &&
               <div className="loading-animation">
                 <Loader active inline="centered" />
@@ -165,7 +180,7 @@ class VideoItem extends React.PureComponent {
           { isUploading &&
             <Progress
               value={ bytesUploaded }
-              total={ fileSizeBytes }
+              total={ filesize }
               color="blue"
               size="small"
               active
@@ -185,7 +200,12 @@ class VideoItem extends React.PureComponent {
 VideoItem.propTypes = {
   videoItem: object.isRequired,
   displayItemInModal: bool,
-  onClick: func
+  onClick: func,
+  videoID: string.isRequired,
+  itemId: string.isRequired,
+  filesize: number.isRequired,
+  loadVideoItem: func,
+  setUploadStatus: func
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {

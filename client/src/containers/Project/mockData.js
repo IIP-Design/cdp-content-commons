@@ -195,6 +195,10 @@ const projects = [
       {
         id: '3728',
         title: 'Made in America',
+        uploadStatus: {
+          error: false,
+          success: false
+        },
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: 'Man walking through factory (State Dept.)',
         language: {
@@ -257,6 +261,10 @@ const projects = [
       {
         id: '3729',
         title: 'Fabriqué en Amérique',
+        uploadStatus: {
+          error: false,
+          success: false
+        },
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: '',
         language: {
@@ -319,6 +327,10 @@ const projects = [
       {
         id: '3730',
         title: 'عنوان: امریکی ساختہ',
+        uploadStatus: {
+          error: false,
+          success: false
+        },
         thumbnail: 'https://staticcdp.s3.amazonaws.com/2018/05/courses.america.gov_1481/b3b38d194ff80d06dd837f57a41fe16f.jpg',
         alt: '',
         language: {
