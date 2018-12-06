@@ -20,7 +20,7 @@ export default combineReducers( {
   auth: authReducer,
   recents: recentsReducer,
   supportItem: supportItemReducer,
-  videoItem: videoItemReducer,
+  videoProjectItems: videoItemReducer,
   videoEditProject: videoEditProjectReducer,
   videoReviewProject: videoReviewProjectReducer
 } );

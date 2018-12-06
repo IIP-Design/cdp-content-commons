@@ -49,7 +49,6 @@ const ProjectItemsList = ( props ) => {
             displayItemInModal={ displayItemInModal }
             projectId={ projectId }
             itemId={ item.id }
-            filesize={ item.source[0].size.filesize }
             modalTrigger={ modalTrigger }
             modalContent={ modalContent }
             customPlaceholderStyle={ customPlaceholderStyle }

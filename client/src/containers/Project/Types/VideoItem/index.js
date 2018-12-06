@@ -4,7 +4,7 @@
  *
  */
 import React, { Fragment } from 'react';
-import { bool, func, number, object, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -79,7 +79,7 @@ class VideoItem extends React.PureComponent {
      * min, max increment in megabytes
      */
     this.setState( ( nextState ) => {
-      const { filesize } = this.props;
+      const { filesize } = this.props.video.source[0].size;
       const { bytesUploaded } = nextState;
 
       const remainingBytes = this.getRemainingUnits( filesize, bytesUploaded );
@@ -106,13 +106,11 @@ class VideoItem extends React.PureComponent {
   render() {
     const {
       onClick,
-      itemId,
-      filesize,
-      videoItem,
+      video,
       displayItemInModal
     } = this.props;
 
-    if ( !videoItem[itemId] || videoItem[itemId].loading ) {
+    if ( !video || video.loading ) {
       return (
         <Loader active inline="centered">
           <p style={ { fontSize: '0.75em' } }>
@@ -128,9 +126,12 @@ class VideoItem extends React.PureComponent {
       thumbnail,
       alt,
       fileName,
+      source,
+      error,
       uploadStatus
-    } = videoItem[itemId];
+    } = video;
 
+    const { filesize } = source[0].size;
     const { bytesUploaded, isUploading } = this.state;
 
     const itemStyle = {
@@ -142,7 +143,7 @@ class VideoItem extends React.PureComponent {
     const Wrapper = !isUploading && displayItemInModal ? 'button' : 'span';
     const wrapperClass = displayItemInModal ? 'modal-trigger' : 'wrapper';
 
-    if ( uploadStatus.error ) {
+    if ( error || uploadStatus.error ) {
       return (
         <li className="item video error" style={ { textAlign: 'center' } }>
           <Icon
@@ -151,7 +152,7 @@ class VideoItem extends React.PureComponent {
             size="large"
           />
           <p style={ { fontSize: '0.75em' } }>
-            An uploading error occurred for this item.
+            { `${error ? 'A loading' : 'An uploading'} error occurred for this item.` }
           </p>
         </li>
       );
@@ -198,18 +199,17 @@ class VideoItem extends React.PureComponent {
 }
 
 VideoItem.propTypes = {
-  videoItem: object.isRequired,
+  video: object,
   displayItemInModal: bool,
   onClick: func,
   videoID: string.isRequired,
   itemId: string.isRequired,
-  filesize: number.isRequired,
   loadVideoItem: func,
   setUploadStatus: func
 };
 
-const mapStateToProps = ( state, props ) => createStructuredSelector( {
-  videoItem: makeSelectVideoItem()
+const mapStateToProps = () => createStructuredSelector( {
+  video: makeSelectVideoItem()
 } );
 
 export default connect( mapStateToProps, actions )( VideoItem );

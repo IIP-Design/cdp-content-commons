@@ -1,19 +1,14 @@
 import { createSelector } from 'reselect';
 
 /**
- * Direct selector to the videoItem state
+ * Direct selectors
  */
-const selectVideoItem = state => state.videoItem;
+const selectVideoItem = ( state, props ) => state.videoProjectItems[props.itemId];
 
 /**
- * Other specific selectors
+ * Selector factories: returns selector instances
  */
-
-/**
- * Default selector used by VideoItem
- */
-const makeSelectVideoItem = props =>
-  createSelector( selectVideoItem, substate => substate );
+const makeSelectVideoItem = () =>
+  createSelector( selectVideoItem, video => video );
 
 export default makeSelectVideoItem;
-export { selectVideoItem };

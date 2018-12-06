@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { bool, func, number, object, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import './ProjectItem.css';
 
 import withModal from 'components/Project/EditProject/withModal';
@@ -15,7 +15,6 @@ const ProjectItem = ( props ) => {
   const {
     projectId,
     itemId,
-    filesize,
     isAvailable,
     displayItemInModal,
     modalTrigger,
@@ -27,7 +26,6 @@ const ProjectItem = ( props ) => {
     triggerProps: {
       ...projectId,
       itemId,
-      filesize,
       displayItemInModal
     }
   };
@@ -72,7 +70,6 @@ const ProjectItem = ( props ) => {
 ProjectItem.propTypes = {
   projectId: object.isRequired,
   itemId: string.isRequired,
-  filesize: number,
   isAvailable: bool,
   displayItemInModal: bool,
   modalTrigger: func,
