@@ -82,6 +82,11 @@ class VideoEditProject extends React.PureComponent {
     return types.reduce( count, 0 );
   }
 
+  getTags = () => {
+    const { tags } = this.state.formData;
+    return ( tags.length > 0 && !Array.isArray( tags ) ) ? tags.split( /\s?[,;]\s?/ ) : tags;
+  }
+
   MAX_CATEGORY_COUNT = 2;
 
   displayConfirmDelete = () => {
@@ -155,8 +160,7 @@ class VideoEditProject extends React.PureComponent {
 
   handleSubmit = ( e ) => {
     e.preventDefault();
-
-    const { protectImages, tags } = this.state.formData;
+    const { protectImages } = this.state.formData;
 
     this.setState( prevState => ( {
       hasSubmittedData: true,
@@ -165,7 +169,7 @@ class VideoEditProject extends React.PureComponent {
       displayTheSaveMsg: true,
       formData: {
         ...prevState.formData,
-        tags: tags.length > 0 ? tags.split( /\s?[,;]\s?/ ) : tags,
+        tags: this.getTags(),
         protectImages
       }
     } ) );
