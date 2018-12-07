@@ -117,6 +117,10 @@ const projects = [
           id: '5678',
           lang: 'Arabic',
           file: 'madeinamerica_arabic.srt',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 24576
           }
@@ -125,6 +129,10 @@ const projects = [
           id: '5679',
           lang: 'Chinese (Simplified)',
           file: 'madeinamerica_chinese_ljhlkjhl_kjhlkjh_aslkfja;lskjfweoij.srt',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 24576
           }
@@ -133,6 +141,10 @@ const projects = [
           id: '5680',
           lang: 'English',
           file: 'madeinamerica_english.srt',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 24576
           }
@@ -141,6 +153,10 @@ const projects = [
           id: '5681',
           lang: 'French',
           file: 'madeinamerica_french.srt',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 24576
           }
@@ -151,6 +167,10 @@ const projects = [
           id: '5682',
           lang: 'Arabic',
           file: 'madeinamerica_arabic.jpg',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 58368
           }
@@ -159,6 +179,10 @@ const projects = [
           id: '5683',
           lang: 'Chinese (Simplified)',
           file: 'madeinamerica_chinese.jpg',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 58368
           }
@@ -167,6 +191,10 @@ const projects = [
           id: '5684',
           lang: 'English',
           file: 'madeinamerica_english.jpg',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 58368
           }
@@ -175,6 +203,10 @@ const projects = [
           id: '5685',
           lang: 'French',
           file: 'madeinamerica_french.jpg',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 58368
           }
@@ -185,6 +217,10 @@ const projects = [
           id: '5686',
           lang: 'English',
           file: 'madeinamerica_english.mp3',
+          uploadStatus: {
+            error: false,
+            success: false
+          },
           size: {
             filesize: 5242880
           }

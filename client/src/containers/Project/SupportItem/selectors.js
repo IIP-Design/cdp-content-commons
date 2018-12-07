@@ -1,28 +1,18 @@
 import { createSelector } from 'reselect';
-import { createHashMap } from '../../../utils/helpers';
 
 /**
- * Direct selector to the supportItem state
+ * Direct selectors
  */
 const selectSupportItem = ( state, props ) => {
-  const { projectId, fileType, itemId } = props;
-  const { videoID } = projectId;
-
-  const projects = state.supportItem;
-  const { supportFiles } = projects.find( project => project.projectId === videoID );
-  const filesHashMap = createHashMap( supportFiles[fileType], 'id' );
-  return filesHashMap[itemId] || null;
+  if ( state.projectSupportItems[props.fileType] ) {
+    return state.projectSupportItems[props.fileType][props.itemId];
+  }
 };
 
 /**
- * Other specific selectors
+ * Selector factories: returns selector instances
  */
+const makeSelectSupportItem = () =>
+  createSelector( selectSupportItem, supportItem => supportItem );
 
-/**
- * Default selector used by SupportItem
- */
-const makeSelectSupportItem = props =>
-  createSelector( selectSupportItem, substate => substate );
-
-export default makeSelectSupportItem;
-export { selectSupportItem };
+export { makeSelectSupportItem };

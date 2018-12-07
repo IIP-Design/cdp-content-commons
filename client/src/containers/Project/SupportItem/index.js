@@ -3,34 +3,33 @@
  * SupportItem
  *
  */
-import React from 'react';
-import { number, object, string } from 'prop-types';
+import React, { Fragment } from 'react';
+import { func, number, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
-import makeSelectSupportItem from './selectors';
-import { Icon, Progress } from 'semantic-ui-react';
+import { makeSelectSupportItem } from './selectors';
+import { Icon, Loader, Progress } from 'semantic-ui-react';
 
 import './SupportItem.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class SupportItem extends React.PureComponent {
   state = {
-    fileSizeBytes: 0,
     bytesUploaded: 0,
     nIntervId: null,
-    isUploading: false,
-    isUploadSuccess: false,
-    error: false
-  }
-
-  componentWillMount = () => {
-    this.setState( {
-      fileSizeBytes: this.getFileSize()
-    } );
+    isUploading: false
   }
 
   componentDidMount = () => {
+    const {
+      projectId,
+      fileType,
+      itemId,
+      loadSupportItem
+    } = this.props;
+    loadSupportItem( projectId.videoID, fileType, itemId );
+
     /**
      * @todo simulate upload for dev purposes;
      * replace for production
@@ -40,8 +39,6 @@ class SupportItem extends React.PureComponent {
     const nIntervId = setInterval( this.uploadItem, interval );
     this.setState( { nIntervId } );
   }
-
-  getFileSize = () => this.props.supportItem.size.filesize;
 
   /**
    * @todo simulate upload for dev purposes;
@@ -70,7 +67,16 @@ class SupportItem extends React.PureComponent {
     this[unit] * this.getRandomInt( min, max )
   )
 
-  endUpload = intervId => clearInterval( intervId );
+  endUpload = ( intervId ) => {
+    const {
+      projectId,
+      fileType,
+      itemId,
+      setUploadStatus
+    } = this.props;
+    clearInterval( intervId );
+    setUploadStatus( projectId.videoID, fileType, itemId );
+  };
 
   uploadItem = () => {
     /**
@@ -79,16 +85,17 @@ class SupportItem extends React.PureComponent {
      * min, max increment in megabytes
      */
     this.setState( ( nextState ) => {
-      const { fileSizeBytes, bytesUploaded } = nextState;
+      const { filesize } = this.props.supportItem.size;
+      const { bytesUploaded } = nextState;
       let increment = this.incrementUpload( 'MEGABYTE', 10, 50 );
-      const remainingBytes = this.getRemainingUnits( fileSizeBytes, bytesUploaded );
+      const remainingBytes = this.getRemainingUnits( filesize, bytesUploaded );
 
       if ( remainingBytes < increment ) {
         increment = remainingBytes;
       }
 
       // continue uploading
-      if ( bytesUploaded < fileSizeBytes ) {
+      if ( bytesUploaded < filesize ) {
         return {
           isUploading: true,
           bytesUploaded: this.state.bytesUploaded + increment
@@ -97,12 +104,18 @@ class SupportItem extends React.PureComponent {
 
       // stop uploading
       this.endUpload( nextState.nIntervId );
-      return {
-        isUploading: false,
-        isUploadSuccess: true
-      };
+      return { isUploading: false };
     } );
   }
+
+  renderLoading = () => (
+    <Fragment>
+      <Loader active inline size="mini" />
+      <span style={ { marginLeft: '0.5em', fontSize: '0.75em' } }>
+        Preparing file for upload...
+      </span>
+    </Fragment>
+  )
 
   render() {
     const {
@@ -111,19 +124,29 @@ class SupportItem extends React.PureComponent {
       supportItem
     } = this.props;
 
-    const { file, lang } = supportItem;
+    if ( !supportItem || supportItem.loading ) {
+      return (
+        <li>
+          <Loader active inline size="mini" />
+          <span style={ { marginLeft: '0.5em', fontSize: '0.75em' } }>
+            Preparing file for upload...
+          </span>
+        </li>
+      );
+    }
 
     const {
-      fileSizeBytes,
-      bytesUploaded,
-      isUploading,
-      error
-    } = this.state;
-
+      error,
+      file,
+      lang,
+      size,
+      uploadStatus
+    } = supportItem;
+    const { bytesUploaded, isUploading } = this.state;
     const isLongFileName = file.length > maxFileNameCharCount;
     const uploadingClass = isUploading ? ' isUploading' : '';
 
-    if ( error ) {
+    if ( error || uploadStatus.error ) {
       return (
         <li key={ `${fileType}-${lang}` } className="support-item error">
           <p>
@@ -132,7 +155,9 @@ class SupportItem extends React.PureComponent {
               name="exclamation triangle"
               size="small"
             />
-            <span>Uploading error</span>
+            <span>
+              { `${supportItem.error ? 'Loading ' : 'Uploading '} error` }
+            </span>
           </p>
         </li>
       );
@@ -143,7 +168,7 @@ class SupportItem extends React.PureComponent {
         <li key={ `${fileType}-${lang}` } className={ `support-item${uploadingClass}` }>
           <Progress
             value={ bytesUploaded }
-            total={ fileSizeBytes }
+            total={ size.filesize }
             color="blue"
             size="small"
             active
@@ -168,18 +193,21 @@ class SupportItem extends React.PureComponent {
 }
 
 SupportItem.propTypes = {
-  supportItem: object.isRequired,
+  supportItem: object,
   projectId: object.isRequired,
-  fileType: string,
+  fileType: string.isRequired,
   itemId: string.isRequired,
-  maxFileNameCharCount: number
+  maxFileNameCharCount: number,
+  loadSupportItem: func,
+  setUploadStatus: func
 };
 
 SupportItem.defaultProps = {
+  supportItem: null,
   maxFileNameCharCount: 25
 };
 
-const mapStateToProps = ( state, props ) => createStructuredSelector( {
+const mapStateToProps = () => createStructuredSelector( {
   supportItem: makeSelectSupportItem()
 } );
 

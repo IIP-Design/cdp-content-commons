@@ -19,7 +19,7 @@ export default combineReducers( {
   global: globalReducer,
   auth: authReducer,
   recents: recentsReducer,
-  supportItem: supportItemReducer,
+  projectSupportItems: supportItemReducer,
   videoProjectItems: videoItemReducer,
   videoEditProject: videoEditProjectReducer,
   videoReviewProject: videoReviewProjectReducer
