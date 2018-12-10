@@ -242,6 +242,12 @@ export const queryBuilder = ( store ) => {
     body.query( 'query_string', 'query', optionStr );
   }
 
+  // Boost more recent content
+  body.orQuery( 'range', 'published', { boost: 8, gte: 'now-7d' } );
+  body.orQuery( 'range', 'published', { boost: 7, gte: 'now-30d' } );
+  body.orQuery( 'range', 'published', { boost: 5, gte: 'now-365d' } );
+  body.orQuery( 'range', 'published', { boost: 3, gte: 'now-730d' } );
+
   // Do not fetch courses or page content type
   body.notQuery( 'match', 'type.keyword', 'courses' );
   body.notQuery( 'match', 'type.keyword', 'page' );
