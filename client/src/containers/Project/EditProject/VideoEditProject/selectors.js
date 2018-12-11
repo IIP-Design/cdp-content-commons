@@ -1,24 +1,44 @@
 import { createSelector } from 'reselect';
 
 /**
- * Direct selector to the VideoEditProject state
+ * Direct selectors
  */
-const selectVideoEditProject = ( state, props ) => {
-  const { videoID } = props.match.params;
-  const projects = state.videoEditProject;
-  const selectedProject = projects.find( project => project.projectId === videoID );
-  return selectedProject || null;
+const selectCurrentVideoEditProject = ( state, props ) =>
+  state.projects[props.match.params.videoID];
+
+const selectUploadedVideoProjectItemsCount = ( state ) => {
+  const videos = state.videoProjectItems;
+  const videoIds = Object.keys( videos );
+  const uploadedVideos = videoIds.filter( id => !videos[id].loading && videos[id].uploadStatus.success );
+  return uploadedVideos.length;
+};
+
+const selectUploadedSupportFilesCount = ( state ) => {
+  const supportItems = state.projectSupportItems;
+  const fileTypes = Object.values( supportItems );
+
+  const countsPerFiletype = fileTypes.map( ( items ) => {
+    const ids = Object.keys( items );
+    return ids.filter( id => !items[id].loading && items[id].uploadStatus.success ).length;
+  } );
+
+  return countsPerFiletype.reduce( ( acc, curr ) => acc + curr, 0 );
 };
 
 /**
- * Other specific selectors
+ * Selector factories: returns selector instances
  */
+const makeSelectCurrentVideoEditProject = () =>
+  createSelector( selectCurrentVideoEditProject, project => project );
 
-/**
- * Default selector used by VideoEditProject
- */
-const makeSelectVideoEditProject = props =>
-  createSelector( selectVideoEditProject, substate => substate );
+const makeUploadedVideoProjectItemsCount = () =>
+  createSelector( selectUploadedVideoProjectItemsCount, count => count );
 
-export default makeSelectVideoEditProject;
-export { selectVideoEditProject };
+const makeUploadedSupportFilesCount = () =>
+  createSelector( selectUploadedSupportFilesCount, count => count );
+
+export {
+  makeSelectCurrentVideoEditProject,
+  makeUploadedVideoProjectItemsCount,
+  makeUploadedSupportFilesCount
+};

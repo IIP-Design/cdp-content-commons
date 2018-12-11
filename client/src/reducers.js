@@ -21,6 +21,6 @@ export default combineReducers( {
   recents: recentsReducer,
   projectSupportItems: supportItemReducer,
   videoProjectItems: videoItemReducer,
-  videoEditProject: videoEditProjectReducer,
+  projects: videoEditProjectReducer,
   videoReviewProject: videoReviewProjectReducer
 } );

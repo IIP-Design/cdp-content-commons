@@ -4,12 +4,16 @@
  *
  */
 import React from 'react';
-import { object } from 'prop-types';
+import { func, number, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
-import makeSelectVideoEditProject from './selectors';
-import { Button, Confirm, Progress } from 'semantic-ui-react';
+import {
+  makeSelectCurrentVideoEditProject,
+  makeUploadedVideoProjectItemsCount,
+  makeUploadedSupportFilesCount
+} from './selectors';
+import { Button, Confirm, Loader, Progress } from 'semantic-ui-react';
 
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
@@ -17,7 +21,8 @@ import Breadcrumbs from 'components/Breadcrumbs';
 import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
-import StatusMessages from 'components/Project/EditProject/StatusMessages';
+import FormInstructions from 'components/Project/EditProject/FormInstructions';
+import UploadSuccessMsg from 'components/Project/EditProject/UploadSuccessMsg';
 import ProjectDataForm from 'components/Project/EditProject/ProjectDataForm';
 import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
@@ -46,11 +51,10 @@ class VideoEditProject extends React.PureComponent {
     isUploadInProgress: false,
     isUploadFinished: false,
     hasUnsavedData: false,
-    displayTheSaveMsg: false,
+    displaySaveMsg: false,
     displayTheUploadSuccessMsg: false,
     hasExceededMaxCategories: false,
-    totalUploaded: 8,
-    totalUploadSize: 0,
+    filesToUploadCount: 0,
 
     /**
      * Use redux for these?
@@ -69,22 +73,56 @@ class VideoEditProject extends React.PureComponent {
   }
 
   componentWillMount = () => {
-    const videosCount = this.props.videoEditProject.videos.length;
+    const projectId = this.props.match.params.videoID;
+    const videosCount = this.props.project.videos.length;
+
+    this.props.loadVideoProjects( projectId );
     this.setState( {
-      totalUploadSize: videosCount + this.getSupportFilesCount()
+      filesToUploadCount: videosCount + this.getSupportFilesCount()
     } );
   }
 
+  componentDidUpdate = ( prevProps, prevState ) => {
+    const uploadedCount = this.getUploadedFilesCount();
+
+    if ( uploadedCount === prevState.filesToUploadCount && prevState.hasSubmittedData && !prevState.isUploadFinished ) {
+      this.setState( {
+        isUploadFinished: true,
+        isUploadInProgress: false,
+        displayTheUploadSuccessMsg: true,
+        displaySaveMsg: true
+      } );
+
+      this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', 2000 );
+      this.delayUnmount( this.handleDisplayUploadSuccessMsg, 'uploadSuccessTimer', 3000 );
+    }
+  }
+
+  componentWillUnmount = () => {
+    clearTimeout( this.uploadSuccessTimer );
+    clearTimeout( this.saveMsgTimer );
+  }
+
   getSupportFilesCount = () => {
-    const { supportFiles } = this.props.videoEditProject;
+    const { supportFiles } = this.props.project;
     const types = Object.keys( supportFiles );
     const count = ( acc, cur ) => acc + supportFiles[cur].length;
     return types.reduce( count, 0 );
   }
 
+  getUploadedFilesCount = () => {
+    const { uploadedVideosCount, uploadedSupportFilesCount } = this.props;
+    return uploadedVideosCount + uploadedSupportFilesCount;
+  }
+
   getTags = () => {
     const { tags } = this.state.formData;
     return ( tags.length > 0 && !Array.isArray( tags ) ) ? tags.split( /\s?[,;]\s?/ ) : tags;
+  }
+
+  delayUnmount = ( fn, timer, delay ) => {
+    if ( this[timer] ) clearTimeout( this[timer] );
+    this[timer] = setTimeout( fn, delay );
   }
 
   MAX_CATEGORY_COUNT = 2;
@@ -115,21 +153,18 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleUpload = () => {
-    // need code to initiate upload,
-    // then setState below when finished
-    this.setState( {
-      isUploadFinished: true,
-      isUploadInProgress: false,
-      displayTheUploadSuccessMsg: true
-    } );
-
-    setTimeout( () => {
-      this.setState( { displayTheSaveMsg: false } );
-    }, 2000 );
-
-    setTimeout( () => {
-      this.setState( { displayTheUploadSuccessMsg: false } );
-    }, 3000 );
+    const { protectImages } = this.state.formData;
+    this.setState( prevState => ( {
+      hasSubmittedData: true,
+      isUploadInProgress: true,
+      hasUnsavedData: false,
+      displaySaveMsg: true,
+      formData: {
+        ...prevState.formData,
+        tags: this.getTags(),
+        protectImages
+      }
+    } ) );
   }
 
   handleChange = ( e, { name, value, checked } ) => {
@@ -160,32 +195,47 @@ class VideoEditProject extends React.PureComponent {
 
   handleSubmit = ( e ) => {
     e.preventDefault();
-    const { protectImages } = this.state.formData;
+    const { videoID } = this.props.match.params;
 
-    this.setState( prevState => ( {
-      hasSubmittedData: true,
-      isUploadInProgress: true,
-      hasUnsavedData: false,
-      displayTheSaveMsg: true,
-      formData: {
-        ...prevState.formData,
-        tags: this.getTags(),
-        protectImages
-      }
-    } ) );
-
-    // use setTimeout to simulate upload time
-    setTimeout( this.handleUpload, 5000 );
+    this.handleUpload();
+    this.props.setSaveStatus( videoID );
     ScrollToTop( { top: 0, behavior: 'smooth' } );
   }
 
+  handleDisplayUploadSuccessMsg = () => {
+    this.setState( { displayTheUploadSuccessMsg: false } );
+    this.uploadSuccessTimer = null;
+  }
+
+  handleDisplaySaveMsg = () => {
+    this.setState( { displaySaveMsg: false } );
+    this.saveMsgTimer = null;
+  }
+
   render() {
-    const projectData = this.props.videoEditProject;
+    const { project } = this.props;
+
+    if ( !project || project.loading ) {
+      return (
+        <div style={ {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100vh'
+          } }
+        >
+          <Loader active inline="centered" style={ { marginBottom: '1em' } } />
+          <p>Loading the project...</p>
+        </div>
+      );
+    }
+
     const {
       projectType,
       supportFiles,
       videos
-    } = projectData;
+    } = project;
 
     const {
       hasRequiredData,
@@ -193,12 +243,11 @@ class VideoEditProject extends React.PureComponent {
       isUploadInProgress,
       isUploadFinished,
       hasUnsavedData,
-      displayTheSaveMsg,
+      displaySaveMsg,
       displayTheUploadSuccessMsg,
       hasExceededMaxCategories,
       formData,
-      totalUploaded,
-      totalUploadSize
+      filesToUploadCount
     } = this.state;
 
     const {
@@ -249,7 +298,7 @@ class VideoEditProject extends React.PureComponent {
                   disabled: !isUploadFinished
                 } }
                 contentProps={ {
-                  data: projectData,
+                  data: project,
                   projecttype: `${projectType}s`
                 } }
                 modalTrigger={ Button }
@@ -273,12 +322,10 @@ class VideoEditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__status alpha">
-            <StatusMessages
-              hasSubmittedData={ hasSubmittedData }
-              displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
-            />
+            { !hasSubmittedData && <FormInstructions /> }
+            { displayTheUploadSuccessMsg && <UploadSuccessMsg /> }
 
-            { displayTheSaveMsg &&
+            { displaySaveMsg &&
               <Notification
                 el="p"
                 customStyles={ {
@@ -292,14 +339,14 @@ class VideoEditProject extends React.PureComponent {
 
             { isUploadInProgress &&
               <Progress
-                value={ totalUploaded }
-                total={ totalUploadSize }
+                value={ this.getUploadedFilesCount() }
+                total={ filesToUploadCount }
                 color="blue"
                 size="medium"
                 active
               >
                 <p>
-                  <b>Uploading files:</b> { totalUploaded } of { totalUploadSize }
+                  <b>Uploading files:</b> { this.getUploadedFilesCount() } of { filesToUploadCount }
                   <br />
                   Please keep this page open until upload is complete
                 </p>
@@ -335,21 +382,19 @@ class VideoEditProject extends React.PureComponent {
           </div>
 
           <div className="edit-project__status beta">
-            <StatusMessages
-              hasSubmittedData={ hasSubmittedData }
-              displayTheUploadSuccessMsg={ displayTheUploadSuccessMsg }
-            />
+            { !hasSubmittedData && <FormInstructions /> }
+            { displayTheUploadSuccessMsg && <UploadSuccessMsg /> }
 
             { isUploadInProgress &&
               <Progress
-                value={ totalUploaded }
-                total={ totalUploadSize }
+                value={ this.getUploadedFilesCount() }
+                total={ filesToUploadCount }
                 color="blue"
                 size="medium"
                 active
               >
                 <p>
-                  <b>Uploading files:</b> { totalUploaded } of { totalUploadSize }
+                  <b>Uploading files:</b> { this.getUploadedFilesCount() } of { filesToUploadCount }
                   <br />
                   Please keep this page open until upload is complete
                 </p>
@@ -400,11 +445,22 @@ class VideoEditProject extends React.PureComponent {
 VideoEditProject.propTypes = {
   history: object,
   match: object,
-  videoEditProject: object
+  project: object,
+  loadVideoProjects: func,
+  setSaveStatus: func,
+  uploadedVideosCount: number,
+  uploadedSupportFilesCount: number
 };
 
-const mapStateToProps = ( state, props ) => createStructuredSelector( {
-  videoEditProject: makeSelectVideoEditProject()
+VideoEditProject.defaultProps = {
+  uploadedVideosCount: 0,
+  uploadedSupportFilesCount: 0
+};
+
+const mapStateToProps = () => createStructuredSelector( {
+  project: makeSelectCurrentVideoEditProject(),
+  uploadedVideosCount: makeUploadedVideoProjectItemsCount(),
+  uploadedSupportFilesCount: makeUploadedSupportFilesCount()
 } );
 
 export default connect( mapStateToProps, actions )( VideoEditProject );

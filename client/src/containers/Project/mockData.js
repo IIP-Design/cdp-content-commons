@@ -100,6 +100,10 @@ const projects = [
     projectType: 'video',
     projectId: 'made-in-america',
     updated: '2018-06-27T00:00:00Z',
+    saveStatus: {
+      error: false,
+      success: false
+    },
     projectData: {
       title: 'Made in America',
       author: 'Jane Doe',

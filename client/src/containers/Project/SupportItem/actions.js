@@ -3,7 +3,6 @@
  * SupportItem actions
  *
  */
-import { createHashMap } from '../../../utils/helpers';
 import {
   LOAD_SUPPORT_ITEM_PENDING,
   LOAD_SUPPORT_ITEM_FAILED,
@@ -13,8 +12,8 @@ import {
 } from './constants';
 
 export const loadSupportItem = ( projectId, fileType, itemId ) => async ( dispatch, getState ) => {
-  const projects = getState().videoEditProject;
-  const currentProject = createHashMap( projects, 'projectId' )[projectId];
+  const { projects } = getState();
+  const currentProject = projects[projectId];
   const { supportFiles } = currentProject;
 
   dispatch( {
@@ -39,8 +38,8 @@ export const loadSupportItem = ( projectId, fileType, itemId ) => async ( dispat
 };
 
 export const setUploadStatus = ( projectId, fileType, itemId ) => async ( dispatch, getState ) => {
-  const projects = getState().videoEditProject;
-  const currentProject = createHashMap( projects, 'projectId' )[projectId];
+  const { projects } = getState();
+  const currentProject = projects[projectId];
   const { supportFiles } = currentProject;
 
   // dispatch( {

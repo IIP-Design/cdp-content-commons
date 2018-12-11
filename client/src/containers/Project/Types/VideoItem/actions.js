@@ -3,8 +3,6 @@
  * VideoItem actions
  *
  */
-
-import { createHashMap } from '../../../../utils/helpers';
 import {
   LOAD_VIDEO_ITEM_PENDING,
   LOAD_VIDEO_ITEM_FAILED,
@@ -12,10 +10,12 @@ import {
   SET_UPLOAD_VIDEO_FAILED,
   SET_UPLOAD_VIDEO_SUCCESS
 } from './constants';
+import { createHashMap } from '../../../../utils/helpers';
+
 
 export const loadVideoItem = ( projectId, itemId ) => async ( dispatch, getState ) => {
-  const projects = getState().videoEditProject;
-  const currentProject = createHashMap( projects, 'projectId' )[projectId];
+  const { projects } = getState();
+  const currentProject = projects[projectId];
   const videosMap = createHashMap( currentProject.videos, 'id' );
 
   dispatch( {
@@ -40,8 +40,8 @@ export const loadVideoItem = ( projectId, itemId ) => async ( dispatch, getState
 };
 
 export const setUploadStatus = ( projectId, itemId ) => async ( dispatch, getState ) => {
-  const projects = getState().videoEditProject;
-  const currentProject = createHashMap( projects, 'projectId' )[projectId];
+  const { projects } = getState();
+  const currentProject = projects[projectId];
   const videos = createHashMap( currentProject.videos, 'id' );
 
   // dispatch( {

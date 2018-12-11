@@ -3,17 +3,100 @@
  * VideoEditProject reducer
  *
  */
-
-import { DEFAULT_ACTION } from './constants';
+import {
+  LOAD_VIDEO_PROJECT_PENDING,
+  LOAD_VIDEO_PROJECT_FAILED,
+  LOAD_VIDEO_PROJECT_SUCCESS,
+  SAVE_VIDEO_PROJECT_DATA_FAILED,
+  SAVE_VIDEO_PROJECT_DATA_SUCCESS
+} from './constants';
+import { createHashMap } from '../../../../utils/helpers';
 import { projects } from '../../mockData';
 
 
-export const INITIAL_STATE = projects;
+export const INITIAL_STATE = createHashMap( projects, 'projectId' );
+
+const setLoading = ( state, action ) => {
+  const { projectId } = action.payload;
+  return {
+    ...state,
+    [projectId]: {
+      ...state[projectId],
+      loading: true,
+      error: false
+    }
+  };
+};
+
+const setError = ( state, action ) => {
+  const { projectId } = action.payload;
+  return {
+    ...state,
+    [projectId]: {
+      ...state[projectId],
+      loading: false,
+      error: true
+    }
+  };
+};
+
+const setSuccess = ( state, action ) => {
+  const { response, projectId } = action.payload;
+  const project = response[projectId];
+  return {
+    ...state,
+    [projectId]: {
+      ...project,
+      loading: false,
+      error: false
+    }
+  };
+};
+
+const setSaveError = ( state, action ) => {
+  const { projectId } = action.payload;
+  return {
+    ...state,
+    [projectId]: {
+      ...state[projectId],
+      saveStatus: {
+        error: true,
+        success: false
+      }
+    }
+  };
+};
+
+const setSaveSuccess = ( state, action ) => {
+  const { projectId } = action.payload;
+  return {
+    ...state,
+    [projectId]: {
+      ...state[projectId],
+      saveStatus: {
+        error: false,
+        success: true
+      }
+    }
+  };
+};
 
 function videoEditProjectReducer( state = INITIAL_STATE, action ) {
   switch ( action.type ) {
-    case DEFAULT_ACTION:
-      return state;
+    case LOAD_VIDEO_PROJECT_PENDING:
+      return setLoading( state, action );
+
+    case LOAD_VIDEO_PROJECT_FAILED:
+      return setError( state, action );
+
+    case LOAD_VIDEO_PROJECT_SUCCESS:
+      return setSuccess( state, action );
+
+    case SAVE_VIDEO_PROJECT_DATA_FAILED:
+      return setSaveError( state, action );
+
+    case SAVE_VIDEO_PROJECT_DATA_SUCCESS:
+      return setSaveSuccess( state, action );
 
     default:
       return state;
