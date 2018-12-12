@@ -44,6 +44,7 @@ class Video extends Component {
       videoProps: null,
       shareLink: ''
     };
+    this.prevUrl = window.location.href;
   }
 
   /**
@@ -71,7 +72,7 @@ class Video extends Component {
   }
 
   componentWillUnmount() {
-    updateUrl( '/' );
+    updateUrl( this.prevUrl );
   }
 
   /**
