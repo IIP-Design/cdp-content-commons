@@ -53,7 +53,13 @@ const ProjectSupportFiles = ( props ) => {
           { type === 'thumbnail' &&
             <Fragment>
               <Checkbox
-                label={ checkBoxLabel }
+                id="protect-images"
+                label={
+                  /* eslint-disable jsx-a11y/label-has-for */
+                  <label htmlFor="protect-images">
+                    { checkBoxLabel }
+                  </label>
+                }
                 name={ checkBoxName }
                 type="checkbox"
                 checked={ protectImages }
