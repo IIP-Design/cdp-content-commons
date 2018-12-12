@@ -140,8 +140,9 @@ class VideoEditProject extends React.PureComponent {
     this.setState( { deleteConfirmOpen: false } );
   }
 
-  handleSaveDraft = () => {
+  handleSaveDraft = ( e ) => {
     console.log( 'Draft saved' );
+    this.handleSubmit( e );
   }
 
   handleFinalReview = () => {
@@ -200,8 +201,24 @@ class VideoEditProject extends React.PureComponent {
   handleSubmit = ( e ) => {
     e.preventDefault();
     const { videoID } = this.props.match.params;
+    const { termsConditions, protectImages } = this.state.formData;
 
-    this.handleUpload();
+    if ( !this.state.isUploadFinished ) {
+      this.handleUpload();
+    } else {
+      this.setState( prevState => ( {
+        hasUnsavedData: false,
+        displaySaveMsg: true,
+        formData: {
+          ...prevState.formData,
+          tags: this.getTags(),
+          termsConditions,
+          protectImages
+        }
+      } ) );
+      this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', 2000 );
+    }
+
     this.props.setSaveStatus( videoID );
     ScrollToTop( { top: 0, behavior: 'smooth' } );
   }
@@ -272,6 +289,7 @@ class VideoEditProject extends React.PureComponent {
     };
 
     const notificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
+    const saveNotification = 'You have unsaved data';
 
     return (
       <Page title="Edit Project" description="Edit content project">
@@ -315,7 +333,7 @@ class VideoEditProject extends React.PureComponent {
                   content="Save Draft"
                   basic
                   onClick={ this.handleSaveDraft }
-                  disabled={ !isUploadFinished || !hasUnsavedData }
+                  disabled={ !isUploadFinished || !hasUnsavedData || !hasRequiredData }
                 /> }
               <Button
                 className="edit-project__btn--final-review"
@@ -330,7 +348,7 @@ class VideoEditProject extends React.PureComponent {
             { !hasSubmittedData && <FormInstructions /> }
             { displayTheUploadSuccessMsg && <UploadSuccessMsg /> }
 
-            { displaySaveMsg &&
+            { ( displaySaveMsg || ( hasUnsavedData && hasSubmittedData ) ) &&
               <Notification
                 el="p"
                 customStyles={ {
@@ -339,7 +357,7 @@ class VideoEditProject extends React.PureComponent {
                   left: '50%',
                   transform: 'translateX(-50%)'
                   } }
-                msg={ notificationMsg }
+                msg={ ( hasUnsavedData && hasSubmittedData ) ? saveNotification : notificationMsg }
               /> }
 
             { isUploadInProgress &&
