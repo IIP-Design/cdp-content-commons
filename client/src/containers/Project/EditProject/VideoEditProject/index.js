@@ -68,6 +68,7 @@ class VideoEditProject extends React.PureComponent {
       tags: [],
       publicDesc: '',
       internalDesc: '',
+      termsConditions: false,
       protectImages: true
     }
   }
@@ -153,7 +154,7 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleUpload = () => {
-    const { protectImages } = this.state.formData;
+    const { termsConditions, protectImages } = this.state.formData;
     this.setState( prevState => ( {
       hasSubmittedData: true,
       isUploadInProgress: true,
@@ -162,6 +163,7 @@ class VideoEditProject extends React.PureComponent {
       formData: {
         ...prevState.formData,
         tags: this.getTags(),
+        termsConditions,
         protectImages
       }
     } ) );
@@ -178,7 +180,8 @@ class VideoEditProject extends React.PureComponent {
       const {
         categories,
         title,
-        privacySetting
+        privacySetting,
+        termsConditions
       } = nextState.formData;
       const categoryCount = categories.length;
 
@@ -188,7 +191,8 @@ class VideoEditProject extends React.PureComponent {
         hasRequiredData: ( title !== '' ) &&
           privacySetting &&
           categoryCount > 0 &&
-          categoryCount <= this.MAX_CATEGORY_COUNT
+          categoryCount <= this.MAX_CATEGORY_COUNT &&
+          termsConditions
       } );
     } );
   };
@@ -259,6 +263,7 @@ class VideoEditProject extends React.PureComponent {
       tags,
       publicDesc,
       internalDesc,
+      termsConditions,
       protectImages
     } = formData;
 
@@ -374,6 +379,7 @@ class VideoEditProject extends React.PureComponent {
 
               publicDescValue={ publicDesc }
               internalDescValue={ internalDesc }
+              termsConditions={ termsConditions }
 
               // submit button props
               hasSubmittedData={ hasSubmittedData }

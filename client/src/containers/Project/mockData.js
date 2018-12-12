@@ -113,6 +113,7 @@ const projects = [
       tags: ['economy', 'manufacturing'],
       publicDesc: 'The value and meaning of the words “Made in America” come from a rich history of innovation and perseverance. Stay for a brief history of manufacturing in the USA and hear some of the positive impacts it has brought to the world and how its benefits are felt today.',
       internalDesc: 'Use this video on social media and embed on web pages to engage audiences in the importance of Economic Prosperity.',
+      termsConditions: false,
       protectImages: false
     },
     supportFiles: {
