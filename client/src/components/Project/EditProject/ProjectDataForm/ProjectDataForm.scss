@@ -7,8 +7,40 @@
 
   .msg--required {
     color: $red;
-    font-size: 0.625em;
+    font-size: 0.5em;
     font-weight: normal;
+  }
+
+  &.ui.form {
+    textarea {
+      font-family: "Source Sans Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    }
+
+    .field {
+      > label {
+        // color: $red;
+        font-size: 1em;
+        font-weight: normal;
+      }
+
+      &.error {
+        input[type="text"],
+        .ui.dropdown,
+        .ui.dropdown .text {
+          background: initial;
+          // color: $red;
+          // border-color: $red;
+        }
+
+        // label {
+        //   color: initial;
+        // }
+
+        .checkbox:not(.toggle):not(.slider) label {
+          // color: initial;
+        }
+      }
+    }
   }
 
   .ui.checkbox {

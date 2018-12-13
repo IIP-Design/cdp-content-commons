@@ -177,6 +177,7 @@ class VideoEditProject extends React.PureComponent {
         [name]: value || checked
       }
     } ) );
+
     this.setState( ( nextState ) => {
       const {
         categories,
@@ -399,7 +400,6 @@ class VideoEditProject extends React.PureComponent {
               internalDescValue={ internalDesc }
               termsConditions={ termsConditions }
 
-              // submit button props
               hasSubmittedData={ hasSubmittedData }
               hasRequiredData={ hasRequiredData }
             />

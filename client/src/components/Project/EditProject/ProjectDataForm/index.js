@@ -17,7 +17,6 @@ import './ProjectDataForm.css';
 
 import {
   Button,
-  Checkbox,
   Dropdown,
   Form,
   Grid,
@@ -73,6 +72,7 @@ const ProjectDataForm = ( props ) => {
                 name="title"
                 value={ videoTitle }
                 onChange={ handleChange }
+                error={ !videoTitle }
               />
 
               <Form.Field
@@ -84,6 +84,7 @@ const ProjectDataForm = ( props ) => {
                 name="privacy"
                 value={ privacySetting }
                 onChange={ handleChange }
+                error={ !privacySetting }
               />
             </Form.Group>
 
@@ -127,7 +128,9 @@ const ProjectDataForm = ( props ) => {
                   name="categories"
                   value={ categoriesValue }
                   onChange={ handleChange }
-                  error={ hasExceededMaxCategories }
+                  error={
+                    !categoriesValue.length > 0 || hasExceededMaxCategories
+                  }
                   style={ { marginBottom: '1em' } }
                 />
                 <p>Select up to { maxCategories }.</p>
@@ -174,7 +177,7 @@ const ProjectDataForm = ( props ) => {
 
         <Grid.Row reversed="computer">
           <Grid.Column mobile={ 11 }>
-            <Checkbox
+            <Form.Checkbox
               id="terms-conditions"
               label={
                 /* eslint-disable jsx-a11y/label-has-for */
@@ -187,8 +190,10 @@ const ProjectDataForm = ( props ) => {
               }
               name="termsConditions"
               type="checkbox"
+              required
               checked={ termsConditions }
               onChange={ handleChange }
+              error={ !termsConditions }
             />
           </Grid.Column>
           <Grid.Column mobile={ 16 } computer={ 5 }>
