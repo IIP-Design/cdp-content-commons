@@ -118,7 +118,14 @@ class VideoEditProject extends React.PureComponent {
 
   getTags = () => {
     const { tags } = this.state.formData;
-    return ( tags.length > 0 && !Array.isArray( tags ) ) ? tags.split( /\s?[,;]\s?/ ) : tags;
+    const tagsArray = ( tags.length > 0 && !Array.isArray( tags ) ) ? tags.split( /\s?[,;]\s?/ ) : tags;
+
+    if ( tagsArray && Array.isArray( tagsArray ) ) {
+      return tagsArray
+        .map( tag => tag.trim() )
+        .filter( tag => /\S/.test( tag ) );
+    }
+    return [];
   }
 
   delayUnmount = ( fn, timer, delay ) => {
@@ -154,23 +161,13 @@ class VideoEditProject extends React.PureComponent {
     console.log( 'Add more video files' );
   }
 
-  handleUpload = () => {
-    const { termsConditions, protectImages } = this.state.formData;
-    this.setState( prevState => ( {
-      hasSubmittedData: true,
-      isUploadInProgress: true,
-      hasUnsavedData: false,
-      displaySaveMsg: true,
-      formData: {
-        ...prevState.formData,
-        tags: this.getTags(),
-        termsConditions,
-        protectImages
-      }
-    } ) );
-  }
+  handleUpload = () => this.setState( { isUploadInProgress: true } );
 
   handleChange = ( e, { name, value, checked } ) => {
+    if ( typeof value === 'string' ) {
+      value = value.trimStart();
+    }
+
     this.setState( prevState => ( {
       formData: {
         ...prevState.formData,
@@ -190,7 +187,7 @@ class VideoEditProject extends React.PureComponent {
       return ( {
         hasUnsavedData: true,
         hasExceededMaxCategories: categoryCount > this.MAX_CATEGORY_COUNT,
-        hasRequiredData: ( title !== '' ) &&
+        hasRequiredData: ( title ) &&
           privacySetting &&
           categoryCount > 0 &&
           categoryCount <= this.MAX_CATEGORY_COUNT &&
@@ -202,21 +199,36 @@ class VideoEditProject extends React.PureComponent {
   handleSubmit = ( e ) => {
     e.preventDefault();
     const { videoID } = this.props.match.params;
-    const { termsConditions, protectImages } = this.state.formData;
+    const {
+      title,
+      author,
+      owner,
+      publicDesc,
+      internalDesc,
+      termsConditions,
+      protectImages
+    } = this.state.formData;
+
+    this.setState( prevState => ( {
+      hasSubmittedData: true,
+      hasUnsavedData: false,
+      displaySaveMsg: true,
+      formData: {
+        ...prevState.formData,
+        title: title ? title.trimEnd() : '',
+        author: author ? author.trimEnd() : '',
+        owner: owner ? owner.trimEnd() : '',
+        publicDesc: publicDesc ? publicDesc.trimEnd() : '',
+        internalDesc: internalDesc ? internalDesc.trimEnd() : '',
+        tags: this.getTags(),
+        termsConditions,
+        protectImages
+      }
+    } ) );
 
     if ( !this.state.isUploadFinished ) {
       this.handleUpload();
     } else {
-      this.setState( prevState => ( {
-        hasUnsavedData: false,
-        displaySaveMsg: true,
-        formData: {
-          ...prevState.formData,
-          tags: this.getTags(),
-          termsConditions,
-          protectImages
-        }
-      } ) );
       this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', 2000 );
     }
 
