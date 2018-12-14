@@ -87,7 +87,7 @@ class SupportItem extends React.PureComponent {
     this.setState( ( nextState ) => {
       const { filesize } = this.props.supportItem.size;
       const { bytesUploaded } = nextState;
-      let increment = this.incrementUpload( 'MEGABYTE', 10, 50 );
+      let increment = this.incrementUpload( 'MEGABYTE', 1, 5 );
       const remainingBytes = this.getRemainingUnits( filesize, bytesUploaded );
 
       if ( remainingBytes < increment ) {
