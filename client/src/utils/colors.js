@@ -12,6 +12,7 @@ export default {
   darkGrey: '#222',
   grey: '#5b616b',
   gold: ' #fdb81e',
+  red: '#e01511',
   silver: '#C2C2C2',
   white: '#FFFFFF',
   black: '#000000'

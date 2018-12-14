@@ -32,6 +32,7 @@ import Notification from 'components/Project/Notification/Loadable';
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
 import { ScrollToTop } from '../../../../utils/helpers';
+import colors from '../../../../utils/colors';
 
 import './VideoEditProject.css';
 import {
@@ -297,8 +298,9 @@ class VideoEditProject extends React.PureComponent {
       protectImages
     } = formData;
 
+    const formBorderColor = `${!hasSubmittedData ? colors.brightBlue : colors.red}`;
     const contentStyle = {
-      border: `3px solid ${( hasRequiredData && hasSubmittedData ) ? 'transparent' : '#02bfe7'}`
+      border: `3px solid ${( hasRequiredData && hasSubmittedData ) ? 'transparent' : `${formBorderColor}`}`
     };
 
     const notificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
