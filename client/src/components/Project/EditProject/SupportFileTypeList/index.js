@@ -26,7 +26,8 @@ const SupportFileTypeList = ( props ) => {
     fileType,
     popupMsg,
     data,
-    hasSubmittedData
+    hasSubmittedData,
+    hasUploaded
   } = props;
 
   const renderSupportItem = ( item ) => {
@@ -73,17 +74,18 @@ const SupportFileTypeList = ( props ) => {
                 size="small"
                 iconType="info circle"
               />
-              <EditSupportFiles
-                triggerProps={ {
-                    className: 'btn--edit',
-                    content: 'Edit',
-                    size: 'small',
-                    basic: true
-                } }
-                contentProps={ { fileType } }
-                modalTrigger={ Button }
-                modalContent={ EditSupportFilesContent }
-              />
+              { hasUploaded &&
+                <EditSupportFiles
+                  triggerProps={ {
+                      className: 'btn--edit',
+                      content: 'Edit',
+                      size: 'small',
+                      basic: true
+                  } }
+                  contentProps={ { fileType } }
+                  modalTrigger={ Button }
+                  modalContent={ EditSupportFilesContent }
+                /> }
             </Fragment> }
         </h3>
         <ul>
@@ -101,7 +103,8 @@ SupportFileTypeList.propTypes = {
   fileType: string,
   popupMsg: string,
   data: array.isRequired,
-  hasSubmittedData: bool
+  hasSubmittedData: bool,
+  hasUploaded: bool
 };
 
 export default SupportFileTypeList;

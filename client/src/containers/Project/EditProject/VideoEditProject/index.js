@@ -247,7 +247,7 @@ class VideoEditProject extends React.PureComponent {
   }
 
   render() {
-    const { project } = this.props;
+    const { project, uploadedSupportFilesCount } = this.props;
 
     if ( !project || project.loading ) {
       return (
@@ -446,6 +446,9 @@ class VideoEditProject extends React.PureComponent {
               protectImages={ protectImages }
               handleChange={ this.handleChange }
               config={ supportFilesConfig }
+              hasUploaded={
+                this.getSupportFilesCount() === uploadedSupportFilesCount
+              }
             />
           </div>
 

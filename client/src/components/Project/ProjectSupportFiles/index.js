@@ -21,7 +21,8 @@ const ProjectSupportFiles = ( props ) => {
     hasSubmittedData,
     protectImages,
     handleChange,
-    config
+    config,
+    hasUploaded
   } = props;
 
   const fileTypes = Object.keys( config );
@@ -48,6 +49,7 @@ const ProjectSupportFiles = ( props ) => {
             popupMsg={ popupMsg }
             data={ supportFiles[type] }
             hasSubmittedData={ hasSubmittedData }
+            hasUploaded={ hasUploaded }
           />
 
           { type === 'thumbnail' &&
@@ -100,7 +102,8 @@ ProjectSupportFiles.propTypes = {
   hasSubmittedData: bool,
   protectImages: bool,
   handleChange: func.isRequired,
-  config: object.isRequired
+  config: object.isRequired,
+  hasUploaded: bool
 };
 
 export default ProjectSupportFiles;
