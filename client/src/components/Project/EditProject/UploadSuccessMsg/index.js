@@ -14,7 +14,7 @@ const UploadSuccessMsg = ( props ) => {
   const { style } = props;
   const baseStyles = {
     margin: '0',
-    padding: '0.625em 1.75em',
+    padding: '1rem 1.75rem',
     backgroundColor: colors.blueGreen,
     textAlign: 'center'
   };
