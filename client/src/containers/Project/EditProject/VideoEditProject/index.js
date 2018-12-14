@@ -303,8 +303,14 @@ class VideoEditProject extends React.PureComponent {
       border: `3px solid ${( hasRequiredData && hasSubmittedData ) ? 'transparent' : `${formBorderColor}`}`
     };
 
-    const notificationMsg = isUploadInProgress ? 'Saving project...' : 'Project saved as draft';
-    const saveNotification = 'You have unsaved data';
+    let notificationMsg = 'Project saved as draft';
+    if ( hasSubmittedData && hasUnsavedData && !hasRequiredData ) {
+      notificationMsg = 'Please fill in required data';
+    } else if ( hasSubmittedData && hasUnsavedData ) {
+      notificationMsg = 'You have unsaved data';
+    } else if ( isUploadInProgress ) {
+      notificationMsg = 'Saving project...';
+    }
 
     return (
       <Page title="Edit Project" description="Edit content project">
@@ -372,7 +378,7 @@ class VideoEditProject extends React.PureComponent {
                   left: '50%',
                   transform: 'translateX(-50%)'
                   } }
-                msg={ ( hasUnsavedData && hasSubmittedData ) ? saveNotification : notificationMsg }
+                msg={ notificationMsg }
               /> }
 
             { isUploadInProgress &&
