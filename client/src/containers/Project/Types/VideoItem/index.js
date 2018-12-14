@@ -83,7 +83,7 @@ class VideoItem extends React.PureComponent {
       const { bytesUploaded } = nextState;
 
       const remainingBytes = this.getRemainingUnits( filesize, bytesUploaded );
-      let increment = this.incrementUpload( 'MEGABYTE', 10, 50 );
+      let increment = this.incrementUpload( 'MEGABYTE', 400, 500 );
 
       if ( remainingBytes < increment ) {
         increment = remainingBytes;
