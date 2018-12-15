@@ -30,7 +30,7 @@ class VideoItem extends React.PureComponent {
      * replace for production
      * min, max interval in milliseconds
      */
-    const interval = this.getRandomInt( 500, 1500 );
+    const interval = this.getRandomInt( this.MIN_INTERVAL, this.MAX_INTERVAL );
     const nIntervId = setInterval( this.uploadItem, interval );
     this.setState( { nIntervId } );
   }
@@ -57,6 +57,10 @@ class VideoItem extends React.PureComponent {
    * 1MB = 1,048,576 Bytes
    */
   MEGABYTE = 1048576;
+  MIN_INTERVAL = 500;
+  MAX_INTERVAL = 1500;
+  MIN_MB_SEC = 400;
+  MAX_MB_SEC = 500;
 
   incrementUpload = ( unit, min, max ) => (
     this[unit] * this.getRandomInt( min, max )
@@ -83,7 +87,7 @@ class VideoItem extends React.PureComponent {
       const { bytesUploaded } = nextState;
 
       const remainingBytes = this.getRemainingUnits( filesize, bytesUploaded );
-      let increment = this.incrementUpload( 'MEGABYTE', 400, 500 );
+      let increment = this.incrementUpload( 'MEGABYTE', this.MIN_MB_SEC, this.MAX_MB_SEC );
 
       if ( remainingBytes < increment ) {
         increment = remainingBytes;
