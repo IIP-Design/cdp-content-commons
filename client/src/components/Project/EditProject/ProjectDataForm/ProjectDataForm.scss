@@ -36,8 +36,22 @@
         //   color: initial;
         // }
 
-        .checkbox:not(.toggle):not(.slider) label {
-          // color: initial;
+        // .checkbox:not(.toggle):not(.slider) label {
+        //   color: initial;
+        // }
+
+        input[type="text"]:focus {
+          border-color: #85B7D9;
+        }
+
+        .ui.checkbox:not(.toggle):not(.slider) input:focus {
+          ~ label {
+            color: initial;
+            &:before {
+              border-color: #85B7D9;
+              background: initial;
+            }
+          }
         }
       }
     }
