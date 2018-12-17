@@ -3,7 +3,7 @@
  * SupportItem
  *
  */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, number, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';

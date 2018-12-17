@@ -52,7 +52,7 @@ const ProjectSupportFiles = ( props ) => {
             hasUploaded={ hasUploaded }
           />
 
-          { type === 'thumbnail' &&
+          { type === 'other' &&
             <Fragment>
               <Checkbox
                 id="protect-images"

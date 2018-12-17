@@ -78,20 +78,15 @@ const supportFilesConfig = {
     fileType: 'srt',
     popupMsg: 'Some info about what SRT files are.'
   },
-  thumbnail: {
-    headline: 'Thumbnail Files',
-    fileType: 'thumbnail',
-    popupMsg: 'Thumbnail to be used when a video is unable to be played or when audio only audio is used.',
+  other: {
+    headline: 'Additional Files',
+    fileType: 'other',
+    popupMsg: 'Additional files that can be used with this video, e.g., audio file, pdf.',
     checkBoxLabel: 'Disable right-click to protect your images',
     checkBoxName: 'protectImages',
     iconMsg: 'Checking this prevents people from downloading and using your images. Useful if your images are licensed.',
     iconSize: 'small',
     iconType: 'info circle'
-  },
-  other: {
-    headline: 'Additional Files',
-    fileType: 'other',
-    popupMsg: 'Additional files that can be used with this video, e.g., audio file, pdf.'
   }
 };
 
@@ -167,7 +162,7 @@ const projects = [
           }
         }
       ],
-      thumbnail: [
+      other: [
         {
           id: '5682',
           lang: 'Arabic',
@@ -215,9 +210,7 @@ const projects = [
           size: {
             filesize: 58368
           }
-        }
-      ],
-      other: [
+        },
         {
           id: '5686',
           lang: 'English',
