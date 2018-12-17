@@ -9,14 +9,18 @@ import { connect } from 'react-redux';
 import './FilterMenu.css';
 
 class FilterMenu extends Component {
-  handleFilterClearAll = () => {
+  handleFilterClearAll = async () => {
     this.props.categoryUpdate();
     this.props.postTypeUpdate();
     this.props.sourceUpdate();
     this.props.languageUpdate();
     this.props.dateUpdate();
 
-    this.props.createRequest();
+    await this.props.createRequest();
+
+    this.props.loadSources();
+    this.props.loadCategories();
+    this.props.loadPostTypes();
   };
 
   render() {
@@ -27,6 +31,15 @@ class FilterMenu extends Component {
 
         <div className="filterMenu_main">
           { /*  MAIN-MENU */ }
+          { /* Language */ }
+          <FilterMenuItem
+            filter="Language"
+            selected={ this.props.language.currentLanguage }
+            onFilterChange={ this.props.languageUpdate }
+            options={ this.props.language.list }
+            loadOptions={ this.props.loadLanguages }
+            FormItem={ Form.Radio }
+          />
           { /* Date */ }
           <FilterMenuItem
             filter="Date Range"
@@ -52,15 +65,6 @@ class FilterMenu extends Component {
             options={ this.props.source.list }
             loadOptions={ this.props.loadSources }
             FormItem={ Form.Checkbox }
-          />
-          { /* Language */ }
-          <FilterMenuItem
-            filter="Language"
-            selected={ this.props.language.currentLanguage }
-            onFilterChange={ this.props.languageUpdate }
-            options={ this.props.language.list }
-            loadOptions={ this.props.loadLanguages }
-            FormItem={ Form.Radio }
           />
           { /* Category */ }
           <FilterMenuItem

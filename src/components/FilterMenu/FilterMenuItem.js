@@ -57,8 +57,13 @@ class FilterMenuItem extends Component {
     }
   };
 
-  handleOnChange = ( e, selected ) => {
-    const { value, checked, label } = selected;
+  handleOnChange = async ( e, selected ) => {
+    const {
+      value,
+      checked,
+      label,
+      filter
+    } = selected;
 
     this.props.onFilterChange( {
       key: value,
@@ -66,7 +71,32 @@ class FilterMenuItem extends Component {
       checked
     } );
 
-    this.props.createRequest();
+    await this.props.createRequest();
+
+    switch ( filter.toLowerCase() ) {
+      case 'language':
+        this.props.loadSources();
+        this.props.loadCategories();
+        break;
+
+      case 'format':
+        this.props.loadSources();
+        this.props.loadCategories();
+        break;
+
+      case 'source':
+        this.props.loadCategories();
+        break;
+
+      case 'date range':
+        this.props.loadSources();
+        this.props.loadCategories();
+        break;
+
+      default: {
+        // console.log( 'no changes' );
+      }
+    }
   };
 
   render() {
@@ -108,6 +138,7 @@ class FilterMenuItem extends Component {
                     }
                   />
                 ) ) }
+            { this.props.options.length === 0 && <span style={ { textAlign: 'center' } }>Not Available</span> }
           </Form.Group>
         </Form>
       </div>
@@ -122,6 +153,8 @@ FilterMenuItem.propTypes = {
   selected: oneOfType( [array, object] ),
   onFilterChange: func,
   createRequest: func,
+  loadSources: func,
+  loadCategories: func,
   loadOptions: func
 };
 

@@ -55,12 +55,14 @@ export const sourceUpdate = ( source ) => {
   };
 };
 
-export const loadSources = () => async ( dispatch ) => {
+export const loadSources = () => async ( dispatch, getState ) => {
   dispatch( { type: LOAD_SOURCES_PENDING } );
 
   let response;
+  const currentState = getState();
+
   try {
-    response = await sourceAggRequest();
+    response = await sourceAggRequest( currentState );
   } catch ( err ) {
     return dispatch( { type: LOAD_SOURCES_FAILED } );
   }

@@ -27,7 +27,6 @@ class Search extends Component {
       // TODO: cache default query (set up general caching strategy)
       this.props.clearFilters();
       this.props.languageUpdate( { display_name: 'English', key: 'en-us' } );
-      this.props.createRequest();
     }
   }
 
@@ -73,6 +72,8 @@ class Search extends Component {
       this.props.updateSort( 'published' );
     }
     await this.props.createRequest();
+    this.props.loadSources();
+    this.props.loadCategories();
     this.props.history.push( '/results' );
   };
 
@@ -111,6 +112,8 @@ Search.propTypes = {
   createRequest: func,
   clearFilters: func,
   languageUpdate: func,
+  loadSources: func,
+  loadCategories: func,
   history: object,
   location: object,
   search: shape( {

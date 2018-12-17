@@ -9,13 +9,16 @@ export const categoryUpdate = ( category, checked ) => ( {
   payload: category
 } );
 
-export const loadCategories = () => async ( dispatch ) => {
+export const loadCategories = () => async ( dispatch, getState ) => {
   dispatch( { type: LOAD_CATEGORIES_PENDING } );
 
   let response;
   let primary;
+
+  const currentState = getState();
+
   try {
-    response = await categoryAggRequest();
+    response = await categoryAggRequest( currentState );
     primary = await categoryPrimaryRequest();
   } catch ( err ) {
     return dispatch( { type: LOAD_CATEGORIES_FAILED } );

@@ -246,6 +246,10 @@ export const queryBuilder = ( store ) => {
   body.notQuery( 'match', 'type.keyword', 'courses' );
   body.notQuery( 'match', 'type.keyword', 'page' );
 
+  body.agg( 'terms', 'unit.categories.id.keyword', { size: 100 }, 'unitId' );
+  body.agg( 'terms', 'categories.id.keyword', { size: 100 }, 'id' );
+  body.agg( 'terms', 'owner.keyword', { size: 100 }, 'source' );
+
   // body.query( 'query_string', 'query', optionStr ); // return all for TESTING
   return body.build();
 };

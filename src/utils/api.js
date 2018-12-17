@@ -35,8 +35,9 @@ export const languagesRequest = () =>
 /**
  * Get categories that have associated content
  */
-export const categoryAggRequest = () =>
-  axios
+export const categoryAggRequest = ( state ) => {
+  if ( Object.keys( state.search.response ).length ) return state.search.response;
+  return axios
     .post( SEARCH, {
       body: bodybuilder()
         .size( 0 )
@@ -45,6 +46,7 @@ export const categoryAggRequest = () =>
         .build()
     } )
     .then( response => response.data );
+};
 
 /**
  * Get primary categories
@@ -78,8 +80,9 @@ export const categoryValueNameRequest = ( ids = [] ) =>
 /**
  * Get all sources that have associated content
  */
-export const sourceAggRequest = () =>
-  axios
+export const sourceAggRequest = ( state ) => {
+  if ( Object.keys( state.search.response ).length ) return state.search.response;
+  return axios
     .post( SEARCH, {
       body: bodybuilder()
         .size( 0 )
@@ -87,6 +90,7 @@ export const sourceAggRequest = () =>
         .build()
     } )
     .then( response => response.data );
+};
 
 /**
  * Get all post types that have associated content
