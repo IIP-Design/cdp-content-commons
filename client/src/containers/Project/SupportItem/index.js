@@ -112,15 +112,6 @@ class SupportItem extends React.PureComponent {
     } );
   }
 
-  renderLoading = () => (
-    <Fragment>
-      <Loader active inline size="mini" />
-      <span style={ { marginLeft: '0.5em', fontSize: '0.75em' } }>
-        Preparing file for upload...
-      </span>
-    </Fragment>
-  )
-
   render() {
     const {
       fileType,
