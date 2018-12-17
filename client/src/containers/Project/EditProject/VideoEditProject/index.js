@@ -119,7 +119,7 @@ class VideoEditProject extends React.PureComponent {
 
   getTags = () => {
     const { tags } = this.state.formData;
-    const tagsArray = ( tags.length > 0 && !Array.isArray( tags ) ) ? tags.split( /\s?[,;]\s?/ ) : tags;
+    const tagsArray = ( tags && tags.length > 0 && !Array.isArray( tags ) ) ? tags.split( /\s?[,;]\s?/ ) : tags;
 
     if ( tagsArray && Array.isArray( tagsArray ) ) {
       return tagsArray
