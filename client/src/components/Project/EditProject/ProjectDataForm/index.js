@@ -175,36 +175,36 @@ const ProjectDataForm = ( props ) => {
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Row reversed="computer">
-          <Grid.Column mobile={ 11 }>
-            <Form.Checkbox
-              id="terms-conditions"
-              label={
-                /* eslint-disable jsx-a11y/label-has-for */
-                /**
-                  * @todo need Terms of Use link
-                  */
-                <label htmlFor="terms-conditions">
-                  By uploading these files I agree to the Content Commons <a href="https://?????">Terms of Use</a> and licensing agreements. I understand that my content will be available to the public for general use.
-                </label>
-              }
-              name="termsConditions"
-              type="checkbox"
-              required
-              checked={ termsConditions }
-              onChange={ handleChange }
-              error={ !termsConditions }
-            />
-          </Grid.Column>
-          <Grid.Column mobile={ 16 } computer={ 5 }>
-            { !hasSubmittedData &&
+        { !hasSubmittedData &&
+          <Grid.Row reversed="computer">
+            <Grid.Column mobile={ 11 }>
+              <Form.Checkbox
+                id="terms-conditions"
+                label={
+                  /* eslint-disable jsx-a11y/label-has-for */
+                  /**
+                    * @todo need Terms of Use link
+                    */
+                  <label htmlFor="terms-conditions">
+                    By uploading these files I agree to the Content Commons <a href="https://?????">Terms of Use</a> and licensing agreements. I understand that my content will be available to the public for general use.
+                  </label>
+                }
+                name="termsConditions"
+                type="checkbox"
+                required
+                checked={ termsConditions }
+                onChange={ handleChange }
+                error={ !termsConditions }
+              />
+            </Grid.Column>
+            <Grid.Column mobile={ 16 } computer={ 5 }>
               <Button
                 className="edit-project__form--save"
                 content="Save draft & upload files to this project"
                 disabled={ !hasRequiredData }
-              /> }
-          </Grid.Column>
-        </Grid.Row>
+              />
+            </Grid.Column>
+          </Grid.Row> }
       </Grid>
     </Form>
   );
