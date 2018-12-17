@@ -1,14 +1,14 @@
 import React from 'react';
 import { string } from 'prop-types';
 import Embed from '../../Embed/Embed';
-import { Checkbox, Icon, Popup } from 'semantic-ui-react';
-import colors from '../../../utils/colors';
+// import { Checkbox, Icon, Popup } from 'semantic-ui-react';
+// import colors from '../../../utils/colors';
 
-const embedPopupStyles = {
-  fontSize: '12px',
-  color: colors.grey,
-  backgroundColor: colors.lightGrey
-};
+// const embedPopupStyles = {
+//   fontSize: '12px',
+//   color: colors.grey,
+//   backgroundColor: colors.lightGrey
+// };
 
 const PostEmbed = props => (
   <div>
