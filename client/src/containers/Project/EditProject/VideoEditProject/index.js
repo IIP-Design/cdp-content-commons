@@ -160,6 +160,11 @@ class VideoEditProject extends React.PureComponent {
 
   handleAddMoreFiles = () => {
     console.log( 'Add more video files' );
+    this.addMoreInputRef.click();
+  }
+
+  handleAddMoreRef = ( c ) => {
+    this.addMoreInputRef = c;
   }
 
   handleUpload = () => this.setState( { isUploadInProgress: true } );
@@ -480,6 +485,18 @@ class VideoEditProject extends React.PureComponent {
                   content="+ Add more files to this project"
                   basic
                   onClick={ this.handleAddMoreFiles }
+                />
+                { /**
+                   * @todo Does this need a label?
+                   * Is hiding the file input best
+                   * practice for accessibility?
+                   */ }
+                <input
+                  ref={ this.handleAddMoreRef }
+                  type="file"
+                  accept=".mov, .mp4, .mpg, .wmv, .avi"
+                  multiple
+                  style={ { display: 'none' } }
                 />
               </div> }
           </div>
