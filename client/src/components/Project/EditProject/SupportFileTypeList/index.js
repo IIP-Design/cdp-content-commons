@@ -34,7 +34,7 @@ const SupportFileTypeList = ( props ) => {
     if ( hasSubmittedData ) {
       return (
         <SupportItem
-          key={ `${fileType}-${item.lang}` }
+          key={ `${fileType}-${item.id}` }
           projectId={ { ...projectId } }
           fileType={ fileType }
           itemId={ item.id }
@@ -44,7 +44,7 @@ const SupportFileTypeList = ( props ) => {
 
     return (
       <Placeholder
-        key={ `${fileType}-${item.lang}` }
+        key={ `${fileType}-${item.id}` }
         parentEl="li"
         childEl="span"
         parentStyles={ {
