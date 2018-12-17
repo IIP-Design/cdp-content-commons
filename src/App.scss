@@ -9,3 +9,11 @@
 .errormsg {
   text-align: center;
 }
+
+.ui.container.alert-shown > section:not(.landing) {
+  margin-top: calc(9em + 56px);
+
+  @media screen and (min-width: 768px) {
+    margin-top: calc(5em + 28px);
+  }
+}

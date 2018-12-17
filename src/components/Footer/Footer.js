@@ -59,7 +59,7 @@ const Footer = ( props ) => {
         <Header as="h1">
           <Header.Subheader className="subtitle">
             Join the conversation
-            on <img src={ slackLogo } alt="Slack" className="footer_img footer_img--slack" /> #cdp-general
+            on <img src={ slackLogo } alt="Slack" className="footer_img footer_img--slack" /> #content-commons
           </Header.Subheader>
         </Header>
         <List horizontal divided className="footer-nav">

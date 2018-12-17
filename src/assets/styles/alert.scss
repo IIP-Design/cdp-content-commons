@@ -1,0 +1,31 @@
+@import '../../assets/styles/colors.scss';
+
+section.bar.alert-shown + div.ui.container {
+  padding-top: 32px;
+}
+
+.alert-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 3px 24px;
+  background-color: $red;
+  font-size: 18px;
+  line-height: 1.4em;
+  color: #fff;
+  text-align: center;
+
+  .close {
+    display: block;
+    position: absolute;
+    top: calc(50% - 14px);
+    right: 7px;
+    border: 0;
+    background-color: transparent;
+    color: #fff;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

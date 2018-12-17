@@ -2,6 +2,7 @@ import axios from 'axios';
 import bodybuilder from 'bodybuilder';
 
 const SEARCH = `${process.env.REACT_APP_PUBLIC_API}/v1/search`;
+const OPENNET = `${process.env.REACT_APP_PUBLIC_API}/v1/task/opennet`;
 
 export const queryRequest = body => axios.post( SEARCH, body ).then( response => response.data );
 
@@ -132,3 +133,6 @@ export const getItemRequest = ( site, postId ) =>
         .build()
     } )
     .then( response => response.data );
+
+export const getOpenNetRequest = () =>
+  axios.get( OPENNET ).then( response => response.data );
