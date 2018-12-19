@@ -34,14 +34,14 @@ export const loadVideoProjects = projectId => async ( dispatch, getState ) => {
   } );
 };
 
-export const setSaveStatus = projectId => async ( dispatch, getState ) => {
+export const saveProjectData = ( projectId, formData ) => async ( dispatch ) => {
   // dispatch( {
   //   type: SAVE_VIDEO_PROJECT_DATA_PENDING,
   //   payload: { projectId }
   // } );
   let response;
   try {
-    response = await getState().projects;
+    response = await formData;
   } catch ( err ) {
     return dispatch( {
       type: SAVE_VIDEO_PROJECT_DATA_FAILED,

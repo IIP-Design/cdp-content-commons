@@ -44,7 +44,6 @@ import {
 
 /* eslint-disable react/prefer-stateless-function */
 class VideoEditProject extends React.PureComponent {
-  // use constructor instead?
   state = {
     deleteConfirmOpen: false,
     hasRequiredData: false,
@@ -56,10 +55,6 @@ class VideoEditProject extends React.PureComponent {
     displayTheUploadSuccessMsg: false,
     hasExceededMaxCategories: false,
     filesToUploadCount: 0,
-
-    /**
-     * Use redux for these?
-     */
     formData: {
       title: '',
       privacySetting: 'anyone',
@@ -86,6 +81,7 @@ class VideoEditProject extends React.PureComponent {
 
   componentDidUpdate = ( prevProps, prevState ) => {
     const uploadedCount = this.getUploadedFilesCount();
+    // const { videoID } = this.props.match.params;
 
     if ( uploadedCount === prevState.filesToUploadCount && prevState.hasSubmittedData && !prevState.isUploadFinished ) {
       this.setState( {
@@ -98,6 +94,11 @@ class VideoEditProject extends React.PureComponent {
       this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', 2000 );
       this.delayUnmount( this.handleDisplayUploadSuccessMsg, 'uploadSuccessTimer', 3000 );
     }
+
+    // if ( ( prevProps.project.projectData !== this.props.project.projectData ) ) {
+    //   console.log( 'this.props.saveProjectData' );
+    //   this.props.saveProjectData( videoID, this.state.formData );
+    // }
   }
 
   componentWillUnmount = () => {
@@ -148,11 +149,6 @@ class VideoEditProject extends React.PureComponent {
     this.setState( { deleteConfirmOpen: false } );
   }
 
-  handleSaveDraft = ( e ) => {
-    console.log( 'Draft saved' );
-    this.handleSubmit( e );
-  }
-
   handleFinalReview = () => {
     const { videoID } = this.props.match.params;
     this.props.history.push( `/admin/video/${videoID}/review` );
@@ -165,6 +161,16 @@ class VideoEditProject extends React.PureComponent {
 
   handleAddMoreRef = ( c ) => {
     this.addMoreInputRef = c;
+  }
+
+  handleSaveDraft = ( e ) => {
+    console.log( 'Draft saved' );
+    this.handleSubmit( e );
+  }
+
+  handleSaveProjectData = () => {
+    const { videoID } = this.props.match.params;
+    this.props.saveProjectData( videoID, this.state.formData );
   }
 
   handleUpload = () => this.setState( { isUploadInProgress: true } );
@@ -193,7 +199,7 @@ class VideoEditProject extends React.PureComponent {
       return ( {
         hasUnsavedData: true,
         hasExceededMaxCategories: categoryCount > this.MAX_CATEGORY_COUNT,
-        hasRequiredData: ( title ) &&
+        hasRequiredData: title &&
           privacySetting &&
           categoryCount > 0 &&
           categoryCount <= this.MAX_CATEGORY_COUNT &&
@@ -204,7 +210,6 @@ class VideoEditProject extends React.PureComponent {
 
   handleSubmit = ( e ) => {
     e.preventDefault();
-    const { videoID } = this.props.match.params;
     const {
       title,
       author,
@@ -215,22 +220,25 @@ class VideoEditProject extends React.PureComponent {
       protectImages
     } = this.state.formData;
 
-    this.setState( prevState => ( {
-      hasSubmittedData: true,
-      hasUnsavedData: false,
-      displaySaveMsg: true,
-      formData: {
-        ...prevState.formData,
-        title: title ? title.trimEnd() : '',
-        author: author ? author.trimEnd() : '',
-        owner: owner ? owner.trimEnd() : '',
-        publicDesc: publicDesc ? publicDesc.trimEnd() : '',
-        internalDesc: internalDesc ? internalDesc.trimEnd() : '',
-        tags: this.getTags(),
-        termsConditions,
-        protectImages
-      }
-    } ) );
+    this.setState(
+      prevState => ( {
+        hasSubmittedData: true,
+        hasUnsavedData: false,
+        displaySaveMsg: true,
+        formData: {
+          ...prevState.formData,
+          title: title ? title.trimEnd() : '',
+          author: author ? author.trimEnd() : '',
+          owner: owner ? owner.trimEnd() : '',
+          publicDesc: publicDesc ? publicDesc.trimEnd() : '',
+          internalDesc: internalDesc ? internalDesc.trimEnd() : '',
+          tags: this.getTags(),
+          termsConditions,
+          protectImages
+        }
+      } ),
+      this.handleSaveProjectData
+    );
 
     if ( !this.state.isUploadFinished ) {
       this.handleUpload();
@@ -238,7 +246,6 @@ class VideoEditProject extends React.PureComponent {
       this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', 2000 );
     }
 
-    this.props.setSaveStatus( videoID );
     ScrollToTop( { top: 0, behavior: 'smooth' } );
   }
 
@@ -511,7 +518,7 @@ VideoEditProject.propTypes = {
   match: object,
   project: object,
   loadVideoProjects: func,
-  setSaveStatus: func,
+  saveProjectData: func,
   uploadedVideosCount: number,
   uploadedSupportFilesCount: number
 };

@@ -68,11 +68,14 @@ const setSaveError = ( state, action ) => {
 };
 
 const setSaveSuccess = ( state, action ) => {
-  const { projectId } = action.payload;
+  const { projectId, response } = action.payload;
   return {
     ...state,
     [projectId]: {
       ...state[projectId],
+      projectData: {
+        ...response
+      },
       saveStatus: {
         error: false,
         success: true
