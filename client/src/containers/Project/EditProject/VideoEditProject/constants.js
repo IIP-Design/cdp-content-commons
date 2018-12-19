@@ -4,7 +4,6 @@
  *
  */
 
-export const DEFAULT_ACTION = 'default_action';
 export const LOAD_VIDEO_PROJECT_PENDING = 'load_video_project_pending';
 export const LOAD_VIDEO_PROJECT_FAILED = 'load_video_project_failed';
 export const LOAD_VIDEO_PROJECT_SUCCESS = 'load_video_project_success';
