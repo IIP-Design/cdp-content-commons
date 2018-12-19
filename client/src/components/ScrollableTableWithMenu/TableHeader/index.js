@@ -10,7 +10,14 @@ import { Table, Checkbox } from 'semantic-ui-react';
 import './TableHeader.css';
 
 const TableHeader = props => {
-  const { tableHeaders, column, direction, handleSort, toggleAllItemsSelection } = props;
+  const {
+    tableHeaders,
+    column,
+    direction,
+    handleSort,
+    toggleAllItemsSelection,
+    displayActionsMenu
+  } = props;
   return (
     <Table.Header>
       <Table.Row>
@@ -19,6 +26,7 @@ const TableHeader = props => {
             key={ i }
             sorted={ column === header.name ? direction : null }
             onClick={ handleSort( header.name )  }
+            className={ displayActionsMenu ? 'displayActionsMenu' : '' }
           >
             { i === 0 
               ? <Checkbox label={ header.label } onChange={ toggleAllItemsSelection }/>

@@ -1,0 +1,16 @@
+@import "../../../assets/styles/colors.scss";
+
+.actionsMenu {
+  position: absolute;
+  top: 0;
+  left: 50px;
+  z-index: 3;
+  transform: translateY(50%);
+  display: none;
+  margin-top: -5px;
+
+  &.active {
+    display: block;
+  }
+
+}

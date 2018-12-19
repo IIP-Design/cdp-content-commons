@@ -10,6 +10,7 @@ import { Table, Grid } from 'semantic-ui-react';
 import TableItemsDisplay from './TableItemsDisplay';
 import TableMenu from './TableMenu';
 import TableHeader from './TableHeader';
+import TableActionsMenu from './TableActionsMenu';
 import './ScrollableTableWithMenu.css';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -19,6 +20,7 @@ class ScrollableTableWithMenu extends React.Component {
     tableHeaders: this.props.persistentTableHeaders,        
     selectAllItems: false,
     selectedItems: new Map(),
+    displayActionsMenu: false,
     column: null,
     direction: null
   };
@@ -57,19 +59,27 @@ class ScrollableTableWithMenu extends React.Component {
     
     this.setState({
       selectAllItems: newSelectAllItemsState,
-      selectedItems: newSelectedItems
+      selectedItems: newSelectedItems,
+      displayActionsMenu: newSelectAllItemsState ? true : false
     });
   }
 
   toggleItemSelection = (e, data) => {
     const isChecked = data.checked;
-    this.setState( prevState => ( {
-      selectedItems: prevState.selectedItems.set(String(data['data-label']), isChecked)
-    } ) );
+    this.setState( prevState => {
+      const updatedSelectedItems = prevState.selectedItems.set(String(data['data-label']), isChecked);
+      const areOtherItemsSelected = Array.from( updatedSelectedItems.values() ).includes( true );
+      return {
+        selectedItems: updatedSelectedItems,
+        displayActionsMenu: areOtherItemsSelected ? true : false
+      }
+    } );
   }
 
   handleSort = clickedColumn => () => {    
-    const { column, data, direction } = this.state;
+    const { column, data, direction, displayActionsMenu } = this.state;
+
+    if ( displayActionsMenu ) return;
 
     if (column !== clickedColumn) {
       return this.setState({
@@ -88,6 +98,7 @@ class ScrollableTableWithMenu extends React.Component {
   render() {
     const {
       tableHeaders,
+      displayActionsMenu,
       column,
       direction,
     } = this.state;
@@ -102,7 +113,8 @@ class ScrollableTableWithMenu extends React.Component {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column className="items_table_wrapper">
-            <div className="items_table">
+            <TableActionsMenu displayActionsMenu={ displayActionsMenu }/>
+            <div className="items_table">              
               <Table sortable celled>
                 <TableHeader
                   tableHeaders={ tableHeaders }
@@ -110,6 +122,7 @@ class ScrollableTableWithMenu extends React.Component {
                   direction={ direction }
                   handleSort={ this.handleSort }
                   toggleAllItemsSelection={ this.toggleAllItemsSelection }
+                  displayActionsMenu={ displayActionsMenu }
                 />
 
                 {/* ADD CUSTOM TABLE BODY */}
