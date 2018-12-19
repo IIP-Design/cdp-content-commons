@@ -1,0 +1,15 @@
+@import "../../../../assets/styles/colors.scss";
+
+.myProjects {
+  
+  &_headline {
+    margin-bottom: 3em;
+    font-size: 12px;
+    font-style: italic;
+    color: $shuttle-grey;
+  }
+
+  &_scrolltable {
+    overflow: hidden;
+  }
+}

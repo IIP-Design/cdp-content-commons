@@ -1,0 +1,41 @@
+@import "../../../../../assets/styles/colors.scss";
+
+.myProjects {
+
+  &_actions {
+    margin-right: 15px;
+  }
+
+  &_thumbnail {
+    flex: 1;
+    margin-right: 15px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &_data {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+
+    &_title {
+      flex: 1;
+      margin-bottom: 0;
+      color: $blue;
+    }
+
+    &_actions {
+      font-size: 11px;
+
+      button {
+        -webkit-appearance: none;
+        padding: 0;
+        border: none;
+        background-color: transparent; 
+      }
+    }
+  }
+
+}
