@@ -69,10 +69,12 @@ const setSaveError = ( state, action ) => {
 
 const setSaveSuccess = ( state, action ) => {
   const { projectId, response } = action.payload;
+  const updated = new Date();
   return {
     ...state,
     [projectId]: {
       ...state[projectId],
+      updated: updated.toISOString(),
       projectData: {
         ...response
       },
