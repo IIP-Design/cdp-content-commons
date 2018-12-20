@@ -1,0 +1,58 @@
+@import "../../assets/styles/colors.scss";
+
+.ui.grid .row.items_tableMenus {
+  padding-bottom: 0;  
+}
+
+// @-moz-document url-prefix() {
+//   html, body {
+//     overflow: hidden!important;
+//   }
+// }
+
+.items {
+
+  &_table {    
+    max-height: 500px;
+    overflow: scroll;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+
+    /* ONLY IN WORKS IN CHROME & SAFARI */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    table.ui.sortable.table {
+      table-layout: fixed;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+      
+      td {
+        z-index: 1;
+        background-color: #fff;
+        box-shadow: 3px 0 3px 1px rgba(0,0,0,0.1);
+      }
+
+      th {
+        letter-spacing: 0.5px;
+      }
+
+      td, th {        
+  
+        &:first-child {
+          position: sticky;
+          left: 0;
+          width: 300px;
+        };
+      }
+    }
+    
+    &_item {
+      
+      .primary_col {
+        display: flex;
+      }
+    }
+  }  
+}
