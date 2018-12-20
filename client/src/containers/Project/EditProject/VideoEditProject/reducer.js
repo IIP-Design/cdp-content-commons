@@ -7,6 +7,7 @@ import {
   LOAD_VIDEO_PROJECT_PENDING,
   LOAD_VIDEO_PROJECT_FAILED,
   LOAD_VIDEO_PROJECT_SUCCESS,
+  DELETE_VIDEO_PROJECT_SUCCESS,
   SAVE_VIDEO_PROJECT_DATA_FAILED,
   SAVE_VIDEO_PROJECT_DATA_SUCCESS
 } from './constants';
@@ -86,6 +87,13 @@ const setSaveSuccess = ( state, action ) => {
   };
 };
 
+const setDeleteSuccess = ( state, action ) => {
+  const { projectId } = action.payload;
+  const newState = { ...state };
+  delete newState[projectId];
+  return newState;
+};
+
 function videoEditProjectReducer( state = INITIAL_STATE, action ) {
   switch ( action.type ) {
     case LOAD_VIDEO_PROJECT_PENDING:
@@ -102,6 +110,9 @@ function videoEditProjectReducer( state = INITIAL_STATE, action ) {
 
     case SAVE_VIDEO_PROJECT_DATA_SUCCESS:
       return setSaveSuccess( state, action );
+
+    case DELETE_VIDEO_PROJECT_SUCCESS:
+      return setDeleteSuccess( state, action );
 
     default:
       return state;

@@ -93,6 +93,10 @@ const supportFilesConfig = {
 const projects = [
   {
     projectType: 'video',
+    projectId: 'test-project'
+  },
+  {
+    projectType: 'video',
     projectId: 'made-in-america',
     updated: '',
     saveStatus: {

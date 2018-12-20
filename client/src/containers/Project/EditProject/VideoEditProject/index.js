@@ -4,6 +4,7 @@
  *
  */
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { func, number, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -46,6 +47,7 @@ import {
 class VideoEditProject extends React.PureComponent {
   state = {
     deleteConfirmOpen: false,
+    hasBeenDeleted: false,
     hasRequiredData: false,
     hasSubmittedData: false,
     isUploadInProgress: false,
@@ -81,7 +83,6 @@ class VideoEditProject extends React.PureComponent {
 
   componentDidUpdate = ( prevProps, prevState ) => {
     const uploadedCount = this.getUploadedFilesCount();
-    // const { videoID } = this.props.match.params;
 
     if ( uploadedCount === prevState.filesToUploadCount && prevState.hasSubmittedData && !prevState.isUploadFinished ) {
       this.setState( {
@@ -94,11 +95,6 @@ class VideoEditProject extends React.PureComponent {
       this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', 2000 );
       this.delayUnmount( this.handleDisplayUploadSuccessMsg, 'uploadSuccessTimer', 3000 );
     }
-
-    // if ( ( prevProps.project.projectData !== this.props.project.projectData ) ) {
-    //   console.log( 'this.props.saveProjectData' );
-    //   this.props.saveProjectData( videoID, this.state.formData );
-    // }
   }
 
   componentWillUnmount = () => {
@@ -142,7 +138,13 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleDeleteConfirm = () => {
-    this.setState( { deleteConfirmOpen: false } );
+    const { videoID } = this.props.match.params;
+    this.props.deleteVideoProject( videoID );
+    console.log( `Deleted "${videoID}" project` );
+    this.setState( {
+      deleteConfirmOpen: false,
+      hasBeenDeleted: true
+    } );
   }
 
   handleDeleteCancel = () => {
@@ -261,6 +263,10 @@ class VideoEditProject extends React.PureComponent {
 
   render() {
     const { project, uploadedSupportFilesCount } = this.props;
+
+    if ( !project && this.state.hasBeenDeleted ) {
+      return <Redirect to="/admin/dashboard" />;
+    }
 
     if ( !project || project.loading ) {
       return (
@@ -519,6 +525,7 @@ VideoEditProject.propTypes = {
   project: object,
   loadVideoProjects: func,
   saveProjectData: func,
+  deleteVideoProject: func,
   uploadedVideosCount: number,
   uploadedSupportFilesCount: number
 };

@@ -7,6 +7,7 @@ import {
   LOAD_VIDEO_PROJECT_PENDING,
   LOAD_VIDEO_PROJECT_FAILED,
   LOAD_VIDEO_PROJECT_SUCCESS,
+  DELETE_VIDEO_PROJECT_SUCCESS,
   SAVE_VIDEO_PROJECT_DATA_FAILED,
   SAVE_VIDEO_PROJECT_DATA_SUCCESS
 } from './constants';
@@ -54,3 +55,10 @@ export const saveProjectData = ( projectId, formData ) => async ( dispatch ) => 
     payload: { projectId, response }
   } );
 };
+
+export const deleteVideoProject = projectId => dispatch => (
+  dispatch( {
+    type: DELETE_VIDEO_PROJECT_SUCCESS,
+    payload: { projectId }
+  } )
+);

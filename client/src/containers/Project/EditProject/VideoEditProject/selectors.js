@@ -8,7 +8,8 @@ const selectCurrentVideoEditProject = ( state, props ) =>
 
 const selectUploadedVideoProjectItemsCount = state => (
   Object.values( state.videoProjectItems )
-    .filter( video => !video.loading && video.uploadStatus.success ).length
+    .filter( video => !video.loading && video.uploadStatus.success )
+    .length
 );
 
 const selectUploadedSupportFilesCount = state => (
