@@ -1,0 +1,32 @@
+@import "../../../assets/styles/colors.scss";
+
+.actionsMenu {
+  position: absolute;
+  top: 0;
+  left: 40px;
+  z-index: 3;
+  transform: translateY(50%);
+  display: none;
+  margin-top: -5px;
+
+  &.active {
+    display: block;
+  }
+
+  img {    
+    margin-left: 1em;
+    cursor: pointer;
+  }
+
+  .unpublish {
+    vertical-align: top;
+    display: inline-block;    
+    margin-left: 0.5em;
+    margin-top: 2px;
+
+    &--text {
+      margin-left: 0.5em;
+      color: $light-blue;
+    }
+  }
+}
