@@ -44,7 +44,26 @@
           position: sticky;
           left: 0;
           width: 300px;
-        };
+
+          .ui.checkbox .box:before, 
+          .ui.checkbox label:before {
+            background: transparent;
+            border: 2px solid $blue;
+            border-radius: 2px;
+          }
+
+          .ui.checkbox input:checked ~ .box,
+          .ui.checkbox input:checked ~ label {
+            &:before {
+              background: #112e51;
+              border-color: transparent;
+            }
+
+            &:after {
+              color: #fff;
+            }
+          }
+        }
       }
     }
     

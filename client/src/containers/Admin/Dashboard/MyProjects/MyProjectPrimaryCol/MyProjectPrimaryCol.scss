@@ -10,15 +10,23 @@
     flex: 1;
     margin-right: 15px;
 
+    &--publishing {
+      opacity: 0.2;
+    }
+    
     img {
       width: 100%;
-    }
+    }    
   }
 
   &_data {
     flex: 2;
     display: flex;
     flex-direction: column;
+
+    &--publishing {
+      opacity: 0.2;
+    }
 
     &_title {
       flex: 1;

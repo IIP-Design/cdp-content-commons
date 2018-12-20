@@ -61,7 +61,7 @@ export const tempData = [
     isNew: false,
     detailsLink: '',
     previewLink: '',
-    visibility: 'embargoed',
+    visibility: 'publishing',
     dateCreated: '2018-08-03',
     datePublished: '2018-09-03',
     dateLastModified: '2018-09-04',

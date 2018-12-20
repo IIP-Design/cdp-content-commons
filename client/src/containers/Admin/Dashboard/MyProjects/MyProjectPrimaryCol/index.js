@@ -21,10 +21,20 @@ const MyProjectPrimaryCol = ( props ) => {
         />
         {/* <div className="myProjects_favorite"><Icon name='star' /></div> */}
       </div>
-      <div className="myProjects_thumbnail">
+      <div className={
+        props.d.visibility === 'publishing'
+        ? 'myProjects_thumbnail myProjects_thumbnail--publishing'
+        : 'myProjects_thumbnail'
+        }
+      >
         <img src={ props.d.thumbnail } alt={ props.d.title } />
       </div>
-      <div className="myProjects_data">
+      <div className={
+        props.d.visibility === 'publishing'
+        ? 'myProjects_data myProjects_data--publishing'
+        : 'myProjects_data'
+        }
+      >
         <h3 className="myProjects_data_title">{ props.d[props.header.name] }</h3>
         <div className="myProjects_data_actions">
           <Link to={ props.d.detailsLink } className="linkStyle">Details</Link>
