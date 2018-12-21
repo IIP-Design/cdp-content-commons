@@ -1,4 +1,4 @@
-@import "../../../../../assets/styles/colors.scss";
+@import "../../../assets/styles/colors.scss";
 
 .delete {
   
@@ -33,10 +33,6 @@
   &_confirm {
     padding: 2em;
     text-align: center;
-
-    h2 {
-      font-weight: normal;
-    }
   }
 
 }
