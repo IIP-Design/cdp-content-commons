@@ -17,7 +17,7 @@ import ProjectHeader from 'components/Project/ProjectHeader';
 import VideoProjectData from 'components/Project/ReviewProject/Video/VideoProjectData';
 import VideoSupportFiles from 'components/Project/ReviewProject/Video/VideoSupportFiles';
 import VideoProjectFiles from 'components/Project/ReviewProject/Video/VideoProjectFiles';
-import VideoConfirmDelete from 'components/Project/VideoConfirmDelete';
+import ConfirmationModalContent from 'components/Project/ConfirmationModalContent';
 import './VideoReviewProject.css';
 
 class VideoReviewProject extends React.PureComponent {
@@ -76,7 +76,7 @@ class VideoReviewProject extends React.PureComponent {
                 <Confirm
                   className="delete"
                   open={ this.state.deleteConfirmOpen }
-                  content={ <VideoConfirmDelete /> }
+                  content={ <ConfirmationModalContent /> }
                   onCancel={ this.handleDeleteCancel }
                   onConfirm={ this.handleDeleteConfirm }
                   cancelButton="No, take me back"

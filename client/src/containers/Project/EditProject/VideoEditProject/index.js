@@ -19,7 +19,7 @@ import { Button, Confirm, Loader, Progress } from 'semantic-ui-react';
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
-import VideoConfirmDelete from 'components/Project/VideoConfirmDelete';
+import ConfirmationModalContent from 'components/Project/ConfirmationModalContent';
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
 import FormInstructions from 'components/Project/EditProject/FormInstructions';
@@ -346,7 +346,7 @@ class VideoEditProject extends React.PureComponent {
               <Confirm
                 className="delete"
                 open={ this.state.deleteConfirmOpen }
-                content={ <VideoConfirmDelete /> }
+                content={ <ConfirmationModalContent /> }
                 onCancel={ this.handleDeleteCancel }
                 onConfirm={ this.handleDeleteConfirm }
                 cancelButton="No, take me back"
