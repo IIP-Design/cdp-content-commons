@@ -17,11 +17,11 @@ import ProjectHeader from 'components/Project/ProjectHeader';
 import VideoProjectData from 'components/Project/ReviewProject/Video/VideoProjectData';
 import VideoSupportFiles from 'components/Project/ReviewProject/Video/VideoSupportFiles';
 import VideoProjectFiles from 'components/Project/ReviewProject/Video/VideoProjectFiles';
-import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
+import VideoConfirmDelete from 'components/Project/VideoConfirmDelete';
 import './VideoReviewProject.css';
 
 class VideoReviewProject extends React.PureComponent {
-  /* 
+  /*
     TODO: PUBLISH_PROJECT_FN(), DELETE_PROJECT_FN()
   */
 
@@ -35,11 +35,11 @@ class VideoReviewProject extends React.PureComponent {
 
   handleDeleteConfirm = () => {
     /* DELETE_PROJECT_FN() */
-    this.setState( { deleteConfirmOpen: false }); 
+    this.setState( { deleteConfirmOpen: false } );
   }
 
   handleDeleteCancel = () => {
-    this.setState( { deleteConfirmOpen: false }); 
+    this.setState( { deleteConfirmOpen: false } );
   }
 
   toggleDisableRightClick = () => {
@@ -48,9 +48,9 @@ class VideoReviewProject extends React.PureComponent {
 
   handleOnPublish = () => {
     /* PUBLISH_PROJECT_FN() */
-    
+
     // Using history.push instead of Redirect b/c back button not working w/ latter
-    this.props.history.push("/admin/dashboard");
+    this.props.history.push( '/admin/dashboard' );
   }
 
   render() {
@@ -58,37 +58,37 @@ class VideoReviewProject extends React.PureComponent {
     const { videoID } = this.props.match.params;
 
     // TEMP - redirect to dashboard if project doesn't exist
-    if ( videoReviewProject === null ) { return <Redirect to="/admin/dashboard" /> }
+    if ( videoReviewProject === null ) { return <Redirect to="/admin/dashboard" />; }
 
     return (
       <Page title="Review Project" description="Review content project">
         <Breadcrumbs />
         <div className="review-project">
           <ProjectHeader icon="video camera" text="Project Details - Review">
-              <div className="button_column_wrapper">
-                <div className="button_delete_wrapper">
-                  <Button
-                    className="project_button project_button--delete"
-                    onClick={ this.displayConfirmDelete }
-                  >
-                    Delete Project
-                  </Button>
-                  <Confirm
-                    className="delete"
-                    open={ this.state.deleteConfirmOpen }
-                    content={ <VideoConfirmDelete /> }
-                    onCancel={ this.handleDeleteCancel }
-                    onConfirm={ this.handleDeleteConfirm }
-                    cancelButton="No, take me back"
-                    confirmButton="Yes, delete forever"
-                  />
-                </div>
-                <Button className="project_button project_button--edit"><Link to={ `/admin/video/${videoID}/edit` }>Edit</Link></Button>
+            <div className="button_column_wrapper">
+              <div className="button_delete_wrapper">
+                <Button
+                  className="project_button project_button--delete"
+                  onClick={ this.displayConfirmDelete }
+                >
+                  Delete Project
+                </Button>
+                <Confirm
+                  className="delete"
+                  open={ this.state.deleteConfirmOpen }
+                  content={ <VideoConfirmDelete /> }
+                  onCancel={ this.handleDeleteCancel }
+                  onConfirm={ this.handleDeleteConfirm }
+                  cancelButton="No, take me back"
+                  confirmButton="Yes, delete forever"
+                />
               </div>
-              <div className="button_column_wrapper">
-                <Button className="project_button project_button--preview">Preview Project</Button>
-                <Button className="project_button project_button--publish" onClick={ this.handleOnPublish }>Publish</Button>
-              </div>
+              <Button className="project_button project_button--edit"><Link to={ `/admin/video/${videoID}/edit` }>Edit</Link></Button>
+            </div>
+            <div className="button_column_wrapper">
+              <Button className="project_button project_button--preview">Preview Project</Button>
+              <Button className="project_button project_button--publish" onClick={ this.handleOnPublish }>Publish</Button>
+            </div>
           </ProjectHeader>
           <VideoProjectData project_data={ videoReviewProject.project_data } />
           <VideoSupportFiles
@@ -109,7 +109,11 @@ class VideoReviewProject extends React.PureComponent {
 }
 
 VideoReviewProject.propTypes = {
-  videoReviewProject: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object,
+  videoReviewProject: PropTypes.object,
+  disableRightClick: PropTypes.bool,
+  toggleDisableRightClick: PropTypes.func
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {

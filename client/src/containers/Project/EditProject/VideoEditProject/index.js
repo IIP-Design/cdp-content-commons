@@ -19,7 +19,7 @@ import { Button, Confirm, Loader, Progress } from 'semantic-ui-react';
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
-import VideoConfirmDelete from 'components/Project/ReviewProject/Video/VideoConfirmDelete';
+import VideoConfirmDelete from 'components/Project/VideoConfirmDelete';
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
 import FormInstructions from 'components/Project/EditProject/FormInstructions';
