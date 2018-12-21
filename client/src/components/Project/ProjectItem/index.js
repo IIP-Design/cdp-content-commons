@@ -17,16 +17,20 @@ const ProjectItem = ( props ) => {
     itemId,
     isAvailable,
     displayItemInModal,
+    modalProps,
     modalTrigger,
     modalContent
   } = props;
 
   const Item = modalTrigger;
-  const modalProps = {
+  const combinedProps = {
     triggerProps: {
       ...projectId,
       itemId,
       displayItemInModal
+    },
+    contentProps: {
+      ...modalProps
     }
   };
   const sharedStyles = { cursor: 'not-allowed' };
@@ -34,7 +38,7 @@ const ProjectItem = ( props ) => {
   if ( isAvailable ) {
     return (
       ( displayItemInModal &&
-        withModal( modalProps, modalTrigger, modalContent ) ) ||
+        withModal( combinedProps, modalTrigger, modalContent ) ) ||
         <Item
           { ...projectId }
           itemId={ itemId }
@@ -72,6 +76,7 @@ ProjectItem.propTypes = {
   itemId: string.isRequired,
   isAvailable: bool,
   displayItemInModal: bool,
+  modalProps: object,
   modalTrigger: func,
   modalContent: func,
   customPlaceholderStyle: object

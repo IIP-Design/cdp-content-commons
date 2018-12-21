@@ -19,6 +19,7 @@ const ProjectItemsList = ( props ) => {
     hasSubmittedData,
     projectType,
     displayItemInModal,
+    modalProps,
     modalTrigger,
     modalContent,
     customListStyle,
@@ -49,6 +50,7 @@ const ProjectItemsList = ( props ) => {
             displayItemInModal={ displayItemInModal }
             projectId={ projectId }
             itemId={ item.id }
+            modalProps={ item }
             modalTrigger={ modalTrigger }
             modalContent={ modalContent }
             customPlaceholderStyle={ customPlaceholderStyle }
@@ -67,6 +69,7 @@ ProjectItemsList.propTypes = {
   hasSubmittedData: bool,
   projectType: string.isRequired,
   displayItemInModal: bool,
+  modalProps: object,
   modalTrigger: func,
   modalContent: func,
   customListStyle: object,
