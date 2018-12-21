@@ -1,15 +1,15 @@
 /**
  *
- * ConfirmationModalContent
+ * ConfirmModalContent
  *
  */
 
 import React from 'react';
 import { node, object, string } from 'prop-types';
-import './ConfirmationModalContent.css';
+import './ConfirmModalContent.css';
 
 /* eslint-disable react/prefer-stateless-function */
-const ConfirmationModalContent = ( props ) => {
+const ConfirmModalContent = ( props ) => {
   const {
     children,
     className,
@@ -25,15 +25,15 @@ const ConfirmationModalContent = ( props ) => {
   );
 };
 
-ConfirmationModalContent.propTypes = {
+ConfirmModalContent.propTypes = {
   children: node,
   className: string,
   headingTxt: string,
   style: object
 };
 
-ConfirmationModalContent.defaultProps = {
+ConfirmModalContent.defaultProps = {
   style: {}
 };
 
-export default ConfirmationModalContent;
+export default ConfirmModalContent;

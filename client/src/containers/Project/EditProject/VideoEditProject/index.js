@@ -19,7 +19,7 @@ import { Button, Confirm, Loader, Progress } from 'semantic-ui-react';
 import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
-import ConfirmationModalContent from 'components/Project/ConfirmationModalContent';
+import ConfirmModalContent from 'components/Project/ConfirmModalContent';
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
 import FormInstructions from 'components/Project/EditProject/FormInstructions';
@@ -347,12 +347,12 @@ class VideoEditProject extends React.PureComponent {
                 className="delete"
                 open={ this.state.deleteConfirmOpen }
                 content={
-                  <ConfirmationModalContent
+                  <ConfirmModalContent
                     className="delete_confirm delete_confirm--video"
                     headingTxt="Are you sure you want to delete this video project?"
                   >
                     <p>This video project will be permanently removed from the Content Cloud. Any videos that you uploaded here will not be uploaded.</p>
-                  </ConfirmationModalContent>
+                  </ConfirmModalContent>
                 }
                 onCancel={ this.handleDeleteCancel }
                 onConfirm={ this.handleDeleteConfirm }

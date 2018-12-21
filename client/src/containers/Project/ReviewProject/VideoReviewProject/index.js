@@ -17,7 +17,7 @@ import ProjectHeader from 'components/Project/ProjectHeader';
 import VideoProjectData from 'components/Project/ReviewProject/Video/VideoProjectData';
 import VideoSupportFiles from 'components/Project/ReviewProject/Video/VideoSupportFiles';
 import VideoProjectFiles from 'components/Project/ReviewProject/Video/VideoProjectFiles';
-import ConfirmationModalContent from 'components/Project/ConfirmationModalContent';
+import ConfirmModalContent from 'components/Project/ConfirmModalContent';
 import './VideoReviewProject.css';
 
 class VideoReviewProject extends React.PureComponent {
@@ -77,12 +77,12 @@ class VideoReviewProject extends React.PureComponent {
                   className="delete"
                   open={ this.state.deleteConfirmOpen }
                   content={
-                    <ConfirmationModalContent
+                    <ConfirmModalContent
                       className="delete_confirm delete_confirm--video"
                       headingTxt="Are you sure you want to delete this video project?"
                     >
                       <p>This video project will be permanently removed from the Content Cloud. Any videos that you uploaded here will not be uploaded.</p>
-                    </ConfirmationModalContent>
+                    </ConfirmModalContent>
                   }
                   onCancel={ this.handleDeleteCancel }
                   onConfirm={ this.handleDeleteConfirm }
