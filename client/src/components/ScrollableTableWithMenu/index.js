@@ -100,7 +100,7 @@ class ScrollableTableWithMenu extends React.Component {
           <TableMenu columnMenu={ columnMenu } tableMenuOnChange={ this.tableMenuOnChange } />
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column className="items_table_wrapper">
+          <Grid.Column className="items_tablePagination">
             <div className="items_table">
               <Table sortable celled>
                 <TableHeader
@@ -118,10 +118,8 @@ class ScrollableTableWithMenu extends React.Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column>
-            <div className="items_tablePagination">
-              <TablePagination />
-            </div>
+          <Grid.Column className="items_tablePagination">
+            <TablePagination />
           </Grid.Column>
         </Grid.Row>
       </Grid>

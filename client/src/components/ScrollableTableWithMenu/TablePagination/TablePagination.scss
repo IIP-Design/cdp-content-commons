@@ -17,28 +17,37 @@
         display:none;
       }
     }
-  }
-  .ui.pagination.menu .item:before {
-    background: white;
-  }
-  .ui.pagination.menu a.item[type="prevItem"], .ui.pagination.menu a.item[type="nextItem"] {
-    color: $light-blue;
-    font-weight: bold;
-  }
-  .ui.pagination.menu a.disabled.item {
-    color: $alt-grey;
-  }
-  .ui.pagination.menu a.active.item[type="pageItem"] {
-    color: white;
-    font-weight: bold;
-    background: $light-blue;
-  }
-  .ui.pagination.menu a.item[type="pageItem"],
-  .ui.pagination.menu a.item[type="ellipsisItem"] {
-    @media screen and (max-width: 767px) {
-      display: none;
+
+    .item:before {
+      background: white;
+    }
+
+    a.item {
+      &[type="prevItem"],
+      &[type="nextItem"] {
+        color: $light-blue;
+        font-weight: bold;
+      }
+
+      &.disabled {
+        color: $alt-grey;
+      }
+
+      &.active[type="pageItem"] {
+        color: white;
+        font-weight: bold;
+        background: $light-blue;
+      }
+
+      &[type="pageItem"],
+      &[type="ellipsisItem"] {
+        @media screen and (max-width: 767px) {
+          display: none;
+        }
+      }
     }
   }
+
   *:focus {
     outline: none;
   }

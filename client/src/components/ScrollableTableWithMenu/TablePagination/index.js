@@ -9,35 +9,27 @@ import { Pagination } from 'semantic-ui-react';
 class TablePagination extends Component {
   constructor( props ) {
     super( props );
-    this.dashSearch = {
-      currentPage: 1,
-      totalPages: 20
+    this.state = {
+      activePage: 1
     };
   }
 
-  // handlePaginationChange = ( e, { activePage } ) => this.props.targetRequest( activePage );
-  handlePaginationChange = () => null;
+  handlePageChange = ( e, { activePage } ) => this.setState( { activePage } );
 
   render() {
-    if ( this.dashSearch.totalPages > 1 ) {
-      const nextDisabled = this.dashSearch.currentPage === this.dashSearch.totalPages;
-      const prevDisabled = this.dashSearch.currentPage === 1;
-      return (
-        <section className="TablePagination">
-          <Pagination
-            nextItem={ { content: 'Next ⟩', disabled: nextDisabled } }
-            prevItem={ { content: '⟨ Previous', disabled: prevDisabled } }
-            activePage={ this.dashSearch.currentPage < 0 ? 1 : this.dashSearch.currentPage }
-            onPageChange={ this.handlePaginationChange }
-            totalPages={ this.dashSearch.totalPages }
-            siblingRange="2"
-            firstItem={ null }
-            lastItem={ null }
-          />
-        </section>
-      );
-    }
-    return <div />;
+    const { activePage } = this.state;
+    return (
+      <Pagination
+        activePage={ activePage }
+        totalPages={ 20 }
+        nextItem={ { content: 'Next ⟩', disabled: activePage === 20 } }
+        prevItem={ { content: '⟨ Previous', disabled: activePage === 1 } }
+        siblingRange="2"
+        firstItem={ null }
+        lastItem={ null }
+        onPageChange={ this.handlePageChange }
+      />
+    );
   }
 }
 
