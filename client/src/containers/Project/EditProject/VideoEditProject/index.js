@@ -291,6 +291,7 @@ class VideoEditProject extends React.PureComponent {
     } = project;
 
     const {
+      deleteConfirmOpen,
       hasRequiredData,
       hasSubmittedData,
       isUploadInProgress,
@@ -345,7 +346,7 @@ class VideoEditProject extends React.PureComponent {
               />
               <Confirm
                 className="delete"
-                open={ this.state.deleteConfirmOpen }
+                open={ deleteConfirmOpen }
                 content={
                   <ConfirmModalContent
                     className="delete_confirm delete_confirm--video"
