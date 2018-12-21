@@ -1,5 +1,12 @@
 @import '../../../../assets/styles/colors.scss';
 
+.edit-video-modal {
+
+  .edit-video__form {
+    min-height: 350px;
+  }
+}
+
 .overlay {
   position: relative;
   width: 100%;

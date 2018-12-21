@@ -28,7 +28,7 @@ class VideoEditVideo extends React.PureComponent {
     ];
 
     return (
-      <div>
+      <div className="edit-video-modal">
         <figure className="modal_thumbnail overlay">
           <img className="overlay-image" src={ data.thumbnail } alt={ data.alt } />
           <div className="overlay-hover">
