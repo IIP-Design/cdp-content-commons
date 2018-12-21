@@ -13,13 +13,13 @@ const ConfirmModalContent = ( props ) => {
   const {
     children,
     className,
-    headingTxt,
+    headline,
     style
   } = props;
 
   return (
     <div className={ className } style={ style }>
-      <h2>{ headingTxt }</h2>
+      <h2>{ headline }</h2>
       { children }
     </div>
   );
@@ -28,7 +28,7 @@ const ConfirmModalContent = ( props ) => {
 ConfirmModalContent.propTypes = {
   children: node,
   className: string,
-  headingTxt: string,
+  headline: string,
   style: object
 };
 

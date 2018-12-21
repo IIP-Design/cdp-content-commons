@@ -349,7 +349,7 @@ class VideoEditProject extends React.PureComponent {
                 content={
                   <ConfirmModalContent
                     className="delete_confirm delete_confirm--video"
-                    headingTxt="Are you sure you want to delete this video project?"
+                    headline="Are you sure you want to delete this video project?"
                   >
                     <p>This video project will be permanently removed from the Content Cloud. Any videos that you uploaded here will not be uploaded.</p>
                   </ConfirmModalContent>
