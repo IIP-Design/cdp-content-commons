@@ -5,14 +5,35 @@
  */
 
 import React from 'react';
+import { node, object, string } from 'prop-types';
 import './ConfirmationModalContent.css';
 
 /* eslint-disable react/prefer-stateless-function */
-const ConfirmationModalContent = () => (
-  <div className="delete_confirm delete_confirm--video">
-    <h2>Are you sure you want to delete this video project?</h2>
-    <p>This video project will be permanently removed from the Content Cloud. Any videos that you uploaded here will not be uploaded.</p>
-  </div>
-);
+const ConfirmationModalContent = ( props ) => {
+  const {
+    children,
+    className,
+    headingTxt,
+    style
+  } = props;
+
+  return (
+    <div className={ className } style={ style }>
+      <h2>{ headingTxt }</h2>
+      { children }
+    </div>
+  );
+};
+
+ConfirmationModalContent.propTypes = {
+  children: node,
+  className: string,
+  headingTxt: string,
+  style: object
+};
+
+ConfirmationModalContent.defaultProps = {
+  style: {}
+};
 
 export default ConfirmationModalContent;
