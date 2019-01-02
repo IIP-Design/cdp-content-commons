@@ -3,13 +3,14 @@
  * SupportItem
  *
  */
-import React from 'react';
-import { func, number, object, string } from 'prop-types';
+import React, { Fragment } from 'react';
+import { func, object, string } from 'prop-types';
 import { connect } from 'react-redux';
+import debounce from 'lodash/debounce';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import { makeSelectSupportItem } from './selectors';
-import { Icon, Loader, Progress } from 'semantic-ui-react';
+import { Icon, Loader, Popup, Progress } from 'semantic-ui-react';
 
 import './SupportItem.css';
 
@@ -18,8 +19,11 @@ class SupportItem extends React.PureComponent {
   state = {
     bytesUploaded: 0,
     nIntervId: null,
-    isUploading: false
-  }
+    isUploading: false,
+    listItemWidth: null,
+    itemNameWidth: null,
+    langNameWidth: null
+  };
 
   componentDidMount = () => {
     const {
@@ -38,6 +42,12 @@ class SupportItem extends React.PureComponent {
     const interval = this.getRandomInt( this.MIN_INTERVAL, this.MAX_INTERVAL );
     const nIntervId = setInterval( this.uploadItem, interval );
     this.setState( { nIntervId } );
+
+    window.addEventListener( 'resize', this.debounceResize );
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener( 'resize', this.debounceResize );
   }
 
   /**
@@ -57,15 +67,53 @@ class SupportItem extends React.PureComponent {
   )
 
   /**
-   * @todo simulate upload for dev purposes;
-   * replace for production
-   * 1MB = 1,048,576 Bytes
+   * Truncates long strings with ellipsis
+   * @param {string} str the string
+   * @param {number} start index for first cutoff point
+   * @param {number} end index for ending cutoff point
+   * @return truncated string
    */
-  MEGABYTE = 1048576;
-  MIN_INTERVAL = 500;
-  MAX_INTERVAL = 1500;
-  MIN_MB_SEC = 1;
-  MAX_MB_SEC = 5;
+  getShortFileName = ( str, index ) => (
+    <Fragment>
+      { `${str.substr( 0, index )}` }&hellip;{ `${str.substr( -index )}` }
+    </Fragment>
+  );
+
+  /**
+   * Determines an integer proportional
+   * to a reference number
+   * @param {number} reference
+   * @return {number}
+   */
+  getProportionalNumber = ( reference, proportion ) => (
+    Math.floor( reference * proportion )
+  )
+
+  /**
+   * Declares a React ref & sets its width in state
+   * @param {node} React node
+   * @param {string} name of React ref
+   */
+  setRefWidth = ( node, ref ) => {
+    if ( node ) {
+      this[`${ref}Ref`] = { ...node };
+      this.setState( ( prevState ) => {
+        if ( !prevState[`${ref}Width`] ) {
+          return ( {
+            [`${ref}Width`]: Math.ceil( node.offsetWidth )
+          } );
+        }
+      } );
+    }
+  }
+
+  updateWidths = () => {
+    this.setState( {
+      listItemWidth: this.listItemRef.offsetWidth,
+      itemNameWidth: this.itemNameRef.offsetWidth,
+      itemLangWidth: this.itemLangRef.offsetWidth
+    } );
+  }
 
   incrementUpload = ( unit, min, max ) => (
     this[unit] * this.getRandomInt( min, max )
@@ -112,12 +160,25 @@ class SupportItem extends React.PureComponent {
     } );
   }
 
+  debounceResize = debounce( this.updateWidths, this.DELAY_INTERVAL );
+
+  /**
+   * @todo simulate upload for dev purposes;
+   * replace for production
+   * 1MB = 1,048,576 Bytes
+   */
+  MEGABYTE = 1048576;
+  MIN_INTERVAL = 500;
+  MAX_INTERVAL = 1500;
+  MIN_MB_SEC = 1;
+  MAX_MB_SEC = 5;
+  STR_INDEX_PROPORTION = 0.04;
+  ITEM_NAME_PROPORTION = 0.625;
+  ITEM_LANG_PROPORTION = 0.3;
+  DELAY_INTERVAL = 500;
+
   render() {
-    const {
-      fileType,
-      maxFileNameCharCount,
-      supportItem
-    } = this.props;
+    const { fileType, supportItem } = this.props;
 
     if ( !supportItem || supportItem.loading ) {
       return (
@@ -137,9 +198,24 @@ class SupportItem extends React.PureComponent {
       size,
       uploadStatus
     } = supportItem;
-    const { bytesUploaded, isUploading } = this.state;
-    const isLongFileName = file.length > maxFileNameCharCount;
+
+    const {
+      bytesUploaded,
+      isUploading,
+      listItemWidth,
+      itemNameWidth,
+      itemLangWidth
+    } = this.state;
+
     const uploadingClass = isUploading ? ' isUploading' : '';
+
+    const charIndex = this.getProportionalNumber( listItemWidth, this.STR_INDEX_PROPORTION );
+
+    const shortFileName = this.getShortFileName( file, charIndex );
+
+    const isLongFileName = itemNameWidth > this.getProportionalNumber( listItemWidth, this.ITEM_NAME_PROPORTION );
+
+    const isLongLangName = itemLangWidth >= this.getProportionalNumber( listItemWidth, this.ITEM_LANG_PROPORTION );
 
     if ( error || uploadStatus.error ) {
       return (
@@ -178,10 +254,52 @@ class SupportItem extends React.PureComponent {
     return (
       <li
         key={ `${fileType}-${lang}` }
-        className={ `support-item${isLongFileName ? ' long' : ''}` }
+        className="support-item"
+        ref={
+          ( node, ref = 'listItem' ) => this.setRefWidth( node, ref )
+        }
       >
-        <span className="item-name">{ file }</span>
-        <b className="item-lang">{ lang }</b>
+        <span className="item-name">
+          { isLongFileName && <span className="sr-only">{ file }</span> }
+          <span
+            className={
+              `item-name-wrap${isLongFileName ? ' hasEllipsis' : ''}`
+            }
+            aria-hidden={ isLongFileName }
+            ref={
+              ( node, ref = 'itemName' ) => this.setRefWidth( node, ref )
+            }
+          >
+            { isLongFileName ?
+              <Popup
+                trigger={ <span>{ shortFileName }</span> }
+                content={ file }
+                on={ ['hover', 'click'] }
+                inverted
+              /> :
+              file }
+          </span>
+        </span>
+
+        <span className="item-lang">
+          <b
+            className={
+              `item-lang-wrap${isLongLangName ? ' hasEllipsis' : ''}`
+            }
+            ref={
+              ( node, ref = 'itemLang' ) => this.setRefWidth( node, ref )
+            }
+          >
+            { isLongLangName ?
+              <Popup
+                trigger={ <span>{ lang }</span> }
+                content={ lang }
+                on={ ['hover', 'click'] }
+                inverted
+              /> :
+              lang }
+          </b>
+        </span>
       </li>
     );
   }
@@ -192,14 +310,12 @@ SupportItem.propTypes = {
   projectId: object.isRequired,
   fileType: string.isRequired,
   itemId: string.isRequired,
-  maxFileNameCharCount: number,
   loadSupportItem: func,
   setUploadStatus: func
 };
 
 SupportItem.defaultProps = {
-  supportItem: null,
-  maxFileNameCharCount: 25
+  supportItem: null
 };
 
 const mapStateToProps = () => createStructuredSelector( {
