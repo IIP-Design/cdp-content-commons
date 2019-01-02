@@ -153,7 +153,8 @@
     Login - no searchbar, only feedback nav item 
   ***/
   &--login,
-  &--register {
+  &--register,
+  &--admin {
     @media screen and (min-width: 768px) {
       height: 64px;
     }
