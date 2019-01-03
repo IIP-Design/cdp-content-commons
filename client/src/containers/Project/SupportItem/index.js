@@ -22,7 +22,7 @@ class SupportItem extends React.PureComponent {
     isUploading: false,
     listItemWidth: null,
     itemNameWidth: null,
-    langNameWidth: null
+    itemLangWidth: null
   };
 
   componentDidMount = () => {
@@ -96,7 +96,6 @@ class SupportItem extends React.PureComponent {
    */
   setRefWidth = ( node, ref ) => {
     if ( node ) {
-      this[`${ref}Ref`] = { ...node };
       this.setState( ( prevState ) => {
         if ( !prevState[`${ref}Width`] ) {
           return ( {
@@ -107,13 +106,17 @@ class SupportItem extends React.PureComponent {
     }
   }
 
-  updateWidths = () => {
+  resetWidths = () => {
     this.setState( {
-      listItemWidth: this.listItemRef.offsetWidth,
-      itemNameWidth: this.itemNameRef.offsetWidth,
-      itemLangWidth: this.itemLangRef.offsetWidth
+      listItemWidth: null,
+      itemNameWidth: null,
+      itemLangWidth: null
     } );
   }
+
+  isLongName = ( itemWidth, reference, proportion ) => (
+    itemWidth >= this.getProportionalNumber( reference, proportion )
+  );
 
   incrementUpload = ( unit, min, max ) => (
     this[unit] * this.getRandomInt( min, max )
@@ -160,8 +163,6 @@ class SupportItem extends React.PureComponent {
     } );
   }
 
-  debounceResize = debounce( this.updateWidths, this.DELAY_INTERVAL );
-
   /**
    * @todo simulate upload for dev purposes;
    * replace for production
@@ -175,7 +176,9 @@ class SupportItem extends React.PureComponent {
   STR_INDEX_PROPORTION = 0.04;
   ITEM_NAME_PROPORTION = 0.625;
   ITEM_LANG_PROPORTION = 0.3;
-  DELAY_INTERVAL = 500;
+  DELAY_INTERVAL = 1000;
+
+  debounceResize = debounce( this.resetWidths, this.DELAY_INTERVAL );
 
   render() {
     const { fileType, supportItem } = this.props;
@@ -213,9 +216,9 @@ class SupportItem extends React.PureComponent {
 
     const shortFileName = this.getShortFileName( file, charIndex );
 
-    const isLongFileName = itemNameWidth > this.getProportionalNumber( listItemWidth, this.ITEM_NAME_PROPORTION );
+    const isLongFileName = this.isLongName( itemNameWidth, listItemWidth, this.ITEM_NAME_PROPORTION );
 
-    const isLongLangName = itemLangWidth >= this.getProportionalNumber( listItemWidth, this.ITEM_LANG_PROPORTION );
+    const isLongLangName = this.isLongName( itemLangWidth, listItemWidth, this.ITEM_LANG_PROPORTION );
 
     if ( error || uploadStatus.error ) {
       return (
@@ -255,9 +258,7 @@ class SupportItem extends React.PureComponent {
       <li
         key={ `${fileType}-${lang}` }
         className="support-item"
-        ref={
-          ( node, ref = 'listItem' ) => this.setRefWidth( node, ref )
-        }
+        ref={ node => this.setRefWidth( node, 'listItem' ) }
       >
         <span className="item-name">
           { isLongFileName && <span className="sr-only">{ file }</span> }
@@ -266,9 +267,7 @@ class SupportItem extends React.PureComponent {
               `item-name-wrap${isLongFileName ? ' hasEllipsis' : ''}`
             }
             aria-hidden={ isLongFileName }
-            ref={
-              ( node, ref = 'itemName' ) => this.setRefWidth( node, ref )
-            }
+            ref={ node => this.setRefWidth( node, 'itemName' ) }
           >
             { isLongFileName ?
               <Popup
@@ -286,9 +285,7 @@ class SupportItem extends React.PureComponent {
             className={
               `item-lang-wrap${isLongLangName ? ' hasEllipsis' : ''}`
             }
-            ref={
-              ( node, ref = 'itemLang' ) => this.setRefWidth( node, ref )
-            }
+            ref={ node => this.setRefWidth( node, 'itemLang' ) }
           >
             { isLongLangName ?
               <Popup
