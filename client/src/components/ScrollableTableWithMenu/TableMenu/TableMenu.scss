@@ -22,6 +22,15 @@
       background-color: $blue;
     }
 
+    [data-tablearrow]:hover {
+      background-color: $light-blue;
+      color: #fff;
+    }
+    
+    [data-tablearrow='right'].right.icon {
+      margin-right: 0;
+    }
+
     &_list {
       position: absolute;
       left: -5px;
