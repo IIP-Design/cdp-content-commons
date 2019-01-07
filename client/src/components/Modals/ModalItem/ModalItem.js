@@ -4,10 +4,14 @@ import './ModalItem.css';
 import './ModalItemRTL.css';
 
 const ModalItem = ( props ) => {
-  const { headline, textDirection } = props;
+  const {
+    headline,
+    textDirection,
+    customClassName
+  } = props;
 
   return (
-    <div className={ `modal ${textDirection}` }>
+    <div className={ `modal ${customClassName} ${textDirection}` }>
       <h1 className="modal_headline">{ headline }</h1>
       { props.children }
     </div>
@@ -17,7 +21,8 @@ const ModalItem = ( props ) => {
 ModalItem.propTypes = {
   headline: string,
   children: node,
-  textDirection: string
+  textDirection: string,
+  customClassName: string
 };
 
 export default ModalItem;

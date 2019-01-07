@@ -9,10 +9,18 @@ import authReducer from 'containers/Auth/reducer';
 import recentsReducer from 'containers/Recents/reducer';
 
 // admin reducers
+import supportItemReducer from 'containers/Project/SupportItem/reducer';
+import videoItemReducer from 'containers/Project/Types/VideoItem/reducer';
+import videoEditProjectReducer from 'containers/Project/EditProject/VideoEditProject/reducer';
+import videoReviewProjectReducer from 'containers/Project/ReviewProject/VideoReviewProject/reducer';
 
 export default combineReducers( {
   // search: searchReducer,
   global: globalReducer,
   auth: authReducer,
-  recents: recentsReducer
+  recents: recentsReducer,
+  projectSupportItems: supportItemReducer,
+  videoProjectItems: videoItemReducer,
+  projects: videoEditProjectReducer,
+  videoReviewProject: videoReviewProjectReducer
 } );

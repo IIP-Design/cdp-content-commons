@@ -3,6 +3,7 @@ import { object } from 'prop-types';
 import { Embed, Checkbox } from 'semantic-ui-react';
 import axios from 'axios';
 
+import { getYouTubeId } from '../../../utils/helpers';
 import { updateUrl } from '../../../utils/browser';
 
 // import plusIcon from '../../../assets/icons/icon_plus.svg';
@@ -99,26 +100,6 @@ class Video extends Component {
   };
 
   /**
-   * Fetch id fron url. A Youtube link can either use the
-   * short form or long form so check both
-   * @param {string} url youtube share url
-   * @return youtube id
-   */
-  getYouTubeId = ( url ) => {
-    const reShort = /https:\/\/youtu.be\/(.*)/;
-    const reLong = /https:\/\/www.youtube.com\/watch\?v=(.*)/;
-    const idShort = url.match( reShort );
-    const idLong = url.match( reLong );
-    if ( idShort ) {
-      return idShort[1];
-    } else if ( idLong ) {
-      return idLong[1];
-    }
-    return null;
-  };
-
-
-  /**
    * Fetches a video props from a valid youtube link by:
    * 1. Checks for available stream object in selected language
    * 2. Fetches youtube id from available stream object
@@ -139,7 +120,7 @@ class Video extends Component {
 
         if ( streamObj && streamObj.site === 'youtube' && streamObj.url ) {
           const youtubeUrl = streamObj.url;
-          const videoId = this.getYouTubeId( youtubeUrl );
+          const videoId = getYouTubeId( youtubeUrl );
 
           if ( videoId ) {
             const res = await this.checkForValidYouTube( videoId );

@@ -123,11 +123,12 @@
   }
 
   /*** 
-    Results, Video - searchbar  
+    Results, Video, Admin - searchbar  
   ***/
   &--results,
   &--video,
   &--admin {
+
     header {
       @media screen and (max-width: 767px) {
         text-align: left;
@@ -145,14 +146,15 @@
       @media screen and (min-width: 900px) {
         width: 500px;
       }
-    }
+    }    
   }
 
   /*** 
     Login - no searchbar, only feedback nav item 
   ***/
   &--login,
-  &--register {
+  &--register,
+  &--admin {
     @media screen and (min-width: 768px) {
       height: 64px;
     }
@@ -171,7 +173,7 @@
   &--admin {
     position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 100;
     width: 100%;
     background-image: linear-gradient(60deg, $light-blue 3%, $bright-blue 100%);
   }

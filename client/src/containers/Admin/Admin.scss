@@ -1,4 +1,10 @@
 .admin {
+  @media screen and (max-width: 767px) {
+    .cdp_static_page {
+      margin-top: 3.5em;
+    }
+  }
+
   &_wrapper {
     width: 100%;
     margin-top: 9em;
@@ -6,4 +12,5 @@
       margin-top: 6em;
     }
   }
+
 }

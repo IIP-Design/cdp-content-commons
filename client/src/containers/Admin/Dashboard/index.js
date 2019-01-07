@@ -10,11 +10,10 @@ import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectDashboard from './selectors';
 import { makeSelectUser } from 'containers/Auth/selectors';
+import Page from 'components/Page';
 import PaneProjects from 'containers/Admin/PaneProjects';
-
 import { Grid, Tab, Popup } from 'semantic-ui-react';
 import userIcon from 'assets/icons/icon_user_profile_dark.svg';
-
 import './Dashboard.css';
 
 const panes = [
@@ -62,22 +61,24 @@ class Dashboard extends React.Component {
   render() {
     const { user } = this.props;
     return (
-      <section className="dashboard">
-        <Grid stackable>
-          <Grid.Column width={ 2 }>
-            <img src={ userIcon } className="userIcon" alt="User Profile Icon" />
-            { user && <span className="currentDashboard">{ user.name }</span> }
-            <div className="filters">[ FILTERS ]</div>
-          </Grid.Column>
-          <Grid.Column width={ 14 }>
-            <Tab
-              menu={ { text: true, stackable: true } }
-              panes={ panes }
-              defaultActiveIndex={ 1 }
-            />
-          </Grid.Column>
-        </Grid>
-      </section>
+      <Page title="Admin" description="Adminstrative area for content authoring">
+        <div className="dashboard">
+          <Grid stackable>
+            <Grid.Column width={ 2 }>
+              <img src={ userIcon } className="userIcon" alt="User Profile Icon" />
+              { user && <span className="currentDashboard">{ user.name }</span> }
+              <div className="filters">[ FILTERS ]</div>
+            </Grid.Column>
+            <Grid.Column width={ 14 }>
+              <Tab
+                menu={ { text: true, stackable: true } }
+                panes={ panes }
+                defaultActiveIndex={ 1 }
+              />
+            </Grid.Column>
+          </Grid>
+        </div>
+      </Page>
     );
   }
 }
