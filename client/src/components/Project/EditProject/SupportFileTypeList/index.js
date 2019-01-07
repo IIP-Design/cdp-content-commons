@@ -10,11 +10,11 @@ import { array, bool, object, string } from 'prop-types';
 import { Button } from 'semantic-ui-react';
 
 import EditSupportFiles from 'components/Project/EditProject/EditSupportFiles';
-import EditSupportFilesContent from 'components/Project/EditProject/EditSupportFilesContent';
 import IconPopup from 'components/Project/EditProject/IconPopup';
 import Placeholder from 'components/Project/Placeholder';
 
 import SupportItem from 'containers/Project/SupportItem';
+import EditSupportFilesContent from 'containers/Project/EditSupportFilesContent';
 
 import colors from '../../../../utils/colors';
 
