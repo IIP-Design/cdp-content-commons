@@ -27,12 +27,15 @@ class EditSupportFilesContent extends React.PureComponent {
   }
 
   handleChange = ( e, { value } ) => (
-    this.setState( prevState => ( {
-      selectedLangValues: {
-        ...prevState.selectedLangValues,
-        [value]: capitalizeFirst( value )
-      }
-    } ) )
+    this.setState(
+      prevState => ( {
+        selectedLangValues: {
+          ...prevState.selectedLangValues,
+          [value]: capitalizeFirst( value )
+        }
+      } ),
+      this.haveAllLangsBeenPopulated
+    )
   )
 
   handleCancel = () => {
@@ -45,6 +48,19 @@ class EditSupportFilesContent extends React.PureComponent {
 
   handleSaveFiles = () => {
     console.log( 'files saved' );
+  }
+
+  haveAllLangsBeenPopulated = () => {
+    const { data: files } = this.props;
+    const { selectedLangValues } = this.state;
+    const fileCount = files.length;
+    const populatedLangsCount = Object.keys( selectedLangValues ).length;
+
+    if ( fileCount === populatedLangsCount ) {
+      this.setState( {
+        hasPopulatedLanguages: true
+      } );
+    }
   }
 
   renderRow = ( file ) => {
@@ -62,8 +78,7 @@ class EditSupportFilesContent extends React.PureComponent {
 
   render() {
     const { data: files, fileType } = this.props;
-    const { hasPopulatedLanguages, selectedLangValues } = this.state;
-    console.log( selectedLangValues );
+    const { hasPopulatedLanguages } = this.state;
 
     const headline = fileType === 'srt'
       ? fileType.toUpperCase()
