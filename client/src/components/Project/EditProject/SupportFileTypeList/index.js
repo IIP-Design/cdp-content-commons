@@ -82,7 +82,7 @@ const SupportFileTypeList = ( props ) => {
                       size: 'small',
                       basic: true
                   } }
-                  contentProps={ { fileType } }
+                  contentProps={ { data, fileType } }
                   modalTrigger={ Button }
                   modalContent={ EditSupportFilesContent }
                 /> }

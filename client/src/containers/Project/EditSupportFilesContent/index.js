@@ -4,7 +4,7 @@
  *
  */
 import React, { Fragment } from 'react';
-import { string } from 'prop-types';
+import { array, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -48,7 +48,7 @@ class EditSupportFilesContent extends React.PureComponent {
   )
 
   render() {
-    const { fileType } = this.props;
+    const { data: files, fileType } = this.props;
 
     const headline = fileType === 'srt'
       ? fileType.toUpperCase()
@@ -170,6 +170,7 @@ class EditSupportFilesContent extends React.PureComponent {
 }
 
 EditSupportFilesContent.propTypes = {
+  data: array.isRequired,
   fileType: string
 };
 
