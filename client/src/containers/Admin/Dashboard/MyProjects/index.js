@@ -42,7 +42,7 @@ class MyProjects extends React.Component {
                 <Table.Row key={ d.id }>
                   { tableHeaders.map( ( header, i ) => {
                     return (              
-                      <Table.Cell key={ `${d.id}_${header.name}` } className="items_table_item">
+                      <Table.Cell data-header={ header.label } key={ `${d.id}_${header.name}` } className="items_table_item">
                         { i === 0 && ( 
                           // Table must include .primary_col div for fixed column
                           <div className="primary_col"> 
@@ -54,7 +54,9 @@ class MyProjects extends React.Component {
                             />
                           </div>
                         ) }
-                        { i !== 0 && d[header.name] }
+                        { i !== 0 &&
+                          <span><span className="items_table_mobileHeader">{ header.label }</span>{ d[header.name] }</span>
+                        }
                       </Table.Cell>
                     )
                   } ) }

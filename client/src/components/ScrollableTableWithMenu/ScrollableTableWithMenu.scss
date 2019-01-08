@@ -30,16 +30,6 @@
       border: none;
       border-radius: 0;
 
-      td {
-        z-index: 1;
-        background-color: #fff;
-        box-shadow: 3px 0 3px 1px rgba(0,0,0,0.1);
-      }
-
-      th {
-        letter-spacing: 0.5px;
-      }
-
       td, th {        
   
         &:first-child {
@@ -48,13 +38,35 @@
           width: 300px !important;
         };
       }
-    }
-    
-    &_item {
-      
-      .primary_col {
-        display: flex;
+
+      td {
+        z-index: 1;
+        background-color: #fff;
+        box-shadow: 3px 0 3px 1px rgba(0,0,0,0.1);
+        
+        &.items_table_item {
+          @media screen and (max-width: 767px){
+            &:not(:first-child) {
+              display: none !important;
+            }
+          }
+        }
+
+        .primary_col {
+          display: flex;
+        }
+      }
+
+      th {
+        letter-spacing: 0.5px;
       }
     }
+
+    &_mobileHeader {
+      @media screen and (min-width: 768px) {
+        display: none;
+      }
+    }
+    
   }  
 }
