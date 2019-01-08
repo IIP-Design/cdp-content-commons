@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.6.3](2019-1-08)
+
+**Fixed:**
+
+- Resolved error that was thrown when typing in odd number of double quotations in the search field.
+
+**Added:**
+
+- Display a notification to OpenNet users on Internet Explorer recommending they use Chrome
+
+**Changed:**
+
+- Downloaded files now follow the - [filename]‌.[language code]‌\_[country code].[ext] naming convention
+- Search results are now displayed by relevacy when a search term is used. Title field is given precedence and a boost is given to newer items
+
 # [1.6.2](2018-11-07)
 
 **Fixed:**
