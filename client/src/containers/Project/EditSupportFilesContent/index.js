@@ -3,18 +3,19 @@
  * EditSupportFilesContent
  *
  */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { array, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFilesContent from './selectors';
-import { Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
+import { Button, Grid } from 'semantic-ui-react';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
 
+import EditSupportFileRow from 'containers/Project/EditSupportFileRow';
+
 import { capitalizeFirst } from '../../../utils/helpers';
-import { languages } from '../mockData';
 
 import './EditSupportFilesContent.css';
 
@@ -36,19 +37,13 @@ class EditSupportFilesContent extends React.PureComponent {
     console.log( 'files saved' );
   }
 
-  renderIcons = () => (
-    <Fragment>
-      <Button basic style={ { padding: '0', boxShadow: 'none' } }>
-        <Icon size="large" name="refresh" />
-      </Button>
-      <Button basic style={ { padding: '0', boxShadow: 'none' } }>
-        <Icon size="large" name="delete" />
-      </Button>
-    </Fragment>
+  renderRow = file => (
+    <EditSupportFileRow key={ file.id } file={ file } />
   )
 
   render() {
     const { data: files, fileType } = this.props;
+    const { hasPopulatedLanguages } = this.state;
 
     const headline = fileType === 'srt'
       ? fileType.toUpperCase()
@@ -71,73 +66,7 @@ class EditSupportFilesContent extends React.PureComponent {
             <Grid.Column mobile={ 4 } />
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column mobile={ 7 }>
-              madeinamerica_arabic.srt
-            </Grid.Column>
-            <Grid.Column mobile={ 5 }>
-              <Dropdown
-                value="arabic"
-                options={ languages }
-                selection
-                style={ { width: '100%' } }
-              />
-            </Grid.Column>
-            <Grid.Column mobile={ 4 }>
-              { this.renderIcons() }
-            </Grid.Column>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Column mobile={ 7 }>
-              madeinamerica_chinese.srt
-            </Grid.Column>
-            <Grid.Column mobile={ 5 }>
-              <Dropdown
-                value="chinese"
-                options={ languages }
-                selection
-                style={ { width: '100%' } }
-              />
-            </Grid.Column>
-            <Grid.Column mobile={ 4 }>
-              { this.renderIcons() }
-            </Grid.Column>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Column mobile={ 7 }>
-              madeinamerica_english.srt
-            </Grid.Column>
-            <Grid.Column mobile={ 5 }>
-              <Dropdown
-                value="english"
-                options={ languages }
-                selection
-                style={ { width: '100%' } }
-              />
-            </Grid.Column>
-            <Grid.Column mobile={ 4 }>
-              { this.renderIcons() }
-            </Grid.Column>
-          </Grid.Row>
-
-          <Grid.Row>
-            <Grid.Column mobile={ 7 }>
-              madeinamerica_french.srt
-            </Grid.Column>
-            <Grid.Column mobile={ 5 }>
-              <Dropdown
-                value="french"
-                options={ languages }
-                selection
-                style={ { width: '100%' } }
-              />
-            </Grid.Column>
-            <Grid.Column mobile={ 4 }>
-              { this.renderIcons() }
-            </Grid.Column>
-          </Grid.Row>
+          { files.map( this.renderRow ) }
 
           <Grid.Row>
             <Grid.Column>
@@ -159,7 +88,7 @@ class EditSupportFilesContent extends React.PureComponent {
                 content="Save"
                 color="blue"
                 onClick={ this.handleSaveFiles }
-                disabled={ !this.state.hasPopulatedLanguages }
+                disabled={ !hasPopulatedLanguages }
               />
             </Grid.Column>
           </Grid.Row>
