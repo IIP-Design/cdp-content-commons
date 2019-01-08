@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Downloaded files now follow the - [filename]‌.[language code]‌\_[country code].[ext] naming convention
 - Search results are now displayed by relevacy when a search term is used. Title field is given precedence and a boost is given to newer items
+- Alter sub-heading text in the site header
 
 # [1.6.2](2018-11-07)
 
