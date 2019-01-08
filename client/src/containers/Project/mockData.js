@@ -61,6 +61,16 @@ const categoryData = [
   }
 ];
 
+const languages = [
+  { value: 'arabic', text: 'Arabic' },
+  { value: 'chinese', text: 'Chinese' },
+  { value: 'english', text: 'English' },
+  { value: 'french', text: 'French' },
+  { value: 'portuguese', text: 'Portuguese' },
+  { value: 'russian', text: 'Russian' },
+  { value: 'spanish', text: 'Spanish' }
+];
+
 const privacyOptions = [
   {
     value: 'anyone',
@@ -432,6 +442,7 @@ const projects = [
 
 export {
   categoryData,
+  languages,
   privacyOptions,
   supportFilesConfig,
   projects

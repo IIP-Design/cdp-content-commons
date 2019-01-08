@@ -3,41 +3,168 @@
  * EditSupportFilesContent
  *
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFilesContent from './selectors';
+import { Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
+
+import ModalItem from 'components/Modals/ModalItem/ModalItem';
+
+import { capitalizeFirst } from '../../../utils/helpers';
+import { languages } from '../mockData';
 
 import './EditSupportFilesContent.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFilesContent extends React.PureComponent {
+  state = {
+    hasPopulatedLanguages: false
+  }
+
+  handleCancel = () => {
+    console.log( 'cancel' );
+  }
+
+  handleAddFiles = () => {
+    console.log( 'add files' );
+  }
+
+  handleSaveFiles = () => {
+    console.log( 'files saved' );
+  }
+
+  renderIcons = () => (
+    <Fragment>
+      <Button basic style={ { padding: '0', boxShadow: 'none' } }>
+        <Icon size="large" name="refresh" />
+      </Button>
+      <Button basic style={ { padding: '0', boxShadow: 'none' } }>
+        <Icon size="large" name="delete" />
+      </Button>
+    </Fragment>
+  )
+
   render() {
     const { fileType } = this.props;
 
-    /**
-     * Duplicate props to avoid unknown prop warning
-     * @see https://reactjs.org/warnings/unknown-prop.html
-     */
-    const articleProps = { ...this.props };
-    delete articleProps.fileType;
-    delete articleProps.modalTrigger;
-    delete articleProps.modalContent;
-    delete articleProps.defaultAction;
-
-    const headingStyle = {
-      textTransform: ( fileType === 'srt' && 'uppercase' ) || 'capitalize'
-    };
+    const headline = fileType === 'srt'
+      ? fileType.toUpperCase()
+      : capitalizeFirst( fileType );
 
     return (
-      <article className={ `${fileType}-files` } { ...articleProps }>
-        <header className="header">
-          <h2>Edit <span style={ headingStyle }>{ fileType }</span> files in this project</h2>
-        </header>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque ex, quod obcaecati molestiae porro ad maxime commodi, nesciunt ducimus soluta nihil. Voluptas temporibus nulla repellat deleniti repudiandae molestiae quos assumenda.</p>
-      </article>
+      <ModalItem
+        customClassName={ `edit-support-files ${fileType}` }
+        headline={ `Edit ${headline} files in this project` }
+        textDirection="ltr"
+      >
+        <Grid divided="vertically" verticalAlign="middle">
+          <Grid.Row>
+            <Grid.Column mobile={ 7 }>
+              { headline } Files Selected
+            </Grid.Column>
+            <Grid.Column mobile={ 5 }>
+              Language
+            </Grid.Column>
+            <Grid.Column mobile={ 4 } />
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column mobile={ 7 }>
+              madeinamerica_arabic.srt
+            </Grid.Column>
+            <Grid.Column mobile={ 5 }>
+              <Dropdown
+                value="arabic"
+                options={ languages }
+                selection
+                style={ { width: '100%' } }
+              />
+            </Grid.Column>
+            <Grid.Column mobile={ 4 }>
+              { this.renderIcons() }
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column mobile={ 7 }>
+              madeinamerica_chinese.srt
+            </Grid.Column>
+            <Grid.Column mobile={ 5 }>
+              <Dropdown
+                value="chinese"
+                options={ languages }
+                selection
+                style={ { width: '100%' } }
+              />
+            </Grid.Column>
+            <Grid.Column mobile={ 4 }>
+              { this.renderIcons() }
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column mobile={ 7 }>
+              madeinamerica_english.srt
+            </Grid.Column>
+            <Grid.Column mobile={ 5 }>
+              <Dropdown
+                value="english"
+                options={ languages }
+                selection
+                style={ { width: '100%' } }
+              />
+            </Grid.Column>
+            <Grid.Column mobile={ 4 }>
+              { this.renderIcons() }
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column mobile={ 7 }>
+              madeinamerica_french.srt
+            </Grid.Column>
+            <Grid.Column mobile={ 5 }>
+              <Dropdown
+                value="french"
+                options={ languages }
+                selection
+                style={ { width: '100%' } }
+              />
+            </Grid.Column>
+            <Grid.Column mobile={ 4 }>
+              { this.renderIcons() }
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Column>
+              <Button
+                className="cancel"
+                content="Cancel"
+                basic
+                onClick={ this.handleCancel }
+              />
+              <Button
+                className="add-files"
+                content="Add Files"
+                color="blue"
+                basic
+                onClick={ this.handleAddFiles }
+              />
+              <Button
+                className="save"
+                content="Save"
+                color="blue"
+                onClick={ this.handleSaveFiles }
+                disabled={ !this.state.hasPopulatedLanguages }
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </ModalItem>
     );
   }
 }
