@@ -1,0 +1,7 @@
+.edit-support-files {
+  .ui.button.disabled,
+  .ui.button:disabled {
+    cursor: not-allowed;
+    pointer-events: initial !important;
+  }
+}
