@@ -22,8 +22,18 @@ import './EditSupportFilesContent.css';
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFilesContent extends React.PureComponent {
   state = {
-    hasPopulatedLanguages: false
+    hasPopulatedLanguages: false,
+    selectedLangValues: {}
   }
+
+  handleChange = ( e, { value } ) => (
+    this.setState( prevState => ( {
+      selectedLangValues: {
+        ...prevState.selectedLangValues,
+        [value]: capitalizeFirst( value )
+      }
+    } ) )
+  )
 
   handleCancel = () => {
     console.log( 'cancel' );
@@ -37,13 +47,23 @@ class EditSupportFilesContent extends React.PureComponent {
     console.log( 'files saved' );
   }
 
-  renderRow = file => (
-    <EditSupportFileRow key={ file.id } file={ file } />
-  )
+  renderRow = ( file ) => {
+    const { id, lang } = file;
+    const { selectedLangValues } = this.state;
+    return (
+      <EditSupportFileRow
+        key={ id }
+        file={ file }
+        handleChange={ this.handleChange }
+        selectedLanguage={ selectedLangValues[lang] }
+      />
+    );
+  }
 
   render() {
     const { data: files, fileType } = this.props;
-    const { hasPopulatedLanguages } = this.state;
+    const { hasPopulatedLanguages, selectedLangValues } = this.state;
+    console.log( selectedLangValues );
 
     const headline = fileType === 'srt'
       ? fileType.toUpperCase()

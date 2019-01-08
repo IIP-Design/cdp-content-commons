@@ -4,30 +4,19 @@
  *
  */
 import React, { Fragment } from 'react';
-import { object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFileRow from './selectors';
 import { Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
 
-import { capitalizeFirst } from '../../../utils/helpers';
 import { languages } from '../mockData';
 
 import './EditSupportFileRow.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFileRow extends React.PureComponent {
-  state = {
-    selectedLanguage: ''
-  }
-
-  handleChange = ( e, { value } ) => (
-    this.setState( {
-      selectedLanguage: capitalizeFirst( value )
-    } )
-  );
-
   renderIcons = () => (
     <Fragment>
       <Button basic style={ { padding: '0', boxShadow: 'none' } }>
@@ -40,14 +29,13 @@ class EditSupportFileRow extends React.PureComponent {
   )
 
   render() {
-    const { file } = this.props;
-    const { selectedLanguage } = this.state;
+    const { file, handleChange, selectedLanguage } = this.props;
     return (
       <Grid.Row>
         <Grid.Column mobile={ 7 }>{ file.file }</Grid.Column>
         <Grid.Column mobile={ 5 }>
           <Dropdown
-            onChange={ this.handleChange }
+            onChange={ handleChange }
             options={ languages }
             placeholder="Select Language"
             text={ selectedLanguage }
@@ -62,7 +50,9 @@ class EditSupportFileRow extends React.PureComponent {
 }
 
 EditSupportFileRow.propTypes = {
-  file: object
+  handleChange: func,
+  file: object,
+  selectedLanguage: string
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {
