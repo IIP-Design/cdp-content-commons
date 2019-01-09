@@ -104,7 +104,7 @@ class EditSupportFilesContent extends React.PureComponent {
           { files.map( this.renderRow ) }
 
           <Grid.Row>
-            <Grid.Column>
+            <Grid.Column className="btn-group">
               <Button
                 className="cancel"
                 content="Cancel"

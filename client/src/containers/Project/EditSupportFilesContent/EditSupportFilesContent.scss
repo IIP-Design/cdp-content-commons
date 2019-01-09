@@ -1,7 +1,77 @@
+@import "../../../assets/styles/colors.scss";
+
 .edit-support-files {
-  .ui.button.disabled,
-  .ui.button:disabled {
-    cursor: not-allowed;
-    pointer-events: initial !important;
+  :focus:not(:focus-visible) {
+    outline: none
+  }
+
+  .ui.button {
+    box-shadow: none !important;
+
+    &.basic.replace,
+    &.basic.delete {
+      padding: 0;
+    }
+
+    &:focus,
+    &.basic.buttons .button:focus,
+    &.basic:focus {
+      outline: 2px dotted $medium-grey;
+      outline-offset: 2px;
+    }
+
+    &.cancel {
+      border: 2px solid transparent;
+      @media screen and (max-width: 899px) {
+        border-color: $grey;
+      }
+      color: $grey !important;
+      font-weight: normal;
+
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: $grey;
+        color: #fff !important;
+        background-color: $grey !important;
+      }
+    }
+
+    &.basic.add-files {
+      border: 2px solid $matisse-blue;
+      color: $matisse-blue !important;
+      font-weight: bold;
+      box-shadow: none !important;
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: #fff !important;
+        background-color: $matisse-blue !important;
+      }
+    }
+
+    &.save {
+      border: 2px solid $light-blue !important;
+      color: #fff !important;
+      background-color: $light-blue !important;
+  
+      &:hover,
+      &:active,
+      &:focus {
+        border-color: $matisse-blue !important;
+        background-color: $matisse-blue !important;
+      }
+    }
+
+    &.disabled,
+    &:disabled {
+      cursor: not-allowed;
+      pointer-events: auto !important;
+    }
+  }
+
+  .btn-group {
+    text-align: right;
   }
 }

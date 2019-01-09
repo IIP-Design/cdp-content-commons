@@ -19,10 +19,10 @@ import './EditSupportFileRow.css';
 class EditSupportFileRow extends React.PureComponent {
   renderIcons = () => (
     <Fragment>
-      <Button basic style={ { padding: '0', boxShadow: 'none' } }>
+      <Button className="replace" basic>
         <Icon size="large" name="refresh" />
       </Button>
-      <Button basic style={ { padding: '0', boxShadow: 'none' } }>
+      <Button className="delete" basic>
         <Icon size="large" name="delete" />
       </Button>
     </Fragment>
