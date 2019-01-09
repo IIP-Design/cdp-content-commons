@@ -3,13 +3,13 @@
  * EditSupportFileRow
  *
  */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { func, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFileRow from './selectors';
-import { Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
+import { Button, Dropdown, Grid } from 'semantic-ui-react';
 
 import { languages } from '../mockData';
 
@@ -18,14 +18,18 @@ import './EditSupportFileRow.css';
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFileRow extends React.PureComponent {
   renderIcons = () => (
-    <Fragment>
-      <Button className="replace" basic>
-        <Icon size="large" name="refresh" />
-      </Button>
-      <Button className="delete" basic>
-        <Icon size="large" name="delete" />
-      </Button>
-    </Fragment>
+    <Button.Group basic size="massive">
+      <Button
+        className="replace"
+        icon="refresh"
+        basic
+      />
+      <Button
+        className="delete"
+        icon="delete"
+        basic
+      />
+    </Button.Group>
   )
 
   render() {

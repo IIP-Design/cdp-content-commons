@@ -5,11 +5,21 @@
     outline: none
   }
 
+  .ui.basic.buttons {
+    border: 0;
+
+    > .button {
+      border-left: 0;
+    }
+  }
+
   .ui.button {
     box-shadow: none !important;
 
     &.basic.replace,
     &.basic.delete {
+      margin-left: 0.25em;
+      margin-right: 0.25em;
       padding: 0;
     }
 
