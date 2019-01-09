@@ -17,16 +17,26 @@ import './EditSupportFileRow.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFileRow extends React.PureComponent {
+  handleReplaceFile = () => {
+    console.log( 'replace file' );
+  }
+
+  handleDeleteFile = () => {
+    console.log( 'delete file' );
+  }
+
   renderIcons = () => (
     <Button.Group basic size="massive">
       <Button
         className="replace"
         icon="refresh"
+        onClick={ this.handleReplaceFile }
         basic
       />
       <Button
         className="delete"
         icon="delete"
+        onClick={ this.handleDeleteFile }
         basic
       />
     </Button.Group>
