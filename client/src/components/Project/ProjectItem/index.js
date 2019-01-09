@@ -30,11 +30,12 @@ const ProjectItem = ( props ) => {
     }
   };
   const sharedStyles = { cursor: 'not-allowed' };
+  const modalOptions = { closeIcon: true };
 
   if ( isAvailable ) {
     return (
       ( displayItemInModal &&
-        withModal( modalProps, modalTrigger, modalContent ) ) ||
+        withModal( modalProps, modalTrigger, modalContent, modalOptions ) ) ||
         <Item
           { ...projectId }
           itemId={ itemId }

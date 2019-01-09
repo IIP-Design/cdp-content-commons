@@ -18,19 +18,23 @@ import EditSupportFilesContent from 'containers/Project/EditSupportFilesContent'
 
 import colors from '../../../../utils/colors';
 
+/* eslint-disable react/prefer-stateless-function */
+class SupportFileTypeList extends React.PureComponent {
+  state = {}
 
-const SupportFileTypeList = ( props ) => {
-  const {
-    headline,
-    projectId,
-    fileType,
-    popupMsg,
-    data,
-    hasSubmittedData,
-    hasUploaded
-  } = props;
+  toggleEditModal = () => (
+    this.setState( prevState => (
+      { isEditing: !prevState.isEditing }
+    ) )
+  )
 
-  const renderSupportItem = ( item ) => {
+  renderSupportItem = ( item ) => {
+    const {
+      projectId,
+      fileType,
+      hasSubmittedData
+    } = this.props;
+
     if ( hasSubmittedData ) {
       return (
         <SupportItem
@@ -61,9 +65,20 @@ const SupportFileTypeList = ( props ) => {
         } }
       />
     );
-  };
+  }
 
-  if ( data && data.length > 0 ) {
+  render() {
+    const {
+      headline,
+      fileType,
+      popupMsg,
+      data,
+      hasSubmittedData,
+      hasUploaded
+    } = this.props;
+
+    if ( data && !data.length ) return;
+
     return (
       <Fragment>
         <h3>{ `${headline} ` }
@@ -80,22 +95,31 @@ const SupportFileTypeList = ( props ) => {
                       className: 'btn--edit',
                       content: 'Edit',
                       size: 'small',
-                      basic: true
+                      basic: true,
+                      onClick: this.toggleEditModal
                   } }
-                  contentProps={ { data, fileType } }
+                  contentProps={ {
+                    data,
+                    fileType,
+                    closeEditModal: this.toggleEditModal
+                  } }
                   modalTrigger={ Button }
                   modalContent={ EditSupportFilesContent }
+                  options={ {
+                    closeIcon: true,
+                    onClose: this.toggleEditModal,
+                    open: this.state.isEditing
+                  } }
                 /> }
             </Fragment> }
         </h3>
         <ul>
-          { data.map( renderSupportItem ) }
+          { data.map( this.renderSupportItem ) }
         </ul>
       </Fragment>
     );
   }
-  return null;
-};
+}
 
 SupportFileTypeList.propTypes = {
   headline: string,

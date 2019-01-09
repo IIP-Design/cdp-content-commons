@@ -375,6 +375,7 @@ class VideoEditProject extends React.PureComponent {
                 } }
                 modalTrigger={ Button }
                 modalContent={ PreviewProjectContent }
+                options={ { closeIcon: true } }
               />
               { hasSubmittedData &&
                 <Button

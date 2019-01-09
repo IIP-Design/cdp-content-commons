@@ -11,8 +11,8 @@ import withModal from 'components/Project/EditProject/withModal';
 
 
 const PreviewProject = ( props ) => {
-  const { modalTrigger, modalContent } = props;
-  return withModal( props, modalTrigger, modalContent );
+  const { modalTrigger, modalContent, options } = props;
+  return withModal( props, modalTrigger, modalContent, options );
 };
 
 PreviewProject.propTypes = {};

@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import { array, string } from 'prop-types';
+import { array, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -52,6 +52,7 @@ class EditSupportFilesContent extends React.PureComponent {
 
   handleCancel = () => {
     console.log( 'cancel' );
+    this.props.closeEditModal();
   }
 
   handleSaveFiles = () => {
@@ -165,7 +166,8 @@ class EditSupportFilesContent extends React.PureComponent {
 
 EditSupportFilesContent.propTypes = {
   data: array.isRequired,
-  fileType: string
+  fileType: string,
+  closeEditModal: func
 };
 
 const mapStateToProps = ( state, props ) => createStructuredSelector( {

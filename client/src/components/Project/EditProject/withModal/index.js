@@ -9,10 +9,13 @@ import { object } from 'prop-types';
 
 import { Modal } from 'semantic-ui-react';
 
-const withModal = ( props, Trigger, Content ) => {
+const withModal = ( props, Trigger, Content, options ) => {
   const { triggerProps, contentProps } = props;
   return (
-    <Modal closeIcon trigger={ <Trigger { ...triggerProps } /> }>
+    <Modal
+      { ...options }
+      trigger={ <Trigger { ...triggerProps } /> }
+    >
       <Modal.Content>
         <Content { ...contentProps } />
       </Modal.Content>
@@ -22,7 +25,8 @@ const withModal = ( props, Trigger, Content ) => {
 
 withModal.propTypes = {
   triggerProps: object,
-  contentProps: object
+  contentProps: object,
+  options: object
 };
 
 export default withModal;
