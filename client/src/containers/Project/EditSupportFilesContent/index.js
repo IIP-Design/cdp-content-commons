@@ -26,6 +26,18 @@ class EditSupportFilesContent extends React.PureComponent {
     selectedLangValues: {}
   }
 
+  getFileExtension = str => (
+    str.slice( ( Math.max( 0, str.lastIndexOf( '.' ) ) || Infinity ) )
+  )
+
+  getFileExtensions = ( arr ) => {
+    const allFileExtensions = arr.reduce( ( acc, curr ) => (
+      acc.concat( this.getFileExtension( curr.file ) )
+    ), [] );
+    const uniqueExtensions = [...new Set( allFileExtensions )];
+    return uniqueExtensions;
+  }
+
   handleChange = ( e, { value } ) => (
     this.setState(
       prevState => ( {
@@ -42,12 +54,17 @@ class EditSupportFilesContent extends React.PureComponent {
     console.log( 'cancel' );
   }
 
-  handleAddFiles = () => {
-    console.log( 'add files' );
-  }
-
   handleSaveFiles = () => {
     console.log( 'files saved' );
+  }
+
+  handleAddFiles = () => {
+    console.log( 'add files' );
+    this.addFilesInputRef.click();
+  }
+
+  handleAddFilesRef = ( input ) => {
+    this.addFilesInputRef = input;
   }
 
   haveAllLangsBeenPopulated = () => {
@@ -64,12 +81,15 @@ class EditSupportFilesContent extends React.PureComponent {
   }
 
   renderRow = ( file ) => {
+    const { data: files, fileType } = this.props;
     const { id, lang } = file;
     const { selectedLangValues } = this.state;
     return (
       <EditSupportFileRow
         key={ id }
         file={ file }
+        fileType={ fileType }
+        fileExtensions={ this.getFileExtensions( files ) }
         handleChange={ this.handleChange }
         selectedLanguage={ selectedLangValues[lang] }
       />
@@ -117,6 +137,16 @@ class EditSupportFilesContent extends React.PureComponent {
                 color="blue"
                 basic
                 onClick={ this.handleAddFiles }
+              />
+              { /**
+                 * @todo Is hiding the file list best
+                 * practice for accessibility?
+                 */ }
+              <input
+                className="upload-file"
+                ref={ this.handleAddFilesRef }
+                type="file"
+                multiple
               />
               <Button
                 className="save"

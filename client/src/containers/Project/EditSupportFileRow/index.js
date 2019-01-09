@@ -4,7 +4,7 @@
  *
  */
 import React from 'react';
-import { func, object, string } from 'prop-types';
+import { array, func, object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
@@ -19,31 +19,54 @@ import './EditSupportFileRow.css';
 class EditSupportFileRow extends React.PureComponent {
   handleReplaceFile = () => {
     console.log( 'replace file' );
+    this.addReplaceFileRef.click();
   }
 
   handleDeleteFile = () => {
     console.log( 'delete file' );
   }
 
-  renderIcons = () => (
-    <Button.Group basic size="massive">
-      <Button
-        className="replace"
-        icon="refresh"
-        onClick={ this.handleReplaceFile }
-        basic
-      />
-      <Button
-        className="delete"
-        icon="delete"
-        onClick={ this.handleDeleteFile }
-        basic
-      />
-    </Button.Group>
-  )
+  handleReplaceFileRef = ( input ) => {
+    this.addReplaceFileRef = input;
+  }
+
+  renderIcons = () => {
+    const { fileExtensions, fileType } = this.props;
+    const isSingleType = fileExtensions.length === 1;
+    const isOther = fileType === 'other';
+    const acceptedTypes = isSingleType && !isOther ? fileExtensions[0] : '';
+
+    return (
+      <Button.Group basic size="massive">
+        <Button
+          className="replace"
+          icon="refresh"
+          onClick={ this.handleReplaceFile }
+          basic
+        />
+        { /**
+          * @todo Is hiding the file list best
+          * practice for accessibility?
+          */ }
+        <input
+          className="upload-file"
+          ref={ this.handleReplaceFileRef }
+          type="file"
+          accept={ acceptedTypes }
+        />
+        <Button
+          className="delete"
+          icon="delete"
+          onClick={ this.handleDeleteFile }
+          basic
+        />
+      </Button.Group>
+    );
+  }
 
   render() {
     const { file, handleChange, selectedLanguage } = this.props;
+
     return (
       <Grid.Row>
         <Grid.Column mobile={ 7 }>{ file.file }</Grid.Column>
@@ -66,6 +89,8 @@ class EditSupportFileRow extends React.PureComponent {
 EditSupportFileRow.propTypes = {
   handleChange: func,
   file: object,
+  fileExtensions: array,
+  fileType: string,
   selectedLanguage: string
 };
 
