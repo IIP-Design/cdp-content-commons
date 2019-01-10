@@ -67,24 +67,26 @@ class EditSupportFileRow extends React.PureComponent {
 
   render() {
     const { file, handleChange, selectedLanguage } = this.props;
+    const { file: fileName, id } = file;
 
     return (
       <Grid.Row>
-        <Grid.Column mobile={ 7 }>{ file.file }</Grid.Column>
+        <Grid.Column mobile={ 7 }>{ fileName }</Grid.Column>
         <Grid.Column mobile={ 5 }>
           { /* eslint-disable jsx-a11y/label-has-for */
             <VisuallyHidden>
-              <label htmlFor={ `file-${file.id}` }>
-                { `${file.file} language` }
+              <label htmlFor={ `file-${id}` }>
+                { `${fileName} language` }
               </label>
             </VisuallyHidden> }
           <Dropdown
-            id={ `file-${file.id}` }
+            id={ id }
             onChange={ handleChange }
             options={ languages }
             placeholder="Select language"
             text={ selectedLanguage }
             value={ selectedLanguage }
+            error={ !selectedLanguage }
             fluid
             required
             selection

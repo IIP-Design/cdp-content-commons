@@ -39,12 +39,12 @@ class EditSupportFilesContent extends React.PureComponent {
     return uniqueExtensions;
   }
 
-  handleChange = ( e, { value } ) => (
+  handleChange = ( e, { id, value } ) => (
     this.setState(
       prevState => ( {
         selectedLangValues: {
           ...prevState.selectedLangValues,
-          [value]: capitalizeFirst( value )
+          [id]: capitalizeFirst( value )
         }
       } ),
       this.haveAllLangsBeenPopulated
@@ -83,9 +83,10 @@ class EditSupportFilesContent extends React.PureComponent {
   }
 
   renderRow = ( file ) => {
-    const { data: files, fileType } = this.props;
-    const { id, lang } = file;
+    const { id } = file;
     const { selectedLangValues } = this.state;
+    const { data: files, fileType } = this.props;
+
     return (
       <EditSupportFileRow
         key={ id }
@@ -93,7 +94,7 @@ class EditSupportFilesContent extends React.PureComponent {
         fileType={ fileType }
         fileExtensions={ this.getFileExtensions( files ) }
         handleChange={ this.handleChange }
-        selectedLanguage={ selectedLangValues[lang] }
+        selectedLanguage={ selectedLangValues[id] }
       />
     );
   }
