@@ -118,6 +118,7 @@ class EditSupportFilesContent extends React.PureComponent {
             </Grid.Column>
             <Grid.Column mobile={ 5 }>
               Language
+              <small className="msg--required"> *</small>
             </Grid.Column>
             <Grid.Column mobile={ 4 } />
           </Grid.Row>

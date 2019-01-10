@@ -71,12 +71,19 @@ class EditSupportFileRow extends React.PureComponent {
       <Grid.Row>
         <Grid.Column mobile={ 7 }>{ file.file }</Grid.Column>
         <Grid.Column mobile={ 5 }>
+          { /* eslint-disable jsx-a11y/label-has-for */
+            <label className="sr-only" htmlFor={ `file-${file.id}` }>
+              { `${file.file} language` }
+            </label> }
           <Dropdown
+            id={ `file-${file.id}` }
             onChange={ handleChange }
             options={ languages }
-            placeholder="Select Language"
+            placeholder="Select language"
             text={ selectedLanguage }
             value={ selectedLanguage }
+            fluid
+            required
             selection
           />
         </Grid.Column>
