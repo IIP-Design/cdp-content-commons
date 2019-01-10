@@ -4,12 +4,6 @@
   padding-bottom: 0;  
 }
 
-// @-moz-document url-prefix() {
-//   html, body {
-//     overflow: hidden!important;
-//   }
-// }
-
 .items {
 
   &_table {
@@ -17,6 +11,11 @@
     max-height: 500px;
     overflow: scroll;
     border: 1px solid rgba(34, 36, 38, 0.15);
+    @media screen and (max-width: 767px) {
+      max-height: auto;
+      border: none;
+      overflow: auto;      
+    }
 
     /* ONLY IN WORKS IN CHROME & SAFARI */
     &::-webkit-scrollbar {
@@ -29,6 +28,12 @@
       margin-top: 0;
       border: none;
       border-radius: 0;
+
+      thead {
+        @media screen and (max-width: 767px) {
+          display: none;
+        }
+      }
 
       td, th {        
   
@@ -46,14 +51,25 @@
         
         &.items_table_item {
           @media screen and (max-width: 767px){
+            position: relative;
+            width: auto !important;
+            padding: 0 !important;
+
             &:not(:first-child) {
               display: none !important;
+
+              &.display {
+                display: block !important;
+              }
             }
           }
         }
 
         .primary_col {
           display: flex;
+          @media screen and (max-width: 767px){
+            flex-direction: column;
+          }
         }
       }
 
@@ -63,10 +79,13 @@
     }
 
     &_mobileHeader {
+      display: inline-block;
+      width: 60px;
+      margin-right: 2em;
       @media screen and (min-width: 768px) {
-        display: none;
+        display: none;        
       }
     }
-    
+      
   }  
 }

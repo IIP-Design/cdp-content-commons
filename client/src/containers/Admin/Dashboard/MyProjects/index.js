@@ -11,6 +11,7 @@ import * as actions from './actions';
 import makeSelectMyProjects from './selectors';
 import { Table } from 'semantic-ui-react';
 import ScrollableTableWithMenu from 'components/ScrollableTableWithMenu';
+import TableMobileDataToggleIcon from 'components/ScrollableTableWithMenu/TableMobileDataToggleIcon';
 import MyProjectPrimaryCol from './MyProjectPrimaryCol';
 import './MyProjects.css';
 
@@ -35,7 +36,7 @@ class MyProjects extends React.Component {
           renderTableBody={ ({
             tableHeaders,
             selectedItems,
-            data,
+            data
           }, toggleItemSelection) => (
             <Table.Body>
               { data.map( ( d,i ) => (
@@ -45,17 +46,20 @@ class MyProjects extends React.Component {
                       <Table.Cell data-header={ header.label } key={ `${d.id}_${header.name}` } className="items_table_item">
                         { i === 0 && ( 
                           // Table must include .primary_col div for fixed column
-                          <div className="primary_col"> 
-                            <MyProjectPrimaryCol
-                              d={ d }
-                              header={ header }
-                              selectedItems={ selectedItems }
-                              toggleItemSelection={ toggleItemSelection }
-                            />
-                          </div>
+                          <Fragment>
+                            <div className="primary_col"> 
+                              <MyProjectPrimaryCol
+                                d={ d }
+                                header={ header }
+                                selectedItems={ selectedItems }
+                                toggleItemSelection={ toggleItemSelection }
+                              />
+                            </div>
+                            <TableMobileDataToggleIcon />
+                          </Fragment>
                         ) }
                         { i !== 0 &&
-                          <span><span className="items_table_mobileHeader">{ header.label }</span>{ d[header.name] }</span>
+                          <span><div className="items_table_mobileHeader">{ header.label }</div>{ d[header.name] }</span>
                         }
                       </Table.Cell>
                     )

@@ -74,7 +74,7 @@ class ScrollableTableWithMenu extends React.Component {
         displayActionsMenu: areOtherItemsSelected ? true : false
       }
     } );
-  }
+  }  
 
   handleSort = clickedColumn => () => {    
     const { column, data, direction, displayActionsMenu } = this.state;

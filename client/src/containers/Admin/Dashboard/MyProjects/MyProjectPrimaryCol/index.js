@@ -8,6 +8,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Checkbox } from 'semantic-ui-react';
+import truncate from 'lodash/truncate';
 import './MyProjectPrimaryCol.css';
 
 const MyProjectPrimaryCol = ( props ) => {
@@ -25,7 +26,13 @@ const MyProjectPrimaryCol = ( props ) => {
         <img src={ props.d.thumbnail } alt={ props.d.title } />
       </div>
       <div className="myProjects_data">
-        <h3 className="myProjects_data_title">{ props.d[props.header.name] }</h3>
+        <Link
+          to={ `/admin/projects/${props.d[props.header.name]}` }
+          className="myProjects_data_title"
+          title={ props.d[props.header.name] }
+        >
+          { truncate(props.d[props.header.name], { length: 35 }) }
+        </Link>
         <div className="myProjects_data_actions">
           <Link to={ props.d.detailsLink } className="linkStyle">Details</Link>
           <span>&nbsp;|&nbsp;</span>

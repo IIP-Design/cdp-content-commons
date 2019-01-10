@@ -4,11 +4,17 @@
 
   &_actions {
     margin-right: 15px;
+    @media screen and (max-width: 767px) {
+      margin-right: 0;
+    }
   }
 
   &_thumbnail {
     flex: 1;
     margin-right: 15px;
+    @media screen and (max-width: 767px) {
+      margin-right: 0;
+    }
 
     img {
       width: 100%;
@@ -23,7 +29,16 @@
     &_title {
       flex: 1;
       margin-bottom: 0;
+      font-size: 18px;
+      font-weight: bold;
       color: $blue;
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+      }
+
+      &:hover {
+        color: $light-blue;
+      }
     }
 
     &_actions {
