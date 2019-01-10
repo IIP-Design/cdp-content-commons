@@ -29,6 +29,7 @@ import ProjectSupportFiles from 'components/Project/ProjectSupportFiles';
 import ProjectItemsList from 'components/Project/ProjectItemsList';
 import VideoItem from 'containers/Project/Types/VideoItem';
 import Notification from 'components/Project/Notification/Loadable';
+import VisuallyHidden from 'components/VisuallyHidden';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
@@ -510,18 +511,17 @@ class VideoEditProject extends React.PureComponent {
                   basic
                   onClick={ this.handleAddMoreFiles }
                 />
-                { /**
-                   * @todo Does this need a label?
-                   * Is hiding the file input best
-                   * practice for accessibility?
-                   */ }
-                <input
-                  ref={ this.handleAddMoreRef }
-                  type="file"
-                  accept=".mov, .mp4, .mpg, .wmv, .avi"
-                  multiple
-                  style={ { display: 'none' } }
-                />
+                <VisuallyHidden>
+                  { /* eslint-disable jsx-a11y/label-has-for */ }
+                  <label htmlFor="upload-item--multiple">upload more project items</label>
+                  <input
+                    id="upload-item--multiple"
+                    ref={ this.handleAddMoreRef }
+                    type="file"
+                    accept=".mov, .mp4, .mpg, .wmv, .avi"
+                    multiple
+                  />
+                </VisuallyHidden>
               </div> }
           </div>
         </div>

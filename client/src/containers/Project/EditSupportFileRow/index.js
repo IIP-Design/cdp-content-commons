@@ -11,6 +11,7 @@ import * as actions from './actions';
 import makeSelectEditSupportFileRow from './selectors';
 import { Button, Dropdown, Grid } from 'semantic-ui-react';
 
+import VisuallyHidden from 'components/VisuallyHidden';
 import { languages } from '../mockData';
 
 import './EditSupportFileRow.css';
@@ -44,16 +45,16 @@ class EditSupportFileRow extends React.PureComponent {
           onClick={ this.handleReplaceFile }
           basic
         />
-        { /**
-          * @todo Is hiding the file list best
-          * practice for accessibility?
-          */ }
-        <input
-          className="upload-file"
-          ref={ this.handleReplaceFileRef }
-          type="file"
-          accept={ acceptedTypes }
-        />
+        <VisuallyHidden>
+          { /* eslint-disable jsx-a11y/label-has-for */ }
+          <label htmlFor="upload-file--single">upload file</label>
+          <input
+            id="upload-file--single"
+            ref={ this.handleReplaceFileRef }
+            type="file"
+            accept={ acceptedTypes }
+          />
+        </VisuallyHidden>
         <Button
           className="delete"
           icon="delete"
@@ -72,9 +73,11 @@ class EditSupportFileRow extends React.PureComponent {
         <Grid.Column mobile={ 7 }>{ file.file }</Grid.Column>
         <Grid.Column mobile={ 5 }>
           { /* eslint-disable jsx-a11y/label-has-for */
-            <label className="sr-only" htmlFor={ `file-${file.id}` }>
-              { `${file.file} language` }
-            </label> }
+            <VisuallyHidden>
+              <label htmlFor={ `file-${file.id}` }>
+                { `${file.file} language` }
+              </label>
+            </VisuallyHidden> }
           <Dropdown
             id={ `file-${file.id}` }
             onChange={ handleChange }

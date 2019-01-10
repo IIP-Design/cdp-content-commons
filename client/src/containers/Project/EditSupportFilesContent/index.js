@@ -12,6 +12,7 @@ import makeSelectEditSupportFilesContent from './selectors';
 import { Button, Grid } from 'semantic-ui-react';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
+import VisuallyHidden from 'components/VisuallyHidden';
 
 import EditSupportFileRow from 'containers/Project/EditSupportFileRow';
 
@@ -140,16 +141,16 @@ class EditSupportFilesContent extends React.PureComponent {
                 basic
                 onClick={ this.handleAddFiles }
               />
-              { /**
-                 * @todo Is hiding the file list best
-                 * practice for accessibility?
-                 */ }
-              <input
-                className="upload-file"
-                ref={ this.handleAddFilesRef }
-                type="file"
-                multiple
-              />
+              <VisuallyHidden>
+                { /* eslint-disable jsx-a11y/label-has-for */ }
+                <label htmlFor="upload-file--multiple">upload files</label>
+                <input
+                  id="upload-file--multiple"
+                  ref={ this.handleAddFilesRef }
+                  type="file"
+                  multiple
+                />
+              </VisuallyHidden>
               <Button
                 className="save"
                 content="Save"

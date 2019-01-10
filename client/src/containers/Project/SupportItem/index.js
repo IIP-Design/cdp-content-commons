@@ -12,6 +12,7 @@ import * as actions from './actions';
 import { makeSelectSupportItem } from './selectors';
 import { Icon, Loader, Popup, Progress } from 'semantic-ui-react';
 
+import VisuallyHidden from 'components/VisuallyHidden';
 import './SupportItem.css';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -261,7 +262,7 @@ class SupportItem extends React.PureComponent {
         ref={ node => this.setRefWidth( node, 'listItem' ) }
       >
         <span className="item-name">
-          { isLongFileName && <span className="sr-only">{ file }</span> }
+          { isLongFileName && <VisuallyHidden>{ file }</VisuallyHidden> }
           <span
             className={
               `item-name-wrap${isLongFileName ? ' hasEllipsis' : ''}`
