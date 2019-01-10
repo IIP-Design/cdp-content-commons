@@ -278,3 +278,8 @@ export const getYouTubeId = ( url ) => {
   }
   return null;
 };
+
+export const delayFnCall = ( fn, timer, delay ) => {
+  if ( timer ) clearTimeout( timer );
+  timer = setTimeout( fn, delay );
+};

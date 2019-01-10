@@ -33,7 +33,7 @@ import VisuallyHidden from 'components/VisuallyHidden';
 
 import EditSingleProjectItem from 'containers/Project/EditSingleProjectItem';
 
-import { ScrollToTop } from '../../../../utils/helpers';
+import { delayFnCall, ScrollToTop } from '../../../../utils/helpers';
 import colors from '../../../../utils/colors';
 
 import './VideoEditProject.css';
@@ -86,15 +86,18 @@ class VideoEditProject extends React.PureComponent {
     const uploadedCount = this.getUploadedFilesCount();
 
     if ( uploadedCount === prevState.filesToUploadCount && prevState.hasSubmittedData && !prevState.isUploadFinished ) {
-      this.setState( {
-        isUploadFinished: true,
-        isUploadInProgress: false,
-        displayTheUploadSuccessMsg: true,
-        displaySaveMsg: true
-      } );
-
-      this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', this.SAVE_MSG_DELAY );
-      this.delayUnmount( this.handleDisplayUploadSuccessMsg, 'uploadSuccessTimer', this.UPLOAD_SUCCESS_MSG_DELAY );
+      this.setState(
+        {
+          isUploadFinished: true,
+          isUploadInProgress: false,
+          displayTheUploadSuccessMsg: true,
+          displaySaveMsg: true
+        },
+        () => {
+          delayFnCall( this.handleDisplaySaveMsg, this.saveMsgTimer, this.SAVE_MSG_DELAY );
+          delayFnCall( this.handleDisplayUploadSuccessMsg, this.uploadSuccessTimer, this.UPLOAD_SUCCESS_MSG_DELAY );
+        }
+      );
     }
   }
 
@@ -125,11 +128,6 @@ class VideoEditProject extends React.PureComponent {
         .filter( tag => /\S/.test( tag ) );
     }
     return [];
-  }
-
-  delayUnmount = ( fn, timer, delay ) => {
-    if ( this[timer] ) clearTimeout( this[timer] );
-    this[timer] = setTimeout( fn, delay );
   }
 
   displayConfirmDelete = () => {
@@ -244,7 +242,7 @@ class VideoEditProject extends React.PureComponent {
     if ( !this.state.isUploadFinished ) {
       this.handleUpload();
     } else {
-      this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', this.SAVE_MSG_DELAY );
+      delayFnCall( this.handleDisplaySaveMsg, this.saveMsgTimer, this.SAVE_MSG_DELAY );
     }
 
     ScrollToTop( { top: 0, behavior: 'smooth' } );

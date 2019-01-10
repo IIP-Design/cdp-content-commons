@@ -17,7 +17,7 @@ import Notification from 'components/Project/Notification/Loadable';
 
 import EditSupportFileRow from 'containers/Project/EditSupportFileRow';
 
-import { capitalizeFirst } from '../../../utils/helpers';
+import { capitalizeFirst, delayFnCall } from '../../../utils/helpers';
 
 import './EditSupportFilesContent.css';
 
@@ -41,11 +41,6 @@ class EditSupportFilesContent extends React.PureComponent {
     ), [] );
     const uniqueExtensions = [...new Set( allFileExtensions )];
     return uniqueExtensions;
-  }
-
-  delayUnmount = ( fn, timer, delay ) => {
-    if ( this[timer] ) clearTimeout( this[timer] );
-    this[timer] = setTimeout( fn, delay );
   }
 
   handleChange = ( e, { id, value } ) => (
@@ -74,7 +69,7 @@ class EditSupportFilesContent extends React.PureComponent {
         hasSaved: true,
         hasUnsavedData: false
       },
-      () => this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', this.SAVE_MSG_DELAY )
+      () => delayFnCall( this.handleDisplaySaveMsg, this.saveMsgTimer, this.SAVE_MSG_DELAY )
     );
   }
 
