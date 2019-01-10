@@ -24,6 +24,7 @@ import './EditSupportFilesContent.css';
 class EditSupportFilesContent extends React.PureComponent {
   state = {
     hasPopulatedLanguages: false,
+    hasSaved: false,
     selectedLangValues: {}
   }
 
@@ -51,13 +52,14 @@ class EditSupportFilesContent extends React.PureComponent {
     )
   )
 
-  handleCancel = () => {
+  handleCancelClose = () => {
     console.log( 'cancel' );
     this.props.closeEditModal();
   }
 
   handleSaveFiles = () => {
     console.log( 'files saved' );
+    this.setState( { hasSaved: true } );
   }
 
   handleAddFiles = () => {
@@ -101,7 +103,7 @@ class EditSupportFilesContent extends React.PureComponent {
 
   render() {
     const { data: files, fileType } = this.props;
-    const { hasPopulatedLanguages } = this.state;
+    const { hasPopulatedLanguages, hasSaved } = this.state;
 
     const headline = fileType === 'srt'
       ? fileType.toUpperCase()
@@ -130,10 +132,10 @@ class EditSupportFilesContent extends React.PureComponent {
           <Grid.Row>
             <Grid.Column className="btn-group">
               <Button
-                className="cancel"
-                content="Cancel"
+                className="cancel-close"
+                content={ hasSaved ? 'Close' : 'Cancel' }
                 basic
-                onClick={ this.handleCancel }
+                onClick={ this.handleCancelClose }
               />
               <Button
                 className="add-files"

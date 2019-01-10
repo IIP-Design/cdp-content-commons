@@ -30,7 +30,7 @@
       outline-offset: 2px;
     }
 
-    &.cancel {
+    &.cancel-close {
       border: 2px solid transparent;
       @media screen and (max-width: 899px) {
         border-color: $grey;
