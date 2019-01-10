@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { object } from 'prop-types';
+import { node } from 'prop-types';
 import './VisuallyHidden.css';
 
 const VisuallyHidden = props => (
@@ -13,7 +13,7 @@ const VisuallyHidden = props => (
 );
 
 VisuallyHidden.propTypes = {
-  children: object
+  children: node
 };
 
 export default VisuallyHidden;

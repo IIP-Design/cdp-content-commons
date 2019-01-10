@@ -12,6 +12,7 @@ import * as actions from './actions';
 import { makeSelectSupportItem } from './selectors';
 import { Icon, Loader, Popup, Progress } from 'semantic-ui-react';
 
+import Focusable from 'components/Focusable';
 import VisuallyHidden from 'components/VisuallyHidden';
 import './SupportItem.css';
 
@@ -272,9 +273,15 @@ class SupportItem extends React.PureComponent {
           >
             { isLongFileName ?
               <Popup
-                trigger={ <span>{ shortFileName }</span> }
+                trigger={
+                  <span>
+                    <Focusable>{ shortFileName }</Focusable>
+                  </span>
+                }
                 content={ file }
-                on={ ['hover', 'click'] }
+                on={ [
+                  'hover', 'click', 'focus'
+                ] }
                 inverted
               /> :
               file }
@@ -290,9 +297,17 @@ class SupportItem extends React.PureComponent {
           >
             { isLongLangName ?
               <Popup
-                trigger={ <span>{ lang }</span> }
+                trigger={
+                  <span>
+                    <Focusable>{ lang }</Focusable>
+                  </span>
+                }
                 content={ lang }
-                on={ ['hover', 'click'] }
+                on={ [
+                  'hover',
+                  'click',
+                  'focus'
+                ] }
                 inverted
               /> :
               lang }

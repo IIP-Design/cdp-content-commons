@@ -8,14 +8,26 @@ import React from 'react';
 import { string } from 'prop-types';
 import { Icon, Popup } from 'semantic-ui-react';
 
+import Focusable from 'components/Focusable';
 
 const IconPopup = ( props ) => {
   const { message, size, iconType } = props;
   return (
     <Popup
-      trigger={ <Icon size={ size } name={ iconType } /> }
+      trigger={
+        <span>
+          <Focusable>
+            <Icon size={ size } name={ iconType } />
+          </Focusable>
+        </span>
+      }
       content={ message }
       size={ size }
+      on={ [
+        'hover',
+        'click',
+        'focus'
+      ] }
       inverted
     />
   );
