@@ -13,6 +13,7 @@ import { Button, Grid } from 'semantic-ui-react';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
 import VisuallyHidden from 'components/VisuallyHidden';
+import Notification from 'components/Project/Notification/Loadable';
 
 import EditSupportFileRow from 'containers/Project/EditSupportFileRow';
 
@@ -23,8 +24,10 @@ import './EditSupportFilesContent.css';
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFilesContent extends React.PureComponent {
   state = {
-    hasPopulatedLanguages: false,
+    displaySaveMsg: false,
     hasSaved: false,
+    hasUnsavedData: false,
+    hasPopulatedLanguages: false,
     selectedLangValues: {}
   }
 
@@ -40,9 +43,15 @@ class EditSupportFilesContent extends React.PureComponent {
     return uniqueExtensions;
   }
 
+  delayUnmount = ( fn, timer, delay ) => {
+    if ( this[timer] ) clearTimeout( this[timer] );
+    this[timer] = setTimeout( fn, delay );
+  }
+
   handleChange = ( e, { id, value } ) => (
     this.setState(
       prevState => ( {
+        hasUnsavedData: true,
         selectedLangValues: {
           ...prevState.selectedLangValues,
           [id]: capitalizeFirst( value )
@@ -59,7 +68,14 @@ class EditSupportFilesContent extends React.PureComponent {
 
   handleSaveFiles = () => {
     console.log( 'files saved' );
-    this.setState( { hasSaved: true } );
+    this.setState(
+      {
+        displaySaveMsg: true,
+        hasSaved: true,
+        hasUnsavedData: false
+      },
+      () => this.delayUnmount( this.handleDisplaySaveMsg, 'saveMsgTimer', this.SAVE_MSG_DELAY )
+    );
   }
 
   handleAddFiles = () => {
@@ -84,6 +100,13 @@ class EditSupportFilesContent extends React.PureComponent {
     }
   }
 
+  handleDisplaySaveMsg = () => {
+    this.setState( { displaySaveMsg: false } );
+    this.saveMsgTimer = null;
+  }
+
+  SAVE_MSG_DELAY = 2000;
+
   renderRow = ( file ) => {
     const { id } = file;
     const { selectedLangValues } = this.state;
@@ -103,11 +126,27 @@ class EditSupportFilesContent extends React.PureComponent {
 
   render() {
     const { data: files, fileType } = this.props;
-    const { hasPopulatedLanguages, hasSaved } = this.state;
+    const {
+      displaySaveMsg,
+      hasSaved,
+      hasUnsavedData,
+      hasPopulatedLanguages
+    } = this.state;
 
     const headline = fileType === 'srt'
       ? fileType.toUpperCase()
       : capitalizeFirst( fileType );
+
+    const notificationStyles = {
+      position: 'absolute',
+      top: '0',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      padding: '1em 1.5em',
+      fontSize: '1em'
+    };
+
+    const notificationMsg = displaySaveMsg ? 'Saved' : 'You have unsaved data';
 
     return (
       <ModalItem
@@ -115,6 +154,12 @@ class EditSupportFilesContent extends React.PureComponent {
         headline={ `Edit ${headline} files in this project` }
         textDirection="ltr"
       >
+        { ( displaySaveMsg || hasUnsavedData ) &&
+          <Notification
+            el="p"
+            customStyles={ notificationStyles }
+            msg={ notificationMsg }
+          /> }
         <Grid divided="vertically" verticalAlign="middle">
           <Grid.Row>
             <Grid.Column mobile={ 7 }>
