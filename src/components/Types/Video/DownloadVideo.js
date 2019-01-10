@@ -53,6 +53,7 @@ class DownloadVideo extends Component {
 
   renderFormItem( video, index ) {
     const { title, language } = this.props.selectedLanguageUnit;
+    const { defaultTitle } = this.props;
     const size = this.getSizeInfo( video.size );
     // const fn = `${title.replace( /\s/g, '_' )}_${video.size.width}.${this.getFnExt( video.downloadUrl )}`;
     const videoQuality = `${video.video_quality && video.video_quality === 'broadcast' ? 'broadcast' : 'web'}`;
@@ -60,11 +61,11 @@ class DownloadVideo extends Component {
     return (
       <div key={ `fs_${index}` } >
         <Item.Group className="download-item">
-          <Item as="a" href={ this.props.downloadLink( video.downloadUrl, title, language.locale, downloadIdentifier ) }>
+          <Item as="a" href={ this.props.downloadLink( video.downloadUrl, defaultTitle, language.locale, downloadIdentifier ) }>
             <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
             <Item.Content>
               <Item.Header className="download-header">
-              Download <span className="lightweight">{ `"${title}"` }</span> for { `${videoQuality}` }
+              Download <span className="lightweight">{ `"${title || defaultTitle}"` }</span> for { `${videoQuality}` }
               </Item.Header>
               <Item.Meta> { `File size: ${size.weight}` } </Item.Meta>
               <Item.Meta> { `Dimensions: ${size.label}` }</Item.Meta>
@@ -107,6 +108,7 @@ class DownloadVideo extends Component {
 
 DownloadVideo.propTypes = {
   selectedLanguageUnit: object,
+  defaultTitle: string,
   instructions: string,
   burnedInCaptions: bool,
   downloadLink: func,

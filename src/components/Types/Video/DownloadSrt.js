@@ -11,12 +11,13 @@ class DownloadSrt extends Component {
   }
 
   renderFormItem = ( unit, i ) => {
-    const { srt, title, language } = unit;
+    const { srt, language } = unit;
+    const { defaultTitle } = this.props;
 
     return (
       <div key={ `fs_${i}` } >
         <Item.Group className="download-item">
-          <Item as="a" href={ this.props.downloadLink( srt.srcUrl, title, language.locale ) } >
+          <Item as="a" href={ this.props.downloadLink( srt.srcUrl, defaultTitle, language.locale ) } >
             <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
             <Item.Content>
               <Item.Header className="download-header">{ `Download ${unit.language.display_name} SRT` }</Item.Header>
@@ -42,6 +43,7 @@ class DownloadSrt extends Component {
 
 DownloadSrt.propTypes = {
   units: array,
+  defaultTitle: string,
   instructions: string,
   downloadLink: func,
   error: string

@@ -42,7 +42,8 @@ class Video extends Component {
       selectedLanguage: this.getLanguage( item.selectedLanguageUnit ),
       captions: this.getCaptions( item.selectedLanguageUnit ),
       videoProps: null,
-      shareLink: ''
+      shareLink: '',
+      defaultTitle: this.getDefaultTitle( item.units )
     };
   }
 
@@ -192,6 +193,21 @@ class Video extends Component {
   };
 
   /**
+   * Returns the first available English title or 'Commons Video' if not found.
+   *
+   * @param units
+   * @returns string
+   */
+  getDefaultTitle = ( units ) => {
+    const en = units.find( ( u ) => {
+      if ( u.language && u.title ) return u.language.language_code === 'en';
+      return false;
+    } );
+    if ( en ) return en.title;
+    return 'Commons Video';
+  };
+
+  /**
    * Some videos have 2 formats: clean (no burned in captions) and
    * with captions (video has captions burned into file). Check see what format to return
    * Note: The burnedInCaptions porperty is coming in as 'true' and 'false' strings. Need to coerce
@@ -312,7 +328,7 @@ class Video extends Component {
 
   render() {
     const {
-      unit, selectedLanguage, captions, videoProps, shareLink
+      unit, selectedLanguage, captions, videoProps, shareLink, defaultTitle
     } = this.state;
     const {
       type, logo, author, owner, published, modified, id, site
@@ -403,6 +419,7 @@ class Video extends Component {
                             instructions={ `Download the video and SRT files in ${unit.language.display_name}.
                               This download option is best for uploading this video to web pages.` }
                             burnedInCaptions={ captions }
+                            defaultTitle={ defaultTitle }
                           />
                         )
                       },
@@ -413,6 +430,7 @@ class Video extends Component {
                             selectedLanguageUnit={ unit }
                             instructions="Download SRTs"
                             units={ this.props.item.units }
+                            defaultTitle={ defaultTitle }
                           />
                         )
                       },

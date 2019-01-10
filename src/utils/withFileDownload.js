@@ -31,18 +31,9 @@ const withFileDownload = ( WrappedComponent ) => {
         } );
     };
 
-    btoaNonLatin = ( str ) => {
-      str = str.replace( /[^\x00-\x7F]/g, ( char ) => { // eslint-disable-line no-control-regex
-        let hex = char.charCodeAt( 0 ).toString( 16 );
-        while ( hex.length < 4 ) hex = `0${hex}`;
-        return `\\u${hex}`;
-      } );
-      return btoa( str );
-    };
-
     downloadLink = ( url, title, locale, id = '' ) => {
       // Replace whitespace with dashes and remove non-alphanumerics
-      title = title.replace( /\s+/g, '-' ).replace( /[/\\:*?"<>|]/g, '' );
+      title = title.replace( /\s+/g, '-' ).replace( /[^\w-]/g, '' );
       locale = locale.replace( '-', '_' );
       const ext = url.substr( url.lastIndexOf( '.' ) );
       id = ( id ) ? `.${id}` : '';
@@ -51,7 +42,7 @@ const withFileDownload = ( WrappedComponent ) => {
         filename,
         url
       };
-      return `${this.ENDPOINT}/${this.btoaNonLatin( JSON.stringify( opts ) )}`;
+      return `${this.ENDPOINT}/${btoa( JSON.stringify( opts ) )}`;
     };
 
     render() {
