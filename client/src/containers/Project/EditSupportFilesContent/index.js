@@ -142,6 +142,7 @@ class EditSupportFilesContent extends React.PureComponent {
     };
 
     const notificationMsg = displaySaveMsg ? 'Saved' : 'You have unsaved data';
+    const saveBtnMsg = hasSaved && !hasUnsavedData ? 'Data Saved' : 'Save';
 
     return (
       <ModalItem
@@ -196,10 +197,10 @@ class EditSupportFilesContent extends React.PureComponent {
               </VisuallyHidden>
               <Button
                 className="save"
-                content="Save"
+                content={ saveBtnMsg }
                 color="blue"
                 onClick={ this.handleSaveFiles }
-                disabled={ !hasPopulatedLanguages }
+                disabled={ !hasPopulatedLanguages || ( hasSaved && !hasUnsavedData ) }
               />
             </Grid.Column>
           </Grid.Row>
