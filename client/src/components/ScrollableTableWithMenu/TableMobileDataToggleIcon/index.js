@@ -15,7 +15,7 @@ class TableMobileDataToggleIcon extends React.Component {
     mobileDataToggleIcon: 'plus'
   }
 
-  componentDidUpdate() {
+  componentDidUpdate() {    
     const activeTableRows = document.querySelectorAll('.activeTableRow');
     activeTableRows.forEach( tr => {
       const tableRowData = Array.from(tr.childNodes).splice(1);

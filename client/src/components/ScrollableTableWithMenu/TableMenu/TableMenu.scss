@@ -10,6 +10,9 @@
 
     &_wrapper {
       text-align: right;
+      @media screen and (max-width: 767px) {
+        text-align: left;
+      }
     }
 
     &.active::after {

@@ -42,6 +42,14 @@ class ScrollableTableWithMenu extends React.Component {
     });
   }
 
+  tableDisplayAllData = menuHeaders => {
+    this.setState( prevState => {
+      return {
+        tableHeaders: [...prevState.tableHeaders, ...menuHeaders ]
+      }
+    } );
+  }
+
   toggleAllItemsSelection = e => {
     e.stopPropagation();
     const allItems = Array
@@ -109,7 +117,11 @@ class ScrollableTableWithMenu extends React.Component {
       <Grid>
         <Grid.Row className="items_tableMenus">
           <TableItemsDisplay />
-          <TableMenu columnMenu={ columnMenu } tableMenuOnChange={ this.tableMenuOnChange } />
+          <TableMenu
+            columnMenu={ columnMenu }
+            tableMenuOnChange={ this.tableMenuOnChange }
+            tableDisplayAllData={ this.tableDisplayAllData }
+          />
         </Grid.Row>
         <Grid.Row>
           <Grid.Column className="items_table_wrapper">
@@ -126,7 +138,7 @@ class ScrollableTableWithMenu extends React.Component {
                 />
 
                 {/* ADD CUSTOM TABLE BODY */}
-                { this.props.renderTableBody(this.state, this.toggleItemSelection) }
+                { this.props.renderTableBody(this.state, this.toggleItemSelection, this.tableDisplayAllData) }
               </Table>
             </div>
           </Grid.Column>

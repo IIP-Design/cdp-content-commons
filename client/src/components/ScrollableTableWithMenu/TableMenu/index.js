@@ -8,18 +8,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Checkbox, Icon } from 'semantic-ui-react';
 import { titleCase } from '../../../utils/helpers';
+import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../../utils/browser';
 import './TableMenu.css';
 
 class TableMenu extends React.Component {
   state = {
-    displayTableMenu: false,
+    displayTableMenu: false
   }
   
-  componentDidMount(){
+  componentDidMount() {
+    if ( isMobile() || isWindowWidthLessThanOrEqualTo( 767 ) ) {
+      this.props.tableDisplayAllData( this.props.columnMenu );
+    }    
+
     document.addEventListener( 'click', this.toggleTableMenu, false );
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     document.removeEventListener( 'click', this.toggleTableMenu, false );
   }
 
@@ -43,7 +48,7 @@ class TableMenu extends React.Component {
     const { columnMenu, tableMenuOnChange } = this.props;
 
     return (
-      <Grid.Column floated='right' width={ 8 } className="items_menu_wrapper">
+      <Grid.Column floated='right' mobile={ 16 } tablet={ 8 } desktop={ 8 } className="items_menu_wrapper">
         <div className={ displayTableMenu ? 'items_menu active' : 'items_menu' }>
           <span data-tablemenu>See More <Icon data-tablemenu name="angle down"/></span>          
           <span><Icon name="angle left" /></span>
