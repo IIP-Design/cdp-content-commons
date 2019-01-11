@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFileRow from './selectors';
-import { Button, Dropdown, Table } from 'semantic-ui-react';
+import { Button, Dropdown, Popup, Table } from 'semantic-ui-react';
 
 import VisuallyHidden from 'components/VisuallyHidden';
 import { languages } from '../mockData';
@@ -39,11 +39,23 @@ class EditSupportFileRow extends React.PureComponent {
 
     return (
       <Button.Group basic size="massive">
-        <Button
-          className="replace"
-          icon="refresh"
-          onClick={ this.handleReplaceFile }
-          basic
+        <Popup
+          content="Replace"
+          size="small"
+          inverted
+          on={ [
+            'hover',
+            'click',
+            'focus'
+          ] }
+          trigger={
+            <Button
+              className="replace"
+              icon="refresh"
+              onClick={ this.handleReplaceFile }
+              basic
+            />
+          }
         />
         <VisuallyHidden>
           { /* eslint-disable jsx-a11y/label-has-for */ }
@@ -56,11 +68,23 @@ class EditSupportFileRow extends React.PureComponent {
             tabIndex={ -1 }
           />
         </VisuallyHidden>
-        <Button
-          className="delete"
-          icon="delete"
-          onClick={ this.handleDeleteFile }
-          basic
+        <Popup
+          content="Delete"
+          size="small"
+          inverted
+          on={ [
+            'hover',
+            'click',
+            'focus'
+          ] }
+          trigger={
+            <Button
+              className="delete"
+              icon="delete"
+              onClick={ this.handleDeleteFile }
+              basic
+            />
+          }
         />
       </Button.Group>
     );
