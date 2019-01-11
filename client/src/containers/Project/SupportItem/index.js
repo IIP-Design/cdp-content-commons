@@ -283,6 +283,7 @@ class SupportItem extends React.PureComponent {
                   'hover', 'click', 'focus'
                 ] }
                 inverted
+                size="small"
               /> :
               file }
           </span>
@@ -309,6 +310,7 @@ class SupportItem extends React.PureComponent {
                   'focus'
                 ] }
                 inverted
+                size="small"
               /> :
               lang }
           </b>
