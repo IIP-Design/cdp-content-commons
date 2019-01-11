@@ -85,8 +85,14 @@
     &.error {
       background: initial;
 
-      > .menu > .selected.item {
-        background-color: $linen;
+      > .menu {
+        > .item {
+          background: $chablis;
+
+          &.selected {
+            background-color: $linen;
+          }
+        }
       }
 
       &:focus {
