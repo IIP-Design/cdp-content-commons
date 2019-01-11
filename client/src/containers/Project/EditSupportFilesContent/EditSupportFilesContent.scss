@@ -81,6 +81,22 @@
     }
   }
 
+  .ui.selection.dropdown {
+    &.error {
+      background: initial;
+
+      > .menu > .selected.item {
+        background-color: $linen;
+      }
+
+      &:focus {
+        .menu {
+          border-color: $cavern-pink;
+        }
+      }
+    }
+  }
+
   .btn-group {
     text-align: right;
   }

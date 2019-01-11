@@ -30,6 +30,10 @@
           background: initial;
           // color: $red;
           // border-color: $red;
+
+          .ui.dropdown {
+            background: initial;
+          }
         }
 
         // label {
@@ -41,14 +45,14 @@
         // }
 
         input[type="text"]:focus {
-          border-color: #85B7D9;
+          border-color: $half-baked;
         }
 
         .ui.checkbox:not(.toggle):not(.slider) input:focus {
           ~ label {
             color: initial;
             &:before {
-              border-color: #85B7D9;
+              border-color: $half-baked;
               background: initial;
             }
           }
