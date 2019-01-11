@@ -193,6 +193,7 @@ class EditSupportFilesContent extends React.PureComponent {
                   ref={ this.handleAddFilesRef }
                   type="file"
                   multiple
+                  tabIndex={ -1 }
                 />
               </VisuallyHidden>
               <Button

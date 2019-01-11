@@ -518,6 +518,7 @@ class VideoEditProject extends React.PureComponent {
                     type="file"
                     accept=".mov, .mp4, .mpg, .wmv, .avi"
                     multiple
+                    tabIndex={ -1 }
                   />
                 </VisuallyHidden>
               </div> }

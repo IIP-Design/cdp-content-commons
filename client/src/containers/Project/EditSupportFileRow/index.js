@@ -53,6 +53,7 @@ class EditSupportFileRow extends React.PureComponent {
             ref={ this.handleReplaceFileRef }
             type="file"
             accept={ acceptedTypes }
+            tabIndex={ -1 }
           />
         </VisuallyHidden>
         <Button
