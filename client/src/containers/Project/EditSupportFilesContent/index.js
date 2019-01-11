@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFilesContent from './selectors';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button, Form, Grid } from 'semantic-ui-react';
 
 import ModalItem from 'components/Modals/ModalItem/ModalItem';
 import VisuallyHidden from 'components/VisuallyHidden';
@@ -61,7 +61,7 @@ class EditSupportFilesContent extends React.PureComponent {
     this.props.closeEditModal();
   }
 
-  handleSaveFiles = () => {
+  handleSubmit = () => {
     console.log( 'files saved' );
     this.setState(
       {
@@ -153,62 +153,74 @@ class EditSupportFilesContent extends React.PureComponent {
         headline={ `Edit ${headline} files in this project` }
         textDirection="ltr"
       >
+
         { ( displaySaveMsg || hasUnsavedData ) &&
           <Notification
             el="p"
             customStyles={ notificationStyles }
             msg={ notificationMsg }
           /> }
-        <Grid divided="vertically" verticalAlign="middle">
-          <Grid.Row>
-            <Grid.Column mobile={ 7 }>
-              { headline } Files Selected
-            </Grid.Column>
-            <Grid.Column mobile={ 5 }>
-              Language
-              <small className="msg--required"> *</small>
-            </Grid.Column>
-            <Grid.Column mobile={ 4 } />
-          </Grid.Row>
 
-          { files.map( this.renderRow ) }
+        { /**
+           * onSubmit prop not used because of Semantic UI
+           * bug where a form inside a modal does not
+           * submit when clicking enter.
+           */ }
+        <Form>
+          <Grid divided="vertically" verticalAlign="middle">
+            <Grid.Row>
+              <Grid.Column mobile={ 7 }>
+                { headline } Files Selected
+              </Grid.Column>
+              <Grid.Column mobile={ 5 }>
+                Language
+                <small className="msg--required"> *</small>
+              </Grid.Column>
+              <Grid.Column mobile={ 4 } />
+            </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column className="btn-group">
-              <Button
-                className="cancel-close"
-                content={ hasSaved ? 'Close' : 'Cancel' }
-                basic
-                onClick={ this.handleCancelClose }
-              />
-              <Button
-                className="add-files"
-                content="Add Files"
-                color="blue"
-                basic
-                onClick={ this.handleAddFiles }
-              />
-              <VisuallyHidden>
-                { /* eslint-disable jsx-a11y/label-has-for */ }
-                <label htmlFor="upload-file--multiple">upload files</label>
-                <input
-                  id="upload-file--multiple"
-                  ref={ this.handleAddFilesRef }
-                  type="file"
-                  multiple
-                  tabIndex={ -1 }
+            { files.map( this.renderRow ) }
+
+            <Grid.Row>
+              <Grid.Column className="btn-group">
+                <Button
+                  className="cancel-close"
+                  content={ hasSaved ? 'Close' : 'Cancel' }
+                  basic
+                  onClick={ this.handleCancelClose }
+                  type="button"
                 />
-              </VisuallyHidden>
-              <Button
-                className="save"
-                content={ saveBtnMsg }
-                color="blue"
-                onClick={ this.handleSaveFiles }
-                disabled={ !hasPopulatedLanguages || ( hasSaved && !hasUnsavedData ) }
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+                <Button
+                  className="add-files"
+                  content="Add Files"
+                  color="blue"
+                  basic
+                  onClick={ this.handleAddFiles }
+                  type="button"
+                />
+                <VisuallyHidden>
+                  { /* eslint-disable jsx-a11y/label-has-for */ }
+                  <label htmlFor="upload-file--multiple">upload files</label>
+                  <input
+                    id="upload-file--multiple"
+                    ref={ this.handleAddFilesRef }
+                    type="file"
+                    multiple
+                    tabIndex={ -1 }
+                  />
+                </VisuallyHidden>
+                <Button
+                  className="save"
+                  content={ saveBtnMsg }
+                  color="blue"
+                  disabled={ !hasPopulatedLanguages || ( hasSaved && !hasUnsavedData ) }
+                  onClick={ this.handleSubmit }
+                  type="submit"
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Form>
       </ModalItem>
     );
   }
