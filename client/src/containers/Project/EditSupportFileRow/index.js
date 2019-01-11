@@ -54,6 +54,7 @@ class EditSupportFileRow extends React.PureComponent {
               icon="refresh"
               onClick={ this.handleReplaceFile }
               basic
+              aria-label="replace file"
             />
           }
         />
@@ -83,6 +84,7 @@ class EditSupportFileRow extends React.PureComponent {
               icon="delete"
               onClick={ this.handleDeleteFile }
               basic
+              aria-label="delete file"
             />
           }
         />
