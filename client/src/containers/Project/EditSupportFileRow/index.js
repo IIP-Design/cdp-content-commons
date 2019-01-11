@@ -98,7 +98,7 @@ class EditSupportFileRow extends React.PureComponent {
 
     return (
       <Table.Row>
-        <Table.Cell>{ fileName }</Table.Cell>
+        <Table.Cell width={ 9 }>{ fileName }</Table.Cell>
 
         <Table.Cell width={ 4 }>
           { /* eslint-disable jsx-a11y/label-has-for */
@@ -111,7 +111,7 @@ class EditSupportFileRow extends React.PureComponent {
             id={ id }
             onChange={ handleChange }
             options={ languages }
-            placeholder="Select Language"
+            placeholder="–"
             text={ selectedLanguage }
             value={ selectedLanguage }
             error={ !selectedLanguage }
