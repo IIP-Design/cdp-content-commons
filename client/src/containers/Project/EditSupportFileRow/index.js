@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as actions from './actions';
 import makeSelectEditSupportFileRow from './selectors';
-import { Button, Dropdown, Grid } from 'semantic-ui-react';
+import { Button, Dropdown, Table } from 'semantic-ui-react';
 
 import VisuallyHidden from 'components/VisuallyHidden';
 import { languages } from '../mockData';
@@ -71,9 +71,10 @@ class EditSupportFileRow extends React.PureComponent {
     const { file: fileName, id } = file;
 
     return (
-      <Grid.Row>
-        <Grid.Column mobile={ 7 }>{ fileName }</Grid.Column>
-        <Grid.Column mobile={ 5 }>
+      <Table.Row>
+        <Table.Cell>{ fileName }</Table.Cell>
+
+        <Table.Cell width={ 4 }>
           { /* eslint-disable jsx-a11y/label-has-for */
             <VisuallyHidden>
               <label htmlFor={ `file-${id}` }>
@@ -84,7 +85,7 @@ class EditSupportFileRow extends React.PureComponent {
             id={ id }
             onChange={ handleChange }
             options={ languages }
-            placeholder="Select language"
+            placeholder="Select Language"
             text={ selectedLanguage }
             value={ selectedLanguage }
             error={ !selectedLanguage }
@@ -92,9 +93,10 @@ class EditSupportFileRow extends React.PureComponent {
             required
             selection
           />
-        </Grid.Column>
-        <Grid.Column mobile={ 4 }>{ this.renderIcons() }</Grid.Column>
-      </Grid.Row>
+        </Table.Cell>
+
+        <Table.Cell>{ this.renderIcons() }</Table.Cell>
+      </Table.Row>
     );
   }
 }
