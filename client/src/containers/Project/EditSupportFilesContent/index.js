@@ -137,6 +137,9 @@ class EditSupportFilesContent extends React.PureComponent {
       top: '0',
       left: '50%',
       transform: 'translateX(-50%)',
+      // match Semantic UI border-radius
+      borderBottomLeftRadius: '0.28571429rem',
+      borderBottomRightRadius: '0.28571429rem',
       padding: '1em 1.5em',
       fontSize: '1em'
     };
