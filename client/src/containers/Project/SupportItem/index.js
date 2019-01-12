@@ -222,6 +222,13 @@ class SupportItem extends React.PureComponent {
 
     const isLongLangName = this.isLongName( itemLangWidth, listItemWidth, this.ITEM_LANG_PROPORTION );
 
+    const popupStyle = {
+      overflowWrap: 'break-word',
+      wordWrap: 'break-word',
+      '-ms-word-break': 'break-all',
+      wordBreak: 'break-word'
+    };
+
     if ( error || uploadStatus.error ) {
       return (
         <li key={ `${fileType}-${lang}` } className="support-item error">
@@ -284,6 +291,7 @@ class SupportItem extends React.PureComponent {
                 ] }
                 inverted
                 size="small"
+                style={ popupStyle }
               /> :
               file }
           </span>
@@ -311,6 +319,7 @@ class SupportItem extends React.PureComponent {
                 ] }
                 inverted
                 size="small"
+                style={ popupStyle }
               /> :
               lang }
           </b>
