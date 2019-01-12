@@ -170,10 +170,10 @@ class EditSupportFilesContent extends React.PureComponent {
           <Table basic="very">
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>
+                <Table.HeaderCell width={ 9 }>
                   { `${headline} File${files.length > 1 ? 's' : ''} Selected` }
                 </Table.HeaderCell>
-                <Table.HeaderCell>
+                <Table.HeaderCell width={ 4 }>
                   Language
                   <small className="msg--required"> *</small>
                 </Table.HeaderCell>

@@ -98,9 +98,9 @@ class EditSupportFileRow extends React.PureComponent {
 
     return (
       <Table.Row>
-        <Table.Cell width={ 9 }>{ fileName }</Table.Cell>
+        <Table.Cell>{ fileName }</Table.Cell>
 
-        <Table.Cell width={ 4 }>
+        <Table.Cell>
           { /* eslint-disable jsx-a11y/label-has-for */
             <VisuallyHidden>
               <label htmlFor={ `file-${id}` }>
