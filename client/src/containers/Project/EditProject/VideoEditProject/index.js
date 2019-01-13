@@ -46,40 +46,42 @@ import {
 
 /* eslint-disable react/prefer-stateless-function */
 class VideoEditProject extends React.PureComponent {
-  state = {
-    deleteConfirmOpen: false,
-    hasBeenDeleted: false,
-    hasRequiredData: false,
-    hasSubmittedData: false,
-    isUploadInProgress: false,
-    isUploadFinished: false,
-    hasUnsavedData: false,
-    displaySaveMsg: false,
-    displayTheUploadSuccessMsg: false,
-    hasExceededMaxCategories: false,
-    filesToUploadCount: 0,
-    formData: {
-      title: '',
-      privacySetting: 'anyone',
-      author: '',
-      owner: '',
-      categories: [],
-      tags: [],
-      publicDesc: '',
-      internalDesc: '',
-      termsConditions: false,
-      protectImages: true
-    }
-  }
+  constructor( props ) {
+    super( props );
 
-  componentWillMount = () => {
-    const projectId = this.props.match.params.videoID;
     const videosCount = this.props.project.videos.length;
 
+    this.state = {
+      deleteConfirmOpen: false,
+      hasBeenDeleted: false,
+      hasRequiredData: false,
+      hasSubmittedData: false,
+      isUploadInProgress: false,
+      isUploadFinished: false,
+      hasUnsavedData: false,
+      displaySaveMsg: false,
+      displayTheUploadSuccessMsg: false,
+      hasExceededMaxCategories: false,
+      filesToUploadCount: videosCount + this.getSupportFilesCount(),
+      formData: {
+        title: '',
+        privacySetting: 'anyone',
+        author: '',
+        owner: '',
+        categories: [],
+        tags: [],
+        publicDesc: '',
+        internalDesc: '',
+        termsConditions: false,
+        protectImages: true
+      }
+    };
+  }
+
+
+  componentDidMount = () => {
+    const projectId = this.props.match.params.videoID;
     this.props.loadVideoProjects( projectId );
-    this.setState( {
-      filesToUploadCount: videosCount + this.getSupportFilesCount()
-    } );
   }
 
   componentDidUpdate = ( prevProps, prevState ) => {

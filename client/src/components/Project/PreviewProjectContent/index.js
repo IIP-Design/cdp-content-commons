@@ -37,17 +37,18 @@ class PreviewProjectContent extends React.PureComponent {
   constructor( props ) {
     super( props );
 
+    const { data, projecttype } = this.props;
+
     this.state = {
       dropDownIsOpen: false,
       selectedLanguage: 'English',
-      projectItems: {},
+      projectItems: this.getProjectItems( data, projecttype ),
       selectedItem: {},
-      languages: []
+      languages: this.getLanguages( data, projecttype )
     };
   }
 
-  componentWillMount = () => {
-    this.selectAllProjectItems();
+  componentDidMount = () => {
     this.selectProjectItem();
   }
 
@@ -72,14 +73,6 @@ class PreviewProjectContent extends React.PureComponent {
 
   selectLanguage = ( language ) => {
     this.setState( { selectedLanguage: language } );
-  }
-
-  selectAllProjectItems = () => {
-    const { data, projecttype } = this.props;
-    this.setState( {
-      projectItems: this.getProjectItems( data, projecttype ),
-      languages: this.getLanguages( data, projecttype )
-    } );
   }
 
   selectProjectItem = () => {
@@ -109,6 +102,8 @@ class PreviewProjectContent extends React.PureComponent {
       selectedItem,
       languages
     } = this.state;
+
+    if ( !Object.keys( selectedItem ).length ) return null;
 
     const {
       title,
