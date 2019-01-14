@@ -41,9 +41,13 @@
     }
   }
 
-  &__content,
+  .content,
   &_confirm {
     padding: 2em;
+  }
+
+  .content h2,
+  &_confirm {
     text-align: center;
   }
 }

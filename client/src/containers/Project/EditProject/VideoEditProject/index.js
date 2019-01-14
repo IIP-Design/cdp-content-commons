@@ -265,6 +265,29 @@ class VideoEditProject extends React.PureComponent {
   SAVE_MSG_DELAY = 2000;
   UPLOAD_SUCCESS_MSG_DELAY = this.SAVE_MSG_DELAY + 1000;
 
+  renderConfirm = ( isOpen, onConfirm, onCancel ) => (
+    <Fragment>
+      <Confirm
+        className="confirm-modal"
+        open={ isOpen }
+        onCancel={ onCancel }
+        onConfirm={ onConfirm }
+        cancelButton="No"
+        confirmButton="Yes"
+        content={
+          <ConfirmModalContent
+            className="content"
+            headline="Unsaved Changes!"
+          >
+            <p>You have not finished entering and uploading your project data and content.</p>
+            <p>Navigating away from this page now, your changes will not be saved and uploads for this project will be canceled.</p>
+            <p><strong>Do you want to leave this page and lose your changes and cancel your uploads?</strong></p>
+          </ConfirmModalContent>
+        }
+      />
+    </Fragment>
+  )
+
   render() {
     const { project, uploadedSupportFilesCount } = this.props;
 
@@ -339,30 +362,7 @@ class VideoEditProject extends React.PureComponent {
       <Page title="Edit Project" description="Edit content project">
 
         <NavigationPrompt when={ hasUnsavedData }>
-          { ( isOpen, onConfirm, onCancel ) => (
-            <Fragment>
-              <Confirm
-                className="confirm-modal nav-away"
-                open={ isOpen }
-                content={
-                  <ConfirmModalContent
-                    className="confirm-modal__content"
-                    headline="Unsaved Changes!"
-                  >
-                    <p>You haven&rsquo;t finished entering your project data.</p>
-
-                    <p>Navigating away from this page now, your changes will not be saved and uploads for this project will be canceled.</p>
-
-                    <p>Do you want to cancel?</p>
-                  </ConfirmModalContent>
-                }
-                onCancel={ onCancel }
-                onConfirm={ onConfirm }
-                cancelButton="No"
-                confirmButton="Yes"
-              />
-            </Fragment>
-          ) }
+          { this.renderConfirm }
         </NavigationPrompt>
 
         <Breadcrumbs />
