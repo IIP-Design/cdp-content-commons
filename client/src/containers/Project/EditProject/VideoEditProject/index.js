@@ -346,7 +346,7 @@ class VideoEditProject extends React.PureComponent {
                 open={ isOpen }
                 content={
                   <ConfirmModalContent
-                    className="confirm confirm--nav-away"
+                    className="confirm-modal__content"
                     headline="Unsaved Changes!"
                   >
                     <p>You haven&rsquo;t finished entering your project data.</p>
