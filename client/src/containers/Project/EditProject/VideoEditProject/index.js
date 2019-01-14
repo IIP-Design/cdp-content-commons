@@ -3,7 +3,7 @@
  * VideoEditProject
  *
  */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { func, number, object } from 'prop-types';
 import { connect } from 'react-redux';
@@ -20,6 +20,7 @@ import Page from 'components/Page';
 import ProjectHeader from 'components/Project/ProjectHeader';
 import Breadcrumbs from 'components/Breadcrumbs';
 import ConfirmModalContent from 'components/Project/ConfirmModalContent';
+import NavigationPrompt from 'components/Project/NavigationPrompt/Loadable';
 import PreviewProject from 'components/Project/PreviewProject';
 import PreviewProjectContent from 'components/Project/PreviewProjectContent';
 import FormInstructions from 'components/Project/EditProject/FormInstructions';
@@ -336,7 +337,36 @@ class VideoEditProject extends React.PureComponent {
 
     return (
       <Page title="Edit Project" description="Edit content project">
+
+        <NavigationPrompt when={ hasUnsavedData }>
+          { ( isOpen, onConfirm, onCancel ) => (
+            <Fragment>
+              <Confirm
+                className="confirm-modal nav-away"
+                open={ isOpen }
+                content={
+                  <ConfirmModalContent
+                    className="confirm confirm--nav-away"
+                    headline="Unsaved Changes!"
+                  >
+                    <p>You haven&rsquo;t finished entering your project data.</p>
+
+                    <p>Navigating away from this page now, your changes will not be saved and uploads for this project will be canceled.</p>
+
+                    <p>Do you want to cancel?</p>
+                  </ConfirmModalContent>
+                }
+                onCancel={ onCancel }
+                onConfirm={ onConfirm }
+                cancelButton="No"
+                confirmButton="Yes"
+              />
+            </Fragment>
+          ) }
+        </NavigationPrompt>
+
         <Breadcrumbs />
+
         <div className="edit-project">
           <div className="edit-project__header">
             <ProjectHeader icon="video camera" text="Project Details">
