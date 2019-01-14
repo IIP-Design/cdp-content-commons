@@ -28,6 +28,7 @@
         &:active,
         &:hover,
         &:focus {
+          border-color: $matisse-blue;
           background-color: $matisse-blue !important;
           color: #fff;
         }
