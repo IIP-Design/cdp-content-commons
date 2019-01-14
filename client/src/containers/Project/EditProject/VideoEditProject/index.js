@@ -361,7 +361,7 @@ class VideoEditProject extends React.PureComponent {
     return (
       <Page title="Edit Project" description="Edit content project">
 
-        <NavigationPrompt when={ hasUnsavedData }>
+        <NavigationPrompt when={ hasUnsavedData || isUploadInProgress }>
           { this.renderConfirm }
         </NavigationPrompt>
 
