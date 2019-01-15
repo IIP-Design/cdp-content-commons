@@ -225,7 +225,7 @@ class SupportItem extends React.PureComponent {
     const popupStyle = {
       overflowWrap: 'break-word',
       wordWrap: 'break-word',
-      '-ms-word-break': 'break-all',
+      msWordBreak: 'break-all',
       wordBreak: 'break-word'
     };
 
@@ -280,17 +280,19 @@ class SupportItem extends React.PureComponent {
           >
             { isLongFileName ?
               <Popup
+                content={ file }
+                size="small"
+                inverted
+                on={ [
+                  'hover',
+                  'click',
+                  'focus'
+                ] }
                 trigger={
                   <span>
                     <Focusable>{ shortFileName }</Focusable>
                   </span>
                 }
-                content={ file }
-                on={ [
-                  'hover', 'click', 'focus'
-                ] }
-                inverted
-                size="small"
                 style={ popupStyle }
               /> :
               file }

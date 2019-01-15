@@ -178,7 +178,7 @@ class EditSupportFileRow extends React.PureComponent {
     const popupStyle = {
       overflowWrap: 'break-word',
       wordWrap: 'break-word',
-      '-ms-word-break': 'break-all',
+      msWordBreak: 'break-all',
       wordBreak: 'break-word'
     };
 
