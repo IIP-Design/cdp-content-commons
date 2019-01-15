@@ -8,20 +8,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Checkbox, Icon } from 'semantic-ui-react';
 import { titleCase } from '../../../utils/helpers';
-import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../../utils/browser';
 import './TableMenu.css';
 
 class TableMenu extends React.Component {
   state = {
-    displayTableMenu: false
+    displayTableMenu: false,
+    menuHeaders: []
   }
   
   componentDidMount() {
-    if ( isMobile() || isWindowWidthLessThanOrEqualTo( 767 ) ) {
-      this.props.tableDisplayAllData( this.props.columnMenu );
-    }    
-
     document.addEventListener( 'click', this.toggleTableMenu, false );
+    
+    this.props.tableDisplayAllData( this.props.columnMenu, () => {
+      this.setState({ menuHeaders: [] });
+    } );    
   }
 
   componentWillUnmount() {
@@ -43,6 +43,25 @@ class TableMenu extends React.Component {
     this.setState( prevState => ({ displayTableMenu: false }) );
   }
 
+  toggleCheckbox = ( e, data ) => {
+    const selectedCheckbox = data[`data-proplabel`];
+    const { menuHeaders } = this.state;
+
+    if ( menuHeaders.includes( selectedCheckbox ) ) {
+      this.setState( prevState => {
+        return {
+          menuHeaders: prevState.menuHeaders.filter( header => header !== selectedCheckbox )
+        }
+      });
+    } else {
+      this.setState( prevState => {
+        return {
+          menuHeaders: [...prevState.menuHeaders, selectedCheckbox]
+        }
+      });
+    }
+  }
+
   render() {
     const { displayTableMenu } = this.state;
     const { columnMenu, tableMenuOnChange } = this.props;
@@ -59,9 +78,11 @@ class TableMenu extends React.Component {
                 data-tablemenuitem
                 data-propname={ item.name }
                 data-proplabel={ item.label }
-                key={ item.name }
-                onChange={ tableMenuOnChange }
                 label={ titleCase( item.label ) }
+                key={ item.name }
+                onChange={ tableMenuOnChange }                
+                onClick={ this.toggleCheckbox }
+                checked={ this.state.menuHeaders.includes( item.label ) }
               />
             ) ) }
           </div>

@@ -7,6 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 import { Table, Grid } from 'semantic-ui-react';
+import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../utils/browser';
 import TableItemsDisplay from './TableItemsDisplay';
 import TableMenu from './TableMenu';
 import TableHeader from './TableHeader';
@@ -42,12 +43,30 @@ class ScrollableTableWithMenu extends React.Component {
     });
   }
 
-  tableDisplayAllData = menuHeaders => {
-    this.setState( prevState => {
-      return {
-        tableHeaders: [...prevState.tableHeaders, ...menuHeaders ]
-      }
+  tableDisplayAllData = ( menuHeaders, clearTableMenuSelections ) => {
+    const { persistentTableHeaders } = this.props;
+
+    if ( isMobile() ) {  
+      this.setState( prevState => {
+        return {
+          tableHeaders: [...prevState.tableHeaders, ...menuHeaders ]
+        }
+      } );
+    }
+
+    let resizeTimer;
+    window.addEventListener( 'resize', () => {
+      clearTimeout( resizeTimer );
+      resizeTimer = setTimeout( () => {        
+        if ( !isWindowWidthLessThanOrEqualTo( 767 ) ) {
+          clearTableMenuSelections();
+          return this.setState({ tableHeaders: persistentTableHeaders });
+        } else {
+          return this.setState({ tableHeaders: [ ...persistentTableHeaders, ...menuHeaders ] });
+        }        
+      }, 250 );      
     } );
+    
   }
 
   toggleAllItemsSelection = e => {
