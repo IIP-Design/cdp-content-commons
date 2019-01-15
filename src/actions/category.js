@@ -28,7 +28,7 @@ export const loadCategories = () => async ( dispatch, getState ) => {
   const primaryCategories = primary.hits.hits.map( category => category._source.language.en );
 
   // get all category ids that have associated content
-  const allIds = [...response.aggregations.id.buckets, ...response.aggregations.unitId.buckets];
+  const allIds = [...response.aggregations.all_hits.id.buckets, ...response.aggregations.all_hits.unitId.buckets];
 
   // get associated category name from id arr of unique values
   const categoryNameValuePairs = await categoryValueNameRequest( uniqBy( allIds, 'key' ) );

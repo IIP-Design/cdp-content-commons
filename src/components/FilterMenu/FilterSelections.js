@@ -86,30 +86,9 @@ class FilterSelections extends Component {
     }
     await this.props.createRequest();
 
-    switch ( filter.toLowerCase() ) {
-      case 'language':
-        this.props.loadSources();
-        this.props.loadCategories();
-        break;
-
-      case 'format':
-        this.props.loadSources();
-        this.props.loadCategories();
-        break;
-
-      case 'source':
-        this.props.loadCategories();
-        break;
-
-      case 'date range':
-        this.props.loadSources();
-        this.props.loadCategories();
-        break;
-
-      default: {
-        // console.log( 'no changes' );
-      }
-    }
+    this.props.loadSources();
+    this.props.loadCategories();
+    this.props.loadPostTypes();
   };
 
   render() {
@@ -161,7 +140,8 @@ FilterSelections.propTypes = {
   dateUpdate: func,
   createRequest: func,
   loadSources: func,
-  loadCategories: func
+  loadCategories: func,
+  loadPostTypes: func
 };
 
 const mapStateToProps = state => ( {

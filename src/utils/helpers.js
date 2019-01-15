@@ -245,10 +245,13 @@ export const queryBuilder = ( store ) => {
   // Do not fetch courses or page content type
   body.notQuery( 'match', 'type.keyword', 'courses' );
   body.notQuery( 'match', 'type.keyword', 'page' );
-
-  body.agg( 'terms', 'unit.categories.id.keyword', { size: 100 }, 'unitId' );
-  body.agg( 'terms', 'categories.id.keyword', { size: 100 }, 'id' );
-  body.agg( 'terms', 'owner.keyword', { size: 100 }, 'source' );
+  body.agg( 'global', {}, 'all_hits', a =>
+    a.agg( 'terms', 'unit.categories.id.keyword', { size: 100 }, 'unitId' )
+      .agg( 'terms', 'categories.id.keyword', { size: 100 }, 'id' )
+      .agg( 'terms', 'owner.keyword', { size: 100 }, 'source' )
+      .agg( 'terms', 'unit.language.locale.keyword', { size: 100 }, 'unitLocale' )
+      .agg( 'terms', 'language.locale.keyword', { size: 100 }, 'locale' )
+      .agg( 'terms', 'type.keyword', { size: 30 }, 'postType' ) );
 
   // body.query( 'query_string', 'query', optionStr ); // return all for TESTING
   return body.build();

@@ -61,42 +61,20 @@ class FilterMenuItem extends Component {
     const {
       value,
       checked,
-      label,
-      filter
+      label
     } = selected;
 
     this.props.onFilterChange( {
       key: value,
-      display_name: label,
+      display_name: label.split( '(' )[0].trim(),
       checked
     } );
 
     await this.props.createRequest();
 
-    switch ( filter.toLowerCase() ) {
-      case 'language':
-        this.props.loadSources();
-        this.props.loadCategories();
-        break;
-
-      case 'format':
-        this.props.loadSources();
-        this.props.loadCategories();
-        break;
-
-      case 'source':
-        this.props.loadCategories();
-        break;
-
-      case 'date range':
-        this.props.loadSources();
-        this.props.loadCategories();
-        break;
-
-      default: {
-        // console.log( 'no changes' );
-      }
-    }
+    this.props.loadSources();
+    this.props.loadCategories();
+    this.props.loadPostTypes();
   };
 
   render() {
@@ -122,22 +100,33 @@ class FilterMenuItem extends Component {
         <Form className={ filterItemOpen ? 'filterMenu_options show' : 'filterMenu_options' }>
           <Form.Group>
             { this.formatOptions( this.props.options, this.props.filter )
-                .map( option => (
-                  <FormItem
-                    key={ option.value }
-                    label={ option.label }
-                    // labelWithCount={ option.count ? `${option.label} (${option.count})` : option.label }
-                    value={ option.value }
-                    filter={ this.props.filter }
-                    count={ option.count }
-                    onChange={ this.handleOnChange }
-                    checked={
-                      FormItem._meta.name === 'FormRadio'
-                        ? selected.key === option.value
-                        : selected.some( sel => sel.display_name === option.label )
-                    }
-                  />
-                ) ) }
+                .map( ( option ) => {
+                  let label;
+                  if ( this.props.filter.toLowerCase() === 'language'
+                    || this.props.filter.toLowerCase() === 'date range'
+                  ) {
+                    ( { label } = option );
+                  } else if ( option.count ) {
+                    label = `${option.label} (${option.count})`;
+                  } else {
+                    label = `${option.label} (0)`;
+                  }
+                  return (
+                    <FormItem
+                      key={ option.value }
+                      label={ label }
+                      value={ option.value }
+                      filter={ this.props.filter }
+                      count={ option.count }
+                      onChange={ this.handleOnChange }
+                      checked={
+                        FormItem._meta.name === 'FormRadio'
+                          ? selected.key === option.value
+                          : selected.some( sel => sel.display_name === option.label )
+                      }
+                    />
+                  );
+                } ) };
             { this.props.options.length === 0 && <span style={ { textAlign: 'center' } }>Not Available</span> }
           </Form.Group>
         </Form>
@@ -155,6 +144,7 @@ FilterMenuItem.propTypes = {
   createRequest: func,
   loadSources: func,
   loadCategories: func,
+  loadPostTypes: func,
   loadOptions: func
 };
 

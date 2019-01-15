@@ -67,7 +67,7 @@ export const loadSources = () => async ( dispatch, getState ) => {
     return dispatch( { type: LOAD_SOURCES_FAILED } );
   }
 
-  const { buckets } = response.aggregations.source;
+  const { buckets } = response.aggregations.all_hits.source;
 
   const sources = buckets.filter( bucket => bucket.key && bucket.key !== 'IIP Courses' ).map( bucket => ( {
     key: normalizeKeys( bucket.key ),
