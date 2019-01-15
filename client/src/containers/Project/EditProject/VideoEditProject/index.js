@@ -79,7 +79,6 @@ class VideoEditProject extends React.PureComponent {
     };
   }
 
-
   componentDidMount = () => {
     const projectId = this.props.match.params.videoID;
     this.props.loadVideoProjects( projectId );
