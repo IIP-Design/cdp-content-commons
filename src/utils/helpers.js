@@ -256,6 +256,36 @@ export const queryBuilder = ( store ) => {
   return body.build();
 };
 
+/**
+ * Removes videos from the ElasticSearch response that do not have streaming URLs
+ * for the provided language locale.
+ *
+ * @param response
+ * @param locale
+ * @returns {*}
+ */
+export const filterResponse = ( response, locale ) => {
+  const filtered = response;
+  filtered.hits.hits = filtered.hits.hits.filter( ( hit ) => {
+    const item = hit._source;
+    if ( item.type !== 'video' ) return true;
+    // Try to find a matching unit
+    return !!item.unit.find( ( unit ) => {
+      if ( unit.language.locale !== locale ) return false;
+      // Try to find a matching source
+      return !!unit.source.find( ( source ) => {
+        if ( source.stream && source.stream.url ) return true;
+        if ( source.streamUrl && source.streamUrl.length > 0 ) {
+          // Try to find a non empty streamUrl url
+          return !!source.streamUrl.find( streamUrl => !!streamUrl.url );
+        }
+        return false;
+      } );
+    } );
+  } );
+  return filtered;
+};
+
 export const ScrollToTop = () => {
   window.scrollTo( 0, 0 );
   return null;

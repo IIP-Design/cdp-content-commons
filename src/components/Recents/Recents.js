@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import './Recents.css';
 import { normalizeItem } from '../../utils/parser';
+import { filterResponse } from '../../utils/helpers';
 import ModalContent from '../Modals/ModalContent';
 
 class Recents extends Component {
@@ -16,7 +17,7 @@ class Recents extends Component {
     const currentLang = 'en-us';
     const response = await typeRecentsRequest( this.props.postType, currentLang );
     this.setState( {
-      recents: response
+      recents: filterResponse( response, currentLang )
     } );
   }
 
