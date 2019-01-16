@@ -16,7 +16,7 @@ import {
   SEARCH_SORT_SUCCESS
 } from './types';
 import { queryRequest } from '../utils/api';
-import { queryBuilder } from '../utils/helpers';
+import { queryBuilder, filterResponse } from '../utils/helpers';
 
 const calculatePageOffset = ( currentPage, pageSize ) => {
   if ( currentPage < 0 ) {
@@ -115,7 +115,7 @@ export const createRequest = () => async ( dispatch, getState ) => {
   return dispatch( {
     type: SEARCH_REQUEST_SUCCESS,
     payload: {
-      response,
+      response: filterResponse( response, currentState.language.currentLanguage.key ),
       ...calculatePages( response.hits.total, 1, pageSize ), // currentPage
       pageSize,
       currentQuery: query
