@@ -173,7 +173,7 @@ export const queryBuilder = ( store ) => {
   const hasSelectedTypes = store.type.currentPostTypes.length;
 
   if ( store.language.currentLanguage ) {
-    options.push( getLanguageQry( store.language.currentLanguage ) );
+    // options.push( getLanguageQry( store.language.currentLanguage ) );
   }
 
   if ( store.search.author ) {
@@ -231,16 +231,30 @@ export const queryBuilder = ( store ) => {
 
   // add original search query last
   if ( store.search.query && store.search.query.trim() ) {
-    const qryObj = { query: `(${maybeFixQuotes( escapeRegExp( store.search.query ) )}) AND (${optionStr})` };
+    const qryObj = { query: `(${maybeFixQuotes( escapeRegExp( store.search.query ) )})${optionStr ? ` AND (${optionStr})` : ''}` };
     if ( hasSelectedTypes ) {
       qryObj.fields = getQryFields( store.type.currentPostTypes );
     } else {
       qryObj.fields = getQryFields( store.type.list );
     }
-    body.query( 'query_string', qryObj );
-  } else {
+    if ( qryObj ) body.query( 'query_string', qryObj );
+  } else if ( optionStr ) {
     body.query( 'query_string', 'query', optionStr );
   }
+
+  body.orQuery( 'bool', ( q ) => {
+    q.notQuery( 'match', 'type', 'video' );
+    q.query( 'match', 'language.locale.keyword', store.language.currentLanguage.key );
+    return q;
+  } );
+  body.orQuery( 'nested', { path: 'unit', ignore_unmapped: true }, ( q ) => {
+    q.query( 'match', 'unit.language.locale.keyword', store.language.currentLanguage.key );
+    q.orQuery( 'exists', 'field', 'unit.source.streamUrl.url' );
+    q.orQuery( 'exists', 'field', 'unit.source.stream.url' );
+    q.queryMinimumShouldMatch( 1 );
+    return q;
+  } );
+  body.queryMinimumShouldMatch( 1 );
 
   // Boost more recent content
   body.orQuery( 'range', 'published', { boost: 8, gte: 'now-7d' } );
@@ -253,7 +267,9 @@ export const queryBuilder = ( store ) => {
   body.notQuery( 'match', 'type.keyword', 'page' );
 
   // body.query( 'query_string', 'query', optionStr ); // return all for TESTING
-  return body.build();
+  const built = body.build();
+  console.log( JSON.stringify( built, null, 2 ) );
+  return built;
 };
 
 export const ScrollToTop = () => {
