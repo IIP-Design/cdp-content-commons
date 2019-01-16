@@ -12,7 +12,7 @@ import './TableMobileDataToggleIcon.css';
 /* eslint-disable react/prefer-stateless-function */
 class TableMobileDataToggleIcon extends React.Component {
   state = {
-    mobileDataToggleIcon: 'plus'
+    mobileDataToggleIcon: 'chevron down'
   }
 
   componentDidUpdate() {    
@@ -37,9 +37,9 @@ class TableMobileDataToggleIcon extends React.Component {
     });
 
     this.setState( prevState => ({
-      mobileDataToggleIcon: prevState.mobileDataToggleIcon === 'plus'
-      ? 'minus'
-      : 'plus'
+      mobileDataToggleIcon: prevState.mobileDataToggleIcon === 'chevron down'
+      ? 'chevron up'
+      : 'chevron down'
     } ) );
 
   }

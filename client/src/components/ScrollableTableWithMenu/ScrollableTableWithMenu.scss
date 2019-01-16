@@ -58,6 +58,7 @@
         &.items_table_item {
           @media screen and (max-width: 767px){
             position: relative;
+            z-index: 2;
             width: auto !important;
             padding: 0 !important;
 
@@ -72,10 +73,7 @@
         }
 
         .primary_col {
-          display: flex;
-          @media screen and (max-width: 767px){
-            flex-direction: column;
-          }
+          display: flex;          
         }
       }
 

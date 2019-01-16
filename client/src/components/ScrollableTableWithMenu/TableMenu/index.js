@@ -40,30 +40,28 @@ class TableMenu extends React.Component {
       return this.setState( prevState => ({ displayTableMenu: true }) );
     }
 
-    this.setState( prevState => ({ displayTableMenu: false }) );
+    return this.setState( prevState => ({ displayTableMenu: false }) );
   }
 
   toggleCheckbox = ( e, data ) => {
     const selectedCheckbox = data[`data-proplabel`];
     const { menuHeaders } = this.state;
 
-    if ( menuHeaders.includes( selectedCheckbox ) ) {
-      this.setState( prevState => {
+    this.setState( prevState => {
+      if ( menuHeaders.includes( selectedCheckbox ) ) {
         return {
           menuHeaders: prevState.menuHeaders.filter( header => header !== selectedCheckbox )
         }
-      });
-    } else {
-      this.setState( prevState => {
+      } else {
         return {
           menuHeaders: [...prevState.menuHeaders, selectedCheckbox]
         }
-      });
-    }
+      }
+    } );
   }
 
   render() {
-    const { displayTableMenu } = this.state;
+    const { displayTableMenu, menuHeaders } = this.state;
     const { columnMenu, tableMenuOnChange } = this.props;
 
     return (
@@ -82,7 +80,7 @@ class TableMenu extends React.Component {
                 key={ item.name }
                 onChange={ tableMenuOnChange }                
                 onClick={ this.toggleCheckbox }
-                checked={ this.state.menuHeaders.includes( item.label ) }
+                checked={ menuHeaders.includes( item.label ) }
               />
             ) ) }
           </div>

@@ -38,7 +38,7 @@ class MyProjects extends React.Component {
             selectedItems,
             data
           }, toggleItemSelection, tableDisplayAllData) => (
-            <Table.Body>
+            <Table.Body className="myProjects">
               { data.map( ( d,i ) => (
                 <Table.Row key={ d.id }>
                   { tableHeaders.map( ( header, i ) => {

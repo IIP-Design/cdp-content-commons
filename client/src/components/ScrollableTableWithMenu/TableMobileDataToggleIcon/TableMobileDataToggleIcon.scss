@@ -1,8 +1,7 @@
 .items_table_mobileDataToggleIcon.icon {
   position: absolute;
   top: 0;
-  right: 0;
-  font-size: 1.5em;
+  right: 20px;
   @media screen and (min-width: 768px) {
     display: none;
   }
