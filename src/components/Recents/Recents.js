@@ -75,7 +75,7 @@ class Recents extends Component {
           key={ v4() }
           closeIcon
           trigger={
-            <Item className="recentsItem">
+            <Item className="recentsItem" data-title={ `openModal - ${item.title}` }>
               <div
                 className="recentsItem_img"
                 style={ { backgroundImage: `url( ${item.thumbnail} )` } }

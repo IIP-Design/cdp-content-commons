@@ -47,7 +47,7 @@ class ClipboardCopy extends Component {
   };
 
   render() {
-    const { copyItem, label } = this.props;
+    const { copyItem, itemAction, label } = this.props;
 
     return (
       <div className="clipboardcopy_wrapper">
@@ -65,7 +65,14 @@ class ClipboardCopy extends Component {
               onFocus={ this.handleFocus }
               ref={ ( copyInput ) => { this.copyInput = copyInput; } }
             />
-            <Button className={ this.state.cls } primary onClick={ this.handleCopyClick }>{ this.state.label }</Button>
+            <Button
+              className={ this.state.cls }
+              data-action={ itemAction }
+              onClick={ this.handleCopyClick }
+              primary
+            >
+              { this.state.label }
+            </Button>
           </div>
         </div>
       </div>
@@ -75,6 +82,7 @@ class ClipboardCopy extends Component {
 
 ClipboardCopy.propTypes = {
   copyItem: string,
+  itemAction: string,
   label: string
 };
 

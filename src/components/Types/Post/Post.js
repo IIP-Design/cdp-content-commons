@@ -19,7 +19,7 @@ import PopupTabbed from '../../Popup/PopupTabbed';
 import Popup from '../../Popup/Popup';
 
 import Share from '../../Share/Share';
-import EmbedPost from './EmbedPost';
+import Embed from '../../Embed/Embed';
 import EmbedHelp from './EmbedHelp';
 
 class Post extends Component {
@@ -89,9 +89,10 @@ class Post extends Component {
                       {
                         title: 'Copy Embed Code',
                         component: (
-                          <EmbedPost
-                            instructions="Copy and paste the code below to embed article on your site"
+                          <Embed
                             embedItem={ embedItem }
+                            instructions="Copy and paste the code below to embed article on your site"
+                            title={ item.title }
                           />
                         )
                       },

@@ -25,7 +25,7 @@ const Share = ( props ) => {
           <ShareButton url={ tweet } icon="twitter" label="Share on Twitter" />
         </List>
       ) }
-      <ClipboardCopy label="Direct Link" copyItem={ directLink } />
+      <ClipboardCopy label="Direct Link" copyItem={ directLink } itemAction={ `copyShareLink - ${title}` } />
     </div>
   );
 };
