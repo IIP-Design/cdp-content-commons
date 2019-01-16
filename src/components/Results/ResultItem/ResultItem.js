@@ -53,14 +53,17 @@ class ResultItem extends Component {
     } else if ( item.language && item.language.text_direction ) {
       textDirection = item.language.text_direction;
     }
+
+    const action = `openModal - ${item.title}`;
+
     return (
       <Card>
         <Modal
           closeIcon
           trigger={
             <div className="card_imgWrapper">
-              <Image src={ item.thumbnail } width="100%" height="100%" />
-              <Image src={ item.icon } className="card_postIcon" />
+              <Image data-action={ action } src={ item.thumbnail } width="100%" height="100%" />
+              <Image data-action={ action } src={ item.icon } className="card_postIcon" />
             </div>
           }
         >
@@ -70,7 +73,7 @@ class ResultItem extends Component {
         </Modal>
         <Card.Content className={ textDirection }>
           <Card.Header className="card_header">
-            <Modal closeIcon trigger={ <p>{ item.title }</p> }>
+            <Modal closeIcon trigger={ <p data-action={ action }>{ item.title }</p> }>
               <Modal.Content>
                 <ModalContent item={ item } />
               </Modal.Content>

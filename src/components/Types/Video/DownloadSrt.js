@@ -17,7 +17,11 @@ class DownloadSrt extends Component {
     return (
       <div key={ `fs_${i}` } >
         <Item.Group className="download-item">
-          <Item as="a" href={ this.props.downloadLink( srt.srcUrl, defaultTitle, language.locale ) } >
+          <Item
+            as="a"
+            data-action={ `downloadSrt - ${unit.language.display_name} - ${defaultTitle}` }
+            href={ this.props.downloadLink( srt.srcUrl, defaultTitle, language.locale ) }
+          >
             <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
             <Item.Content>
               <Item.Header className="download-header">{ `Download ${unit.language.display_name} SRT` }</Item.Header>

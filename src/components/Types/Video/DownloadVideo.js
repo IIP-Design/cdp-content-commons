@@ -61,7 +61,11 @@ class DownloadVideo extends Component {
     return (
       <div key={ `fs_${index}` } >
         <Item.Group className="download-item">
-          <Item as="a" href={ this.props.downloadLink( video.downloadUrl, defaultTitle, language.locale, downloadIdentifier ) }>
+          <Item
+            as="a"
+            data-action={ `downloadVideo - ${title || defaultTitle}` }
+            href={ this.props.downloadLink( video.downloadUrl, defaultTitle, language.locale, downloadIdentifier ) }
+          >
             <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
             <Item.Content>
               <Item.Header className="download-header">

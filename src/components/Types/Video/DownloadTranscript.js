@@ -13,7 +13,12 @@ class DownloadTranscript extends Component {
 
   renderFormItem = ( unit, i ) => (
     <Item.Group key={ `fs_${i}` } className="download-item">
-      <Item as="a" href={ unit.transcript.srcUrl } download={ `${unit.language.display_name}_Transcript` }>
+      <Item
+        as="a"
+        href={ unit.transcript.srcUrl }
+        data-action={ `downloadTranscript - ${unit.language.display_name} - ${unit.title}` }
+        download={ `${unit.language.display_name}_Transcript` }
+      >
         <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
         <Item.Content>
           <Item.Header className="download-header">{ `Download ${unit.language.display_name} Transcript` }</Item.Header>

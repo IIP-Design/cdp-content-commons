@@ -79,9 +79,10 @@ class Post extends Component {
             </div>
             <div className="trigger-container">
               <PopupTrigger
-                toolTip="Embed this article"
+                action={ `embedIconClick - ${item.title}` }
                 icon={ { img: embedIcon, dim: 24 } }
                 show
+                toolTip="Embed this article"
                 content={
                   <PopupTabbed
                     title="Embed this article on your site"
@@ -102,9 +103,10 @@ class Post extends Component {
                 }
               />
               <PopupTrigger
-                toolTip="Share article"
+                action={ `shareIconClick - ${item.title}` }
                 icon={ { img: shareIcon, dim: 20 } }
                 show
+                toolTip="Share article"
                 content={
                   <Popup title="Share this article.">
                     <Share

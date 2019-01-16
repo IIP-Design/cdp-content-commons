@@ -70,23 +70,33 @@ class Recents extends Component {
           : `${cat.name.toLowerCase()}  · `;
       } );
 
+      const action = `openModal - ${item.title}`;
+
       itemsright.push( (
         <Modal
           key={ v4() }
           closeIcon
           trigger={
-            <Item className="recentsItem" data-title={ `openModal - ${item.title}` }>
+            <Item className="recentsItem" data-action={ action }>
               <div
                 className="recentsItem_img"
+                data-action={ action }
                 style={ { backgroundImage: `url( ${item.thumbnail} )` } }
               >
-                <img src={ item.icon } className="metaicon" alt={ `${this.props.postType} icon` } />
+                <img
+                  alt={ `${this.props.postType} icon` }
+                  className="metaicon"
+                  data-action={ action }
+                  src={ item.icon }
+                />
               </div>
-              <Item.Content>
-                <Item.Header>{ item.title }</Item.Header>
-                <div className="meta">
-                  <span className="date">{ moment( item.published ).format( 'MMMM DD, YYYY' ) }</span>
-                  <span className="categories">{ categories }</span>
+              <Item.Content data-action={ action }>
+                <Item.Header data-action={ action }>{ item.title }</Item.Header>
+                <div className="meta" >
+                  <span className="date" data-action={ action }>
+                    { moment( item.published ).format( 'MMMM DD, YYYY' ) }
+                  </span>
+                  <span className="categories" data-action={ action }>{ categories }</span>
                 </div>
               </Item.Content>
             </Item>
@@ -113,12 +123,22 @@ class Recents extends Component {
               <Modal
                 closeIcon
                 trigger={
-                  <div className="recentsleft" style={ { backgroundImage: `url( ${items[0].thumbnail} )` } }>
+                  <div
+                    className="recentsleft"
+                    data-action={ `openModal - ${items[0].title}` }
+                    style={ { backgroundImage: `url( ${items[0].thumbnail} )` } }
+                  >
                     <div className="recentsoverlay">
-                      <div className="recentsoverlay_title">{ items[0].title }</div>
+                      <div
+                        className="recentsoverlay_title"
+                        data-action={ `openModal - ${items[0].title}` }
+                      >
+                        { items[0].title }
+                      </div>
                       <img
                         src={ items[0].icon }
                         className="recentsoverlay_icon"
+                        data-action={ `openModal - ${items[0].title}` }
                         alt={ `${this.props.postType} icon` }
                       />
                     </div>

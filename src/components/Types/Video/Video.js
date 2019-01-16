@@ -363,9 +363,10 @@ class Video extends Component {
             <div className="trigger-container">
               { embedItem && (
               <PopupTrigger
-                toolTip="Embed video"
-                icon={ { img: embedIcon, dim: 24 } }
+                action={ `embedIconClick - ${unit.title}` }
                 show
+                icon={ { img: embedIcon, dim: 24 } }
+                toolTip="Embed video"
                 content={
                   <PopupTabbed
                     title="Embed this video on your site"
@@ -377,6 +378,7 @@ class Video extends Component {
                           <EmbedVideo
                             instructions="Copy and paste the code below to embed video on your site"
                             embedItem={ embedItem || null }
+                            title={ unit.title }
                           />
                         )
                       },
@@ -386,9 +388,10 @@ class Video extends Component {
                 }
               /> ) }
               <PopupTrigger
-                toolTip="Share video"
+                action={ `shareIconClick - ${unit.title}` }
                 icon={ { img: shareIcon, dim: 20 } }
                 show={ type === 'video' }
+                toolTip="Share video"
                 content={
                   <Popup title="Share this video.">
                     <Share
@@ -403,10 +406,11 @@ class Video extends Component {
                 }
               />
               <PopupTrigger
-                toolTip="Download video"
+                action={ `downloadIconClick - ${unit.title}` }
                 icon={ { img: downloadIcon, dim: 18 } }
                 position="right"
                 show={ type === 'video' }
+                toolTip="Download video"
                 content={
                   <PopupTabbed
                     title="Download this video."

@@ -66,19 +66,22 @@ class PopupTrigger extends Component {
 
   render() {
     // const trigger = withTooltip( <Button>my button </Button> );
+    const { action } = this.props;
     return (
       <span style={ { display: this.props.show ? 'inline-block' : 'none' } }>
         <Popup
           trigger={
             <Button
               className={ isMobile() ? 'trigger noTooltip' : 'trigger' }
+              data-action={ action }
               tooltip={ this.props.toolTip }
             >
               <img
-                src={ this.props.icon.img }
-                width={ this.props.icon.dim }
-                height={ this.props.icon.dim }
                 alt={ this.props.toolTip }
+                data-action={ action }
+                height={ this.props.icon.dim }
+                width={ this.props.icon.dim }
+                src={ this.props.icon.img }
               />
             </Button>
           }
@@ -95,10 +98,11 @@ class PopupTrigger extends Component {
 }
 
 PopupTrigger.propTypes = {
-  toolTip: string,
-  icon: object,
+  action: string,
   content: node,
-  show: bool
+  icon: object,
+  show: bool,
+  toolTip: string
 };
 
 export default PopupTrigger;
