@@ -23,12 +23,27 @@ import './EditSupportFilesContent.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFilesContent extends React.PureComponent {
-  state = {
-    displaySaveMsg: false,
-    hasSaved: false,
-    hasUnsavedData: false,
-    hasPopulatedLanguages: false,
-    selectedLangValues: {}
+  constructor( props ) {
+    super( props );
+
+    this.SAVE_MSG_DELAY = 2000;
+    this._isMounted = false;
+
+    this.state = {
+      displaySaveMsg: false,
+      hasSaved: false,
+      hasUnsavedData: false,
+      hasPopulatedLanguages: false,
+      selectedLangValues: {}
+    };
+  }
+
+  componentDidMount = () => {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount = () => {
+    this._isMounted = false;
   }
 
   getFileExtension = str => (
@@ -96,11 +111,11 @@ class EditSupportFilesContent extends React.PureComponent {
   }
 
   handleDisplaySaveMsg = () => {
-    this.setState( { displaySaveMsg: false } );
+    if ( this._isMounted ) {
+      this.setState( { displaySaveMsg: false } );
+    }
     this.saveMsgTimer = null;
   }
-
-  SAVE_MSG_DELAY = 2000;
 
   renderRow = ( file ) => {
     const { id } = file;

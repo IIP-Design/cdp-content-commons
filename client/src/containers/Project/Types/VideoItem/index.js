@@ -15,10 +15,25 @@ import './VideoItem.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class VideoItem extends React.PureComponent {
-  state = {
-    bytesUploaded: 0,
-    nIntervId: null,
-    isUploading: false
+  constructor( props ) {
+    super( props );
+
+    /**
+     * @todo simulate upload for dev purposes;
+     * replace for production
+     * 1MB = 1,048,576 Bytes
+     */
+    this.MEGABYTE = 1048576;
+    this.MIN_INTERVAL = 500;
+    this.MAX_INTERVAL = 1500;
+    this.MIN_MB_SEC = 400;
+    this.MAX_MB_SEC = 500;
+
+    this.state = {
+      bytesUploaded: 0,
+      nIntervId: null,
+      isUploading: false
+    };
   }
 
   componentDidMount = () => {
@@ -33,6 +48,10 @@ class VideoItem extends React.PureComponent {
     const interval = this.getRandomInt( this.MIN_INTERVAL, this.MAX_INTERVAL );
     const nIntervId = setInterval( this.uploadItem, interval );
     this.setState( { nIntervId } );
+  }
+
+  componentWillUnmount = () => {
+    clearInterval( this.state.nIntervId );
   }
 
   /**
@@ -50,17 +69,6 @@ class VideoItem extends React.PureComponent {
   getRemainingUnits = ( totalUnits, unitsUploaded ) => (
     totalUnits - unitsUploaded
   )
-
-  /**
-   * @todo simulate upload for dev purposes;
-   * replace for production
-   * 1MB = 1,048,576 Bytes
-   */
-  MEGABYTE = 1048576;
-  MIN_INTERVAL = 500;
-  MAX_INTERVAL = 1500;
-  MIN_MB_SEC = 400;
-  MAX_MB_SEC = 500;
 
   incrementUpload = ( unit, min, max ) => (
     this[unit] * this.getRandomInt( min, max )

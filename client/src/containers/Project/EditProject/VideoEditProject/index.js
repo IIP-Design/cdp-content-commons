@@ -52,6 +52,11 @@ class VideoEditProject extends React.PureComponent {
 
     const videosCount = this.props.project.videos.length;
 
+    this.MAX_CATEGORY_COUNT = 2;
+    this.SAVE_MSG_DELAY = 2000;
+    this.UPLOAD_SUCCESS_MSG_DELAY = this.SAVE_MSG_DELAY + 1000;
+    this._isMounted = false;
+
     this.state = {
       deleteConfirmOpen: false,
       hasBeenDeleted: false,
@@ -79,7 +84,9 @@ class VideoEditProject extends React.PureComponent {
     };
   }
 
+
   componentDidMount = () => {
+    this._isMounted = true;
     const projectId = this.props.match.params.videoID;
     this.props.loadVideoProjects( projectId );
   }
@@ -104,6 +111,7 @@ class VideoEditProject extends React.PureComponent {
   }
 
   componentWillUnmount = () => {
+    this._isMounted = false;
     clearTimeout( this.uploadSuccessTimer );
     clearTimeout( this.saveMsgTimer );
   }
@@ -251,18 +259,18 @@ class VideoEditProject extends React.PureComponent {
   }
 
   handleDisplayUploadSuccessMsg = () => {
-    this.setState( { displayTheUploadSuccessMsg: false } );
+    if ( this._isMounted ) {
+      this.setState( { displayTheUploadSuccessMsg: false } );
+    }
     this.uploadSuccessTimer = null;
   }
 
   handleDisplaySaveMsg = () => {
-    this.setState( { displaySaveMsg: false } );
+    if ( this._isMounted ) {
+      this.setState( { displaySaveMsg: false } );
+    }
     this.saveMsgTimer = null;
   }
-
-  MAX_CATEGORY_COUNT = 2;
-  SAVE_MSG_DELAY = 2000;
-  UPLOAD_SUCCESS_MSG_DELAY = this.SAVE_MSG_DELAY + 1000;
 
   renderConfirm = ( isOpen, onConfirm, onCancel ) => (
     <Fragment>

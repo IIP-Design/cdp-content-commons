@@ -20,16 +20,28 @@ import './EditSupportFileRow.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class EditSupportFileRow extends React.PureComponent {
-  state = {
-    cellWidth: null,
-    fileNameWidth: null
+  constructor( props ) {
+    super( props );
+
+    this.DELAY_INTERVAL = 1000;
+    this.STR_INDEX_PROPORTION = 0.04;
+    this.ITEM_NAME_PROPORTION = 0.85;
+    this.debounceResize = debounce( this.resetWidths, this.DELAY_INTERVAL );
+    this._isMounted = false;
+
+    this.state = {
+      cellWidth: null,
+      fileNameWidth: null
+    };
   }
 
   componentDidMount = () => {
+    this._isMounted = true;
     window.addEventListener( 'resize', this.debounceResize );
   }
 
   componentWillUnmount = () => {
+    this._isMounted = false;
     window.removeEventListener( 'resize', this.debounceResize );
   }
 
@@ -78,10 +90,12 @@ class EditSupportFileRow extends React.PureComponent {
   }
 
   resetWidths = () => {
-    this.setState( {
-      cellWidth: null,
-      fileNameWidth: null
-    } );
+    if ( this._isMounted ) {
+      this.setState( {
+        cellWidth: null,
+        fileNameWidth: null
+      } );
+    }
   }
 
   isLongName = ( itemWidth, reference, proportion ) => (
@@ -96,12 +110,6 @@ class EditSupportFileRow extends React.PureComponent {
   handleDeleteFile = () => {
     console.log( 'delete file' );
   }
-
-  DELAY_INTERVAL = 1000;
-  STR_INDEX_PROPORTION = 0.04;
-  ITEM_NAME_PROPORTION = 0.85;
-
-  debounceResize = debounce( this.resetWidths, this.DELAY_INTERVAL );
 
   renderIcons = () => {
     const { fileExtensions, fileType } = this.props;

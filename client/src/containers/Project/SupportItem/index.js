@@ -18,16 +18,38 @@ import './SupportItem.css';
 
 /* eslint-disable react/prefer-stateless-function */
 class SupportItem extends React.PureComponent {
-  state = {
-    bytesUploaded: 0,
-    nIntervId: null,
-    isUploading: false,
-    listItemWidth: null,
-    itemNameWidth: null,
-    itemLangWidth: null
-  };
+  constructor( props ) {
+    super( props );
+
+    /**
+     * @todo simulate upload for dev purposes;
+     * replace for production
+     * 1MB = 1,048,576 Bytes
+     */
+    this.MEGABYTE = 1048576;
+    this.MIN_INTERVAL = 500;
+    this.MAX_INTERVAL = 1500;
+    this.MIN_MB_SEC = 1;
+    this.MAX_MB_SEC = 5;
+    this.STR_INDEX_PROPORTION = 0.04;
+    this.ITEM_NAME_PROPORTION = 0.625;
+    this.ITEM_LANG_PROPORTION = 0.3;
+    this.DELAY_INTERVAL = 1000;
+    this.debounceResize = debounce( this.resetWidths, this.DELAY_INTERVAL );
+    this._isMounted = false;
+
+    this.state = {
+      bytesUploaded: 0,
+      nIntervId: null,
+      isUploading: false,
+      listItemWidth: null,
+      itemNameWidth: null,
+      itemLangWidth: null
+    };
+  }
 
   componentDidMount = () => {
+    this._isMounted = true;
     const {
       projectId,
       fileType,
@@ -49,6 +71,8 @@ class SupportItem extends React.PureComponent {
   }
 
   componentWillUnmount = () => {
+    this._isMounted = false;
+    clearInterval( this.state.nIntervId );
     window.removeEventListener( 'resize', this.debounceResize );
   }
 
@@ -109,11 +133,13 @@ class SupportItem extends React.PureComponent {
   }
 
   resetWidths = () => {
-    this.setState( {
-      listItemWidth: null,
-      itemNameWidth: null,
-      itemLangWidth: null
-    } );
+    if ( this._isMounted ) {
+      this.setState( {
+        listItemWidth: null,
+        itemNameWidth: null,
+        itemLangWidth: null
+      } );
+    }
   }
 
   isLongName = ( itemWidth, reference, proportion ) => (
@@ -164,23 +190,6 @@ class SupportItem extends React.PureComponent {
       return { isUploading: false };
     } );
   }
-
-  /**
-   * @todo simulate upload for dev purposes;
-   * replace for production
-   * 1MB = 1,048,576 Bytes
-   */
-  MEGABYTE = 1048576;
-  MIN_INTERVAL = 500;
-  MAX_INTERVAL = 1500;
-  MIN_MB_SEC = 1;
-  MAX_MB_SEC = 5;
-  STR_INDEX_PROPORTION = 0.04;
-  ITEM_NAME_PROPORTION = 0.625;
-  ITEM_LANG_PROPORTION = 0.3;
-  DELAY_INTERVAL = 1000;
-
-  debounceResize = debounce( this.resetWidths, this.DELAY_INTERVAL );
 
   render() {
     const { fileType, supportItem } = this.props;
