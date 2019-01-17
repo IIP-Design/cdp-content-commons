@@ -11,6 +11,22 @@ import { Checkbox, Icon } from 'semantic-ui-react';
 import truncate from 'lodash/truncate';
 import './MyProjectPrimaryCol.css';
 
+const toggleDataActions = e => {
+  // Select target table td element
+  const parentTD = e.target.closest('.items_table_item');
+
+  if ( parentTD.classList.contains('displayDataActions') ) {
+    parentTD.classList.remove('displayDataActions');    
+  } else {
+    // Close any other open dataActions menus
+    const openDataActionsMenu = document.querySelector('.displayDataActions');
+    if ( openDataActionsMenu !== null ) openDataActionsMenu.classList.remove('displayDataActions');
+
+    // Display target dataActions menu
+    parentTD.classList.add('displayDataActions');
+  }
+}
+
 const MyProjectPrimaryCol = ( props ) => {
   return (
     <Fragment>
@@ -43,20 +59,7 @@ const MyProjectPrimaryCol = ( props ) => {
           </div>
           <button
             className="linkStyle myProjects_data_actions_mobileToggle"
-            onClick={ e => {              
-              const parentTD = e.target.closest('.items_table_item');
-              const dataActions = e.target.parentNode.parentNode.querySelector('.myProjects_data_actions_wrapper');
-              
-              parentTD.classList.toggle('displayDataActions');
-
-              if ( parentTD.classList.contains('displayDataActions') ) {
-                parentTD.style.zIndex = '3';
-                dataActions.style.display = 'block';
-              } else {
-                parentTD.style.zIndex = '2';
-                dataActions.style.display = 'none';                
-              }              
-            } }
+            onClick={ toggleDataActions }
           >
             <Icon name="ellipsis vertical" />
           </button>

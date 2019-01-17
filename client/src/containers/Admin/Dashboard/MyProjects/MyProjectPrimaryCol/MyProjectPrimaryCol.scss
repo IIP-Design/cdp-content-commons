@@ -101,9 +101,15 @@
           width: auto;
         }
       }
-
-
     }
   }
+}
 
+// Display data actions menu
+td.items_table_item.displayDataActions {
+  z-index: 3 !important;
+
+  .myProjects_data_actions_wrapper {
+    display: block;
+  }
 }

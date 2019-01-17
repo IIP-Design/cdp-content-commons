@@ -65,8 +65,7 @@ class ScrollableTableWithMenu extends React.Component {
           return this.setState({ tableHeaders: [ ...persistentTableHeaders, ...menuHeaders ] });
         }        
       }, 250 );      
-    } );
-    
+    } );    
   }
 
   toggleAllItemsSelection = e => {
