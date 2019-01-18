@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.6.5](2019-1-18)
+
+**Added:**
+
+- Adds a data-action attribute to various elements that users might interact with. This provides an attribute that Google Tag Manager can cue on to record a specific user action.
+
+**Changed:**
+
+- Update Slack logo in footer
+- Filenames for SRT and Videos will always be the English title or 'commons-video' if not available
+
 # [1.6.4](2019-1-08)
 
 **Fixed:**
