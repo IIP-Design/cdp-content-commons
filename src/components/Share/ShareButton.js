@@ -3,7 +3,9 @@ import { string } from 'prop-types';
 import { List } from 'semantic-ui-react';
 import { openWindow, isMobile } from '../../utils/browser';
 
-const ShareButton = ( props ) => {
+const ShareButton = ( {
+  action, icon, label, url
+} ) => {
   /**
    * Opens a new window. If mobile, go a new window, else open popup window
    * Calling this function as opposed to directly calling openWindow allows
@@ -15,28 +17,30 @@ const ShareButton = ( props ) => {
   const willOpenWindow = ( e, data = {} ) => {
     if ( !isMobile() ) {
       e.preventDefault();
-      openWindow( props.url, data );
+      openWindow( url, data );
     }
   };
 
   return (
     <List.Item
       as="a"
-      href={ props.url }
+      data-action={ action }
+      href={ url }
       target="_blank"
       onClick={ willOpenWindow }
       onKeyPress={ willOpenWindow }
     >
-      <List.Icon name={ props.icon } size="large" />
-      <List.Content>{ props.label }</List.Content>
+      <List.Icon name={ icon } size="large" />
+      <List.Content>{ label }</List.Content>
     </List.Item>
   );
 };
 
 ShareButton.propTypes = {
-  url: string,
+  action: string,
   icon: string,
-  label: string
+  label: string,
+  url: string
 };
 
 export default ShareButton;

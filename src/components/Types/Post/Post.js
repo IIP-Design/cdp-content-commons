@@ -19,7 +19,7 @@ import PopupTabbed from '../../Popup/PopupTabbed';
 import Popup from '../../Popup/Popup';
 
 import Share from '../../Share/Share';
-import EmbedPost from './EmbedPost';
+import Embed from '../../Embed/Embed';
 import EmbedHelp from './EmbedHelp';
 
 class Post extends Component {
@@ -79,9 +79,10 @@ class Post extends Component {
             </div>
             <div className="trigger-container">
               <PopupTrigger
-                toolTip="Embed this article"
+                action={ `embedIconClick - ${item.title}` }
                 icon={ { img: embedIcon, dim: 24 } }
                 show
+                toolTip="Embed this article"
                 content={
                   <PopupTabbed
                     title="Embed this article on your site"
@@ -89,9 +90,10 @@ class Post extends Component {
                       {
                         title: 'Copy Embed Code',
                         component: (
-                          <EmbedPost
-                            instructions="Copy and paste the code below to embed article on your site"
+                          <Embed
                             embedItem={ embedItem }
+                            instructions="Copy and paste the code below to embed article on your site"
+                            title={ item.title }
                           />
                         )
                       },
@@ -101,9 +103,10 @@ class Post extends Component {
                 }
               />
               <PopupTrigger
-                toolTip="Share article"
+                action={ `shareIconClick - ${item.title}` }
                 icon={ { img: shareIcon, dim: 20 } }
                 show
+                toolTip="Share article"
                 content={
                   <Popup title="Share this article.">
                     <Share

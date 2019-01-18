@@ -13,7 +13,10 @@ const Share = ( props ) => {
   } = props;
 
   const queryStr = stringifyQueryString( { id, site, language } );
-  const directLink = ( type === 'video' ) ? `${window.location.protocol}//${window.location.host}/video?${queryStr}` : link;
+  const directLink =
+    ( type === 'video' )
+      ? `${window.location.protocol}//${window.location.host}/video?${queryStr}`
+      : link;
   const facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
   const tweet = `https://twitter.com/home?status=${title} ${link}`;
 
@@ -21,11 +24,21 @@ const Share = ( props ) => {
     <div>
       { link && (
         <List className="share_list">
-          <ShareButton url={ facebookURL } icon="facebook f" label="Share on Facebook" />
-          <ShareButton url={ tweet } icon="twitter" label="Share on Twitter" />
+          <ShareButton
+            action={ `shareFacebook - ${title}` }
+            icon="facebook f"
+            label="Share on Facebook"
+            url={ facebookURL }
+          />
+          <ShareButton
+            action={ `shareTwitter - ${title}` }
+            icon="twitter"
+            label="Share on Twitter"
+            url={ tweet }
+          />
         </List>
       ) }
-      <ClipboardCopy label="Direct Link" copyItem={ directLink } />
+      <ClipboardCopy label="Direct Link" copyItem={ directLink } itemAction={ `copyShareLink - ${title}` } />
     </div>
   );
 };
