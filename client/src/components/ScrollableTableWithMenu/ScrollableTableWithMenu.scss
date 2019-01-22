@@ -59,14 +59,18 @@
           @media screen and (max-width: 767px){
             position: relative;
             z-index: 2;
-            width: auto !important;
+            width: auto !important;            
             padding: 0 !important;
 
             &:not(:first-child) {
-              display: none !important;
+              max-height: 0;
+              height: auto;              
+              opacity: 0;
+              transition: max-height 0.3s ease, opacity 0.3s ease;
 
               &.display {
-                display: block !important;
+                max-height: 100px;
+                opacity: 1;
               }
             }
           }
