@@ -63,7 +63,7 @@
           z-index: 2;
           padding: 10px;          
           background-color: #fff;
-          border: 1px solid #000;
+          box-shadow: 1px 1px 1px 1px $medium-grey;
 
           > span {
             display: none;

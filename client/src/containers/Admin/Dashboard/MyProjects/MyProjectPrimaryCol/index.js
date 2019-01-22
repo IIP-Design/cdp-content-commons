@@ -11,12 +11,30 @@ import { Checkbox, Icon } from 'semantic-ui-react';
 import truncate from 'lodash/truncate';
 import './MyProjectPrimaryCol.css';
 
+const dataActionsOffClick = e => {  
+  // Check if click target is a data actions menu link
+  const isDataActionsMenuLink = e.target.classList.contains('myProjects_data_actions_action');
+  if ( isDataActionsMenuLink ) return;
+
+  // If click target is not actions menu toggle button
+  if ( !e.target.classList.contains('ellipsis') ) {
+    // Close any open menus
+    const openDataActionsMenu = document.querySelector('.displayDataActions');
+    if ( openDataActionsMenu !== null ) openDataActionsMenu.classList.remove('displayDataActions');
+    
+    // Remove the document click event handler since no open menus
+    document.removeEventListener( 'click', dataActionsOffClick );
+  }  
+}
+
 const toggleDataActions = e => {
+  e.persist();    
+
   // Select target table td element
   const parentTD = e.target.closest('.items_table_item');
 
-  if ( parentTD.classList.contains('displayDataActions') ) {
-    parentTD.classList.remove('displayDataActions');    
+  if ( parentTD.classList.contains('displayDataActions') ) {    
+    parentTD.classList.remove('displayDataActions');
   } else {
     // Close any other open dataActions menus
     const openDataActionsMenu = document.querySelector('.displayDataActions');
@@ -24,10 +42,13 @@ const toggleDataActions = e => {
 
     // Display target dataActions menu
     parentTD.classList.add('displayDataActions');
+    
+    // Add a document click event listener to close any open data actions menus on 'off' clicks
+    document.addEventListener( 'click', dataActionsOffClick );
   }
 }
 
-const MyProjectPrimaryCol = ( props ) => {
+const MyProjectPrimaryCol = props => {
   return (
     <Fragment>
       <div className="myProjects_actions">
