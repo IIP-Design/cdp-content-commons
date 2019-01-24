@@ -8,24 +8,51 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Checkbox, Icon } from 'semantic-ui-react';
 import { titleCase } from '../../../utils/helpers';
+import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../../utils/browser';
 import './TableMenu.css';
 
 class TableMenu extends React.Component {
   state = {
     displayTableMenu: false,
-    menuHeaders: []
+    menuHeaders: [],
+    windowWidth: ''
   }
   
-  componentDidMount() {
+  componentDidMount() {    
     document.addEventListener( 'click', this.toggleTableMenu, false );
     
-    this.props.tableDisplayAllData( this.props.columnMenu, () => {
-      this.setState({ menuHeaders: [] });
-    } );    
+    const allMenuHeaders = this.props.columnMenu.map( menu => menu.label );    
+    if ( isMobile() ) {
+      this.setState({
+        menuHeaders: [...allMenuHeaders]
+      });
+    }
+
+    window.addEventListener( 'resize', this.menuHeadersOnResize );
   }
 
   componentWillUnmount() {
     document.removeEventListener( 'click', this.toggleTableMenu, false );
+    window.removeEventListener( 'resize', this.menuHeadersOnResize );
+  }
+
+  menuHeadersOnResize = () => {
+    const windowWidth = window.innerWidth;
+    const prevWindowWidth = this.state.windowWidth;    
+
+    let resizeMenuHeadersTimer;
+    clearTimeout( resizeMenuHeadersTimer );
+    
+    resizeMenuHeadersTimer = setTimeout( () => {
+      if ( prevWindowWidth !== '' && prevWindowWidth <= 767 && !isWindowWidthLessThanOrEqualTo( 767 ) ) {
+        return this.setState( { menuHeaders: [], windowWidth } );
+      } else if ( isWindowWidthLessThanOrEqualTo( 767 ) ) {
+        const allMenuHeaders = this.props.columnMenu.map( menu => menu.label ); 
+        return this.setState( { menuHeaders: [...allMenuHeaders], windowWidth } );
+      } else {
+        return this.setState( { windowWidth } );
+      }
+    }, 500 );
   }
 
   toggleTableMenu = e => {

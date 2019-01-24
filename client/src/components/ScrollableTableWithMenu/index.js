@@ -23,8 +23,18 @@ class ScrollableTableWithMenu extends React.Component {
     selectedItems: new Map(),
     displayActionsMenu: false,
     column: null,
-    direction: null
+    direction: null,
+    windowWidth: ''
   };
+
+  componentDidMount() {
+    this.tableMenuSelectionsOnMobile();
+    window.addEventListener( 'resize', this.tableMenuSelectionsOnResize );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener( 'resize', this.tableMenuSelectionsOnResize );
+  }
 
   tableMenuOnChange = e => {    
     e.persist();
@@ -43,29 +53,34 @@ class ScrollableTableWithMenu extends React.Component {
     });
   }
 
-  tableDisplayAllData = ( menuHeaders, clearTableMenuSelections ) => {
-    const { persistentTableHeaders } = this.props;
+  tableMenuSelectionsOnResize = () => {
+    const { persistentTableHeaders, columnMenu } = this.props;
+    const windowWidth = window.innerWidth;
+    const prevWindowWidth = this.state.windowWidth;
 
+    let resizeMenuSelectionsTimer;
+    clearTimeout( resizeMenuSelectionsTimer );
+    
+    resizeMenuSelectionsTimer = setTimeout( () => {
+      if ( prevWindowWidth !== '' && prevWindowWidth <= 767 && !isWindowWidthLessThanOrEqualTo( 767 ) ) {        
+        return this.setState( { tableHeaders: persistentTableHeaders, windowWidth } );
+      } else if ( isWindowWidthLessThanOrEqualTo( 767 ) ) {
+        return this.setState( { tableHeaders: [ ...persistentTableHeaders, ...columnMenu ], windowWidth } );
+      } else {
+        return this.setState( { windowWidth } );
+      }       
+    }, 500 );
+  }
+
+  tableMenuSelectionsOnMobile = () => {
+    const { columnMenu } = this.props;
     if ( isMobile() ) {  
       this.setState( prevState => {
         return {
-          tableHeaders: [...prevState.tableHeaders, ...menuHeaders ]
+          tableHeaders: [...prevState.tableHeaders, ...columnMenu ]
         }
       } );
     }
-
-    let resizeTimer;
-    window.addEventListener( 'resize', () => {
-      clearTimeout( resizeTimer );
-      resizeTimer = setTimeout( () => {        
-        if ( !isWindowWidthLessThanOrEqualTo( 767 ) ) {
-          clearTableMenuSelections();
-          return this.setState({ tableHeaders: persistentTableHeaders });
-        } else {
-          return this.setState({ tableHeaders: [ ...persistentTableHeaders, ...menuHeaders ] });
-        }        
-      }, 250 );      
-    } );    
   }
 
   toggleAllItemsSelection = e => {
@@ -126,7 +141,7 @@ class ScrollableTableWithMenu extends React.Component {
       tableHeaders,
       displayActionsMenu,
       column,
-      direction,
+      direction
     } = this.state;
 
     const { columnMenu } = this.props;
@@ -138,7 +153,6 @@ class ScrollableTableWithMenu extends React.Component {
           <TableMenu
             columnMenu={ columnMenu }
             tableMenuOnChange={ this.tableMenuOnChange }
-            tableDisplayAllData={ this.tableDisplayAllData }
           />
         </Grid.Row>
         <Grid.Row>
@@ -156,7 +170,7 @@ class ScrollableTableWithMenu extends React.Component {
                 />
 
                 {/* ADD CUSTOM TABLE BODY */}
-                { this.props.renderTableBody(this.state, this.toggleItemSelection, this.tableDisplayAllData) }
+                { this.props.renderTableBody(this.state, this.toggleItemSelection) }
               </Table>
             </div>
           </Grid.Column>

@@ -161,6 +161,14 @@
     }
   }
 
+  &--dashboard {
+    @media screen and (max-width: 767px) {
+      .search_bar {
+        display: none;
+      }
+    }    
+  }
+
   /***  
     Blue bG bar 
   ***/

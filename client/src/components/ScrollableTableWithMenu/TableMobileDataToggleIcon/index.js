@@ -3,59 +3,43 @@
  * TableMobileDataToggleIcon
  *
  */
-
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Icon } from 'semantic-ui-react';
 import './TableMobileDataToggleIcon.css';
 
-/* eslint-disable react/prefer-stateless-function */
-class TableMobileDataToggleIcon extends React.Component {
-  state = {
-    mobileDataToggleIcon: 'chevron down'
+const toggleMobileData = e => {
+  e.persist();    
+
+  const parentTR = e.target.parentNode.parentNode;
+  const isParentTRActive = parentTR.classList.contains('activeTableRow');
+  
+  if ( !isParentTRActive ) {
+    const currentActiveTableRow = document.querySelector('.activeTableRow');
+    if ( currentActiveTableRow !== null ) {
+      currentActiveTableRow.classList.remove('activeTableRow');
+      const currentActiveTableRowToggleIcon = currentActiveTableRow.querySelector('.items_table_mobileDataToggleIcon');
+      currentActiveTableRowToggleIcon.classList.replace('up','down');
+    }      
   }
 
-  componentDidUpdate() {    
-    const activeTableRows = document.querySelectorAll('.activeTableRow');
-    activeTableRows.forEach( tr => {
-      const tableRowData = Array.from(tr.childNodes).splice(1);
-      tableRowData.forEach( td => td.classList.add( 'display' ) );
-    } );
-  }
+  const DOMactiveTableRow = e.target.parentNode.parentNode;
+  const DOMactiveTableRowToggleIcon = DOMactiveTableRow.querySelector('.items_table_mobileDataToggleIcon');
+  
+  DOMactiveTableRow.classList.toggle('activeTableRow');
 
-  toggleMobileData = e => {
-    e.persist();
-    const DOMactiveTableRow = e.target.parentNode.parentNode;    
-    const tableRowData = Array.from(DOMactiveTableRow.childNodes).splice(1);
-    
-    DOMactiveTableRow.classList.toggle('activeTableRow');
-
-    tableRowData.forEach( td => {        
-      td.classList.contains( 'display' )
-      ? td.classList.remove( 'display' )
-      : td.classList.add( 'display' )
-    });
-
-    this.setState( prevState => ({
-      mobileDataToggleIcon: prevState.mobileDataToggleIcon === 'chevron down'
-      ? 'chevron up'
-      : 'chevron down'
-    } ) );
-
-  }
-
-  render() {
-    const { mobileDataToggleIcon } = this.state;
-    return (
-      <Icon
-        name={ mobileDataToggleIcon }
-        className="items_table_mobileDataToggleIcon"
-        onClick={ this.toggleMobileData }
-      />
-    );
+  if ( DOMactiveTableRowToggleIcon.classList.contains('down') ){
+    DOMactiveTableRowToggleIcon.classList.replace('down', 'up');
+  } else {
+    DOMactiveTableRowToggleIcon.classList.replace('up','down');
   }
 }
 
-TableMobileDataToggleIcon.propTypes = {};
+const TableMobileDataToggleIcon = () => (
+  <Icon
+    name="chevron down"
+    className="items_table_mobileDataToggleIcon"
+    onClick={ toggleMobileData }
+  />
+);
 
 export default TableMobileDataToggleIcon;
