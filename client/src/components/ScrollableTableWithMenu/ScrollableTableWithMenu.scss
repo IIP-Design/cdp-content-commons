@@ -12,8 +12,8 @@
     overflow: scroll;
     border: 1px solid rgba(34, 36, 38, 0.15);
     @media screen and (max-width: 767px) {
-      max-height: auto;
       border: none;
+      max-height: 300px;
       overflow: auto;      
     }
 
@@ -24,7 +24,8 @@
 
     &_wrapper {
       @media screen and (max-width: 767px) {
-        padding: 45px 0 0 !important;
+        padding: 20px 0 0 !important;
+        margin-top: -1em !important;
       }
     }
 
@@ -38,6 +39,15 @@
       thead {
         @media screen and (max-width: 767px) {
           display: none;
+        }
+      }
+
+      tr {
+        @media screen and (max-width: 767px) {
+          padding: 5px 3px;
+          margin-bottom: 5px;
+          border: 1px solid $light-grey;
+          box-shadow: none !important;
         }
       }
 
@@ -66,7 +76,7 @@
               max-height: 0;
               height: auto;              
               opacity: 0;
-              transition: max-height 0.3s ease, opacity 0.3s ease;
+              transition: max-height 0.3s ease, opacity 0.2s ease;
             }
           }
         }

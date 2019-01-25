@@ -36,7 +36,7 @@
       font-weight: bold;
       color: $blue;
       @media screen and (max-width: 767px) {
-        max-width: 175px;
+        max-width: 155px;
         font-size: 14px;
       }
 
@@ -89,7 +89,7 @@
       &_mobileToggle {
         position: absolute;
         top: 0;
-        right: 0;
+        right: 5px;
         font-size: 1.5em;
         color: $blue;
         @media screen and (min-width: 768px) {
