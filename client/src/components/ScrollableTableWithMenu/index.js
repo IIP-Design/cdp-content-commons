@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
-import { Table, Grid } from 'semantic-ui-react';
+import { Table, Grid, Checkbox } from 'semantic-ui-react';
 import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../utils/browser';
 import TableItemsDisplay from './TableItemsDisplay';
 import TableMenu from './TableMenu';
@@ -148,16 +148,23 @@ class ScrollableTableWithMenu extends React.Component {
 
     return (
       <Grid>
-        <Grid.Row className="items_tableMenus">
-          <TableItemsDisplay />
-          <TableMenu
-            columnMenu={ columnMenu }
-            tableMenuOnChange={ this.tableMenuOnChange }
-          />
+        <Grid.Row className="items_tableMenus_wrapper">
+          <Grid.Column mobile={ 16 } tablet={ 8 } computer={ 8 }>
+            <TableActionsMenu
+              displayActionsMenu={ displayActionsMenu }
+              toggleAllItemsSelection={ this.toggleAllItemsSelection }
+            />
+          </Grid.Column>
+          <Grid.Column mobile={ 16 } tablet={ 8 }computer={ 8 } className="items_tableMenus">
+            <TableItemsDisplay />
+            <TableMenu
+              columnMenu={ columnMenu }
+              tableMenuOnChange={ this.tableMenuOnChange }
+            />
+          </Grid.Column>          
         </Grid.Row>
         <Grid.Row>
           <Grid.Column className="items_table_wrapper">
-            <TableActionsMenu displayActionsMenu={ displayActionsMenu }/>
             <div className="items_table">              
               <Table sortable celled>
                 <TableHeader

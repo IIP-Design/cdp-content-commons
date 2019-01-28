@@ -28,10 +28,7 @@ const TableHeader = props => {
             onClick={ handleSort( header.name )  }
             className={ displayActionsMenu ? 'displayActionsMenu' : '' }
           >
-            { i === 0 
-              ? <Checkbox label={ header.label } onChange={ toggleAllItemsSelection }/>
-              : header.label
-            }
+            { header.label }            
           </Table.HeaderCell>
         ) ) }
       </Table.Row>

@@ -1,7 +1,29 @@
 @import "../../assets/styles/colors.scss";
 
-.ui.grid .row.items_tableMenus {
-  padding-bottom: 0;  
+.ui.grid {
+  
+  .row.items_tableMenus_wrapper {
+    @media screen and (max-width: 767px) {
+      flex-direction: column-reverse;
+    }
+
+    .column {
+      @media screen and (max-width: 767px) {
+        padding-left: 0;
+        padding-right: 0;
+      }
+  
+      &.items_tableMenus {
+        display: flex;    
+        // padding-bottom: 0;
+        // padding-left: 1em;
+        // padding-right: 1em;
+        @media screen and (min-width: 768px) {
+          justify-content: flex-end;
+        }    
+      }
+    }
+  }  
 }
 
 .items {
@@ -23,9 +45,9 @@
     }
 
     &_wrapper {
-      @media screen and (max-width: 767px) {
-        padding: 20px 0 0 !important;
-        margin-top: -1em !important;
+      margin-top: -2em !important;
+      @media screen and (max-width: 767px) {        
+        padding: 20px 0 0 !important;        
       }
     }
 

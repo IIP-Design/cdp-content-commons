@@ -1,17 +1,12 @@
 @import "../../../assets/styles/colors.scss";
 
 .actionsMenu {
-  position: absolute;
-  top: 0;
-  left: 40px;
   z-index: 3;
-  transform: translateY(50%);
   display: none;
   margin-top: -5px;
+  transition: width 0.5s ease;
   @media screen and (max-width: 767px) {
-    left: 0;
     z-index: 3;
-    transform: translateY(-7px);
     width: 100%;
     padding: 3px 0 1px 0;
     background-color: #fff;
@@ -20,6 +15,20 @@
 
   &.active {
     display: block;
+  }
+
+  &_wrapper {
+    display: flex;
+  }
+
+  &_toggle {
+
+    &:after {
+      content: 'Select All';
+      position: absolute;
+      left: 25px;
+      min-width: 75px;
+    }    
   }
 
   img {    

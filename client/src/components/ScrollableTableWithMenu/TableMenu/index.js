@@ -20,20 +20,22 @@ class TableMenu extends React.Component {
   
   componentDidMount() {    
     document.addEventListener( 'click', this.toggleTableMenu, false );
-    
-    const allMenuHeaders = this.props.columnMenu.map( menu => menu.label );    
-    if ( isMobile() ) {
-      this.setState({
-        menuHeaders: [...allMenuHeaders]
-      });
-    }
-
+    this.menuHeadersOnMobile();
     window.addEventListener( 'resize', this.menuHeadersOnResize );
   }
 
   componentWillUnmount() {
     document.removeEventListener( 'click', this.toggleTableMenu, false );
     window.removeEventListener( 'resize', this.menuHeadersOnResize );
+  }
+
+  menuHeadersOnMobile = () => {
+    const allMenuHeaders = this.props.columnMenu.map( menu => menu.label );    
+    if ( isMobile() ) {
+      this.setState({
+        menuHeaders: [...allMenuHeaders]
+      });
+    }
   }
 
   menuHeadersOnResize = () => {
@@ -92,7 +94,7 @@ class TableMenu extends React.Component {
     const { columnMenu, tableMenuOnChange } = this.props;
 
     return (
-      <Grid.Column floated='right' mobile={ 16 } tablet={ 8 } desktop={ 8 } className="items_menu_wrapper">
+      <div className="items_menu_wrapper">
         <div className={ displayTableMenu ? 'items_menu active' : 'items_menu' }>
           <span data-tablemenu>See More <Icon data-tablemenu name="angle down"/></span>          
           <span><Icon name="angle left" /></span>
@@ -112,7 +114,7 @@ class TableMenu extends React.Component {
             ) ) }
           </div>
         </div>
-      </Grid.Column>
+      </div>
     );
   }
 }

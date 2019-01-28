@@ -1,8 +1,10 @@
 @import "../../../assets/styles/colors.scss";
 
 .items_display {
+  margin-right: 3em;
   color: $blue;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 767px) {    
+    margin-right: 0;
     margin-bottom: 1em !important;
   }
 }
