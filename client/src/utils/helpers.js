@@ -248,7 +248,38 @@ export const queryBuilder = ( store ) => {
   return body.build();
 };
 
-export const ScrollToTop = () => {
-  window.scrollTo( 0, 0 );
+export const ScrollToTop = ( options = { top: 0, left: 0 } ) => {
+  window.scrollTo( options );
   return null;
+};
+
+export const createHashMap = ( array, key ) => (
+  array.reduce( ( acc, obj ) => ( {
+    ...acc,
+    [obj[key]]: obj
+  } ), {} )
+);
+
+/**
+ * Fetch id fron url. A Youtube link can either use the
+ * short form or long form so check both
+ * @param {string} url youtube share url
+ * @return youtube id
+ */
+export const getYouTubeId = ( url ) => {
+  const reShort = /https:\/\/youtu.be\/(.*)/;
+  const reLong = /https:\/\/www.youtube.com\/watch\?v=(.*)/;
+  const idShort = url.match( reShort );
+  const idLong = url.match( reLong );
+  if ( idShort ) {
+    return idShort[1];
+  } else if ( idLong ) {
+    return idLong[1];
+  }
+  return null;
+};
+
+export const delayFnCall = ( fn, timer, delay ) => {
+  if ( timer ) clearTimeout( timer );
+  timer = setTimeout( fn, delay );
 };

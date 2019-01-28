@@ -20,7 +20,7 @@ import Popup from '../../Popup/Popup';
 
 import Share from '../../Share/Share';
 import EmbedPost from './EmbedPost';
-import EmbedHelp from './EmbedHelp';
+// import EmbedHelp from './EmbedHelp';
 
 class Post extends Component {
   constructor( props ) {
