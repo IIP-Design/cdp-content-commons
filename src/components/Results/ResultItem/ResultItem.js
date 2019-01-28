@@ -24,9 +24,9 @@ class ResultItem extends Component {
         />
       );
     }
-    if ( !source && item.type === 'video' ) source = item.owner;
+    if ( !source && ( item.type === 'video' || item.type === 'image' ) ) source = item.owner;
     if ( !source ) source = item.site;
-    return item.type === 'video'
+    return ( item.type === 'video' || item.type === 'image' )
       ? source
       : <a target="_blank" rel="noopener noreferrer" href={ item.sourcelink }>{ source }</a>;
   }

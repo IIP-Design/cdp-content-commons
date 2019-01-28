@@ -10,6 +10,7 @@ import HelpPage from './components/Pages/HelpPage';
 import PrivacyPage from './components/Pages/PrivacyPage';
 import ContactPage from './components/Pages/ContactPage';
 import VideoPage from './components/Pages/VideoPage';
+import ImagePage from './components/Pages/ImagePage';
 import NotFoundPage from './components/Pages/NotFoundPage';
 import Header from './components/Header';
 import Results from './components/Results';
@@ -45,6 +46,7 @@ class App extends Component {
             <Route path="/privacy" component={ PrivacyPage } />
             <Route path="/contact" component={ ContactPage } />
             <Route path="/video" component={ VideoPage } />
+            <Route path="/image" component={ ImagePage } />
             <Route render={ props => <NotFoundPage toggleError={ this.toggleError } /> } />
           </Switch>
         </div>
