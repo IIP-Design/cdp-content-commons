@@ -8,18 +8,16 @@ export const languageUpdate = language => ( {
   payload: language
 } );
 
-export const loadLanguages = () => async ( dispatch, getState ) => {
+export const loadLanguages = () => async ( dispatch ) => {
   dispatch( { type: LOAD_LANGUAGES_PENDING } );
 
   let languages = [];
   let response;
   let all;
 
-  const currentState = getState();
-
   // Fetch languages that have content AND all languages in language index
   try {
-    response = await languageAggRequest( currentState );
+    response = await languageAggRequest();
     all = await languagesRequest();
   } catch ( err ) {
     return dispatch( { type: LOAD_LANGUAGES_FAILED } );
@@ -33,10 +31,7 @@ export const loadLanguages = () => async ( dispatch, getState ) => {
 
   // Get all languages that have associated content across content types
   const { aggregations } = response;
-  const allLocales = [
-    ...aggregations.all_hits.locale.buckets,
-    ...aggregations.all_hits.unitLocale.buckets
-  ].map( locale => ( {
+  const allLocales = [...aggregations.locale.buckets, ...aggregations.unitLocale.buckets].map( locale => ( {
     key: locale.key.toLowerCase(),
     count: locale.doc_count
   } ) );
@@ -45,19 +40,12 @@ export const loadLanguages = () => async ( dispatch, getState ) => {
   const uniqueLocales = uniqBy( allLocales, 'key' ).filter( locale => languages.find( l => l.locale === locale.key ) );
 
   // Get associated language name from locale
-  const payload = languages.map( ( locale ) => {
-    const language = uniqueLocales.find( l => l.key === locale.locale );
-    if ( language ) {
-      return {
-        key: language.key,
-        display_name: locale.display_name,
-        count: language.count
-      };
-    }
+  const payload = uniqueLocales.map( ( locale ) => {
+    const language = languages.find( l => l.locale === locale.key );
     return {
-      key: locale.locale,
-      display_name: locale.display_name,
-      count: 0
+      key: language.locale,
+      display_name: language.display_name,
+      count: locale.count
     };
   } );
 

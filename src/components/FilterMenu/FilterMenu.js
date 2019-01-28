@@ -20,7 +20,6 @@ class FilterMenu extends Component {
 
     this.props.loadSources();
     this.props.loadCategories();
-    this.props.loadPostTypes();
   };
 
   render() {
@@ -55,7 +54,7 @@ class FilterMenu extends Component {
             onFilterChange={ this.props.postTypeUpdate }
             options={ this.props.type.list }
             loadOptions={ this.props.loadPostTypes }
-            FormItem={ Form.Checkbox }
+            FormItem={ Form.Radio }
           />
           { /* Source */ }
           <FilterMenuItem

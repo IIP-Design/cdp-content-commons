@@ -27,16 +27,11 @@ class FilterMenuItem extends Component {
    * Format data into state that dopdowns will use
    */
   formatOptions = ( options, filter ) => {
-    let filterOptions = options.map( option => ( {
+    const filterOptions = options.map( option => ( {
       label: option.display_name,
       value: option.key,
       count: option.count
     } ) );
-
-    /* Sort Source filter alphabetically */
-    if ( filter === 'Source' ) {
-      filterOptions = filterOptions.sort( ( a, b ) => a.label.localeCompare( b.label ) );
-    }
 
     return filterOptions;
   };
@@ -57,11 +52,25 @@ class FilterMenuItem extends Component {
     }
   };
 
+  updateFilters = ( filter ) => {
+    switch ( filter.toLowerCase() ) {
+      case 'source':
+        this.props.loadCategories();
+        break;
+      case 'category':
+        break;
+      default:
+        this.props.loadCategories();
+        this.props.loadSources();
+    }
+  }
+
   handleOnChange = async ( e, selected ) => {
     const {
       value,
       checked,
-      label
+      label,
+      filter
     } = selected;
 
     this.props.onFilterChange( {
@@ -72,9 +81,7 @@ class FilterMenuItem extends Component {
 
     await this.props.createRequest();
 
-    this.props.loadSources();
-    this.props.loadCategories();
-    this.props.loadPostTypes();
+    this.updateFilters( filter );
   };
 
   render() {
@@ -99,34 +106,34 @@ class FilterMenuItem extends Component {
         </span>
         <Form className={ filterItemOpen ? 'filterMenu_options show' : 'filterMenu_options' }>
           <Form.Group>
-            { this.formatOptions( this.props.options, this.props.filter )
-                .map( ( option ) => {
-                  let label;
-                  if ( this.props.filter.toLowerCase() === 'language'
-                    || this.props.filter.toLowerCase() === 'date range'
-                  ) {
-                    ( { label } = option );
-                  } else if ( option.count ) {
-                    label = `${option.label} (${option.count})`;
-                  } else {
-                    label = `${option.label} (0)`;
+            { this.formatOptions( this.props.options, this.props.filter ).map( ( option ) => {
+              let label;
+              if ( this.props.filter.toLowerCase() === 'language'
+                || this.props.filter.toLowerCase() === 'date range'
+                || this.props.filter.toLowerCase() === 'format'
+              ) {
+                ( { label } = option );
+              } else if ( option.count ) {
+                label = `${option.label} (${option.count})`;
+              } else {
+                label = `${option.label} (0)`;
+              }
+              return (
+                <FormItem
+                  key={ option.value }
+                  label={ label }
+                  value={ option.value }
+                  filter={ this.props.filter }
+                  count={ option.count }
+                  onChange={ this.handleOnChange }
+                  checked={
+                    FormItem._meta.name === 'FormRadio'
+                      ? selected.key === option.value
+                      : selected.some( sel => sel.display_name === option.label )
                   }
-                  return (
-                    <FormItem
-                      key={ option.value }
-                      label={ label }
-                      value={ option.value }
-                      filter={ this.props.filter }
-                      count={ option.count }
-                      onChange={ this.handleOnChange }
-                      checked={
-                        FormItem._meta.name === 'FormRadio'
-                          ? selected.key === option.value
-                          : selected.some( sel => sel.display_name === option.label )
-                      }
-                    />
-                  );
-                } ) };
+                />
+              );
+            } ) }
             { this.props.options.length === 0 && <span style={ { textAlign: 'center' } }>Not Available</span> }
           </Form.Group>
         </Form>
@@ -144,7 +151,6 @@ FilterMenuItem.propTypes = {
   createRequest: func,
   loadSources: func,
   loadCategories: func,
-  loadPostTypes: func,
   loadOptions: func
 };
 

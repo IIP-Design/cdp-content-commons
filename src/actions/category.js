@@ -1,7 +1,7 @@
 import { categoryAggRequest, categoryPrimaryRequest, categoryValueNameRequest } from '../utils/api';
 import { titleCase } from '../utils/helpers';
 import { LOAD_CATEGORIES_PENDING, LOAD_CATEGORIES_FAILED, LOAD_CATEGORIES_SUCCESS, CATEGORY_CHANGE } from './types';
-import sortBy from 'lodash.sortby';
+import orderBy from 'lodash.orderby';
 import uniqBy from 'lodash.uniqby';
 
 export const categoryUpdate = ( category, checked ) => ( {
@@ -28,27 +28,27 @@ export const loadCategories = () => async ( dispatch, getState ) => {
   const primaryCategories = primary.hits.hits.map( category => category._source.language.en );
 
   // get all category ids that have associated content
-  const allIds = [...response.aggregations.all_hits.id.buckets, ...response.aggregations.all_hits.unitId.buckets];
+  const allIds = [...response.aggregations.id.buckets, ...response.aggregations.unitId.buckets];
 
   // get associated category name from id arr of unique values
   const categoryNameValuePairs = await categoryValueNameRequest( uniqBy( allIds, 'key' ) );
 
-  // onlu include category if it is a primary
+  // only include category if it is a primary
   const primaryCats = categoryNameValuePairs.hits.hits.filter( category =>
     primaryCategories.includes( category._source.language.en ) );
 
-  // sort list
-  const sorted = sortBy( primaryCats, [o => o._source.language.en] );
-
-  // only display primary categories that have associated content
-  const payload = sorted.map( category => ( {
-    key: category._id,
-    display_name: titleCase( category._source.language.en ),
-    count: category.doc_count
+  // merge category names with count
+  const merged = primaryCats.map( cat => ( {
+    key: cat._id,
+    display_name: titleCase( cat._source.language.en ),
+    count: allIds.find( k => k.key === cat._id ).doc_count
   } ) );
+
+  // sort list by count
+  const sorted = orderBy( merged, 'count', 'desc' );
 
   return dispatch( {
     type: LOAD_CATEGORIES_SUCCESS,
-    payload
+    payload: sorted
   } );
 };

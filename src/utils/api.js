@@ -8,9 +8,8 @@ export const queryRequest = body => axios.post( SEARCH, body ).then( response =>
 /**
  * Get languages that have associated content
  */
-export const languageAggRequest = ( state ) => {
-  if ( Object.keys( state.search.response ).length ) return state.search.response;
-  return axios
+export const languageAggRequest = () =>
+  axios
     .post( SEARCH, {
       body: bodybuilder()
         .size( 0 )
@@ -19,7 +18,6 @@ export const languageAggRequest = ( state ) => {
         .build()
     } )
     .then( response => response.data );
-};
 
 /**
  * Get all languages in languages index
@@ -106,11 +104,6 @@ export const postTypeAggRequest = () =>
         .build()
     } )
     .then( response => response.data );
-
-export const currentAggs = ( state ) => {
-  if ( Object.keys( state.search.response ).length ) return state.search.response.aggregations;
-  return {};
-};
 
 /**
  *
