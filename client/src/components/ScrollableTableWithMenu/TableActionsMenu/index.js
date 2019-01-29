@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Checkbox } from 'semantic-ui-react';
 import editIcon from 'assets/images/Dashboard/edit.svg'
 import createIcon from 'assets/images/Dashboard/create.svg'
@@ -20,7 +20,10 @@ class TableActionsMenu extends React.Component {
     const { displayActionsMenu, toggleAllItemsSelection } = this.props;
     return (
       <div className="actionsMenu_wrapper">
-        <Checkbox className="actionsMenu_toggle" onChange={ toggleAllItemsSelection } />        
+        <Checkbox
+          className={ displayActionsMenu ? 'actionsMenu_toggle actionsMenu_toggle--active' : 'actionsMenu_toggle' }
+          onChange={ toggleAllItemsSelection }
+        />        
         <div className={ displayActionsMenu ? 'actionsMenu active' : 'actionsMenu' }>
           <img src={ editIcon } alt='Edit Selection(s)' title='Edit Selection(s)'/>
           <img src={ deleteIcon } alt='Delete Selection(s)' title='Delete Selection(s)'/>
@@ -35,6 +38,9 @@ class TableActionsMenu extends React.Component {
   }
 }
 
-TableActionsMenu.propTypes = {};
+TableActionsMenu.propTypes = {
+  displayActionsMenu: PropTypes.bool,
+  toggleAllItemsSelection: PropTypes.func
+};
 
 export default TableActionsMenu;

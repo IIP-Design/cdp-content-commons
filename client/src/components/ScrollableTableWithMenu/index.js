@@ -149,13 +149,13 @@ class ScrollableTableWithMenu extends React.Component {
     return (
       <Grid>
         <Grid.Row className="items_tableMenus_wrapper">
-          <Grid.Column mobile={ 16 } tablet={ 8 } computer={ 8 }>
+          <Grid.Column mobile={ 16 } tablet={ 3 } computer={ 3 }>
             <TableActionsMenu
               displayActionsMenu={ displayActionsMenu }
               toggleAllItemsSelection={ this.toggleAllItemsSelection }
             />
           </Grid.Column>
-          <Grid.Column mobile={ 16 } tablet={ 8 }computer={ 8 } className="items_tableMenus">
+          <Grid.Column mobile={ 16 } tablet={ 13 }computer={ 13 } className="items_tableMenus">
             <TableItemsDisplay />
             <TableMenu
               columnMenu={ columnMenu }
