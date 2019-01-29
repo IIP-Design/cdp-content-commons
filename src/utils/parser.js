@@ -2,11 +2,13 @@ import iconPost from '../assets/icons/icon_32px_post.png';
 import iconCourse from '../assets/icons/icon_32px_course.png';
 import iconAudio from '../assets/icons/icon_32px_audio.png';
 import iconVideo from '../assets/icons/icon_32px_video.png';
+import iconImage from '../assets/icons/icon_32px_image.png';
 
 import thumbnailPost from '../assets/images/thumbnail_post.jpg';
 import thumbnailCourse from '../assets/images/thumbnail_course.jpg';
 import thumbnailAudio from '../assets/images/thumbnail_audio.jpg';
 import thumbnailVideo from '../assets/images/thumbnail_video.jpg';
+import thumbnailImage from '../assets/images/thumbnail_image.jpg';
 
 import logoYali from '../assets/images/logo_yali.svg';
 import logoYlai from '../assets/images/logo_ylai.svg';
@@ -40,6 +42,9 @@ const getIcon = ( type ) => {
     case 'video':
       icon = iconVideo;
       break;
+    case 'image':
+      icon = iconImage;
+      break;
     default:
       icon = iconPost;
   }
@@ -58,6 +63,9 @@ const getDefaultThumbnail = ( type ) => {
       break;
     case 'video':
       thumbnail = thumbnailVideo;
+      break;
+    case 'image':
+      thumbnail = thumbnailImage;
       break;
     default:
       thumbnail = thumbnailPost;
@@ -116,6 +124,22 @@ const getThumbnailFromVideo = ( source ) => {
   return thumbnail || getDefaultThumbnail( 'video' );
 };
 
+const getThumbnailFromImage = ( source ) => {
+  let thumbnail = '';
+
+  const imgSrc = source[0];
+  if ( imgSrc ) {
+    switch ( imgSrc.filetype ) {
+      case 'pdf':
+        thumbnail = getDefaultThumbnail( 'image' );
+        break;
+      default:
+        thumbnail = imgSrc.src;
+    }
+  }
+  return thumbnail || getDefaultThumbnail( 'image' );
+};
+
 const getAuthor = ( author ) => {
   if ( !author ) return '';
   return author.name || author;
@@ -164,6 +188,40 @@ const populateVideoItem = ( source, language ) => {
   return obj;
 };
 
+const populateImageItem = ( source, language ) => {
+  const key = getLocaleKey( language );
+  const units = source.unit;
+  const languageUnit = units.find( unit => unit.language.locale.toLowerCase() === key.toLowerCase() );
+  const thumbnail = getThumbnailFromImage( languageUnit.images );
+  let obj = {};
+
+  if ( languageUnit ) {
+    obj = {
+      title: languageUnit.title || '[TITLE]',
+      description: languageUnit.desc || '',
+      internalDescription: languageUnit.internal_desc || '',
+      thumbnail,
+      categories: languageUnit.categories || [],
+      tags: languageUnit.tags || [],
+      units,
+      selectedLanguageUnit: languageUnit
+    };
+  } else {
+    // this may not be needed
+    obj = {
+      title: '[TITLE]',
+      description: '',
+      internalDescription: '',
+      thumbnail: getDefaultThumbnail( 'image' ),
+      categories: [],
+      tags: [],
+      units: []
+    };
+  }
+
+  return obj;
+};
+
 const populateItem = ( source ) => {
   const obj = {
     title: source.title,
@@ -186,7 +244,9 @@ const getTypeSpecObj = ( source, language ) => {
     case 'video':
       obj = populateVideoItem( source, language );
       break;
-
+    case 'image':
+      obj = populateImageItem( source, language );
+      break;
     case 'post':
     case 'course':
       obj = populateItem( source );
