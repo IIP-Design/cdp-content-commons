@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Item } from 'semantic-ui-react';
 import downloadIcon from '../../../assets/icons/icon_download.svg';
-import { array, string } from 'prop-types';
+import { array, func, object, string } from 'prop-types';
+import withFileDownload from '../../../utils/withFileDownload';
 
 class DownloadTranscript extends Component {
   renderFormItems( units ) {
@@ -15,9 +16,14 @@ class DownloadTranscript extends Component {
     <Item.Group key={ `fs_${i}` } className="download-item">
       <Item
         as="a"
-        href={ unit.transcript.srcUrl }
+        href={ this.props.downloadLink(
+          unit.transcript.srcUrl,
+          this.props.defaultTitle,
+          this.props.selectedLanguageUnit.language.locale, 'transcript'
+        ) }
         data-action={ `downloadTranscript - ${unit.language.display_name} - ${unit.title}` }
         download={ `${unit.language.display_name}_Transcript` }
+
       >
         <Item.Image size="mini" src={ downloadIcon } className="download-icon" />
         <Item.Content>
@@ -40,8 +46,11 @@ class DownloadTranscript extends Component {
 }
 
 DownloadTranscript.propTypes = {
+  selectedLanguageUnit: object,
   units: array,
-  instructions: string
+  instructions: string,
+  defaultTitle: string,
+  downloadLink: func
 };
 
-export default DownloadTranscript;
+export default withFileDownload( DownloadTranscript );
