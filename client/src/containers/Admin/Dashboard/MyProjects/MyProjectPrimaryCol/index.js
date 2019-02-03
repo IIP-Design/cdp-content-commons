@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Checkbox, Icon } from 'semantic-ui-react';
 import truncate from 'lodash/truncate';
+import FavoriteIcon from 'components/ScrollableTableWithMenu/FavoriteIcon';
 import './MyProjectPrimaryCol.css';
 
 const dataActionsOffClick = e => {  
@@ -57,7 +58,9 @@ const MyProjectPrimaryCol = props => {
           checked={ props.selectedItems.get( `${props.d.id}` ) }
           onChange={ props.toggleItemSelection }
         />
-        {/* <div className="myProjects_favorite"><Icon name='star' /></div> */}
+        <div className="myProjects_favorite">
+          <FavoriteIcon />
+        </div>
       </div>
       <div className="myProjects_thumbnail">
         <img src={ props.d.thumbnail } alt={ props.d.title } />

@@ -1,0 +1,15 @@
+.favoriteIcon {
+  margin-left: -3px;
+  cursor: pointer;  
+}
+
+.starIcon {
+  fill: #fff;
+  stroke: #ccc;
+  stroke-width: 2px;
+
+  &--active {
+    fill: #000;
+    stroke: none;
+  }  
+}
