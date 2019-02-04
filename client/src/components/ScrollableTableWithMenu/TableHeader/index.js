@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Checkbox } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import './TableHeader.css';
 
 const TableHeader = props => {
@@ -15,7 +15,6 @@ const TableHeader = props => {
     column,
     direction,
     handleSort,
-    toggleAllItemsSelection,
     displayActionsMenu
   } = props;
   return (

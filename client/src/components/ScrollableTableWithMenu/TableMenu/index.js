@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Checkbox, Icon } from 'semantic-ui-react';
+import { Checkbox, Icon } from 'semantic-ui-react';
 import { titleCase } from '../../../utils/helpers';
 import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../../utils/browser';
 import './TableMenu.css';

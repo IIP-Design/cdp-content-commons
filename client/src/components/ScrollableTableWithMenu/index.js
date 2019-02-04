@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
-import { Table, Grid, Checkbox } from 'semantic-ui-react';
+import { Table, Grid } from 'semantic-ui-react';
 import { isMobile, isWindowWidthLessThanOrEqualTo } from '../../utils/browser';
 import TableItemsDisplay from './TableItemsDisplay';
 import TableMenu from './TableMenu';

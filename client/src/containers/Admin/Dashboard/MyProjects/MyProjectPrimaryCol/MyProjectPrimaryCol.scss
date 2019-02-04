@@ -35,9 +35,12 @@
       font-size: 18px;
       font-weight: bold;
       color: $blue;
-      @media screen and (max-width: 767px) {
-        max-width: 155px;
+      @media screen and (max-width: 600px) {
+        max-width: 90%;
         font-size: 14px;
+      }
+      @media screen and (max-width: 400px) {
+        max-width: 155px;
       }
 
       &:hover {
@@ -103,48 +106,6 @@
       }
     }
   }
-
-  // Favorite Star
-  &_favorite {
-
-    .cdp_star {
-      display: block;
-      position: relative;
-      width: 0;
-      border-right: 25px solid transparent;
-      border-left: 25px solid transparent;
-      border-bottom: 25px solid red;
-      transform: rotate(35deg);
-      color: red;
-
-      &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: -45px;
-        left: -65px;
-        width: 0;
-        border-right: 25px solid transparent;
-        border-left: 25px solid transparent;
-        border-bottom: 25px solid red;
-        transform: rotate(-35deg);
-      }
-
-      &:after {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 3px;
-        left: -105px;
-        width: 0;
-        border-right: 25px solid transparent;
-        border-left: 25px solid transparent;
-        border-bottom: 25px solid red;
-        transform: rotate(-70deg);
-      }
-    }
-  }
-
 }
 
 // Display data actions menu

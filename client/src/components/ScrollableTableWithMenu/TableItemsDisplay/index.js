@@ -5,8 +5,7 @@
  */
 
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './TableItemsDisplay.css';
 
 const TableItemsDisplay = ( props ) => {
@@ -18,6 +17,6 @@ const TableItemsDisplay = ( props ) => {
   );
 }
 
-TableItemsDisplay.propTypes = {};
+// TableItemsDisplay.propTypes = {};
 
 export default TableItemsDisplay;
