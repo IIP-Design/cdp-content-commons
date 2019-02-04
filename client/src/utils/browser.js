@@ -15,6 +15,8 @@ export const isMobile = () => {
   return re.test( navigator.userAgent );
 };
 
+export const isWindowWidthLessThanOrEqualTo = size => window.outerWidth <= size;
+
 /**
  * Updates a url without reloading the page.  Uses replaceState to replace
  * the hostroy object instead of adding a new item to history

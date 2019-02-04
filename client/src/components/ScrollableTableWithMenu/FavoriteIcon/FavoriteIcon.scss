@@ -1,0 +1,23 @@
+.favoriteIcon {
+  width: 24px;
+  height: 24px;
+  margin-left: -3px;
+  cursor: pointer;  
+  @media screen and (max-width: 425px) {
+    width: 20px;
+    height: 20px;
+    margin-left: -1px;
+  }
+
+  &_star {
+    fill: #fff;
+    stroke: #ccc;
+    stroke-width: 2px;
+  
+    &--active {
+      fill: #000;
+      stroke: none;
+    }  
+  }
+}
+
