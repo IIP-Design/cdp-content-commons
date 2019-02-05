@@ -40,10 +40,17 @@ class MyProjects extends React.Component {
           }, toggleItemSelection) => (
             <Table.Body className="myProjects">
               { data.map( d => (
-                <Table.Row key={ d.id }>
+                <Table.Row
+                  key={ d.id }
+                  className={ d.isNew ? 'myProjects_newItem' : '' }
+                >
                   { tableHeaders.map( ( header, i ) => {
                     return (              
-                      <Table.Cell data-header={ header.label } key={ `${d.id}_${header.name}` } className="items_table_item">
+                      <Table.Cell
+                        data-header={ header.label }
+                        key={ `${d.id}_${header.name}` }
+                        className="items_table_item"                          
+                      >
                         { i === 0 && ( 
                           // Table must include .primary_col div for fixed column
                           <Fragment>

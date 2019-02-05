@@ -24,7 +24,7 @@ export const tempData = [
     icon: iconVideo,
     postType: 'video',
     title: 'Item 1 - Tillerson outlines "the way forward" toward stable Syria',
-    isNew: false,
+    isNew: true,
     detailsLink: '',
     previewLink: '',
     visibility: 'draft',
