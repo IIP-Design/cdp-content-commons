@@ -161,6 +161,14 @@
     }
   }
 
+  &--dashboard {
+    @media screen and (max-width: 767px) {
+      .search_bar {
+        display: none;
+      }
+    }    
+  }
+
   /***  
     Blue bG bar 
   ***/
@@ -171,7 +179,7 @@
   &--admin {
     position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 4;
     width: 100%;
     background-image: linear-gradient(60deg, $light-blue 3%, $bright-blue 100%);
   }

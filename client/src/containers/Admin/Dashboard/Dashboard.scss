@@ -21,13 +21,34 @@
   }
 
   .ui.text.menu {
-    margin-top: 0.4em;
-  }
+    margin: 6px -0.5em 8px;
+    border-bottom: 1px solid #ccc;
 
-  .ui.text.menu .active.item {
-    font-weight: bold;
-    color: $blue;
-    border-bottom: 4px solid $blue;
+    .item {
+      margin-right: 1em;
+      font-size: 16px;
+
+      &.active {
+        position: relative;
+        font-weight: bold;
+        color: $blue;
+
+        &:after {
+          content: '';
+          position: absolute;
+          top: 32px;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background-color: $light-blue;
+        }
+      }
+    }
+    
+    .disabled.item {
+      color: $alt-grey;
+    }
+
   }
 
   .ui.segment {
@@ -35,13 +56,5 @@
     box-shadow: none;
     padding: 0;
   }
-  .ui.text.menu {
-    .item {
-      margin-right: 1em;
-      justify-content: center;
-    }
-    .disabled.item {
-      color: $alt-grey;
-    }
-  }
+  
 }
