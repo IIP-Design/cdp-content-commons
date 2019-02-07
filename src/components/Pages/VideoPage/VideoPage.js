@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { getItemRequest } from '../../../utils/api';
 import { normalizeItem } from '../../../utils/parser';
 import { parseQueryString } from '../../../utils/browser';
+import { setPageMetavalues } from '../../../utils/metaHeaders';
 import Video from '../../Types/Video/Video';
 import './VideoPage.css';
 
@@ -26,6 +27,7 @@ class VideoPage extends Component {
           if ( response.hits && response.hits.hits && response.hits.hits[0] ) {
             const item = normalizeItem( response.hits.hits[0], parsed.language );
             this.setState( { item } );
+            setPageMetavalues( item );
           } else {
             this.redirectTo404();
           }
