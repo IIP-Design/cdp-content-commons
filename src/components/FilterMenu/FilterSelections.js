@@ -56,7 +56,7 @@ class FilterSelections extends Component {
     } );
   }
 
-  onFilterChange = async ( {
+  onFilterChange = ( {
     filter, value, label, checked
   } ) => {
     switch ( filter.toLowerCase() ) {
@@ -84,11 +84,7 @@ class FilterSelections extends Component {
         // console.log( 'no changes' );
       }
     }
-    await this.props.createRequest();
-
-    this.props.loadSources();
-    this.props.loadCategories();
-    this.props.loadPostTypes();
+    this.props.createRequest();
   };
 
   render() {
@@ -138,10 +134,7 @@ FilterSelections.propTypes = {
   postTypeUpdate: func,
   sourceUpdate: func,
   dateUpdate: func,
-  createRequest: func,
-  loadSources: func,
-  loadCategories: func,
-  loadPostTypes: func
+  createRequest: func
 };
 
 const mapStateToProps = state => ( {

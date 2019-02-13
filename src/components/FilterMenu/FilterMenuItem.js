@@ -111,6 +111,7 @@ class FilterMenuItem extends Component {
               if ( this.props.filter.toLowerCase() === 'language'
                 || this.props.filter.toLowerCase() === 'date range'
                 || this.props.filter.toLowerCase() === 'format'
+                || this.props.filter.toLowerCase() === 'source'
               ) {
                 ( { label } = option );
               } else if ( option.count ) {
