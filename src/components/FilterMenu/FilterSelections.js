@@ -12,14 +12,6 @@ class FilterSelections extends Component {
   };
 
   componentWillReceiveProps( nextProps ) {
-    const nextLanguage = nextProps.language.currentLanguage;
-    const language = {
-      label: nextLanguage.display_name,
-      value: nextLanguage.key,
-      filter: 'language',
-      single: true
-    };
-
     const nextDate = nextProps.date.currentDate;
     const date = {
       label: nextDate.display_name,
@@ -51,7 +43,7 @@ class FilterSelections extends Component {
 
     this.setState( {
       selections: [
-        language, date, ...nextTypes, ...nextCategories, ...nextSources
+        date, ...nextTypes, ...nextCategories, ...nextSources
       ]
     } );
   }
@@ -60,10 +52,6 @@ class FilterSelections extends Component {
     filter, value, label, checked
   } ) => {
     switch ( filter.toLowerCase() ) {
-      case 'language':
-        this.props.languageUpdate( { key: value, display_name: label } );
-        break;
-
       case 'category':
         this.props.categoryUpdate( { key: value, display_name: label, checked } );
         break;
@@ -123,13 +111,11 @@ class FilterSelections extends Component {
 }
 
 FilterSelections.propTypes = {
-  language: object,
   category: object,
   type: object,
   source: object,
   date: object,
   onFilterClearAll: func,
-  languageUpdate: func,
   categoryUpdate: func,
   postTypeUpdate: func,
   sourceUpdate: func,
@@ -139,7 +125,6 @@ FilterSelections.propTypes = {
 
 const mapStateToProps = state => ( {
   search: state.search,
-  language: state.language,
   category: state.category,
   source: state.source,
   type: state.type,

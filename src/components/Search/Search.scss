@@ -14,18 +14,44 @@
   }
 
   .ui.form {
-    
+    input[type="text"] {
+      width: auto;
+    }
+
     .search_input {
       width: 100%;
       font-size: 18px;
+
+      ::placeholder {
+        overflow: hidden;
+      }
+
+      .ui.label {
+        font-weight: normal;
+        color: black;
+        font-size: 0.8em;
+        line-height: 1.7em;
+      }
+
+      .ui.dropdown > .text {
+        display: inline-flex;
+        width: 4em;
+        overflow: hidden;
+        white-space: nowrap;
+      }
 
       > input[type="text"]::-ms-clear {
         display: none;
       }
       
-      i {
-        color: $light-blue;
-        opacity: 0.9;
+      i.search {
+        color: $light-grey;
+        opacity: 1;
+        background: $blue;
+      }
+
+      i.search:hover {
+        background: $light-blue;
       }
 
       &.right {
@@ -34,6 +60,13 @@
           text-align: right;
         }
       }
+    }
+    .ui[class*="left icon"].input > i.icon {
+      left: 0;
+    }
+    .ui[class*="right labeled"].input > div.dropdown {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 }
