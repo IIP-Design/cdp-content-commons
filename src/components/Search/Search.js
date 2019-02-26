@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { func, shape, string, object } from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { Form, Input, Icon } from 'semantic-ui-react';
+import { Form, Input, Icon, Dropdown } from 'semantic-ui-react';
 import config from '../../config';
 import './Search.css';
 
@@ -17,7 +17,8 @@ class Search extends Component {
     super( props );
     this.URL = `${config.GOOGLE_LANGUAGE_DETECT_URL}?key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
     this.state = {
-      direction: 'left'
+      direction: 'left',
+      currentLang: 'en-us'
     };
   }
 
@@ -27,6 +28,7 @@ class Search extends Component {
       // TODO: cache default query (set up general caching strategy)
       this.props.clearFilters();
       this.props.languageUpdate( { display_name: 'English', key: 'en-us' } );
+      this.props.loadLanguages();
       this.props.createRequest();
     }
   }
@@ -45,11 +47,19 @@ class Search extends Component {
 
     if ( language ) {
       this.setState( {
-        direction: getDirection( language )
+        direction: getDirection( language ),
+        currentLang: language.key
       } );
       return ( languages[language] ) ? languages[language] : null;
     }
     return null;
+  }
+
+  handleLangOnChange = ( e, data ) => {
+    this.setState( {
+      direction: getDirection( data.value ),
+      currentLang: data.value
+    } );
   }
 
   handleQueryOnChange = async ( e ) => {
@@ -67,6 +77,8 @@ class Search extends Component {
   handleSubmit = async ( e ) => {
     e.preventDefault();
 
+    this.props.languageUpdate( { key: this.state.currentLang } );
+
     if ( this.props.search.query && this.props.search.query.trim() ) {
       this.props.updateSort( 'relevance' );
     } else {
@@ -81,18 +93,34 @@ class Search extends Component {
     if ( this.state.direction === 'left' ) {
       inputProps = { className: 'search_input' };
     } else {
-      inputProps = { className: 'search_input right', iconPosition: 'left' };
+      inputProps = { className: 'search_input right', iconPosition: 'left', labelPosition: 'right' };
     }
+
+    let langOptions = this.props.language.list.map( l => ( {
+      key: l.key,
+      text: l.display_name,
+      value: l.key
+    } ) );
+
+    if ( langOptions.length === 0 ) langOptions = [{ key: 'en-us', text: 'English', value: 'en-us' }];
 
     return (
       <section className="search_bar">
         <Form onSubmit={ this.handleSubmit }>
           <Input
+            label={
+              <Dropdown
+                defaultValue={ this.state.currentLang }
+                options={ langOptions }
+                onChange={ this.handleLangOnChange }
+              />
+            }
+            labelPosition="left"
             onChange={ this.handleQueryOnChange }
             value={ this.props.search.query ? this.props.search.query : '' }
             size="large"
             icon={ <Icon name="search" onClick={ this.handleSubmit } /> }
-            placeholder="Type in keywords to search our content"
+            placeholder="Type in keywords to search"
             { ...inputProps }
           />
         </Form>
@@ -102,7 +130,8 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => ( {
-  search: state.search
+  search: state.search,
+  language: state.language
 } );
 
 Search.propTypes = {
@@ -111,8 +140,10 @@ Search.propTypes = {
   createRequest: func,
   clearFilters: func,
   languageUpdate: func,
+  loadLanguages: func,
   history: object,
   location: object,
+  language: object,
   search: shape( {
     query: string
   } )

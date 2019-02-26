@@ -55,5 +55,5 @@ export const languages = {
 
 
 export const getDirection = language => ( ( [
-  'ar', 'fa', 'ur'
+  'ar', 'fa', 'fa-ir', 'ur'
 ].includes( language ) ) ? 'right' : 'left' );

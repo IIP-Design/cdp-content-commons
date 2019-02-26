@@ -13,7 +13,6 @@ class FilterMenu extends Component {
     this.props.categoryUpdate();
     this.props.postTypeUpdate();
     this.props.sourceUpdate();
-    this.props.languageUpdate();
     this.props.dateUpdate();
 
     this.props.createRequest();
@@ -23,7 +22,7 @@ class FilterMenu extends Component {
     return (
       <section className="filterMenu_wrapper">
         { /* SELECTION DISPLAY */ }
-        <FilterSelections onFilterClearAll={ this.handleFilterClearAll } />
+        { <FilterSelections onFilterClearAll={ this.handleFilterClearAll } /> }
 
         <div className="filterMenu_main">
           { /*  MAIN-MENU */ }
@@ -54,14 +53,14 @@ class FilterMenu extends Component {
             FormItem={ Form.Checkbox }
           />
           { /* Language */ }
-          <FilterMenuItem
+          { /* <FilterMenuItem
             filter="Language"
             selected={ this.props.language.currentLanguage }
             onFilterChange={ this.props.languageUpdate }
             options={ this.props.language.list }
             loadOptions={ this.props.loadLanguages }
             FormItem={ Form.Radio }
-          />
+          /> */ }
           { /* Category */ }
           <FilterMenuItem
             filter="Category"
@@ -78,17 +77,14 @@ class FilterMenu extends Component {
 }
 
 FilterMenu.propTypes = {
-  loadLanguages: func,
   loadCategories: func,
   loadPostTypes: func,
   loadSources: func,
-  languageUpdate: func,
   categoryUpdate: func,
   postTypeUpdate: func,
   sourceUpdate: func,
   dateUpdate: func,
   createRequest: func,
-  language: object,
   category: object,
   type: object,
   source: object,
@@ -97,7 +93,6 @@ FilterMenu.propTypes = {
 
 const mapStateToProps = state => ( {
   search: state.search,
-  language: state.language,
   category: state.category,
   type: state.type,
   source: state.source,
