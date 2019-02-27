@@ -17,9 +17,10 @@ class Search extends Component {
   constructor( props ) {
     super( props );
     this.URL = `${config.GOOGLE_LANGUAGE_DETECT_URL}?key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
+    const { location, language } = this.props;
     this.state = {
       direction: 'left',
-      currentLang: 'en-us'
+      currentLang: location.pathname === '/' ? 'en-us' : language.currentLanguage.key
     };
   }
 
