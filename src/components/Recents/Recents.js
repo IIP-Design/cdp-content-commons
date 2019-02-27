@@ -13,6 +13,7 @@ import ModalContent from '../Modals/ModalContent';
 
 class Recents extends Component {
   async componentWillMount() {
+    this.props.clearFilters();
     const currentLang = 'en-us';
     const response = await typeRecentsRequest( this.props.postType, currentLang );
     this.setState( {

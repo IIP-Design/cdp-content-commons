@@ -9,8 +9,9 @@ import './Search.css';
 
 
 // Text language detect - move to v2
-import axios from 'axios';
-import { languages, getDirection } from '../../utils/language';
+// import axios from 'axios';
+// import { languages, getDirection } from '../../utils/language';
+import { getDirection } from '../../utils/language';
 
 class Search extends Component {
   constructor( props ) {
@@ -29,7 +30,6 @@ class Search extends Component {
       this.props.clearFilters();
       this.props.languageUpdate( { display_name: 'English', key: 'en-us' } );
       this.props.loadLanguages();
-      this.props.createRequest();
     }
   }
 
@@ -41,19 +41,19 @@ class Search extends Component {
     return null;
   }
 
-  async fetchTextLanguage( text ) {
-    const result = await axios.post( `${this.URL}&q=${text}` );
-    const language = this.getDetections( result );
+  // async fetchTextLanguage( text ) {
+  //   const result = await axios.post( `${this.URL}&q=${text}` );
+  //   const language = this.getDetections( result );
 
-    if ( language ) {
-      this.setState( {
-        direction: getDirection( language ),
-        currentLang: language.key
-      } );
-      return ( languages[language] ) ? languages[language] : null;
-    }
-    return null;
-  }
+  //   if ( language ) {
+  //     this.setState( {
+  //       direction: getDirection( language ),
+  //       currentLang: language.key
+  //     } );
+  //     return ( languages[language] ) ? languages[language] : null;
+  //   }
+  //   return null;
+  // }
 
   handleLangOnChange = ( e, data ) => {
     this.setState( {
@@ -65,13 +65,13 @@ class Search extends Component {
   handleQueryOnChange = async ( e ) => {
     const text = e.target.value;
     this.props.updateSearchQuery( text );
-    this.fetchTextLanguage( text )
-      .then( ( language ) => {
-        if ( language ) {
-          this.props.languageUpdate( language );
-        }
-      } )
-      .catch( err => console.log( err ) );
+    // this.fetchTextLanguage( text )
+    //   .then( ( language ) => {
+    //     if ( language ) {
+    //       this.props.languageUpdate( language );
+    //     }
+    //   } )
+    //   .catch( err => console.log( err ) );
   };
 
   handleSubmit = async ( e ) => {
@@ -110,7 +110,7 @@ class Search extends Component {
           <Input
             label={
               <Dropdown
-                defaultValue={ this.state.currentLang }
+                value={ this.state.currentLang }
                 options={ langOptions }
                 onChange={ this.handleLangOnChange }
               />
