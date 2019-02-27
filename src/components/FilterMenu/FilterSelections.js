@@ -27,13 +27,6 @@ class FilterSelections extends Component {
       single: false
     } ) );
 
-    const nextCategories = nextProps.category.currentCategories.map( item => ( {
-      label: item.display_name,
-      value: item.key,
-      filter: 'category',
-      single: false
-    } ) );
-
     const nextSources = nextProps.source.currentSources.map( item => ( {
       label: item.display_name,
       value: item.display_name,
@@ -41,9 +34,16 @@ class FilterSelections extends Component {
       single: false
     } ) );
 
+    const nextCategories = nextProps.category.currentCategories.map( item => ( {
+      label: item.display_name,
+      value: item.key,
+      filter: 'category',
+      single: false
+    } ) );
+
     this.setState( {
       selections: [
-        date, ...nextTypes, ...nextCategories, ...nextSources
+        date, ...nextTypes, ...nextSources, ...nextCategories
       ]
     } );
   }
