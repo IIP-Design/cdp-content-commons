@@ -3,15 +3,18 @@ import { object } from 'prop-types';
 import moment from 'moment';
 import { Card, Image, Modal } from 'semantic-ui-react';
 import ModalContent from '../../Modals/ModalContent';
+
 import './ResultItem.css';
 import './ResultItemRTL.css';
+
+import logoDos from '../../../assets/images/DOS_Seal.svg';
 
 class ResultItem extends Component {
   getItemSource( textDirection ) {
     const { item } = this.props;
     let source;
+    textDirection = textDirection === 'ltr' ? 'left' : 'right';
     if ( item.logo ) {
-      textDirection = textDirection === 'ltr' ? 'left' : 'right';
       source = (
         <div
           style={ {
@@ -22,6 +25,23 @@ class ResultItem extends Component {
           } }
           alt={ item.site }
         />
+      );
+    }
+    if ( !source && item.type === 'video' && ( item.owner === 'IIP Video' || item.owner === 'IIP Interactive' ) ) {
+      source = (
+        <div style={ { display: 'block', marginTop: '2px' } }>
+          <div
+            style={ {
+              background: `url( ${logoDos} ) no-repeat`,
+              height: '16px',
+              width: '16px',
+              float: textDirection,
+              marginLeft: textDirection === 'left' ? '0' : '0.3em'
+            } }
+            alt={ item.owner }
+          />
+          <span style={ { marginTop: '1px', float: textDirection } }>{ item.owner }</span>
+        </div>
       );
     }
     if ( !source && item.type === 'video' ) source = item.owner;
