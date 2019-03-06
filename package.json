@@ -13,6 +13,7 @@
     "jszip-utils": "0.0.2",
     "lodash.differencewith": "^4.5.0",
     "lodash.isequal": "^4.5.0",
+    "lodash.orderby": "^4.6.0",
     "lodash.range": "^3.2.0",
     "lodash.sortby": "^4.7.0",
     "lodash.throttle": "^4.1.1",

@@ -1,5 +1,6 @@
 import { sourceAggRequest } from '../utils/api';
 import uniqby from 'lodash.uniqby';
+import orderBy from 'lodash.orderby';
 import { LOAD_SOURCES_PENDING, LOAD_SOURCES_FAILED, LOAD_SOURCES_SUCCESS, SOURCE_CHANGE } from './types';
 
 /**
@@ -55,12 +56,15 @@ export const sourceUpdate = ( source ) => {
   };
 };
 
-export const loadSources = () => async ( dispatch ) => {
+export const loadSources = () => async ( dispatch, getState ) => {
   dispatch( { type: LOAD_SOURCES_PENDING } );
 
   let response;
+  const currentState = getState();
+
   try {
-    response = await sourceAggRequest();
+    response = await sourceAggRequest( currentState );
+    if ( response.hits.total === 0 ) response = await sourceAggRequest( currentState, true );
   } catch ( err ) {
     return dispatch( { type: LOAD_SOURCES_FAILED } );
   }
@@ -73,10 +77,12 @@ export const loadSources = () => async ( dispatch ) => {
     count: bucket.doc_count
   } ) );
 
+  const sorted = orderBy( sources, 'count', 'desc' );
+
   // When doucment counts are introduced, we will need to add together all
   // counts form duplicates sources, i.e. Young African Leaders Initiative & Young African Leaders Initiative Network
   // will need to be totaled
-  const payload = uniqby( sources, 'key' );
+  const payload = uniqby( sorted, 'key' );
 
   return dispatch( {
     type: LOAD_SOURCES_SUCCESS,

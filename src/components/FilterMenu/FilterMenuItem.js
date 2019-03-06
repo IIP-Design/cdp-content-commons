@@ -27,16 +27,11 @@ class FilterMenuItem extends Component {
    * Format data into state that dopdowns will use
    */
   formatOptions = ( options, filter ) => {
-    let filterOptions = options.map( option => ( {
+    const filterOptions = options.map( option => ( {
       label: option.display_name,
       value: option.key,
       count: option.count
     } ) );
-
-    /* Sort Source filter alphabetically */
-    if ( filter === 'Source' ) {
-      filterOptions = filterOptions.sort( ( a, b ) => a.label.localeCompare( b.label ) );
-    }
 
     return filterOptions;
   };
@@ -57,8 +52,26 @@ class FilterMenuItem extends Component {
     }
   };
 
-  handleOnChange = ( e, selected ) => {
-    const { value, checked, label } = selected;
+  updateFilters = ( filter ) => {
+    switch ( filter.toLowerCase() ) {
+      case 'source':
+        this.props.loadCategories();
+        break;
+      case 'category':
+        break;
+      default:
+        this.props.loadCategories();
+        this.props.loadSources();
+    }
+  }
+
+  handleOnChange = async ( e, selected ) => {
+    const {
+      value,
+      checked,
+      label,
+      filter
+    } = selected;
 
     this.props.onFilterChange( {
       key: value,
@@ -66,7 +79,9 @@ class FilterMenuItem extends Component {
       checked
     } );
 
-    this.props.createRequest();
+    await this.props.createRequest();
+
+    this.updateFilters( filter );
   };
 
   render() {
@@ -122,6 +137,8 @@ FilterMenuItem.propTypes = {
   selected: oneOfType( [array, object] ),
   onFilterChange: func,
   createRequest: func,
+  loadSources: func,
+  loadCategories: func,
   loadOptions: func
 };
 

@@ -48,7 +48,7 @@ class FilterSelections extends Component {
     } );
   }
 
-  onFilterChange = ( {
+  onFilterChange = async ( {
     filter, value, label, checked
   } ) => {
     switch ( filter.toLowerCase() ) {
@@ -72,7 +72,18 @@ class FilterSelections extends Component {
         // console.log( 'no changes' );
       }
     }
-    this.props.createRequest();
+    await this.props.createRequest();
+
+    switch ( filter.toLowerCase() ) {
+      case 'source':
+        this.props.loadCategories();
+        break;
+      case 'category':
+        break;
+      default:
+        this.props.loadCategories();
+        this.props.loadSources();
+    }
   };
 
   render() {
@@ -94,7 +105,7 @@ class FilterSelections extends Component {
             onClick={ this.onFilterChange }
           />
         ) ) }
-        { selections.length > 2 && ( // need to update to > 2 as defaults to 2
+        { selections.length > 1 && ( // need to update to > 1 as defaults to 1
           <div
             className="ui label clear_filter"
             onClick={ this.props.onFilterClearAll }
@@ -116,8 +127,10 @@ FilterSelections.propTypes = {
   source: object,
   date: object,
   onFilterClearAll: func,
+  loadCategories: func,
   categoryUpdate: func,
   postTypeUpdate: func,
+  loadSources: func,
   sourceUpdate: func,
   dateUpdate: func,
   createRequest: func

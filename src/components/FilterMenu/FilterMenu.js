@@ -9,13 +9,16 @@ import { connect } from 'react-redux';
 import './FilterMenu.css';
 
 class FilterMenu extends Component {
-  handleFilterClearAll = () => {
+  handleFilterClearAll = async () => {
     this.props.categoryUpdate();
     this.props.postTypeUpdate();
     this.props.sourceUpdate();
     this.props.dateUpdate();
 
-    this.props.createRequest();
+    await this.props.createRequest();
+
+    this.props.loadSources();
+    this.props.loadCategories();
   };
 
   render() {
