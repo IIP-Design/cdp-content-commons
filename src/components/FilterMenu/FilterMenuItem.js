@@ -123,6 +123,11 @@ class FilterMenuItem extends Component {
                     }
                   />
                 ) ) }
+            { this.props.options.length === 0 &&
+              <span style={ { textAlign: 'center', paddingTop: '3px' } }>
+                None Available
+              </span>
+            }
           </Form.Group>
         </Form>
       </div>
