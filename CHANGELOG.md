@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.6.7](2019-3-08)
+
+**Changed:**
+
+- Category and Source filters will update based on the search
+- Search language is now set via a dropdown on the search bar
+- VOA has been renamed to VOA Editorials
+
+**Added:**
+
+- Open Graph tags have been added
+- A logo has been added for DoS properties
+
 # [1.6.6](2019-1-30)
 
 **Changed:**
