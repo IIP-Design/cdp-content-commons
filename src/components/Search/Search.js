@@ -87,6 +87,9 @@ class Search extends Component {
     }
     await this.props.createRequest();
     this.props.history.push( '/results' );
+
+    this.props.loadSources();
+    this.props.loadCategories();
   };
 
   render() {
@@ -142,6 +145,8 @@ Search.propTypes = {
   clearFilters: func,
   languageUpdate: func,
   loadLanguages: func,
+  loadSources: func,
+  loadCategories: func,
   history: object,
   location: object,
   language: object,
