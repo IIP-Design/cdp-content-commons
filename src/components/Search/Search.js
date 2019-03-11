@@ -25,8 +25,8 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    // Clear session if on home page
-    if ( this.props.location.pathname === '/' ) {
+    // Clear session if not on results page
+    if ( this.props.location.pathname !== '/results' ) {
       // TODO: cache default query (set up general caching strategy)
       this.props.clearFilters();
       this.props.languageUpdate( { display_name: 'English', key: 'en-us' } );
