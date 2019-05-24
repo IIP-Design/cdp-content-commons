@@ -43,14 +43,14 @@ class ArticlePage extends Component {
   render() {
     if ( !this.state.item ) {
       return (
-        <section className="video-page">
-          <p className="video-page_paragraph">Content Unavailable</p>
+        <section className="article-page">
+          <p className="article-page_paragraph">Content Unavailable</p>
         </section>
       );
     }
 
     return (
-      <section className="video-page">
+      <section className="article-page">
         <Post item={ this.state.item } />
       </section>
     );
