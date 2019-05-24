@@ -12,11 +12,17 @@ const Share = ( props ) => {
     id, site, language, title, link, type
   } = props;
 
-  const queryStr = stringifyQueryString( { id, site, language } );
-  const directLink =
-    ( type === 'video' )
-      ? `${window.location.protocol}//${window.location.host}/video?${queryStr}`
-      : link;
+  const queryStr = ( type === 'video' )
+    ? stringifyQueryString( { id, site, language } )
+    : stringifyQueryString( { id, site } );
+  const re = /^.*content.*america\.gov.*$/;
+
+  let directLink = link;
+  if ( type === 'video' ) directLink = `${window.location.protocol}//${window.location.host}/video?${queryStr}`;
+  if ( re.test( link ) && type === 'post' ) {
+    directLink = `${window.location.protocol}//${window.location.host}/article?${queryStr}`;
+  }
+
   const facebookURL = `https://www.facebook.com/sharer/sharer.php?u=${link}`;
   const tweet = `https://twitter.com/home?status=${title} ${link}`;
 

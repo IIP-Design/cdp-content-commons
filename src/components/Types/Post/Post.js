@@ -3,6 +3,8 @@ import { object } from 'prop-types';
 import { getItemRequest } from '../../../utils/api';
 import { normalizeItem } from '../../../utils/parser';
 
+import { updateUrl } from '../../../utils/browser';
+
 import embedIcon from '../../../assets/icons/icon_embed.svg';
 import shareIcon from '../../../assets/icons/icon_share.svg';
 
@@ -34,6 +36,18 @@ class Post extends Component {
     this.handleLanguageChange = this.handleLanguageChange.bind( this );
   }
 
+  componentDidMount() {
+    this.willUpdateUrl();
+  }
+
+  componentDidUpdate() {
+    this.willUpdateUrl();
+  }
+
+  componentWillUnmount() {
+    updateUrl( '/' );
+  }
+
   onFetchResult = ( response, value ) => {
     if ( response && response.hits.total > 0 ) {
       const item = normalizeItem( response.hits.hits[0] );
@@ -51,6 +65,16 @@ class Post extends Component {
     return language.display_name;
   }
 
+  /**
+   * Update the location url the direct link to selected article
+   */
+  willUpdateUrl() {
+    const { id, site } = this.state.item;
+    if ( id && site ) {
+      updateUrl( `/article?id=${id}&site=${site}` );
+    }
+  }
+
   handleLanguageChange( value ) {
     const { item } = this.state;
     const language = item.languages.find( lang => lang.language.display_name === value );
@@ -64,6 +88,7 @@ class Post extends Component {
     if ( this.state && this.state.item ) {
       const { item, textDirection } = this.state;
       const embedItem = (
+        // eslint-disable-next-line max-len
         `<div id="cdp-article-embed"></div><script async id="cdpArticle" data-id="${item.id}" data-site="${item.site}" src="${process.env.REACT_APP_CDP_MODULES_URL}${process.env.REACT_APP_SINGLE_ARTICLE_MODULE}"></script>`
       );
 

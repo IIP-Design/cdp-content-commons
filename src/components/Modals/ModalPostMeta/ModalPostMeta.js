@@ -13,6 +13,8 @@ const ModalPostMeta = ( props ) => {
     originalLink
   } = props;
 
+  const re = /^.*content.*america\.gov.*$/;
+
   let sourceItem = <div />;
   if ( logo && sourcelink ) {
     sourceItem = (
@@ -43,7 +45,11 @@ const ModalPostMeta = ( props ) => {
       <span className="modal_postmeta_content">
         { `Date Published: ${moment( datePublished ).format( 'MMMM DD, YYYY' )}` }
       </span>
-      { originalLink && <a href={ originalLink } target="_blank" rel="noopener noreferrer">View Original</a> }
+      {
+        originalLink
+        && !re.test( originalLink )
+        && <a href={ originalLink } target="_blank" rel="noopener noreferrer">View Original</a>
+      }
     </section>
   );
 };
