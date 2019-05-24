@@ -16,7 +16,9 @@ const ModalPostMeta = ( props ) => {
   const re = /^.*content.*america\.gov.*$/;
 
   let sourceItem = <div />;
-  if ( logo && sourcelink ) {
+  if ( re.test( source ) ) {
+    sourceItem = <div />;
+  } else if ( logo && sourcelink ) {
     sourceItem = (
       <a href={ sourcelink } target="_blank" rel="noopener noreferrer">
         <img src={ logo } alt={ source } className="modal_postmeta_logo" />
@@ -31,7 +33,7 @@ const ModalPostMeta = ( props ) => {
       </span>
     );
   } else {
-    sourceItem = source ? <span className="modal_postmeta_content">Source: { source }</span> : '';
+    sourceItem = ( source ) ? <span className="modal_postmeta_content">Source: { source }</span> : <div />;
   }
 
   return (
