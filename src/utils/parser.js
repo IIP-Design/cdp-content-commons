@@ -11,17 +11,22 @@ import thumbnailVideo from '../assets/images/thumbnail_video.jpg';
 import logoYali from '../assets/images/logo_yali.svg';
 import logoYlai from '../assets/images/logo_ylai.svg';
 import logoShareamerica from '../assets/images/logo_shareamerica.svg';
+import logoGEC from '../assets/images/logo_gec.svg';
+
+import { contentRegExp } from './helpers';
 
 import store from '../utils/store';
 
 const logos = [
   { name: 'yali', logo: logoYali },
   { name: 'ylai', logo: logoYlai },
-  { name: 'share', logo: logoShareamerica }
+  { name: 'share', logo: logoShareamerica },
+  { name: 'Global Engagement Center', logo: logoGEC },
+  { name: 'Content Commons', logo: logoGEC }
 ];
 
 const getLogo = ( site, owner, type ) => {
-  const siteOwner = type === 'video' ? owner : site;
+  const siteOwner = ( type === 'video' || contentRegExp( site ) ) ? owner : site;
   const siteLogo = logos.filter( logo => siteOwner.indexOf( logo.name ) > -1 );
   if ( siteLogo[0] && siteLogo[0].logo ) {
     return siteLogo[0].logo;

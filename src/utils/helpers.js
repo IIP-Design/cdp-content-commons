@@ -146,6 +146,8 @@ const getQryFields = ( types = [] ) => {
 
 const escapeRegExp = string => string.replace( /[.*+-=&!?^~${}()|[\]\\]/g, '\\$&' );
 
+export const contentRegExp = string => /^.*content.*america\.gov.*$/.test( string );
+
 /**
  * If there are an odd number of quotes in the query string is will cause
  * an error. So in that case a string is returned with some quotes escaped

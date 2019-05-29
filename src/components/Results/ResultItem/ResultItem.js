@@ -3,6 +3,7 @@ import { object } from 'prop-types';
 import moment from 'moment';
 import { Card, Image, Modal } from 'semantic-ui-react';
 import ModalContent from '../../Modals/ModalContent';
+import { contentRegExp } from '../../../utils/helpers';
 
 import './ResultItem.css';
 import './ResultItemRTL.css';
@@ -27,7 +28,11 @@ class ResultItem extends Component {
         />
       );
     }
-    const dosOwners = ['IIP Video', 'IIP Interactive', 'Public Affairs'];
+    const dosOwners = [
+      'IIP Video',
+      'IIP Interactive',
+      'Public Affairs'
+    ];
     if ( !source && item.type === 'video' && dosOwners.includes( item.owner ) ) {
       source = (
         <div style={ { display: 'block', marginTop: '2px' } }>
@@ -46,8 +51,9 @@ class ResultItem extends Component {
       );
     }
     if ( !source && item.type === 'video' ) source = item.owner;
+    if ( !source && contentRegExp( item.site ) ) source = item.owner;
     if ( !source ) source = item.site;
-    return item.type === 'video'
+    return item.type === 'video' || contentRegExp( item.site )
       ? source
       : <a target="_blank" rel="noopener noreferrer" href={ item.sourcelink }>{ source }</a>;
   }

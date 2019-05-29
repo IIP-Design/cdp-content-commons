@@ -3,6 +3,7 @@ import { string, number } from 'prop-types';
 import { List } from 'semantic-ui-react';
 import ClipboardCopy from '../ClipboardCopy/ClipboardCopy';
 import { stringifyQueryString } from '../../utils/browser';
+import { contentRegExp } from '../../utils/helpers';
 import ShareButton from './ShareButton';
 
 import './Share.css';
@@ -15,11 +16,10 @@ const Share = ( props ) => {
   const queryStr = ( type === 'video' )
     ? stringifyQueryString( { id, site, language } )
     : stringifyQueryString( { id, site } );
-  const re = /^.*content.*america\.gov.*$/;
 
   let directLink = link;
   if ( type === 'video' ) directLink = `${window.location.protocol}//${window.location.host}/video?${queryStr}`;
-  if ( re.test( link ) && type === 'post' ) {
+  if ( contentRegExp( link ) && type === 'post' ) {
     directLink = `${window.location.protocol}//${window.location.host}/article?${queryStr}`;
   }
 

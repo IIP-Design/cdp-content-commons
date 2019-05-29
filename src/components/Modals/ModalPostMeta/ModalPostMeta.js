@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { string } from 'prop-types';
+import { contentRegExp } from '../../../utils/helpers';
 import './ModalPostMeta.css';
 
 const ModalPostMeta = ( props ) => {
@@ -13,12 +14,10 @@ const ModalPostMeta = ( props ) => {
     originalLink
   } = props;
 
-  const re = /^.*content.*america\.gov.*$/;
+  const contentSite = contentRegExp( sourcelink );
 
   let sourceItem = <div />;
-  if ( re.test( source ) ) {
-    sourceItem = <div />;
-  } else if ( logo && sourcelink ) {
+  if ( logo && sourcelink && !contentSite ) {
     sourceItem = (
       <a href={ sourcelink } target="_blank" rel="noopener noreferrer">
         <img src={ logo } alt={ source } className="modal_postmeta_logo" />
@@ -26,14 +25,16 @@ const ModalPostMeta = ( props ) => {
     );
   } else if ( logo ) {
     sourceItem = <img src={ logo } alt={ source } className="modal_postmeta_logo" />;
-  } else if ( sourcelink ) {
+  } else if ( sourcelink && !contentSite ) {
     sourceItem = (
       <span className="modal_postmeta_content">
         Source: <a href={ sourcelink } target="_blank" rel="noopener noreferrer">{ source }</a>
       </span>
     );
   } else {
-    sourceItem = ( source ) ? <span className="modal_postmeta_content">Source: { source }</span> : <div />;
+    sourceItem = ( source && !contentSite )
+      ? <span className="modal_postmeta_content">Source: { source }</span>
+      : <div />;
   }
 
   return (
@@ -49,7 +50,7 @@ const ModalPostMeta = ( props ) => {
       </span>
       {
         originalLink
-        && !re.test( originalLink )
+        && !contentSite
         && <a href={ originalLink } target="_blank" rel="noopener noreferrer">View Original</a>
       }
     </section>
