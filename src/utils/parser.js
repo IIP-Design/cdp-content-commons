@@ -21,8 +21,7 @@ const logos = [
   { name: 'yali', logo: logoYali },
   { name: 'ylai', logo: logoYlai },
   { name: 'share', logo: logoShareamerica },
-  { name: 'Global Engagement Center', logo: logoGEC },
-  { name: 'Content Commons', logo: logoGEC }
+  { name: 'Global Engagement Center', logo: logoGEC }
 ];
 
 const getLogo = ( site, owner, type ) => {
