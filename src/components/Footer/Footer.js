@@ -77,7 +77,7 @@ const Footer = ( props ) => {
             send us an email at <a href="mailto:design@america.gov">design@america.gov</a>.
           </Header.Subheader>
           <Header.Subheader className="smalltext">
-            This site is managed by the <a href="https://www.state.gov/r/iip/">Bureau of International Information Programs</a> within the <a href="https://state.gov">U.S. Department of State</a>. External links to other Internet sites should not be construed as an endorsement of the views or privacy policies contained therein. IIP © 2018.
+            This site is managed by the <a href="https://www.state.gov/bureaus-offices/under-secretary-for-public-diplomacy-and-public-affairs/bureau-of-global-public-affairs/">Bureau of Global Public Affairs</a> within the <a href="https://state.gov">U.S. Department of State</a>. External links to other Internet sites should not be construed as an endorsement of the views or privacy policies contained therein. GPA © 2019.
           </Header.Subheader>
         </Header>
         <img src={ flagImage } alt="United States Flag" className="footer_img footer_img--usflag" />
