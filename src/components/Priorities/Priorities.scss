@@ -2,14 +2,21 @@
 
 .priorities {
   margin-bottom: 6em;
-  background: url("../../assets/images/wavy-bg.jpg") repeat;
-  padding: 4em 0;
+  @media screen and (min-width: 1340px) {
+    background: url("../../assets/images/wavy-bg.jpg") repeat;
+    padding: 4em 0;
+  }
 
   &container {
     max-width: 1340px;
     margin: 0 auto;
     background: white;
     padding: 30px 70px 64px;
+
+    @media screen and (max-width: 1340px) {
+      max-width: 1200px;
+      padding: 3em 0 0;
+    }
   }
 
   &title {
@@ -21,8 +28,11 @@
       padding: 0.5em 1em;
       background: $blue;
       color: #fff;
-      left: -70px;
       position: relative;
+      left: -70px;
+      @media screen and (max-width: 1340px) {
+        left: 0;
+      }
     }
 
     .browseAll {
