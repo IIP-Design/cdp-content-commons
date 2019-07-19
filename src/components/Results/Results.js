@@ -42,36 +42,38 @@ class Results extends Component {
     const { hits } = this.props.search.response;
     const items = hits ? hits.hits : [];
     return (
-      <section className="results">
-        <Breadcrumbs />
-        { this.props.search.currentPage !== -1 && (
-          <div>
-            <SearchTerm />
-            { !items.length && ( <NoResults searchTerm={ this.props.search.currentQuery } /> ) }
-            <hr />
-            <FilterMenu />
-            <section>
-              <ResultsHeader toggleView={ this.toggleView } currentView={ this.state.view } />
-            </section>
-            <Grid className="results_wrapper">
-              { items.map( item => (
-                <Grid.Column
-                  mobile={ 16 }
-                  tablet={ view === 'gallery' ? 8 : 16 }
-                  computer={ view === 'gallery' ? 4 : 16 }
-                  className={
-                    view === 'gallery' ? 'card_wrapper card_wrapper--gallery' : 'card_wrapper card_wrapper--list'
-                  }
-                  key={ item._id }
-                >
-                  <ResultItem key={ item._id } item={ normalizeItem( item ) } />
-                </Grid.Column>
-              ) ) }
-            </Grid>
-            <ResultsPagination />
-          </div>
-        ) }
-      </section>
+      <div className="ui container">
+        <section className="results">
+          <Breadcrumbs />
+          { this.props.search.currentPage !== -1 && (
+            <div>
+              <SearchTerm />
+              { !items.length && ( <NoResults searchTerm={ this.props.search.currentQuery } /> ) }
+              <hr />
+              <FilterMenu />
+              <section>
+                <ResultsHeader toggleView={ this.toggleView } currentView={ this.state.view } />
+              </section>
+              <Grid className="results_wrapper">
+                { items.map( item => (
+                  <Grid.Column
+                    mobile={ 16 }
+                    tablet={ view === 'gallery' ? 8 : 16 }
+                    computer={ view === 'gallery' ? 4 : 16 }
+                    className={
+                      view === 'gallery' ? 'card_wrapper card_wrapper--gallery' : 'card_wrapper card_wrapper--list'
+                    }
+                    key={ item._id }
+                  >
+                    <ResultItem key={ item._id } item={ normalizeItem( item ) } />
+                  </Grid.Column>
+                ) ) }
+              </Grid>
+              <ResultsPagination />
+            </div>
+          ) }
+        </section>
+      </div>
     );
   }
 }
