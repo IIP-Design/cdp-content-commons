@@ -1,13 +1,39 @@
 @import "../../assets/styles/colors.scss";
 
-.recents {
-  margin: 0 auto 6em;
-  max-width: 1200px;
+.priorities {
+  margin-bottom: 6em;
+  @media screen and (min-width: 1340px) {
+    background: url("../../assets/images/wavy-bg.jpg") repeat;
+    padding: 4em 0;
+  }
+
+  &container {
+    max-width: 1340px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px 70px 64px;
+
+    @media screen and (max-width: 1340px) {
+      max-width: 1200px;
+      padding: 3em 0 0;
+    }
+  }
 
   &title {
     display: flex;
     justify-content: space-between;
     position:relative;
+
+    h1.ui.header {
+      padding: 0.5em 1em;
+      background: $blue;
+      color: #fff;
+      position: relative;
+      left: -70px;
+      @media screen and (max-width: 1340px) {
+        left: 0;
+      }
+    }
 
     .browseAll {
       position: absolute;
@@ -27,8 +53,8 @@
     }
   }
 
-  .ui.stackable.grid > .column.recentsgridleft,
-  .ui.stackable.grid > .column.recentsgridright {
+  .ui.stackable.grid > .column.prioritiesgridleft,
+  .ui.stackable.grid > .column.prioritiesgridright {
     @media screen and (max-width: 767px) {
       padding-right: 0 !important;
       padding-left: 0 !important;
@@ -92,12 +118,12 @@
   }
 }
 
-.ui.items .item.recentsItem {
+.ui.items .item.prioritiesItem {
   border: 1px solid $light-grey;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 
-  .recentsItem_img {
+  .prioritiesItem_img {
     position: relative;
     min-width: 195px;
     background-size: cover;

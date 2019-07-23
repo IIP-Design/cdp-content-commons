@@ -36,20 +36,18 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <div className="ui container">
-          <Route component={ ScrollToTop } />
-          <Switch>
-            <Route path="/" exact component={ LandingPage } />
-            <Route path="/results" component={ Results } />
-            <Route path="/about" component={ AboutPage } />
-            <Route path="/help" component={ HelpPage } />
-            <Route path="/privacy" component={ PrivacyPage } />
-            <Route path="/contact" component={ ContactPage } />
-            <Route path="/video" component={ VideoPage } />
-            <Route path="/article" component={ ArticlePage } />
-            <Route render={ props => <NotFoundPage toggleError={ this.toggleError } /> } />
-          </Switch>
-        </div>
+        <Route component={ ScrollToTop } />
+        <Switch>
+          <Route path="/" exact component={ LandingPage } />
+          <Route path="/results" component={ Results } />
+          <Route path="/about" component={ AboutPage } />
+          <Route path="/help" component={ HelpPage } />
+          <Route path="/privacy" component={ PrivacyPage } />
+          <Route path="/contact" component={ ContactPage } />
+          <Route path="/video" component={ VideoPage } />
+          <Route path="/article" component={ ArticlePage } />
+          <Route render={ props => <NotFoundPage toggleError={ this.toggleError } /> } />
+        </Switch>
         <Footer isError={ this.state.isError } />
       </div>
     );
