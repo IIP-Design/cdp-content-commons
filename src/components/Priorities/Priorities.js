@@ -47,7 +47,7 @@ class Priorities extends Component {
 
   render() {
     let items;
-    if ( this.state && this.state.priorities.hits ) {
+    if ( this.state && this.state.priorities.hits && this.state.priorities.hits.total > 2 ) {
       items = this.state.priorities.hits.hits;
     } else {
       return <div />;
