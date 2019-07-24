@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [1.8.0](2019-7-24)
+
+**Added:**
+
+- Added a Department Priority section to the front page
+- Configured Department Priority section to display the topic of Iran
+
+**Changed:**
+
+- Style updates to accommodate the Department Priority section
+- Text updates in the Recents section to maintain consistancy with the Department Priority section
+
 # [1.7.1](2019-6-26)
 
 **Changed:**
