@@ -117,6 +117,7 @@ export const typeRecentsRequest = ( currentType, currentLang ) =>
         .size( 3 )
         .query( 'match', 'type', currentType )
         .query( 'query_string', 'query', `(language.locale: ${currentLang} OR unit.language.locale: ${currentLang})` )
+        .sort( 'published', 'desc' )
         .build()
     } )
     .then( response => response.data );
