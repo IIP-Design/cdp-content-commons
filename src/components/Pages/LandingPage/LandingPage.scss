@@ -1,4 +1,6 @@
-.ui.container .landing {
-  max-width: 1200px;
-  margin: 0 auto;
+.landing{
+  @media screen and (max-width: 1340px) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
 }

@@ -113,10 +113,8 @@ class Recents extends Component {
     return (
       <section className="recents">
         <div className="recentstitle">
-          <Header as="h1" size="large">Most Recent { this.getLabel( this.props.type ) }s</Header>
-          <Link to="/results" className="browseAll" onClick={ this.handleClick } >
-            Browse All { this.getLabel( this.props.type ) }s
-          </Link>
+          <Header as="h1" size="large">Latest { this.getLabel( this.props.type ) }s</Header>
+          <Link to="/results" className="browseAll" onClick={ this.handleClick } >Browse All</Link>
         </div>
         <Grid columns="equal" stackable stretched>
           <Grid.Column width={ 8 } className="recentsgridleft" >
