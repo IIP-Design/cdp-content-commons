@@ -59,7 +59,7 @@ class Priorities extends Component {
 
     items.slice( 1 ).forEach( ( item ) => {
       let categories = '';
-      item.categories.forEach( ( cat, index ) => {
+      item.categories.slice( 0, 3 ).forEach( ( cat, index ) => {
         categories += ( item.categories.length === index + 1 )
           ? cat.name.toLowerCase()
           : `${cat.name.toLowerCase()}  · `;
