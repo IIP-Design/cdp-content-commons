@@ -20,7 +20,8 @@ class ResultItem extends Component {
         <div
           style={ {
             background: `url( ${item.logo} ) no-repeat ${textDirection}`,
-            height: '16px',
+            backgroundSize: 'contain',
+            height: '20px',
             margin: '6px 0 0',
             marginLeft: '-1px'
           } }
@@ -29,9 +30,8 @@ class ResultItem extends Component {
       );
     }
     const dosOwners = [
-      'IIP Video',
-      'IIP Interactive',
-      'Public Affairs'
+      'GPA Video',
+      'GPA Media Strategy'
     ];
     if ( !source && item.type === 'video' && dosOwners.includes( item.owner ) ) {
       source = (

@@ -12,6 +12,7 @@ import logoYali from '../assets/images/logo_yali.svg';
 import logoYlai from '../assets/images/logo_ylai.svg';
 import logoShareamerica from '../assets/images/logo_shareamerica.svg';
 import logoGEC from '../assets/images/logo_gec.svg';
+import logoVOA from '../assets/images/logo_voa.png';
 
 import { contentRegExp } from './helpers';
 
@@ -21,7 +22,8 @@ const logos = [
   { name: 'yali', logo: logoYali },
   { name: 'ylai', logo: logoYlai },
   { name: 'share', logo: logoShareamerica },
-  { name: 'Global Engagement Center', logo: logoGEC }
+  { name: 'Global Engagement Center', logo: logoGEC },
+  { name: 'VOA Editorials', logo: logoVOA }
 ];
 
 const getLogo = ( site, owner, type ) => {
