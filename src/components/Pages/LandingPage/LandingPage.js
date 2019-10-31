@@ -5,6 +5,7 @@ import './LandingPage.css';
 
 const LandingPage = () => (
   <section className="landing">
+    <Priorities term="5G" categories={ [] } />
     <Priorities
       term="Iran"
       categories={ [
